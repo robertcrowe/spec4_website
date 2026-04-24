@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StackAdvisor — Spec4 AI</title>
+  <meta name="description" content="StackAdvisor walks you through every layer of the technology decision with honest trade-off analysis, producing a stack spec that Phaser can execute precisely.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/reviewer/">Reviewer</a>
+            <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/stackadvisor/" aria-current="page">StackAdvisor</a>
+            <a href="../../agents/phaser/">Phaser</a>
+          </div>
+        </div>
+        <a href="../../about/">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/reviewer/">Reviewer</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <div class="mobile-divider"></div>
+    <a href="../../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 03 — StackAdvisor</div>
+      <h1 class="agent-hero-title">StackAdvisor</h1>
+      <p class="agent-hero-sub">Every technology decision, made deliberately.</p>
+      <p class="agent-hero-desc">Choosing a tech stack is one of the most consequential decisions in a project — and one of the easiest to get wrong when you're moving fast, or when your AI developer tool is making decisions for you. StackAdvisor walks you through every layer of the decision, presents honest trade-offs, and produces a stack spec that Phaser can execute precisely.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">StackAdvisor — selecting your technology stack</span>
+        </div>
+        <img src="../../screenshots/stack.png" alt="StackAdvisor technology selection interface">
+      </div>
+    </div>
+  </section>
+
+  <!-- What It Covers -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What StackAdvisor covers</h2>
+      <p class="body-text fade-in">StackAdvisor works through the technology stack in order, one decision at a time:</p>
+
+      <div class="covers-list fade-in">
+        <div class="covers-item">
+          <div class="covers-num">1.</div>
+          <div>
+            <div class="covers-title">Programming language(s)</div>
+            <div class="covers-desc">What language fits the vision, the team, and the deployment target? Each option is assessed against the specific requirements surfaced by Brainstormer.</div>
+          </div>
+        </div>
+        <div class="covers-item">
+          <div class="covers-num">2.</div>
+          <div>
+            <div class="covers-title">Deployment platforms</div>
+            <div class="covers-desc">GitHub repository, web app, iOS, Android, CLI, or a combination — mapped to the deployment targets your vision requires.</div>
+          </div>
+        </div>
+        <div class="covers-item">
+          <div class="covers-num">3.</div>
+          <div>
+            <div class="covers-title">Hosting approach</div>
+            <div class="covers-desc">Self-hosted, cloud-hosted, or managed service — with the trade-offs of each explained in the context of your specific project's scale and constraints.</div>
+          </div>
+        </div>
+        <div class="covers-item">
+          <div class="covers-num">4.</div>
+          <div>
+            <div class="covers-title">Libraries — for every functional area</div>
+            <div class="covers-desc">For each area the project needs (database access, authentication, HTTP, data validation, UI, AI integration, etc.), StackAdvisor identifies the best candidate libraries with maintenance status, adoption, footprint, honest strengths and weaknesses vs. alternatives, and what you'd have to write yourself without it.</div>
+          </div>
+        </div>
+        <div class="covers-item">
+          <div class="covers-num">5.</div>
+          <div>
+            <div class="covers-title">Coding style</div>
+            <div class="covers-desc">Linter, formatter, indentation style, line length, quote style, naming conventions, and type-checking approach. The goal is a coding_style section that a coding agent can follow with zero ambiguity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conflict Detection -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Conflict detection</h2>
+      <p class="body-text fade-in">If a code review is present, StackAdvisor actively compares its recommendations against your existing choices. When it detects a conflict, it explains the implication and offers three concrete paths:</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem; grid-template-columns: repeat(3,1fr)">
+        <div class="area-card">
+          <div class="area-title">Keep the existing technology</div>
+          <div class="area-desc">Maintain consistency with the current codebase. No migration effort required.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Migrate to the new choice</div>
+          <div class="area-desc">With an honest assessment of the migration effort and what it entails.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Hybrid approach</div>
+          <div class="area-desc">Use both where each makes sense, with a clear boundary between them.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example Exchange -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Example exchange</h2>
+
+      <div class="conv-wrap fade-in">
+        <div class="conv-row agent-row">
+          <div class="conv-speaker">StackAdvisor</div>
+          <div class="conv-text">For the backend framework, your vision calls for a Python backend. Here are the leading options for REST API development:</div>
+          <div class="conv-choices">
+            <div class="conv-choice"><span class="choice-num">1.</span> <strong style="color:var(--color-text)">FastAPI</strong> — Modern, async-native, auto-generates OpenAPI docs. Recommended for AI-integrated applications. 70k+ GitHub stars, actively maintained.</div>
+            <div class="conv-choice"><span class="choice-num">2.</span> <strong style="color:var(--color-text)">Django REST Framework</strong> — Battle-tested, full-featured, excellent admin interface out of the box. Higher learning curve, heavier footprint.</div>
+            <div class="conv-choice"><span class="choice-num">3.</span> <strong style="color:var(--color-text)">Flask</strong> — Lightweight and flexible, but you'll write significantly more boilerplate for validation, serialization, and docs.</div>
+            <div class="conv-choice"><span class="choice-num">4.</span> Suggest your own option</div>
+          </div>
+          <div class="conv-text" style="margin-top:0.75rem; font-style:italic; font-size:0.8125rem; color:var(--color-text-dim)">Pick one.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack Spec Output -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What the stack spec includes</h2>
+      <p class="body-text fade-in">The confirmed <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">stack_spec</code> JSON — from the healthcare app example:</p>
+
+      <div class="json-wrap fade-in">
+        <div class="json-block"><span class="j-punc">{</span>
+  <span class="j-key">"stack_spec"</span><span class="j-punc">: {</span>
+    <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"ClinicAssist"</span><span class="j-punc">,</span>
+    <span class="j-key">"languages"</span><span class="j-punc">: [</span><span class="j-str">"Python"</span><span class="j-punc">,</span> <span class="j-str">"TypeScript"</span><span class="j-punc">],</span>
+    <span class="j-key">"deployment"</span><span class="j-punc">: {</span>
+      <span class="j-key">"platforms"</span><span class="j-punc">: [</span><span class="j-str">"Mobile app (React Native)"</span><span class="j-punc">,</span> <span class="j-str">"REST API backend"</span><span class="j-punc">],</span>
+      <span class="j-key">"hosting"</span><span class="j-punc">:</span> <span class="j-str">"Cloud-hosted (AWS), offline-capable mobile client"</span>
+    <span class="j-punc">},</span>
+    <span class="j-key">"libraries"</span><span class="j-punc">: {</span>
+      <span class="j-key">"backend"</span><span class="j-punc">: [</span>
+        <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"FastAPI"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"REST API framework"</span> <span class="j-punc">},</span>
+        <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"SQLAlchemy"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"Database ORM"</span> <span class="j-punc">},</span>
+        <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"Pydantic"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"Data validation"</span> <span class="j-punc">}</span>
+      <span class="j-punc">],</span>
+      <span class="j-key">"mobile"</span><span class="j-punc">: [</span>
+        <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"React Native"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"Cross-platform mobile UI"</span> <span class="j-punc">},</span>
+        <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"WatermelonDB"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"Offline-first local database"</span> <span class="j-punc">}</span>
+      <span class="j-punc">]</span>
+    <span class="j-punc">},</span>
+    <span class="j-key">"coding_style"</span><span class="j-punc">: {</span>
+      <span class="j-key">"linter"</span><span class="j-punc">:</span> <span class="j-str">"Ruff"</span><span class="j-punc">,</span>
+      <span class="j-key">"formatter"</span><span class="j-punc">:</span> <span class="j-str">"Ruff format"</span><span class="j-punc">,</span>
+      <span class="j-key">"indentation"</span><span class="j-punc">:</span> <span class="j-str">"4 spaces"</span><span class="j-punc">,</span>
+      <span class="j-key">"naming_conventions"</span><span class="j-punc">: {</span>
+        <span class="j-key">"functions"</span><span class="j-punc">:</span> <span class="j-str">"snake_case"</span><span class="j-punc">,</span>
+        <span class="j-key">"classes"</span><span class="j-punc">:</span> <span class="j-str">"PascalCase"</span>
+      <span class="j-punc">}</span>
+    <span class="j-punc">},</span>
+    <span class="j-key">"references"</span><span class="j-punc">: [</span>
+      <span class="j-punc">{</span> <span class="j-key">"standard"</span><span class="j-punc">:</span> <span class="j-str">"HL7 FHIR R4"</span><span class="j-punc">,</span> <span class="j-key">"url"</span><span class="j-punc">:</span> <span class="j-str">"https://hl7.org/fhir/R4/"</span> <span class="j-punc">}</span>
+    <span class="j-punc">]</span>
+  <span class="j-punc">}</span>
+<span class="j-punc">}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to choose your stack?</h2>
+        <p>Open Spec4 and let StackAdvisor guide you through every technology decision — one choice at a time.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/reviewer/">Reviewer</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

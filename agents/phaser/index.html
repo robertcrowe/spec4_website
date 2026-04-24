@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser — Spec4 AI</title>
+  <meta name="description" content="Phaser breaks your project into phases small enough to execute reliably, large enough to deliver meaningful progress — designed for first-attempt success.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/reviewer/">Reviewer</a>
+            <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../../agents/phaser/" aria-current="page">Phaser</a>
+          </div>
+        </div>
+        <a href="../../about/">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/reviewer/">Reviewer</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <div class="mobile-divider"></div>
+    <a href="../../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 04 — Phaser</div>
+      <h1 class="agent-hero-title">Phaser</h1>
+      <p class="agent-hero-sub">Implementation plans built for first-attempt success.</p>
+      <p class="agent-hero-desc">An implementation plan that's too vague leads to hallucination. One that's too large leads to failure. Phaser finds the right granularity — breaking your project into phases small enough to execute reliably, large enough to deliver meaningful progress.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Phaser — generating implementation phases</span>
+        </div>
+        <img src="../../screenshots/phaser.png" alt="Phaser generating implementation phases">
+      </div>
+    </div>
+  </section>
+
+  <!-- Steel Thread -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">The Steel Thread principle</h2>
+      <p class="body-text fade-in">Phase 1 is always a Steel Thread: the minimum viable end-to-end path that proves your tech stack is wired together before any feature development begins.</p>
+      <p class="body-text fade-in">Connecting a frontend to a backend. Verifying a database connection. Confirming an API handshake works. It sounds unglamorous, but it's the most important phase of any project. If the plumbing doesn't work in Phase 1, every subsequent phase fails. Phaser makes sure you know the stack is alive before you build on top of it.</p>
+    </div>
+  </section>
+
+  <!-- What Makes a Good Phase -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What makes a good phase</h2>
+      <p class="body-text fade-in">Each phase in Spec4 is designed around a single principle: <strong style="color:var(--color-text)">an AI coding agent should be able to implement this phase on the first attempt.</strong></p>
+
+      <div class="principles-grid fade-in">
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Strict scoping</span></div>
+          <div class="principle-body">Each phase contains only what's needed for that phase. Future requirements don't appear until they're needed. The agent implementing Phase 2 doesn't know — and shouldn't know — what Phase 5 looks like.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Cumulative progress</span></div>
+          <div class="principle-body">Phase N builds directly on Phase N-1. No orphaned scaffolding, no skipped steps. Each phase produces a working, testable state that the next phase extends.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Explicit verification</span></div>
+          <div class="principle-body">Every phase ends with an exact command or criterion that proves it succeeded — not a vague checklist, but a specific command to run and a specific output to expect.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Risk assessment</span></div>
+          <div class="principle-body">Every phase identifies where an AI coding agent is most likely to go wrong, and provides explicit guidance to prevent it. The places where LLMs reliably make mistakes are called out in advance.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack Spec Fidelity -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Stack spec fidelity</h2>
+      <p class="body-text fade-in">Phaser treats your stack spec as the authoritative list of approved components and dependencies. If a phase would require something not already in the spec, Phaser stops — explains why it's needed, what it would add — and waits for your explicit approval before including it. It never assumes.</p>
+    </div>
+  </section>
+
+  <!-- Example Phases -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Example phases</h2>
+      <p class="body-text fade-in">From the healthcare app (ClinicAssist), a 5-phase plan:</p>
+
+      <div class="json-wrap fade-in">
+        <div class="json-label">Phase 1 — Steel Thread</div>
+        <div class="json-block"><span class="j-punc">{</span>
+  <span class="j-key">"phase_number"</span><span class="j-punc">:</span> <span class="j-num">1</span><span class="j-punc">,</span>
+  <span class="j-key">"total_phases"</span><span class="j-punc">:</span> <span class="j-num">5</span><span class="j-punc">,</span>
+  <span class="j-key">"phase_title"</span><span class="j-punc">:</span> <span class="j-str">"Steel Thread — API Health Check &amp; Database Connection"</span><span class="j-punc">,</span>
+  <span class="j-key">"phase_summary"</span><span class="j-punc">:</span> <span class="j-str">"Establish a live end-to-end connection from the FastAPI backend to PostgreSQL. A single /health endpoint confirms the stack is wired together before any feature development begins."</span><span class="j-punc">,</span>
+  <span class="j-key">"instructions"</span><span class="j-punc">: [</span>
+    <span class="j-str">"Initialise the FastAPI app in main.py with a single GET /health endpoint."</span><span class="j-punc">,</span>
+    <span class="j-str">"Configure SQLAlchemy with the DATABASE_URL env var and open the connection on startup."</span><span class="j-punc">,</span>
+    <span class="j-str">"Add a startup event that runs SELECT 1 to verify the database is reachable."</span><span class="j-punc">,</span>
+    <span class="j-str">"Return {\"status\": \"ok\", \"db\": \"connected\"} on success."</span>
+  <span class="j-punc">],</span>
+  <span class="j-key">"verification"</span><span class="j-punc">:</span> <span class="j-str">"Run `uvicorn main:app --reload` and call GET http://localhost:8000/health — expect HTTP 200 with {\"status\": \"ok\", \"db\": \"connected\"}."</span>
+<span class="j-punc">}</span></div>
+      </div>
+
+      <div class="json-wrap fade-in">
+        <div class="json-label">Phase 2 — Database Schema</div>
+        <div class="json-block"><span class="j-punc">{</span>
+  <span class="j-key">"phase_number"</span><span class="j-punc">:</span> <span class="j-num">2</span><span class="j-punc">,</span>
+  <span class="j-key">"total_phases"</span><span class="j-punc">:</span> <span class="j-num">5</span><span class="j-punc">,</span>
+  <span class="j-key">"phase_title"</span><span class="j-punc">:</span> <span class="j-str">"Database Schema — Users, Patients, and Clinical Records"</span><span class="j-punc">,</span>
+  <span class="j-key">"phase_summary"</span><span class="j-punc">:</span> <span class="j-str">"Define and migrate the core data models. No business logic yet — schema stability before feature development."</span><span class="j-punc">,</span>
+  <span class="j-key">"verification"</span><span class="j-punc">:</span> <span class="j-str">"Run `alembic upgrade head` with no errors. Inspect tables in psql — confirm users, patients, and clinical_records tables exist with correct columns and constraints."</span>
+<span class="j-punc">}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">How to use Phaser's output</h2>
+      <p class="body-text fade-in">When you approve the phase plan, Phaser outputs all phase JSON blocks in a single response — one per phase, in order. Work through them one at a time with your agentic coding tool of choice:</p>
+
+      <div class="flow-steps fade-in">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text">Paste Phase 1 into Claude Code, Cursor, or your tool</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text">Let the agent implement it</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text">Run the verification command</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-text">When it passes, move to Phase 2</div>
+        </div>
+      </div>
+
+      <p class="body-text fade-in" style="margin-top:2rem">Each phase is self-contained and scoped. The agent implementing Phase 2 doesn't need to know what Phase 5 looks like — and it shouldn't.</p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to build phase by phase?</h2>
+        <p>Open Spec4 and generate your first implementation plan. From steel thread to feature complete, one verified phase at a time.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/reviewer/">Reviewer</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

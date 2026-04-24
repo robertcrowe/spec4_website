@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Spec4 AI</title>
+  <meta name="description" content="Spec4 AI is a project planning tool for developers who use agentic coding tools for spec-driven development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../agents/reviewer/">Reviewer</a>
+            <a href="../agents/brainstormer/">Brainstormer</a>
+            <a href="../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../agents/phaser/">Phaser</a>
+          </div>
+        </div>
+        <a href="../about/" aria-current="page">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../agents/reviewer/">Reviewer</a>
+    <a href="../agents/brainstormer/">Brainstormer</a>
+    <a href="../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../agents/phaser/">Phaser</a>
+    <div class="mobile-divider"></div>
+    <a href="../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="page-hero-wrap">
+    <div class="page-hero">
+      <span class="section-label">About</span>
+      <h1 class="page-hero-title">About Spec4</h1>
+    </div>
+  </div>
+
+  <!-- What Spec4 Is -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What Spec4 is</h2>
+      <p class="body-text fade-in">Spec4 AI is a project planning tool for developers who are already using — or planning to use — agentic coding tools for spec-driven development.</p>
+      <p class="body-text fade-in">It's built on a simple observation: the quality of what an agentic coding tool produces is almost entirely determined by the quality of the spec it's given. Vague specs produce vague code. Incomplete specs produce incomplete code. Specs that grow organically as the conversation progresses lead to drift, contradiction, and rework.</p>
+      <p class="body-text fade-in">Spec4 makes the spec the first-class artifact. Four specialized agents — each with a distinct role and a clear handoff — work together to build a spec that is precise, complete, and structured exactly the way a coding agent needs it.</p>
+    </div>
+  </section>
+
+  <!-- Pipeline at a Glance -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">The pipeline at a glance</h2>
+
+      <div class="table-wrap fade-in">
+        <table class="pipeline-table">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Role</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="../agents/reviewer/" style="color:inherit">Reviewer</a></td>
+              <td>Reads an existing codebase and confirms the current state</td>
+              <td>code_review</td>
+            </tr>
+            <tr>
+              <td><a href="../agents/brainstormer/" style="color:inherit">Brainstormer</a></td>
+              <td>Collaborates on the project vision through structured dialogue</td>
+              <td>vision_statement</td>
+            </tr>
+            <tr>
+              <td><a href="../agents/stackadvisor/" style="color:inherit">StackAdvisor</a></td>
+              <td>Guides technology stack selection with trade-off analysis</td>
+              <td>stack_spec</td>
+            </tr>
+            <tr>
+              <td><a href="../agents/phaser/" style="color:inherit">Phaser</a></td>
+              <td>Breaks the build into phase-by-phase implementation prompts</td>
+              <td>phase[ ]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Principles -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Design principles</h2>
+
+      <div class="principles-grid fade-in">
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">One question at a time.</span></div>
+          <div class="principle-body">Every agent in Spec4 asks one focused question and waits for your answer. No overwhelming forms, no multi-part questions, no assumptions. The pace is yours.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Confirmed, not assumed.</span></div>
+          <div class="principle-body">Every finding is confirmed with you before it moves forward. Every technical standard is verified against canonical documentation. Every dependency is added to the spec only after you approve it.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Bring your own everything.</span></div>
+          <div class="principle-body">Spec4 is provider-agnostic. Choose the AI model that fits your budget and preference. Use whatever agentic coding tool you work with. The output is plain JSON — yours to use however you like.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Downstream quality starts upstream.</span></div>
+          <div class="principle-body">Each agent's output is designed to feed the next. A thorough code review leads to better stack recommendations. A complete vision leads to more accurate phases. The pipeline is only as good as each handoff.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It's For -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Who Spec4 is for</h2>
+      <p class="body-text fade-in">Spec4 is for developers who are already using — or planning to use — agentic coding tools, and who want to get more reliable, consistent results from them. It's particularly useful when:</p>
+
+      <div class="for-list fade-in">
+        <div class="for-item">
+          <div class="for-dot"></div>
+          <div class="for-text">The project is complex enough that a single prompt won't cut it</div>
+        </div>
+        <div class="for-item">
+          <div class="for-dot"></div>
+          <div class="for-text">You're working on an existing codebase and need to plan a significant change</div>
+        </div>
+        <div class="for-item">
+          <div class="for-dot"></div>
+          <div class="for-text">You want a repeatable, structured process rather than ad-hoc prompting</div>
+        </div>
+        <div class="for-item">
+          <div class="for-dot"></div>
+          <div class="for-text">You're working with a team and need a shared, documented plan before implementation begins</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Source -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Open source</h2>
+      <p class="body-text fade-in">Spec4 is free to use. Source code, contribution guidelines, and the roadmap are available on GitHub.</p>
+      <div style="margin-top:1.5rem" class="fade-in">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-secondary">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Stop prompting. Start speccing.</h2>
+        <p>Spec4 is free to use. Bring your own AI provider and model.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../how-it-works/" class="btn btn-secondary">How It Works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../how-it-works/">How It Works</a>
+          <a href="../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../agents/reviewer/">Reviewer</a>
+          <a href="../agents/brainstormer/">Brainstormer</a>
+          <a href="../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../agents/phaser/">Phaser</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

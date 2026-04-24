@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstormer — Spec4 AI</title>
+  <meta name="description" content="Brainstormer turns a rough idea into a complete, well-defined vision — by asking focused questions, one at a time, and building a structured vision statement as you go.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/reviewer/">Reviewer</a>
+            <a href="../../agents/brainstormer/" aria-current="page">Brainstormer</a>
+            <a href="../../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../../agents/phaser/">Phaser</a>
+          </div>
+        </div>
+        <a href="../../about/">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/reviewer/">Reviewer</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <div class="mobile-divider"></div>
+    <a href="../../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 02 — Brainstormer</div>
+      <h1 class="agent-hero-title">Brainstormer</h1>
+      <p class="agent-hero-sub">One question at a time, until the vision is clear.</p>
+      <p class="agent-hero-desc">Most project ideas start with a sentence or two. Brainstormer turns that sentence into a complete, well-defined vision — by asking focused questions, one at a time, and building a structured vision statement as you go.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Brainstormer — defining your vision</span>
+        </div>
+        <img src="../../screenshots/brainstormer.png" alt="Brainstormer conversation interface">
+      </div>
+    </div>
+  </section>
+
+  <!-- What It Does -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What Brainstormer does</h2>
+      <p class="body-text fade-in">Brainstormer is a collaborative agent, not a form. It leads you through a structured conversation designed to surface every dimension of your project: who it's for, what it does, how it's different, and what comes after the MVP.</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem">
+        <div class="area-card">
+          <div class="area-title">One question at a time</div>
+          <div class="area-desc">Asks one focused question and waits for your answer. Offers numbered options — always including "suggest your own." Makes clear when choices are mutually exclusive vs. combinable.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Running vision statement</div>
+          <div class="area-desc">Adds your answer to a running vision statement after each step, shows it to you, and lets you return to any previous answer and revise it.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Stays in its lane</div>
+          <div class="area-desc">Won't ask about technology, libraries, hosting, or infrastructure. Those decisions belong to StackAdvisor. Here, the focus is entirely on <em>what</em> you're building, <em>who</em> it's for, and <em>why</em> it matters.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Verifies references</div>
+          <div class="area-desc">When a technical standard or protocol comes up, searches for the canonical documentation, confirms the reference with you, and adds it to the vision statement's reference list.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example Conversation -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Example conversation</h2>
+      <p class="body-text fade-in">Starting from a single paragraph about a healthcare app:</p>
+
+      <div class="conv-wrap fade-in">
+        <div class="conv-row user-row">
+          <div class="conv-speaker">Starting prompt</div>
+          <div class="conv-text">"I'd like to create an application to help healthcare professionals in regions where limited resources are available to be as efficient as possible — providing knowledge, advice, and helping to streamline processes and paperwork."</div>
+        </div>
+        <div class="conv-row agent-row">
+          <div class="conv-speaker">Brainstormer</div>
+          <div class="conv-text">That's a meaningful problem to solve. Let's start by understanding your primary user. Who will be using this app day-to-day?</div>
+          <div class="conv-choices">
+            <div class="conv-choice"><span class="choice-num">1.</span> Physicians and nurses at the point of care</div>
+            <div class="conv-choice"><span class="choice-num">2.</span> Community health workers with limited formal training</div>
+            <div class="conv-choice"><span class="choice-num">3.</span> Administrative staff managing records and paperwork</div>
+            <div class="conv-choice"><span class="choice-num">4.</span> Suggest your own option</div>
+          </div>
+          <div class="conv-text" style="margin-top:0.75rem; font-style:italic; font-size:0.8125rem; color:var(--color-text-dim)">Pick one or more — you can combine them.</div>
+        </div>
+        <div class="conv-row user-row">
+          <div class="conv-speaker">User</div>
+          <div class="conv-text">1 and 2</div>
+        </div>
+        <div class="conv-row agent-row">
+          <div class="conv-speaker">Brainstormer</div>
+          <div class="conv-text">Good — that covers both clinical judgment and community-level delivery. Given that community health workers may have limited formal training, will the app need to adapt its language and guidance to different literacy or expertise levels?</div>
+          <div class="conv-choices">
+            <div class="conv-choice"><span class="choice-num">1.</span> Yes — detect or ask about the user's role and adjust accordingly</div>
+            <div class="conv-choice"><span class="choice-num">2.</span> No — design for the lowest common denominator throughout</div>
+            <div class="conv-choice"><span class="choice-num">3.</span> Partially — a single simplified interface with optional depth for trained users</div>
+            <div class="conv-choice"><span class="choice-num">4.</span> Suggest your own option</div>
+          </div>
+        </div>
+        <div class="conv-row agent-row">
+          <div class="conv-speaker">Brainstormer</div>
+          <div class="conv-text" style="font-style:italic; color:var(--color-text-dim)">(after several more questions) Here's the vision statement as it stands. Would you like to revise anything, or does this feel complete?<br><br>Purpose: A mobile-first clinical decision support and workflow tool for physicians, nurses, and community health workers in resource-limited settings...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Statement Contents -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What the vision statement includes</h2>
+      <p class="body-text fade-in">The final <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">vision_statement</code> JSON covers:</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem">
+        <div class="area-card">
+          <div class="area-title">Purpose</div>
+          <div class="area-desc">A clear statement of what the software does and who it serves.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Target Audience</div>
+          <div class="area-desc">Specific user groups with their distinct needs and contexts.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Key Features (MVP)</div>
+          <div class="area-desc">Each feature with a description and concrete example of what it looks like in practice.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Differentiators</div>
+          <div class="area-desc">What makes this different from existing solutions in the market.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Monetization</div>
+          <div class="area-desc">Current model and future options, if applicable to the project.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">References</div>
+          <div class="area-desc">Canonical URLs for every technical standard mentioned during the conversation.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to define your vision?</h2>
+        <p>Open Spec4 and start a conversation with Brainstormer. Bring any idea — even a rough one.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/reviewer/">Reviewer</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>
