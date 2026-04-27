@@ -600,7 +600,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .body-text {
   font-size: 1.0625rem; color: var(--color-text-muted);
-  line-height: 1.8; max-width: 720px;
+  line-height: 1.8;
 }
 .body-text + .body-text { margin-top: var(--space-lg); }
 .body-text em { color: var(--color-text); font-style: italic; }
