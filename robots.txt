@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /agents/reviewer/
+
+Sitemap: https://spec4.ai/sitemap.xml

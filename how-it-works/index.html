@@ -12,20 +12,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How It Works — Spec4 AI</title>
-  <meta name="description" content="Spec4 is a structured pipeline of four AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
+  <meta name="description" content="Spec4 is a structured pipeline of six AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
   <link rel="canonical" href="https://spec4.ai/how-it-works/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://spec4.ai/how-it-works/">
   <meta property="og:site_name" content="Spec4 AI">
   <meta property="og:title" content="How It Works — Spec4 AI">
-  <meta property="og:description" content="Spec4 is a structured pipeline of four AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
+  <meta property="og:description" content="Spec4 is a structured pipeline of six AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="How It Works — Spec4 AI">
-  <meta name="twitter:description" content="Spec4 is a structured pipeline of four AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
+  <meta name="twitter:description" content="Spec4 is a structured pipeline of six AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.">
   <meta name="twitter:image" content="https://spec4.ai/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,10 +46,12 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
           <div class="nav-dropdown-menu">
-            <a href="../agents/reviewer/">Reviewer</a>
+            <a href="../agents/codescanner/">CodeScanner</a>
             <a href="../agents/brainstormer/">Brainstormer</a>
+            <a href="../agents/designer/">Designer</a>
             <a href="../agents/stackadvisor/">StackAdvisor</a>
             <a href="../agents/phaser/">Phaser</a>
+            <a href="../agents/deployer/">Deployer</a>
           </div>
         </div>
         <a href="../about/">About</a>
@@ -65,10 +67,12 @@
     <a href="../how-it-works/">How It Works</a>
     <div class="mobile-divider"></div>
     <span class="mobile-label">Agents</span>
-    <a href="../agents/reviewer/">Reviewer</a>
+    <a href="../agents/codescanner/">CodeScanner</a>
     <a href="../agents/brainstormer/">Brainstormer</a>
+    <a href="../agents/designer/">Designer</a>
     <a href="../agents/stackadvisor/">StackAdvisor</a>
     <a href="../agents/phaser/">Phaser</a>
+    <a href="../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="../about/">About</a>
     <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
@@ -78,8 +82,8 @@
   <div class="page-hero-wrap">
     <div class="page-hero">
       <span class="section-label">How It Works</span>
-      <h1 class="page-hero-title">From idea to implementation plan in four steps.</h1>
-      <p class="page-hero-sub">Spec4 is a structured pipeline of four AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next. You stay in control at every step.</p>
+      <h1 class="page-hero-title">From idea to implementation plan — and beyond.</h1>
+      <p class="page-hero-sub">Spec4 is a structured pipeline of six AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next. You stay in control at every step.</p>
     </div>
   </div>
 
@@ -112,25 +116,25 @@
             <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
             <span class="chrome-title">Choose a provider</span>
           </div>
-          <img src="../screenshots/provider.png" alt="Choosing an AI provider in Spec4">
+          <img src="../screenshots/provider_select.png" alt="Choosing an AI provider in Spec4">
         </div>
         <div class="screenshot-frame">
           <div class="screenshot-chrome">
             <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
             <span class="chrome-title">Choose a model</span>
           </div>
-          <img src="../screenshots/model.png" alt="Choosing a model in Spec4">
+          <img src="../screenshots/model_select.png" alt="Choosing a model in Spec4">
         </div>
         <div class="screenshot-frame">
           <div class="screenshot-chrome">
             <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
             <span class="chrome-title">Web search provider</span>
           </div>
-          <img src="../screenshots/search.png" alt="Configuring web search in Spec4">
+          <img src="../screenshots/tavily.png" alt="Configuring web search in Spec4">
         </div>
       </div>
 
-      <p class="body-text fade-in" style="margin-top:1.5rem">Once configured, you move through the pipeline. You can start from scratch with a new idea, or begin with Reviewer if you're planning changes to an existing project.</p>
+      <p class="body-text fade-in" style="margin-top:1.5rem">Once configured, you move through the pipeline. You can start from scratch with a new idea, or begin with CodeScanner if you're planning changes to an existing project.</p>
     </div>
   </section>
 
@@ -138,7 +142,7 @@
   <section class="steps-section">
     <div class="section-container">
 
-      <!-- Step 1: Reviewer -->
+      <!-- Step 1: CodeScanner -->
       <div class="step-item fade-in">
         <div class="step-content">
           <div>
@@ -146,21 +150,28 @@
             <span class="step-optional">optional</span>
           </div>
           <h2 class="step-heading">Understand where you're starting from.</h2>
-          <p class="step-body">If you're building something new from scratch, you can skip straight to Brainstormer. But if you're extending or redesigning an existing project, Reviewer reads your codebase and produces a structured analysis before any planning begins.</p>
+          <p class="step-body">If you're building something new from scratch, you can skip straight to Brainstormer. But if you're extending or redesigning an existing project, CodeScanner reads your codebase and produces a structured analysis before any planning begins.</p>
           <p class="step-body">It walks through six areas — project type, architecture, languages and frameworks, build system, coding style, and notable observations — and asks you to confirm or correct each one. The result travels with the spec through every downstream agent.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
-            Output: <code>code_review</code> JSON object
+            Output: <code>code_review.json</code>
           </div>
-          <a href="../agents/reviewer/" class="step-link">Learn more about Reviewer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../agents/codescanner/" class="step-link">Learn more about CodeScanner <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="step-visual">
           <div class="screenshot-frame">
             <div class="screenshot-chrome">
               <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-              <span class="chrome-title">Reviewer</span>
+              <span class="chrome-title">CodeScanner start</span>
             </div>
-            <img src="../screenshots/directory.png" alt="Reviewer reading a codebase">
+            <img src="../screenshots/CodeScanner_start.png" alt="CodeScanner reading a codebase">
+          </div>
+          <div class="screenshot-frame" style="margin-top: 1rem;">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">CodeScanner end</span>
+            </div>
+            <img src="../screenshots/CodeScanner_end.png" alt="CodeScanner code review output">
           </div>
         </div>
       </div>
@@ -182,23 +193,66 @@
           <div class="screenshot-frame">
             <div class="screenshot-chrome">
               <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-              <span class="chrome-title">Brainstormer</span>
+              <span class="chrome-title">Brainstormer start</span>
             </div>
-            <img src="../screenshots/brainstormer.png" alt="Brainstormer conversation">
+            <img src="../screenshots/brainstormer_start.png" alt="Brainstormer starting conversation">
+          </div>
+          <div class="screenshot-frame" style="margin-top: 1rem;">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">Brainstormer end</span>
+            </div>
+            <img src="../screenshots/brainstormer_end.png" alt="Brainstormer vision statement output">
           </div>
         </div>
       </div>
 
-      <!-- Step 3: StackAdvisor -->
+      <!-- Step 3: Designer -->
       <div class="step-item fade-in">
         <div class="step-content">
-          <span class="step-badge">03</span>
+          <div>
+            <span class="step-badge">03</span>
+            <span class="step-optional">optional</span>
+          </div>
+          <h2 class="step-heading">See it before you build it.</h2>
+          <p class="step-body">Designer reads your vision statement and generates a self-contained HTML
+            mock of your application's look and feel — no frameworks, no build step, no external dependencies.
+            Open it in any browser, share it with stakeholders, or hand it to your coding agent as a visual spec.</p>
+          <p class="step-body">Two modes: create from scratch using your vision, or modify an existing UI to
+            reflect your planned changes. Iterative refinement is built in — describe what to change and it
+            regenerates. Give Designer screenshots or images that you like or dislike and it will use those
+            to guide the design. The mock can then inform StackAdvisor's UI library recommendations.
+            You can skip Designer for CLI, terminal, or API-only projects.</p>
+          <div class="step-output">
+            <span class="step-output-dot"></span>
+            Output: <code>design/mock.html</code>
+          </div>
+          <a href="../agents/designer/" class="step-link">Learn more about Designer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="step-visual">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="../examples/mock.html" target="_blank" rel="noopener" class="btn btn-primary">See a complete design mock →</a>
+          </div>
+          <div class="screenshot-frame">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">Designer output</span>
+            </div>
+            <img src="../screenshots/Designer.png" alt="Designer generating a UI mock">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: StackAdvisor -->
+      <div class="step-item reverse fade-in">
+        <div class="step-content">
+          <span class="step-badge">04</span>
           <h2 class="step-heading">Pick a technology stack with confidence.</h2>
-          <p class="step-body">StackAdvisor takes your vision statement and walks you through every layer of the technology decision: programming language, deployment platforms, hosting approach, libraries for each functional area, and coding style.</p>
+          <p class="step-body">StackAdvisor takes your vision statement — and your UI mock if Designer ran — and walks you through every layer of the technology decision: programming language, deployment platforms, hosting approach, libraries for each functional area, and coding style.</p>
           <p class="step-body">For each choice, it presents ranked options with honest trade-off analysis — maintenance status, adoption, footprint, what you'd have to write yourself without it. When a code review is present, it actively flags conflicts between what you have and what you're considering.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
-            Output: <code>stack_spec</code> JSON object
+            Output: <code>stack.json</code>
           </div>
           <a href="../agents/stackadvisor/" class="step-link">Learn more about StackAdvisor <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
@@ -206,19 +260,26 @@
           <div class="screenshot-frame">
             <div class="screenshot-chrome">
               <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-              <span class="chrome-title">StackAdvisor</span>
+              <span class="chrome-title">StackAdvisor start</span>
             </div>
-            <img src="../screenshots/stack.png" alt="StackAdvisor technology selection">
+            <img src="../screenshots/StackAdvisor_start.png" alt="StackAdvisor beginning technology selection">
+          </div>
+          <div class="screenshot-frame" style="margin-top: 1rem;">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">StackAdvisor end</span>
+            </div>
+            <img src="../screenshots/StackAdvisor_end.png" alt="StackAdvisor technology stack output">
           </div>
         </div>
       </div>
 
-      <!-- Step 4: Phaser -->
-      <div class="step-item reverse fade-in">
+      <!-- Step 5: Phaser -->
+      <div class="step-item fade-in">
         <div class="step-content">
-          <span class="step-badge">04</span>
+          <span class="step-badge">05</span>
           <h2 class="step-heading">A plan your coding agent can actually execute.</h2>
-          <p class="step-body">Phaser takes the vision and stack spec and produces a numbered sequence of implementation phases. Each phase is a self-contained JSON object with a summary, dependency list, configuration requirements, step-by-step instructions, a risk assessment, and an exact verification command.</p>
+          <p class="step-body">Phaser takes the vision, stack spec, and design mock and produces a numbered sequence of implementation phases. Each phase is a self-contained JSON object with a summary, dependency list, configuration requirements, step-by-step instructions, a risk assessment, and an exact verification command.</p>
           <p class="step-body">Phase 1 is always a Steel Thread — the minimal end-to-end connection that proves your stack is wired together before any feature development begins. If a phase would require a dependency not in your stack spec, Phaser stops and asks for your approval first.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
@@ -230,9 +291,50 @@
           <div class="screenshot-frame">
             <div class="screenshot-chrome">
               <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-              <span class="chrome-title">Phaser</span>
+              <span class="chrome-title">Phaser start</span>
             </div>
-            <img src="../screenshots/phaser.png" alt="Phaser implementation phases">
+            <img src="../screenshots/Phaser_start.png" alt="Phaser beginning phase planning">
+          </div>
+          <div class="screenshot-frame" style="margin-top: 1rem;">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">Phaser end</span>
+            </div>
+            <img src="../screenshots/Phaser_end.png" alt="Phaser implementation phases output">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6: Deployer -->
+      <div class="step-item reverse fade-in">
+        <div class="step-content">
+          <span class="step-badge">06</span>
+          <h2 class="step-heading">Plan your path to production.</h2>
+          <p class="step-body">Deployer works in two parts. First, you tell it which AI coding agent you'll use (Claude Code, Cursor, Copilot, Windsurf, Cline, and others are supported). Deployer searches for current documentation on that agent and gives you precise guidance for loading and executing Spec4 phases — exact syntax, recommended workflow, and known pitfalls.</p>
+          <p class="step-body">Second, Deployer walks through your deployment strategy one question at a time: target platform, containerization, CI/CD pipeline, environment configuration, and monitoring. For cloud deployments, it can generate complete Terraform infrastructure scripts.</p>
+          <div class="step-output">
+            <span class="step-output-dot"></span>
+            Output: <code>deployment-plan.md</code>
+          </div>
+          <a href="../agents/deployer/" class="step-link">Learn more about Deployer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="step-visual">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="../examples/deployment-plan.html" target="_blank" rel="noopener" class="btn btn-primary">See a complete deployment plan →</a>
+          </div>
+          <div class="screenshot-frame">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">Deployer start</span>
+            </div>
+            <img src="../screenshots/Deployer_start.png" alt="Deployer planning production deployment">
+          </div>
+          <div class="screenshot-frame" style="margin-top: 1rem;">
+            <div class="screenshot-chrome">
+              <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+              <span class="chrome-title">Deployer end</span>
+            </div>
+            <img src="../screenshots/Deployer_end.png" alt="Deployer deployment plan output">
           </div>
         </div>
       </div>
@@ -245,7 +347,7 @@
     <div class="section-container">
       <div class="cta-card fade-in">
         <h2>Your spec. Your tool. Your pace.</h2>
-        <p>Spec4 doesn't lock you into an agentic coding tool or a deployment workflow. The output is structured JSON you can use however you like — paste a phase into Claude Code, feed it to a custom pipeline, or use it as a reference while coding manually.</p>
+        <p>Spec4 doesn't lock you into an agentic coding tool or a deployment workflow. The output is structured JSON, a deployment plan, and a UI mock — all yours to use however you like. Paste a phase into Claude Code, deploy to your own infrastructure, design on your own schedule.</p>
         <div class="cta-actions">
           <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Start your first spec →</a>
         </div>
@@ -271,10 +373,12 @@
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
-          <a href="../agents/reviewer/">Reviewer</a>
+          <a href="../agents/codescanner/">CodeScanner</a>
           <a href="../agents/brainstormer/">Brainstormer</a>
+          <a href="../agents/designer/">Designer</a>
           <a href="../agents/stackadvisor/">StackAdvisor</a>
           <a href="../agents/phaser/">Phaser</a>
+          <a href="../agents/deployer/">Deployer</a>
         </div>
         <div class="footer-column">
           <h4>Resources</h4>
@@ -290,5 +394,29 @@
   </footer>
 
   <script src="../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/how-it-works/",
+        "url": "https://spec4.ai/how-it-works/",
+        "name": "How It Works — Spec4 AI",
+        "description": "Spec4 is a structured pipeline of six AI agents. Each one handles a distinct phase of project planning, produces a machine-readable output, and hands it forward to the next.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/how-it-works/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/how-it-works/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" }
+        ]
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

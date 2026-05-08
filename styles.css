@@ -441,10 +441,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   white-space: nowrap;
 }
 
-.pipeline-pill.reviewer    { background: rgba(57,255,20,0.12);   border: 1px solid rgba(57,255,20,0.35);   color: #39FF14; }
+.pipeline-pill.codescanner { background: rgba(57,255,20,0.12);   border: 1px solid rgba(57,255,20,0.35);   color: #39FF14; }
 .pipeline-pill.brainstormer{ background: rgba(233,30,140,0.12);  border: 1px solid rgba(233,30,140,0.35);  color: #E91E8C; }
 .pipeline-pill.stackadvisor{ background: rgba(30,136,229,0.12);  border: 1px solid rgba(30,136,229,0.35);  color: #64B5F6; }
 .pipeline-pill.phaser      { background: rgba(255,189,46,0.12);  border: 1px solid rgba(255,189,46,0.35);  color: #FFBD2E; }
+.pipeline-pill.deployer    { background: rgba(0,188,212,0.12);   border: 1px solid rgba(0,188,212,0.35);   color: #00BCD4; }
+.pipeline-pill.designer    { background: rgba(255,112,67,0.12);  border: 1px solid rgba(255,112,67,0.35);  color: #FF7043; }
 
 .pipeline-arrow { color: var(--color-text-dim); font-size: 0.875rem; user-select: none; }
 
@@ -452,7 +454,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .agents-section { padding: var(--space-4xl) 0; }
 
 .agent-cards-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md); margin-bottom: var(--space-2xl);
 }
 

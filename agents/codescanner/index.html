@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PS571XRB2G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PS571XRB2G');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeScanner — Spec4 AI</title>
+  <meta name="description" content="CodeScanner reads your project directory and produces a confirmed code review — so every downstream agent starts from a shared, accurate understanding of your current stack.">
+  <link rel="canonical" href="https://spec4.ai/agents/codescanner/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spec4.ai/agents/codescanner/">
+  <meta property="og:site_name" content="Spec4 AI">
+  <meta property="og:title" content="CodeScanner — Spec4 AI">
+  <meta property="og:description" content="CodeScanner reads your project directory and produces a confirmed code review — so every downstream agent starts from a shared, accurate understanding of your current stack.">
+  <meta property="og:image" content="https://spec4.ai/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CodeScanner — Spec4 AI">
+  <meta name="twitter:description" content="CodeScanner reads your project directory and produces a confirmed code review — so every downstream agent starts from a shared, accurate understanding of your current stack.">
+  <meta name="twitter:image" content="https://spec4.ai/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/codescanner/" aria-current="page">CodeScanner</a>
+            <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/designer/">Designer</a>
+            <a href="../../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../../agents/phaser/">Phaser</a>
+            <a href="../../agents/deployer/">Deployer</a>
+          </div>
+        </div>
+        <a href="../../about/">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/codescanner/">CodeScanner</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/designer/">Designer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <a href="../../agents/deployer/">Deployer</a>
+    <div class="mobile-divider"></div>
+    <a href="../../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 01 — CodeScanner</div>
+      <h1 class="agent-hero-title">CodeScanner</h1>
+      <p class="agent-hero-sub">The first step when you're building on top of something that 
+        already exists.</p>
+      <p class="agent-hero-desc">Before you plan what to build next, it helps to have a 
+        clear, structured picture of what you've already built. CodeScanner reads your project 
+        directory and works with you to produce a confirmed code review — so every downstream 
+        agent starts from a shared, accurate understanding of your current stack.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">CodeScanner start</span>
+        </div>
+        <img src="../../screenshots/CodeScanner_start.png" alt="CodeScanner reading a project directory">
+      </div>
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:2rem auto 0">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">CodeScanner end</span>
+        </div>
+        <img src="../../screenshots/CodeScanner_end.png" alt="CodeScanner code review output">
+      </div>
+    </div>
+  </section>
+
+  <!-- What CodeScanner Does -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What CodeScanner does</h2>
+      <p class="body-text fade-in">CodeScanner gathers your file tree, analyzes config and manifest files, samples source code, and walks through your codebase in six areas — asking you to confirm or correct its findings before moving on:</p>
+
+      <div class="areas-grid fade-in">
+        <div class="area-card">
+          <div class="area-num">01</div>
+          <div class="area-title">Project Type</div>
+          <div class="area-desc">Web app, CLI, library, API, data pipeline, mobile app, desktop app, or something else entirely.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-num">02</div>
+          <div class="area-title">Architecture</div>
+          <div class="area-desc">The high-level structural pattern: MVC, layered, microservices, monolith, serverless, event-driven.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-num">03</div>
+          <div class="area-title">Languages and Frameworks</div>
+          <div class="area-desc">Every programming language and framework detected in use, with versions where available.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-num">04</div>
+          <div class="area-title">Build System and Dependencies</div>
+          <div class="area-desc">The package manager and build tool, plus a list of key dependencies and their purpose.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-num">05</div>
+          <div class="area-title">Coding Style</div>
+          <div class="area-desc">Indentation, naming conventions, linter, formatter, and type checker — inferred from config files or source samples when config files are absent.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-num">06</div>
+          <div class="area-title">Notable Observations</div>
+          <div class="area-desc">Test coverage, CI/CD configuration, security patterns, or anything else that will affect new development.</div>
+        </div>
+      </div>
+
+      <p class="body-text fade-in" style="margin-top:2rem">After each section, CodeScanner presents its findings and waits for your confirmation before moving on. If you correct something, it updates its understanding before proceeding. Web search is used to identify any unfamiliar frameworks or technologies it encounters.</p>
+    </div>
+  </section>
+
+  <!-- Why It Matters -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Why it matters for the rest of the pipeline</h2>
+      <p class="body-text fade-in">CodeScanner's output — a <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">code_review.json</code> object — travels alongside the vision and stack spec through every downstream agent.</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem; grid-template-columns: 1fr 1fr">
+        <div class="area-card">
+          <div class="area-title">StackAdvisor</div>
+          <div class="area-desc">Uses the code review to flag conflicts between your existing stack and any proposed changes, and offers concrete paths to resolve them: keep the existing choice, migrate, or go hybrid.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Phaser</div>
+          <div class="area-desc">Uses the code review to ensure phase instructions don't contradict the patterns and conventions already established in your codebase.</div>
+        </div>
+      </div>
+
+      <p class="body-text fade-in" style="margin-top:1.5rem">Without a code review, those agents make assumptions. With a code review, they know exactly what they're working with.</p>
+    </div>
+  </section>
+
+  <!-- Example Output -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">Example output</h2>
+      <p class="body-text fade-in">From the healthcare app example, after scanning an existing FastAPI/Streamlit codebase:</p>
+
+      <div class="json-wrap fade-in">
+        <div class="json-block"><span class="j-punc">{</span>
+  <span class="j-key">"code_review"</span><span class="j-punc">: {</span>
+    <span class="j-key">"is_software_project"</span><span class="j-punc">:</span> <span class="j-bool">true</span><span class="j-punc">,</span>
+    <span class="j-key">"project_type"</span><span class="j-punc">:</span> <span class="j-str">"web application"</span><span class="j-punc">,</span>
+    <span class="j-key">"architecture"</span><span class="j-punc">:</span> <span class="j-str">"layered (presentation / business logic / data)"</span><span class="j-punc">,</span>
+    <span class="j-key">"languages"</span><span class="j-punc">: [</span><span class="j-str">"Python"</span><span class="j-punc">],</span>
+    <span class="j-key">"frameworks"</span><span class="j-punc">: [</span><span class="j-str">"FastAPI"</span><span class="j-punc">,</span> <span class="j-str">"Streamlit"</span><span class="j-punc">],</span>
+    <span class="j-key">"build_system"</span><span class="j-punc">:</span> <span class="j-str">"uv / pyproject.toml"</span><span class="j-punc">,</span>
+    <span class="j-key">"dependencies"</span><span class="j-punc">: [</span>
+      <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"streamlit"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"UI framework"</span> <span class="j-punc">},</span>
+      <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"litellm"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"LLM provider abstraction"</span> <span class="j-punc">},</span>
+      <span class="j-punc">{</span> <span class="j-key">"name"</span><span class="j-punc">:</span> <span class="j-str">"fastapi"</span><span class="j-punc">,</span> <span class="j-key">"purpose"</span><span class="j-punc">:</span> <span class="j-str">"REST API backend"</span> <span class="j-punc">}</span>
+    <span class="j-punc">],</span>
+    <span class="j-key">"coding_style"</span><span class="j-punc">: {</span>
+      <span class="j-key">"linter"</span><span class="j-punc">:</span> <span class="j-str">"ruff"</span><span class="j-punc">,</span>
+      <span class="j-key">"formatter"</span><span class="j-punc">:</span> <span class="j-str">"ruff format"</span><span class="j-punc">,</span>
+      <span class="j-key">"indentation"</span><span class="j-punc">:</span> <span class="j-str">"4 spaces"</span><span class="j-punc">,</span>
+      <span class="j-key">"quotes"</span><span class="j-punc">:</span> <span class="j-str">"double"</span><span class="j-punc">,</span>
+      <span class="j-key">"naming_conventions"</span><span class="j-punc">: {</span>
+        <span class="j-key">"functions"</span><span class="j-punc">:</span> <span class="j-str">"snake_case"</span><span class="j-punc">,</span>
+        <span class="j-key">"classes"</span><span class="j-punc">:</span> <span class="j-str">"PascalCase"</span>
+      <span class="j-punc">}</span>
+    <span class="j-punc">},</span>
+    <span class="j-key">"notes"</span><span class="j-punc">: [</span><span class="j-str">"test coverage is minimal"</span><span class="j-punc">,</span> <span class="j-str">"no CI configuration found"</span><span class="j-punc">]</span>
+  <span class="j-punc">}</span>
+<span class="j-punc">}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- When to Use -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">When to use CodeScanner</h2>
+
+      <div class="use-cases fade-in">
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're adding major new features to an existing project</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're onboarding Spec4 to a project that was built before Spec4 existed</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're handing a project off to a new developer and want a shared baseline</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You want to catch stack conflicts before they become implementation problems</span>
+        </div>
+      </div>
+
+      <div class="skip-note fade-in">
+        <strong>Starting a brand-new project from scratch?</strong> You can skip CodeScanner and go straight to Brainstormer.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to scan your codebase?</h2>
+        <p>Open Spec4 and start your first code scan. It takes about five minutes and sets the foundation for everything that follows.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/codescanner/">CodeScanner</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/designer/">Designer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+          <a href="../../agents/deployer/">Deployer</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/agents/codescanner/",
+        "url": "https://spec4.ai/agents/codescanner/",
+        "name": "CodeScanner — Spec4 AI",
+        "description": "CodeScanner reads your project directory and produces a confirmed code review — so every downstream agent starts from a shared, accurate understanding of your current stack.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/agents/codescanner/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/agents/codescanner/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" },
+          { "@type": "ListItem", "position": 3, "name": "CodeScanner", "item": "https://spec4.ai/agents/codescanner/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
