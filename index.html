@@ -12,20 +12,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spec4 AI — Spec-driven development for developers</title>
-  <meta name="description" content="Spec4 AI guides you through a pipeline of four specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec ready for your agentic coding tool.">
+  <meta name="description" content="Spec4 AI guides you through a pipeline of six specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec — with a UI mock and deployment plan — ready for your agentic coding tool.">
   <link rel="canonical" href="https://spec4.ai/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://spec4.ai/">
   <meta property="og:site_name" content="Spec4 AI">
   <meta property="og:title" content="Spec4 AI — Spec-driven development for developers">
-  <meta property="og:description" content="Spec4 AI guides you through a pipeline of four specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec ready for your agentic coding tool.">
+  <meta property="og:description" content="Spec4 AI guides you through a pipeline of six specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec — with a UI mock and deployment plan — ready for your agentic coding tool.">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Spec4 AI — Spec-driven development for developers">
-  <meta name="twitter:description" content="Spec4 AI guides you through a pipeline of four specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec ready for your agentic coding tool.">
+  <meta name="twitter:description" content="Spec4 AI guides you through a pipeline of six specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec — with a UI mock and deployment plan — ready for your agentic coding tool.">
   <meta name="twitter:image" content="https://spec4.ai/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,10 +47,12 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
           <div class="nav-dropdown-menu">
-            <a href="agents/reviewer/">Reviewer</a>
+            <a href="agents/codescanner/">CodeScanner</a>
             <a href="agents/brainstormer/">Brainstormer</a>
+            <a href="agents/designer/">Designer</a>
             <a href="agents/stackadvisor/">StackAdvisor</a>
             <a href="agents/phaser/">Phaser</a>
+            <a href="agents/deployer/">Deployer</a>
           </div>
         </div>
         <a href="about/">About</a>
@@ -66,10 +68,12 @@
     <a href="how-it-works/">How It Works</a>
     <div class="mobile-divider"></div>
     <span class="mobile-label">Agents</span>
-    <a href="agents/reviewer/">Reviewer</a>
+    <a href="agents/codescanner/">CodeScanner</a>
     <a href="agents/brainstormer/">Brainstormer</a>
+    <a href="agents/designer/">Designer</a>
     <a href="agents/stackadvisor/">StackAdvisor</a>
     <a href="agents/phaser/">Phaser</a>
+    <a href="agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="about/">About</a>
     <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
@@ -87,7 +91,14 @@
         <span class="text-gradient">for developers.</span>
       </h1>
       <p class="hero-description">
-        Spec4 AI guides you through a pipeline of four specialized AI agents that turn a rough idea — or an existing codebase — into a complete, phase-by-phase implementation spec ready for your agentic coding tool. <strong style="color:var(--color-primary)">It's way more powerful than <code style="font-family:var(--font-mono);color:var(--color-primary)">/plan</code>.</strong>
+        Spec4 AI works with you as a partner and advisor to guide
+        you through a pipeline of six specialized AI agents that 
+        turn a rough idea — or an existing codebase — into 
+        a complete, phase-by-phase implementation spec, UI mock, and 
+        deployment plan ready for your agentic coding tool and
+        infra. 
+        <br /><strong style="color:var(--color-primary)">It's way more 
+          powerful than <code style="font-family:var(--font-mono);color:var(--color-primary)">/plan</code>.</strong>
       </p>
       <div class="hero-actions">
         <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
@@ -102,21 +113,36 @@
     </div>
   </header>
 
-  <!-- Demo Video -->
-  <section class="video-section">
+  <!-- See How It Works -->
+  <section class="content-section">
     <div class="section-container">
       <div class="section-header fade-in">
-        <span class="section-label">Demo</span>
-        <h2 class="section-title">Watch the demo.</h2>
+        <span class="section-label">The Pipeline</span>
+        <h2 class="section-title">See how it works.</h2>
       </div>
-      <div class="video-wrap fade-in">
-        <iframe
-          src="https://www.youtube.com/embed/vhIcx05FoUs"
-          title="Spec4 AI demo"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
+
+      <div class="pipeline-bar fade-in">
+        <span class="pipeline-pill codescanner">🔍 CodeScanner</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill brainstormer">🧠 Brainstormer</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill designer">🎨 Designer</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill stackadvisor">⚙️ StackAdvisor</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill phaser">📋 Phaser</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill deployer">🚀 Deployer</span>
+      </div>
+
+      <p class="body-text fade-in">
+        Walk through each step of the Spec4 pipeline. Learn how CodeScanner reads your codebase,
+        how Brainstormer defines your vision, how Designer mocks your UI, how StackAdvisor
+        recommends your tech stack, how Phaser breaks it into executable phases, and how Deployer
+        plans your path to production.
+      </p>
+      <div class="section-cta fade-in" style="margin-top: 2rem;">
+        <a href="how-it-works/" class="btn btn-primary">See the full pipeline →</a>
       </div>
     </div>
   </section>
@@ -146,23 +172,27 @@
       </div>
 
       <div class="pipeline-bar fade-in">
-        <span class="pipeline-pill reviewer">🔍 Reviewer</span>
+        <span class="pipeline-pill codescanner">🔍 CodeScanner</span>
         <span class="pipeline-arrow">→</span>
         <span class="pipeline-pill brainstormer">🧠 Brainstormer</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill designer">🎨 Designer</span>
         <span class="pipeline-arrow">→</span>
         <span class="pipeline-pill stackadvisor">⚙️ StackAdvisor</span>
         <span class="pipeline-arrow">→</span>
         <span class="pipeline-pill phaser">📋 Phaser</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-pill deployer">🚀 Deployer</span>
       </div>
 
       <div class="agent-cards-grid">
-        <a href="agents/reviewer/" class="agent-teaser-card fade-in">
+        <a href="agents/codescanner/" class="agent-teaser-card fade-in">
           <div class="agent-card-header">
             <span class="agent-card-num">01</span>
-            <span class="agent-card-name">🔍 Reviewer</span>
+            <span class="agent-card-name">🔍 CodeScanner</span>
             <span class="agent-card-optional">(optional)</span>
           </div>
-          <div class="agent-card-desc">Understands your existing codebase so nothing gets lost in the transition.</div>
+          <div class="agent-card-desc">Reads your existing codebase so nothing gets lost in the transition to what's next.</div>
           <span class="output-badge">code_review.json</span>
         </a>
         <a href="agents/brainstormer/" class="agent-teaser-card fade-in">
@@ -173,9 +203,18 @@
           <div class="agent-card-desc">Collaborates with you to define a clear, complete vision — no gaps, no ambiguity.</div>
           <span class="output-badge">vision.json</span>
         </a>
-        <a href="agents/stackadvisor/" class="agent-teaser-card fade-in">
+        <a href="agents/designer/" class="agent-teaser-card fade-in">
           <div class="agent-card-header">
             <span class="agent-card-num">03</span>
+            <span class="agent-card-name">🎨 Designer</span>
+            <span class="agent-card-optional">(optional)</span>
+          </div>
+          <div class="agent-card-desc">Generates a self-contained HTML mock of your UI so you have a visual target before a line of code is written.</div>
+          <span class="output-badge">mock.html</span>
+        </a>
+        <a href="agents/stackadvisor/" class="agent-teaser-card fade-in">
+          <div class="agent-card-header">
+            <span class="agent-card-num">04</span>
             <span class="agent-card-name">⚙️ StackAdvisor</span>
           </div>
           <div class="agent-card-desc">Guides you through selecting a technology stack that fits the vision and your requirements.</div>
@@ -183,11 +222,19 @@
         </a>
         <a href="agents/phaser/" class="agent-teaser-card fade-in">
           <div class="agent-card-header">
-            <span class="agent-card-num">04</span>
+            <span class="agent-card-num">05</span>
             <span class="agent-card-name">📋 Phaser</span>
           </div>
           <div class="agent-card-desc">Breaks the build into executable phases designed for first-attempt success.</div>
           <span class="output-badge">phases.zip</span>
+        </a>
+        <a href="agents/deployer/" class="agent-teaser-card fade-in">
+          <div class="agent-card-header">
+            <span class="agent-card-num">06</span>
+            <span class="agent-card-name">🚀 Deployer</span>
+          </div>
+          <div class="agent-card-desc">Plans your path to production — coding agent guidance, infrastructure, CI/CD, and monitoring.</div>
+          <span class="output-badge">deployment-plan.md</span>
         </a>
       </div>
 
@@ -262,10 +309,12 @@
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
-          <a href="agents/reviewer/">Reviewer</a>
+          <a href="agents/codescanner/">CodeScanner</a>
           <a href="agents/brainstormer/">Brainstormer</a>
+          <a href="agents/designer/">Designer</a>
           <a href="agents/stackadvisor/">StackAdvisor</a>
           <a href="agents/phaser/">Phaser</a>
+          <a href="agents/deployer/">Deployer</a>
         </div>
         <div class="footer-column">
           <h4>Resources</h4>
@@ -287,7 +336,7 @@
     "@type": "SoftwareApplication",
     "name": "Spec4 AI",
     "url": "https://spec4.ai",
-    "description": "A pipeline of four specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec ready for Claude Code, Cursor, or Copilot Workspace.",
+    "description": "A pipeline of six specialized AI agents that turn a rough idea into a complete, phase-by-phase implementation spec, UI mock, and deployment plan ready for Claude Code, Cursor, or any agentic coding tool.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web",
     "offers": {

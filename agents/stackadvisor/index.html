@@ -47,10 +47,12 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
           <div class="nav-dropdown-menu">
-            <a href="../../agents/reviewer/">Reviewer</a>
+            <a href="../../agents/codescanner/">CodeScanner</a>
             <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/designer/">Designer</a>
             <a href="../../agents/stackadvisor/" aria-current="page">StackAdvisor</a>
             <a href="../../agents/phaser/">Phaser</a>
+            <a href="../../agents/deployer/">Deployer</a>
           </div>
         </div>
         <a href="../../about/">About</a>
@@ -66,10 +68,12 @@
     <a href="../../how-it-works/">How It Works</a>
     <div class="mobile-divider"></div>
     <span class="mobile-label">Agents</span>
-    <a href="../../agents/reviewer/">Reviewer</a>
+    <a href="../../agents/codescanner/">CodeScanner</a>
     <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/designer/">Designer</a>
     <a href="../../agents/stackadvisor/">StackAdvisor</a>
     <a href="../../agents/phaser/">Phaser</a>
+    <a href="../../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="../../about/">About</a>
     <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
@@ -78,7 +82,7 @@
   <!-- Hero -->
   <div class="agent-hero-wrap">
     <div class="agent-hero">
-      <div class="agent-hero-badge">Agent 03 — StackAdvisor</div>
+      <div class="agent-hero-badge">Agent 04 — StackAdvisor</div>
       <h1 class="agent-hero-title">StackAdvisor</h1>
       <p class="agent-hero-sub">Every technology decision, made deliberately.</p>
       <p class="agent-hero-desc">Choosing a tech stack is one of the most consequential decisions in a project — and one of the easiest to get wrong when you're moving fast, or when your AI developer tool is making decisions for you. StackAdvisor walks you through every layer of the decision, presents honest trade-offs, and produces a stack spec that Phaser can execute precisely.</p>
@@ -91,9 +95,16 @@
       <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
         <div class="screenshot-chrome">
           <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-          <span class="chrome-title">StackAdvisor — selecting your technology stack</span>
+          <span class="chrome-title">StackAdvisor start</span>
         </div>
-        <img src="../../screenshots/stack.png" alt="StackAdvisor technology selection interface">
+        <img src="../../screenshots/StackAdvisor_start.png" alt="StackAdvisor beginning technology selection">
+      </div>
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:2rem auto 0">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">StackAdvisor end</span>
+        </div>
+        <img src="../../screenshots/StackAdvisor_end.png" alt="StackAdvisor technology stack output">
       </div>
     </div>
   </section>
@@ -262,10 +273,12 @@
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
-          <a href="../../agents/reviewer/">Reviewer</a>
+          <a href="../../agents/codescanner/">CodeScanner</a>
           <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/designer/">Designer</a>
           <a href="../../agents/stackadvisor/">StackAdvisor</a>
           <a href="../../agents/phaser/">Phaser</a>
+          <a href="../../agents/deployer/">Deployer</a>
         </div>
         <div class="footer-column">
           <h4>Resources</h4>
@@ -281,5 +294,30 @@
   </footer>
 
   <script src="../../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/agents/stackadvisor/",
+        "url": "https://spec4.ai/agents/stackadvisor/",
+        "name": "StackAdvisor — Spec4 AI",
+        "description": "StackAdvisor walks you through every layer of the technology decision with honest trade-off analysis, producing a stack spec that Phaser can execute precisely.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/agents/stackadvisor/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/agents/stackadvisor/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" },
+          { "@type": "ListItem", "position": 3, "name": "StackAdvisor", "item": "https://spec4.ai/agents/stackadvisor/" }
+        ]
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>HealthHelper</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #ED1B2E;
+      --deep-red:   #7F181B;
+      --dark-red:   #B01020;
+      --white:      #FFFFFF;
+      --off-white:  #F7F7F8;
+      --light-gray: #D7D7D8;
+      --mid-gray:   #9F9FA3;
+      --dark-gray:  #3A3A3C;
+      --charcoal:   #1C1C1E;
+      --accent-blue:#0091CD;
+      --safe-green: #537B35;
+
+      --font:       'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --radius-sm:  10px;
+      --radius-md:  16px;
+      --radius-lg:  24px;
+      --shadow-sm:  0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:  0 6px 24px rgba(0,0,0,.13);
+      --shadow-lg:  0 16px 48px rgba(0,0,0,.18);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--off-white);
+      color: var(--charcoal);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Phone Shell ──────────────────────────────────────────── */
+    .shell-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 12px;
+      background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    .phone {
+      position: relative;
+      width: 390px;
+      min-height: 844px;
+      background: var(--white);
+      border-radius: 52px;
+      box-shadow: 0 40px 120px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08) inset;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Notch */
+    .phone-notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 126px; height: 34px;
+      background: #111;
+      border-radius: 0 0 20px 20px;
+      z-index: 99;
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px 0;
+      height: 52px;
+      flex-shrink: 0;
+      background: var(--red);
+    }
+    .status-time {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: .3px;
+    }
+    .status-icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .status-icons svg { fill: var(--white); }
+
+    /* ─── Scrollable Content ────────────────────────────────────── */
+    .screen-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+    }
+    .screen-content::-webkit-scrollbar { display: none; }
+
+    /* ─── Header / Hero ─────────────────────────────────────────── */
+    .header {
+      background: linear-gradient(160deg, var(--red) 0%, var(--deep-red) 100%);
+      padding: 28px 24px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative cross watermark */
+    .header::before {
+      content: '+';
+      position: absolute;
+      right: -18px;
+      top: -28px;
+      font-size: 240px;
+      font-weight: 900;
+      color: rgba(255,255,255,.07);
+      line-height: 1;
+      letter-spacing: -8px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-cross {
+      width: 38px; height: 38px;
+      background: var(--white);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,.22);
+      flex-shrink: 0;
+    }
+    .logo-cross svg { width: 26px; height: 26px; }
+
+    .logo-text {
+      color: var(--white);
+    }
+    .logo-text .app-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.4px;
+      line-height: 1;
+    }
+    .logo-text .app-tagline {
+      font-size: 10px;
+      font-weight: 400;
+      opacity: .78;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Offline badge */
+    .offline-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 20px;
+      padding: 5px 10px;
+      backdrop-filter: blur(4px);
+    }
+    .offline-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #8EC06C;
+      box-shadow: 0 0 0 2px rgba(142,192,108,.35);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(142,192,108,.35); }
+      50% { box-shadow: 0 0 0 5px rgba(142,192,108,.15); }
+    }
+    .offline-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    /* Greeting */
+    .greeting {
+      margin-bottom: 20px;
+    }
+    .greeting-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,.7);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .greeting-main {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -.5px;
+      line-height: 1.15;
+    }
+    .greeting-main span {
+      opacity: .85;
+    }
+
+    /* Search bar */
+    .search-bar {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 16px;
+      height: 50px;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: box-shadow .2s;
+    }
+    .search-bar:active { box-shadow: var(--shadow-lg); }
+    .search-bar svg { flex-shrink: 0; }
+    .search-bar-text {
+      font-size: 14px;
+      color: var(--mid-gray);
+      letter-spacing: .1px;
+      flex: 1;
+    }
+    .search-lang-pill {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      background: rgba(237,27,46,.08);
+      border: 1px solid rgba(237,27,46,.2);
+      border-radius: 20px;
+      padding: 3px 8px;
+      letter-spacing: .3px;
+    }
+
+    /* ─── Body Sections ─────────────────────────────────────────── */
+    .body-section {
+      padding: 0 20px;
+      margin-top: 24px;
+    }
+    .body-section:last-child { margin-bottom: 100px; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -.1px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+    .section-link {
+      font-size: 12px;
+      color: var(--red);
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: .2px;
+    }
+
+    /* ─── Quick Action Cards ──────────────────────────────────── */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .quick-card {
+      border-radius: var(--radius-md);
+      padding: 18px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .quick-card:active {
+      transform: scale(.97);
+      box-shadow: var(--shadow-md);
+    }
+
+    .quick-card.red {
+      background: linear-gradient(140deg, var(--red) 0%, var(--dark-red) 100%);
+    }
+    .quick-card.dark {
+      background: linear-gradient(140deg, #1C2B3A 0%, #0D1B2A 100%);
+    }
+    .quick-card.green {
+      background: linear-gradient(140deg, #537B35 0%, #3A5626 100%);
+    }
+    .quick-card.blue {
+      background: linear-gradient(140deg, #005F8E 0%, #003E60 100%);
+    }
+
+    .quick-card::after {
+      content: '';
+      position: absolute;
+      right: -20px; bottom: -20px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+
+    .quick-icon {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.18);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .quick-icon svg { width: 20px; height: 20px; }
+
+    .quick-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -.1px;
+    }
+    .quick-desc {
+      font-size: 10px;
+      color: rgba(255,255,255,.68);
+      line-height: 1.4;
+      letter-spacing: .1px;
+    }
+
+    /* ─── AI Assist Banner ──────────────────────────────────────── */
+    .ai-banner {
+      background: linear-gradient(135deg, #0D1B2A 0%, #112233 100%);
+      border-radius: var(--radius-md);
+      padding: 18px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .15s;
+    }
+    .ai-banner:active { transform: scale(.98); }
+
+    /* AI circuit decoration */
+    .ai-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 140px; height: 100%;
+      background: radial-gradient(ellipse at 100% 50%, rgba(0,145,205,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .ai-icon-wrap {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, rgba(0,145,205,.3) 0%, rgba(0,145,205,.1) 100%);
+      border: 1px solid rgba(0,145,205,.4);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ai-content { flex: 1; }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0,145,205,.2);
+      border: 1px solid rgba(0,145,205,.35);
+      border-radius: 20px;
+      padding: 2px 8px;
+      margin-bottom: 6px;
+    }
+    .ai-badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #0091CD;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .ai-badge-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #56A0D3;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+    .ai-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.2px;
+      margin-bottom: 4px;
+    }
+    .ai-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,.55);
+      line-height: 1.45;
+    }
+    .ai-arrow {
+      align-self: center;
+      opacity: .5;
+    }
+
+    /* ─── Recent / Knowledge Cards ──────────────────────────────── */
+    .knowledge-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .k-card {
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .k-card:hover { border-left-color: var(--red); box-shadow: var(--shadow-md); }
+    .k-card:active { transform: scale(.99); }
+
+    .k-card.urgent { border-left-color: var(--red); }
+    .k-card.caution { border-left-color: #ECB731; }
+    .k-card.info { border-left-color: var(--accent-blue); }
+
+    .k-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .k-icon.red-bg   { background: rgba(237,27,46,.1); }
+    .k-icon.gold-bg  { background: rgba(236,183,49,.12); }
+    .k-icon.blue-bg  { background: rgba(0,145,205,.1); }
+    .k-icon.green-bg { background: rgba(83,123,53,.1); }
+
+    .k-text { flex: 1; }
+    .k-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -.1px;
+      margin-bottom: 2px;
+    }
+    .k-meta {
+      font-size: 11px;
+      color: var(--mid-gray);
+      letter-spacing: .1px;
+    }
+    .k-meta span {
+      display: inline-block;
+      margin-right: 8px;
+    }
+    .k-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .k-tag.urgent { background: rgba(237,27,46,.1); color: var(--red); }
+    .k-tag.icd    { background: rgba(0,145,205,.1); color: var(--accent-blue); }
+    .k-tag.drug   { background: rgba(83,123,53,.1); color: var(--safe-green); }
+
+    /* ─── Alert / Info Strip ───────────────────────────────────── */
+    .alert-strip {
+      background: rgba(237,27,46,.06);
+      border: 1px solid rgba(237,27,46,.18);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .alert-strip svg { flex-shrink: 0; margin-top: 1px; }
+    .alert-text {
+      font-size: 12px;
+      color: var(--dark-red);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .alert-text strong { font-weight: 700; }
+
+    /* ─── Language Row ───────────────────────────────────────────── */
+    .lang-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lang-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1.5px solid var(--light-gray);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dark-gray);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      box-shadow: var(--shadow-sm);
+    }
+    .lang-chip.active {
+      border-color: var(--red);
+      background: rgba(237,27,46,.05);
+      color: var(--red);
+    }
+    .lang-chip:hover { border-color: var(--red); }
+    .lang-flag { font-size: 16px; line-height: 1; }
+
+    /* ─── Bottom Nav ─────────────────────────────────────────────── */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 82px;
+      background: var(--white);
+      border-top: 1px solid var(--light-gray);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      padding-top: 12px;
+      z-index: 10;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.07);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      flex: 1;
+      transition: opacity .15s;
+    }
+    .nav-item:active { opacity: .7; }
+    .nav-icon-wrap {
+      width: 44px; height: 32px;
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .nav-item.active .nav-icon-wrap {
+      background: rgba(237,27,46,.1);
+    }
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      letter-spacing: .3px;
+    }
+    .nav-item.active .nav-label {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    /* ─── Ripple ─────────────────────────────────────────────────── */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple-anim .5s linear;
+      background: rgba(255,255,255,.25);
+      pointer-events: none;
+    }
+    @keyframes ripple-anim {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* ─── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 430px) {
+      .shell-wrap { padding: 0; background: var(--off-white); }
+      .phone {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .phone-notch { display: none; }
+      .status-bar { padding-top: 10px; height: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell-wrap">
+  <div class="phone">
+
+    <!-- Notch -->
+    <div class="phone-notch"></div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <!-- Signal -->
+        <svg width="17" height="12" viewBox="0 0 17 12">
+          <rect x="0" y="7" width="3" height="5" rx="1" opacity=".4"/>
+          <rect x="4.5" y="5" width="3" height="7" rx="1" opacity=".6"/>
+          <rect x="9" y="3" width="3" height="9" rx="1" opacity=".8"/>
+          <rect x="13.5" y="0" width="3" height="12" rx="1"/>
+        </svg>
+        <!-- WiFi slash -->
+        <svg width="16" height="12" viewBox="0 0 16 12" opacity=".5">
+          <path d="M1 2.5 Q8 -1 15 2.5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M3 5.2 Q8 2.5 13 5.2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".6"/>
+          <circle cx="8" cy="10.5" r="1.4" fill="white"/>
+        </svg>
+        <!-- Battery -->
+        <svg width="26" height="12" viewBox="0 0 26 12">
+          <rect x="0" y="1" width="22" height="10" rx="2.5" stroke="white" stroke-width="1.3" fill="none"/>
+          <rect x="23" y="4" width="2.5" height="4" rx="1" fill="white" opacity=".6"/>
+          <rect x="1.5" y="2.5" width="17" height="7" rx="1.5" fill="white"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Scrollable Screen -->
+    <div class="screen-content">
+
+      <!-- ── Header Hero ── -->
+      <div class="header">
+        <div class="header-top">
+          <div class="logo-wrap">
+            <div class="logo-cross">
+              <!-- Red Cross SVG -->
+              <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="9" y="0" width="8" height="26" rx="2" fill="#ED1B2E"/>
+                <rect x="0" y="9" width="26" height="8" rx="2" fill="#ED1B2E"/>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <div class="app-name">HealthHelper</div>
+              <div class="app-tagline">Frontline Clinical Support</div>
+            </div>
+          </div>
+
+          <div class="offline-badge">
+            <div class="offline-dot"></div>
+            <span class="offline-label">Offline Ready</span>
+          </div>
+        </div>
+
+        <div class="greeting">
+          <div class="greeting-sub">Good morning</div>
+          <div class="greeting-main">What do you<br><span>need today?</span></div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-bar" id="searchBar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="7.5" cy="7.5" r="5.5" stroke="#9F9FA3" stroke-width="1.8"/>
+            <path d="M11.5 11.5 L16 16" stroke="#9F9FA3" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="search-bar-text">Search diagnoses, drugs, protocols…</span>
+          <span class="search-lang-pill">EN</span>
+        </div>
+      </div>
+
+      <!-- ── Alert Strip ── -->
+      <div class="body-section" style="margin-top:18px;">
+        <div class="alert-strip">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1L15 14H1L8 1Z" fill="#ED1B2E" opacity=".15" stroke="#ED1B2E" stroke-width="1.4" stroke-linejoin="round"/>
+            <rect x="7.3" y="5.5" width="1.4" height="4.5" rx=".7" fill="#7F181B"/>
+            <circle cx="8" cy="12" r=".8" fill="#7F181B"/>
+          </svg>
+          <div class="alert-text">
+            <strong>Working offline.</strong> All core features available — knowledge base, AI support, and drug references synced 2 hrs ago.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Quick Actions ── -->
+      <div class="body-section">
+        <div class="section-header">
+          <span class="section-title">Quick Actions</span>
+        </div>
+        <div class="quick-grid">
+
+          <!-- Knowledge Base -->
+          <div class="quick-card red" id="qKnowledge">
+            <div class="quick-icon">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M3 3h6v14H3zM11 3h6v14h-6z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M5 7h2M5 10h2M13 7h2M13 10h2" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="quick-label">Clinical Knowledge Base</div>
+              <div class="quick-desc">Diagnoses, treatments &amp; drug references</div>
+            </div>
+          </div>
+
+          <!-- AI Decision Support -->
+          <div class="quick-card dark" id="qAI">
+            <div class="quick-icon">
+              <svg viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7" stroke="#56A0D3" stroke-width="1.6"/>
+                <path d="M7 10h2l1-3 2 6 1-3h2" stroke="#56A0D3" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="quick-label">AI Clinical Advisor</div>
+              <div class="quick-desc">Context-aware decision support</div>
+            </div>
+          </div>
+
+          <!-- Patient Record -->
+          <div class="quick-card blue" id="qPatient">
+            <div class="quick-icon">
+              <svg viewBox="0 0 20 20" fill="none">
+                <rect x="3" y="2" width="14" height="16" rx="2" stroke="white" stroke-width="1.6"/>
+                <path d="M7 7h6M7 10h6M7 13h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="quick-label">Patient Encounter</div>
+              <div class="quick-desc">Log visit &amp; FHIR-compliant record</div>
+            </div>
+          </div>
+
+          <!-- Emergency Protocol -->
+          <div class="quick-card green" id="qProtocol">
+            <div class="quick-icon">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L3 6v5c0 4.5 3.1 7.5 7 8.5 3.9-1 7-4 7-8.5V6L10 2Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M7 10l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="quick-label">Emergency Protocols</div>
+              <div class="quick-desc">Step-by-step critical care guides</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── AI Assist Banner ── -->
+      <div class="body-section">
+        <div class="ai-banner" id="aiBanner">
+          <div class="ai-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <circle cx="13" cy="13" r="9" stroke="#0091CD" stroke-width="1.6"/>
+              <path d="M9 13.5c.5-2 1.5-3.5 4-3.5s3.5 1.5 4 3.5" stroke="#56A0D3" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="10" cy="11" r="1" fill="#56A0D3"/>
+              <circle cx="16" cy="11" r="1" fill="#56A0D3"/>
+              <path d="M9 16.5c1 1.5 2.2 2 4 2s3-0.5 4-2" stroke="#56A0D3" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M13 4v2M13 20v2M4 13h2M20 13h2" stroke="#0091CD" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="ai-content">
+            <div class="ai-badge">
+              <div class="ai-badge-dot"></div>
+              <span class="ai-badge-label">AI Ready</span>
+            </div>
+            <div class="ai-title">Ask the Clinical Advisor</div>
+            <div class="ai-sub">Specialist-grade guidance for nurses, CHWs &amp; field medics — even without connectivity.</div>
+          </div>
+          <div class="ai-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M6 4l5 5-5 5" stroke="#56A0D3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Knowledge Base ── -->
+      <div class="body-section">
+        <div class="section-header">
+          <span class="section-title">Recent &amp; Recommended</span>
+          <span class="section-link">View All</span>
+        </div>
+        <div class="knowledge-list">
+
+          <div class="k-card urgent">
+            <div class="k-icon red-bg">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7.5" stroke="#ED1B2E" stroke-width="1.5"/>
+                <path d="M10 6v4" stroke="#ED1B2E" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="10" cy="13.5" r="1" fill="#ED1B2E"/>
+              </svg>
+            </div>
+            <div class="k-text">
+              <div class="k-title">Severe Acute Malnutrition (SAM)</div>
+              <div class="k-meta">
+                <span>ICD-11: 5B51</span>
+                <span>· WHO Protocol</span>
+              </div>
+            </div>
+            <span class="k-tag urgent">Urgent</span>
+          </div>
+
+          <div class="k-card info">
+            <div class="k-icon blue-bg">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="4" y="3" width="12" height="14" rx="2" stroke="#0091CD" stroke-width="1.5"/>
+                <path d="M7 8h6M7 11h6M7 14h4" stroke="#0091CD" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="k-text">
+              <div class="k-title">Malaria — Uncomplicated (P. falciparum)</div>
+              <div class="k-meta">
+                <span>ICD-11: 1F40</span>
+                <span>· ACT Regimen</span>
+              </div>
+            </div>
+            <span class="k-tag icd">ICD</span>
+          </div>
+
+          <div class="k-card caution">
+            <div class="k-icon gold-bg">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M8 3h4v2l2 3v2H6V8l2-3V3Z" stroke="#ECB731" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M8 13v2a2 2 0 004 0v-2H8Z" stroke="#ECB731" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M7 13h6" stroke="#ECB731" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="k-text">
+              <div class="k-title">Amoxicillin — Paediatric Dosing</div>
+              <div class="k-meta">
+                <span>Antibiotic</span>
+                <span>· Weight-based</span>
+              </div>
+            </div>
+            <span class="k-tag drug">Drug</span>
+          </div>
+
+          <div class="k-card info">
+            <div class="k-icon green-bg">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 3L4 7v5c0 3.5 2.5 6 6 7 3.5-1 6-3.5 6-7V7L10 3Z" stroke="#537B35" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M7.5 10.5l2 2 3.5-3.5" stroke="#537B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="k-text">
+              <div class="k-title">Neonatal Resuscitation — Field Protocol</div>
+              <div class="k-meta">
+                <span>Emergency</span>
+                <span>· Illustrated Guide</span>
+              </div>
+            </div>
+            <span class="k-tag icd">Protocol</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Language Section ── -->
+      <div class="body-section">
+        <div class="section-header">
+          <span class="section-title">Language</span>
+          <span class="section-link">More</span>
+        </div>
+        <div class="lang-row">
+          <div class="lang-chip active" data-lang="EN">
+            <span class="lang-flag">🇬🇧</span> English
+          </div>
+          <div class="lang-chip" data-lang="FR">
+            <span class="lang-flag">🇫🇷</span> Français
+          </div>
+          <div class="lang-chip" data-lang="SW">
+            <span class="lang-flag">🇰🇪</span> Kiswahili
+          </div>
+          <div class="lang-chip" data-lang="AR">
+            <span class="lang-flag">🇸🇦</span> العربية
+          </div>
+          <div class="lang-chip" data-lang="PT">
+            <span class="lang-flag">🇧🇷</span> Português
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /screen-content -->
+
+    <!-- ── Bottom Nav ── -->
+    <nav class="bottom-nav">
+
+      <div class="nav-item active" data-tab="home">
+        <div class="nav-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M3 9.5L11 3l8 6.5V19a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5Z" fill="#ED1B2E" stroke="#ED1B2E" stroke-width="1.3" stroke-linejoin="round"/>
+            <rect x="8" y="13" width="5" height="7" rx="1" fill="white"/>
+          </svg>
+        </div>
+        <span class="nav-label">Home</span>
+      </div>
+
+      <div class="nav-item" data-tab="knowledge">
+        <div class="nav-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M4 4h6v14H4zM12 4h6v14h-6z" stroke="#9F9FA3" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M6 8h2M6 11h2M14 8h2M14 11h2" stroke="#9F9FA3" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="nav-label">Knowledge</span>
+      </div>
+
+      <div class="nav-item" data-tab="ai">
+        <div class="nav-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="8" stroke="#9F9FA3" stroke-width="1.6"/>
+            <path d="M7 12c.5-2.5 2-4 4-4s3.5 1.5 4 4" stroke="#9F9FA3" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="8.5" cy="10" r=".9" fill="#9F9FA3"/>
+            <circle cx="13.5" cy="10" r=".9" fill="#9F9FA3"/>
+          </svg>
+        </div>
+        <span class="nav-label">AI Advisor</span>
+      </div>
+
+      <div class="nav-item" data-tab="patients">
+        <div class="nav-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="9" cy="7" r="3.5" stroke="#9F9FA3" stroke-width="1.6"/>
+            <path d="M3 19c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#9F9FA3" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M17 11v6M14 14h6" stroke="#9F9FA3" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="nav-label">Patients</span>
+      </div>
+
+      <div class="nav-item" data-tab="settings">
+        <div class="nav-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="3" stroke="#9F9FA3" stroke-width="1.6"/>
+            <path d="M11 2v2M11 18v2M2 11h2M18 11h2M4.2 4.2l1.4 1.4M16.4 16.4l1.4 1.4M4.2 17.8l1.4-1.4M16.4 5.6l1.4-1.4" stroke="#9F9FA3" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="nav-label">Settings</span>
+      </div>
+
+    </nav>
+
+  </div><!-- /phone -->
+</div><!-- /shell-wrap -->
+
+<script>
+  // ── Tab navigation ──────────────────────────────────────────────
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navItems.forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // ── Language selection ──────────────────────────────────────────
+  const langChips = document.querySelectorAll('.lang-chip');
+  const searchLangPill = document.querySelector('.search-lang-pill');
+  langChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      langChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      searchLangPill.textContent = chip.dataset.lang;
+    });
+  });
+
+  // ── Ripple effect on quick cards ───────────────────────────────
+  const rippleTargets = document.querySelectorAll(
+    '.quick-card, .ai-banner, .k-card, .search-bar'
+  );
+  rippleTargets.forEach(el => {
+    el.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      const size = Math.max(rect.width, rect.height) * 2;
+      ripple.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x - size / 2}px;
+        top: ${y - size / 2}px;
+      `;
+      this.style.position = 'relative';
+      this.style.overflow = 'hidden';
+      this.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    });
+  });
+
+  // ── Search bar interaction ──────────────────────────────────────
+  const searchBar = document.getElementById('searchBar');
+  searchBar.addEventListener('click', () => {
+    const textEl = searchBar.querySelector('.search-bar-text');
+    textEl.textContent = 'Type to search…';
+    setTimeout(() => {
+      textEl.textContent = 'Search diagnoses, drugs, protocols…';
+    }, 1800);
+  });
+
+  // ── Subtle scroll shadow on header ──────────────────────────────
+  const content = document.querySelector('.screen-content');
+  const header  = document.querySelector('.header');
+  content.addEventListener('scroll', () => {
+    if (content.scrollTop > 10) {
+      header.style.boxShadow = '0 4px 20px rgba(0,0,0,.2)';
+    } else {
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>

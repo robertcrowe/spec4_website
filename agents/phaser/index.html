@@ -47,10 +47,12 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
           <div class="nav-dropdown-menu">
-            <a href="../../agents/reviewer/">Reviewer</a>
+            <a href="../../agents/codescanner/">CodeScanner</a>
             <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/designer/">Designer</a>
             <a href="../../agents/stackadvisor/">StackAdvisor</a>
             <a href="../../agents/phaser/" aria-current="page">Phaser</a>
+            <a href="../../agents/deployer/">Deployer</a>
           </div>
         </div>
         <a href="../../about/">About</a>
@@ -66,10 +68,12 @@
     <a href="../../how-it-works/">How It Works</a>
     <div class="mobile-divider"></div>
     <span class="mobile-label">Agents</span>
-    <a href="../../agents/reviewer/">Reviewer</a>
+    <a href="../../agents/codescanner/">CodeScanner</a>
     <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/designer/">Designer</a>
     <a href="../../agents/stackadvisor/">StackAdvisor</a>
     <a href="../../agents/phaser/">Phaser</a>
+    <a href="../../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="../../about/">About</a>
     <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
@@ -78,7 +82,7 @@
   <!-- Hero -->
   <div class="agent-hero-wrap">
     <div class="agent-hero">
-      <div class="agent-hero-badge">Agent 04 — Phaser</div>
+      <div class="agent-hero-badge">Agent 05 — Phaser</div>
       <h1 class="agent-hero-title">Phaser</h1>
       <p class="agent-hero-sub">Implementation plans built for first-attempt success.</p>
       <p class="agent-hero-desc">An implementation plan that's too vague leads to hallucination. One that's too large leads to failure. Phaser finds the right granularity — breaking your project into phases small enough to execute reliably, large enough to deliver meaningful progress.</p>
@@ -91,9 +95,16 @@
       <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
         <div class="screenshot-chrome">
           <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
-          <span class="chrome-title">Phaser — generating implementation phases</span>
+          <span class="chrome-title">Phaser start</span>
         </div>
-        <img src="../../screenshots/phaser.png" alt="Phaser generating implementation phases">
+        <img src="../../screenshots/Phaser_start.png" alt="Phaser beginning phase planning">
+      </div>
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:2rem auto 0">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Phaser end</span>
+        </div>
+        <img src="../../screenshots/Phaser_end.png" alt="Phaser implementation phases output">
       </div>
     </div>
   </section>
@@ -237,10 +248,12 @@
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
-          <a href="../../agents/reviewer/">Reviewer</a>
+          <a href="../../agents/codescanner/">CodeScanner</a>
           <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/designer/">Designer</a>
           <a href="../../agents/stackadvisor/">StackAdvisor</a>
           <a href="../../agents/phaser/">Phaser</a>
+          <a href="../../agents/deployer/">Deployer</a>
         </div>
         <div class="footer-column">
           <h4>Resources</h4>
@@ -256,5 +269,30 @@
   </footer>
 
   <script src="../../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/agents/phaser/",
+        "url": "https://spec4.ai/agents/phaser/",
+        "name": "Phaser — Spec4 AI",
+        "description": "Phaser breaks your project into phases small enough to execute reliably, large enough to deliver meaningful progress — designed for first-attempt success.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/agents/phaser/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/agents/phaser/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" },
+          { "@type": "ListItem", "position": 3, "name": "Phaser", "item": "https://spec4.ai/agents/phaser/" }
+        ]
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

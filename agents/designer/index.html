@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PS571XRB2G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PS571XRB2G');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Designer — Spec4 AI</title>
+  <meta name="description" content="Designer generates a self-contained HTML mock of your application's UI from your vision statement — so you have a visual target before a line of production code is written.">
+  <link rel="canonical" href="https://spec4.ai/agents/designer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spec4.ai/agents/designer/">
+  <meta property="og:site_name" content="Spec4 AI">
+  <meta property="og:title" content="Designer — Spec4 AI">
+  <meta property="og:description" content="Designer generates a self-contained HTML mock of your application's UI from your vision statement — so you have a visual target before a line of production code is written.">
+  <meta property="og:image" content="https://spec4.ai/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Designer — Spec4 AI">
+  <meta name="twitter:description" content="Designer generates a self-contained HTML mock of your application's UI from your vision statement — so you have a visual target before a line of production code is written.">
+  <meta name="twitter:image" content="https://spec4.ai/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/codescanner/">CodeScanner</a>
+            <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/designer/" aria-current="page">Designer</a>
+            <a href="../../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../../agents/phaser/">Phaser</a>
+            <a href="../../agents/deployer/">Deployer</a>
+          </div>
+        </div>
+        <a href="../../about/">About</a>
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/codescanner/">CodeScanner</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/designer/">Designer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <a href="../../agents/deployer/">Deployer</a>
+    <div class="mobile-divider"></div>
+    <a href="../../about/">About</a>
+    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 03 — Designer <span style="font-weight:400; opacity:0.6">(optional)</span></div>
+      <h1 class="agent-hero-title">Designer</h1>
+      <p class="agent-hero-sub">See it before you build it.</p>
+      <p class="agent-hero-desc">Design decisions made early are easy. Design decisions made during implementation are expensive. Designer generates a self-contained HTML mock of your application's starting screen — before a single line of production code is written.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot and Mock Button -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <a href="../../examples/mock.html" target="_blank" rel="noopener" class="btn btn-primary">See a complete design mock →</a>
+      </div>
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Designer interface</span>
+        </div>
+        <img src="../../screenshots/Designer.png" alt="Designer generating a UI mock">
+      </div>
+    </div>
+  </section>
+
+  <!-- What Designer Does -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What Designer does</h2>
+      <p class="body-text fade-in">Designer reads your vision statement and generates a complete, runnable UI mock as a single HTML file. No frameworks, no external dependencies, no CDN links — just a self-contained file you can open in any browser, share with anyone, and hand directly to your AI coding agent.</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem">
+        <div class="area-card">
+          <div class="area-title">Create from scratch</div>
+          <div class="area-desc">Reads your vision statement — project name, purpose, target audience, and key features — and generates a UI mock that fits. You provide style preferences and an optional reference screenshot to guide the look and feel.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Modify existing</div>
+          <div class="area-desc">Analyzes up to 20 of your existing UI source files and creates a mock that preserves your established look and feel, while reflecting the new features or changes you're planning.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Iterative refinement</div>
+          <div class="area-desc">Not quite right? Describe the changes you want — in plain language, with an optional reference image — and Designer regenerates. Repeat until you're satisfied.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Stays out of your stack</div>
+          <div class="area-desc">The output is pure HTML, CSS, and JavaScript in a single file. No React, no Tailwind, no build step. All CSS lives in a <code style="font-family:var(--font-mono); font-size:0.875em">&lt;style&gt;</code> block; all JS at the end of <code style="font-family:var(--font-mono); font-size:0.875em">&lt;body&gt;</code>. Zero external dependencies.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use It -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">How to use the mock</h2>
+      <p class="body-text fade-in">Designer saves the mock to <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">.spec4/design/mock.html</code> inside your project directory. Once you have it:</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem; grid-template-columns: 1fr 1fr">
+        <div class="area-card">
+          <div class="area-title">Share before you build</div>
+          <div class="area-desc">Open it in any browser. Share the file with teammates or clients for alignment before any code is written.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Inform StackAdvisor</div>
+          <div class="area-desc">StackAdvisor can reference the mock when recommending UI libraries — matching framework choices to what the design actually needs.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Ground your phases</div>
+          <div class="area-desc">Phaser references the mock when writing phase instructions, so your coding agent knows exactly what it's building toward.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Visual spec for your agent</div>
+          <div class="area-desc">Hand the mock to Claude Code, Cursor, or your tool of choice as a concrete visual target — not just a text description.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- When to Use -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">When to use Designer</h2>
+
+      <div class="use-cases fade-in">
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're building a web or mobile app and want a visual target before development starts</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You want to align with teammates or stakeholders before writing code</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You want to give your AI coding agent something concrete to build toward</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You have an existing UI and want a mock of the new version before changing production code</span>
+        </div>
+      </div>
+
+      <div class="skip-note fade-in">
+        <strong>Building a CLI, batch processor, or API-only project?</strong> 
+        You can skip Designer — no UI to mock means no mock needed.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to visualize your project?</h2>
+        <p>Open Spec4 and let Designer generate a UI mock from your vision. See what you're building before you start building it.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>Spec-driven development, from idea to implementation plan.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/codescanner/">CodeScanner</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/designer/">Designer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+          <a href="../../agents/deployer/">Deployer</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/agents/designer/",
+        "url": "https://spec4.ai/agents/designer/",
+        "name": "Designer — Spec4 AI",
+        "description": "Designer generates a self-contained HTML mock of your application's UI from your vision statement — so you have a visual target before a line of production code is written.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/agents/designer/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/agents/designer/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" },
+          { "@type": "ListItem", "position": 3, "name": "Designer", "item": "https://spec4.ai/agents/designer/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
