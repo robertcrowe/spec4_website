@@ -12,20 +12,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About — Spec4 AI</title>
-  <meta name="description" content="Spec4 AI is a project planning tool for developers who use agentic coding tools for spec-driven development.">
+  <meta name="description" content="Spec4 AI is a free, open-source planning tool that runs locally: seven specialized agents that turn your idea into a complete spec — including the AI inside your app — ready for any agentic coding tool.">
   <link rel="canonical" href="https://spec4.ai/about/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://spec4.ai/about/">
   <meta property="og:site_name" content="Spec4 AI">
   <meta property="og:title" content="About — Spec4 AI">
-  <meta property="og:description" content="Spec4 AI is a project planning tool for developers who use agentic coding tools for spec-driven development.">
+  <meta property="og:description" content="Spec4 AI is a free, open-source planning tool that runs locally: seven specialized agents that turn your idea into a complete spec — including the AI inside your app — ready for any agentic coding tool.">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
+  <meta property="og:image:alt" content="Spec4 AI — Design and deploy agentic applications">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="About — Spec4 AI">
-  <meta name="twitter:description" content="Spec4 AI is a project planning tool for developers who use agentic coding tools for spec-driven development.">
+  <meta name="twitter:description" content="Spec4 AI is a free, open-source planning tool that runs locally: seven specialized agents that turn your idea into a complete spec — including the AI inside your app — ready for any agentic coding tool.">
   <meta name="twitter:image" content="https://spec4.ai/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +49,7 @@
           <div class="nav-dropdown-menu">
             <a href="../agents/codescanner/">CodeScanner</a>
             <a href="../agents/brainstormer/">Brainstormer</a>
+            <a href="../agents/agentifier/">Agentifier</a>
             <a href="../agents/designer/">Designer</a>
             <a href="../agents/stackadvisor/">StackAdvisor</a>
             <a href="../agents/phaser/">Phaser</a>
@@ -56,7 +57,7 @@
           </div>
         </div>
         <a href="../about/" aria-current="page">About</a>
-        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+        <a href="../#get-started" class="nav-cta">Get Started →</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -70,13 +71,14 @@
     <span class="mobile-label">Agents</span>
     <a href="../agents/codescanner/">CodeScanner</a>
     <a href="../agents/brainstormer/">Brainstormer</a>
+    <a href="../agents/agentifier/">Agentifier</a>
     <a href="../agents/designer/">Designer</a>
     <a href="../agents/stackadvisor/">StackAdvisor</a>
     <a href="../agents/phaser/">Phaser</a>
     <a href="../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="../about/">About</a>
-    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+    <a href="../#get-started" class="mobile-cta">Get Started →</a>
   </div>
 
   <!-- Hero -->
@@ -91,9 +93,9 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">What Spec4 is</h2>
-      <p class="body-text fade-in">Spec4 AI is a project planning tool for developers who are already using — or planning to use — agentic coding tools for spec-driven development.</p>
-      <p class="body-text fade-in">It's built on a simple observation: the quality of what an agentic coding tool produces is almost entirely determined by the quality of the spec it's given. Vague specs produce vague code. Incomplete specs produce incomplete code. Specs that grow organically as the conversation progresses lead to drift, contradiction, and rework.</p>
-      <p class="body-text fade-in">Spec4 makes the spec the first-class artifact. Six specialized agents — each with a distinct role and a clear handoff — work together to build a spec, a UI mock, and a deployment plan that are precise, complete, and structured exactly the way a coding agent needs them.</p>
+      <p class="body-text fade-in">Spec4 AI is a project planning tool for developers who are already using — or planning to use — agentic coding tools for spec-driven development. It's a free, open-source app that runs locally on your machine: you bring your own AI provider and keys, and your code never leaves your computer.</p>
+      <p class="body-text fade-in">It's built on a simple observation: the quality of what an agentic coding tool produces is almost entirely determined by the quality of the spec it's given. Vague specs produce vague code. Incomplete specs produce incomplete code. Specs that grow organically as the conversation progresses lead to drift, contradiction, and rework. And as apps increasingly have AI inside them, the spec has to cover that too — which features use AI, how ambitious each one should be, and what it takes to run them in production.</p>
+      <p class="body-text fade-in">Spec4 makes the spec the first-class artifact. Seven specialized agents — each with a distinct role and a clear handoff — work together to build a spec that includes the AI inside your app, a UI mock, and a deployment plan: precise, complete, and structured exactly the way a coding agent needs them.</p>
     </div>
   </section>
 
@@ -119,13 +121,18 @@
             </tr>
             <tr>
               <td><a href="../agents/brainstormer/" style="color:inherit">Brainstormer</a></td>
-              <td>Collaborates on the project vision through structured dialogue</td>
-              <td>vision.json</td>
+              <td>Collaborates on the project vision through structured dialogue, with a behavioral spec per feature</td>
+              <td>vision.json + feature_specs.json</td>
+            </tr>
+            <tr>
+              <td><a href="../agents/agentifier/" style="color:inherit">Agentifier</a></td>
+              <td>Identifies AI opportunities, assigns complexity tiers, and drafts per-feature AI implementation specs</td>
+              <td>ai_features.json</td>
             </tr>
             <tr>
               <td><a href="../agents/designer/" style="color:inherit">Designer</a> <span style="color:var(--color-text-dim); font-size:0.8em">(optional)</span></td>
-              <td>Generates a self-contained HTML mock of the application UI</td>
-              <td>design/mock.html</td>
+              <td>Generates a self-contained HTML mock of the application UI from a structured design manifest</td>
+              <td>design/mock.html + design/manifest.json</td>
             </tr>
             <tr>
               <td><a href="../agents/stackadvisor/" style="color:inherit">StackAdvisor</a></td>
@@ -135,7 +142,7 @@
             <tr>
               <td><a href="../agents/phaser/" style="color:inherit">Phaser</a></td>
               <td>Breaks the build into phase-by-phase implementation prompts</td>
-              <td>phases/*.json</td>
+              <td>phases/phase&lt;N&gt;.md (phases.zip)</td>
             </tr>
             <tr>
               <td><a href="../agents/deployer/" style="color:inherit">Deployer</a></td>
@@ -164,11 +171,19 @@
         </div>
         <div class="principle-card">
           <div class="principle-title"><span class="kw">Bring your own everything.</span></div>
-          <div class="principle-body">Spec4 is provider-agnostic. Choose the AI model that fits your budget and preference. Use whatever agentic coding tool you work with. The output is plain JSON — yours to use however you like.</div>
+          <div class="principle-body">Spec4 is provider-agnostic. Choose the AI model that fits your budget and preference. Use whatever agentic coding tool you work with. The output is plain JSON and Markdown — yours to use however you like.</div>
         </div>
         <div class="principle-card">
           <div class="principle-title"><span class="kw">Downstream quality starts upstream.</span></div>
           <div class="principle-body">Each agent's output is designed to feed the next. A thorough code review leads to better stack recommendations. A complete vision leads to more accurate phases. The pipeline is only as good as each handoff.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Right-size the AI.</span></div>
+          <div class="principle-body">Not every feature needs an agent — and some don't need AI at all. Agentifier recommends the cheapest tier of complexity that genuinely does the job, and says so plainly when deterministic code is the right answer.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-title"><span class="kw">Nothing leaves your machine.</span></div>
+          <div class="principle-body">Spec4 runs locally. Your API keys live only in your browser, your artifacts save to your project directory, and there's no telemetry, no hosted service, and no account.</div>
         </div>
       </div>
     </div>
@@ -197,6 +212,10 @@
           <div class="for-dot"></div>
           <div class="for-text">You're working with a team and need a shared, documented plan before implementation begins</div>
         </div>
+        <div class="for-item">
+          <div class="for-dot"></div>
+          <div class="for-text">You're adding AI or LLM features and want them specified — tiers, evals, budgets — not improvised mid-build</div>
+        </div>
       </div>
     </div>
   </section>
@@ -205,7 +224,8 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">Open source</h2>
-      <p class="body-text fade-in">Spec4 is free to use. Source code, contribution guidelines, and the roadmap are available on GitHub.</p>
+      <p class="body-text fade-in">Spec4 is free to use, open source under the Apache 2.0 license. Source code, contribution guidelines, and the roadmap are available on GitHub — the Agentifier pattern library is a particularly good place to contribute.</p>
+      <p class="body-text fade-in" style="margin-top:1rem">Want proof it works? <a href="https://github.com/robertcrowe/BWS4" target="_blank" rel="noopener">Built with Spec4 (BWS4)</a> is a showcase of common AI application patterns, currently under construction — planned and specced with Spec4 itself.</p>
       <div style="margin-top:1.5rem" class="fade-in">
         <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-secondary">View on GitHub</a>
       </div>
@@ -216,9 +236,9 @@
     <div class="section-container">
       <div class="cta-card fade-in">
         <h2>Stop prompting. Start speccing.</h2>
-        <p>Spec4 is free to use. Bring your own AI provider and model.</p>
+        <p>Spec4 is free and open source. Bring your own AI provider and model.</p>
         <div class="cta-actions">
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../#get-started" class="btn btn-primary">Get Started →</a>
           <a href="../how-it-works/" class="btn btn-secondary">How It Works</a>
         </div>
       </div>
@@ -231,19 +251,20 @@
         <a href="../" class="nav-logo">
           <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
         </a>
-        <p>Spec-driven development, from idea to implementation plan.</p>
+        <p>From idea to agentic application — spec-driven AI development.</p>
       </div>
       <div class="footer-links">
         <div class="footer-column">
           <h4>Spec4</h4>
           <a href="../how-it-works/">How It Works</a>
           <a href="../about/">About</a>
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+          <a href="../#get-started">Get Started</a>
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
           <a href="../agents/codescanner/">CodeScanner</a>
           <a href="../agents/brainstormer/">Brainstormer</a>
+          <a href="../agents/agentifier/">Agentifier</a>
           <a href="../agents/designer/">Designer</a>
           <a href="../agents/stackadvisor/">StackAdvisor</a>
           <a href="../agents/phaser/">Phaser</a>
@@ -254,6 +275,7 @@
           <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
           <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+          <a href="https://github.com/robertcrowe/BWS4" target="_blank" rel="noopener">Built with Spec4</a>
         </div>
       </div>
     </div>
@@ -272,7 +294,7 @@
         "@id": "https://spec4.ai/about/",
         "url": "https://spec4.ai/about/",
         "name": "About — Spec4 AI",
-        "description": "Spec4 AI is a project planning tool for developers who use agentic coding tools for spec-driven development.",
+        "description": "Spec4 AI is a free, open-source planning tool that runs locally: seven specialized agents that turn your idea into a complete spec — including the AI inside your app — ready for any agentic coding tool.",
         "isPartOf": { "@id": "https://spec4.ai/" },
         "breadcrumb": { "@id": "https://spec4.ai/about/#breadcrumb" }
       },

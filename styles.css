@@ -447,6 +447,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pipeline-pill.phaser      { background: rgba(255,189,46,0.12);  border: 1px solid rgba(255,189,46,0.35);  color: #FFBD2E; }
 .pipeline-pill.deployer    { background: rgba(0,188,212,0.12);   border: 1px solid rgba(0,188,212,0.35);   color: #00BCD4; }
 .pipeline-pill.designer    { background: rgba(255,112,67,0.12);  border: 1px solid rgba(255,112,67,0.35);  color: #FF7043; }
+.pipeline-pill.agentifier  { background: rgba(171,71,188,0.12);  border: 1px solid rgba(171,71,188,0.35);  color: #CE93D8; }
 
 .pipeline-arrow { color: var(--color-text-dim); font-size: 0.875rem; user-select: none; }
 
@@ -1019,6 +1020,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .cta-actions { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; }
 
+/* ===== Built with Spec4 (BWS4) ===== */
+.bws4-card {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: var(--space-2xl); align-items: center;
+  padding: var(--space-2xl) var(--space-3xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.bws4-logo img { max-width: 100%; height: auto; display: block; }
+
+.bws4-body p {
+  font-size: 1rem; color: var(--color-text-muted);
+  line-height: 1.7; margin-bottom: var(--space-md);
+}
+.bws4-body p:last-of-type { margin-bottom: var(--space-lg); }
+
+.bws4-status {
+  display: inline-block; margin-left: var(--space-sm);
+  padding: 0.125rem 0.625rem; border-radius: 100px;
+  font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(255,189,46,0.12); border: 1px solid rgba(255,189,46,0.35); color: #FFBD2E;
+  vertical-align: middle;
+}
+
 /* ===== Footer ===== */
 .footer {
   padding: var(--space-4xl) 0 var(--space-xl);
@@ -1100,6 +1128,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .footer-brand p { margin: var(--space-md) auto 0; }
 
   .cta-card { padding: var(--space-2xl) var(--space-lg); }
+
+  .bws4-card { grid-template-columns: 1fr; text-align: center; padding: var(--space-2xl) var(--space-lg); }
+  .bws4-logo img { max-width: 200px; margin: 0 auto; }
 
   .conv-row { padding: var(--space-md) var(--space-lg); }
 

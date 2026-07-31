@@ -22,7 +22,7 @@
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
+  <meta property="og:image:alt" content="Spec4 AI — Design and deploy agentic applications">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Designer — Spec4 AI">
   <meta name="twitter:description" content="Designer generates a self-contained HTML mock of your application's UI from your vision statement — so you have a visual target before a line of production code is written.">
@@ -49,6 +49,7 @@
           <div class="nav-dropdown-menu">
             <a href="../../agents/codescanner/">CodeScanner</a>
             <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/agentifier/">Agentifier</a>
             <a href="../../agents/designer/" aria-current="page">Designer</a>
             <a href="../../agents/stackadvisor/">StackAdvisor</a>
             <a href="../../agents/phaser/">Phaser</a>
@@ -56,7 +57,7 @@
           </div>
         </div>
         <a href="../../about/">About</a>
-        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+        <a href="../../#get-started" class="nav-cta">Get Started →</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -70,19 +71,20 @@
     <span class="mobile-label">Agents</span>
     <a href="../../agents/codescanner/">CodeScanner</a>
     <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/agentifier/">Agentifier</a>
     <a href="../../agents/designer/">Designer</a>
     <a href="../../agents/stackadvisor/">StackAdvisor</a>
     <a href="../../agents/phaser/">Phaser</a>
     <a href="../../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
     <a href="../../about/">About</a>
-    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+    <a href="../../#get-started" class="mobile-cta">Get Started →</a>
   </div>
 
   <!-- Hero -->
   <div class="agent-hero-wrap">
     <div class="agent-hero">
-      <div class="agent-hero-badge">Agent 03 — Designer <span style="font-weight:400; opacity:0.6">(optional)</span></div>
+      <div class="agent-hero-badge">Agent 04 — Designer <span style="font-weight:400; opacity:0.6">(optional)</span></div>
       <h1 class="agent-hero-title">Designer</h1>
       <p class="agent-hero-sub">See it before you build it.</p>
       <p class="agent-hero-desc">Design decisions made early are easy. Design decisions made during implementation are expensive. Designer generates a self-contained HTML mock of your application's starting screen — before a single line of production code is written.</p>
@@ -109,7 +111,7 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">What Designer does</h2>
-      <p class="body-text fade-in">Designer reads your vision statement and generates a complete, runnable UI mock as a single HTML file. No frameworks, no external dependencies, no CDN links — just a self-contained file you can open in any browser, share with anyone, and hand directly to your AI coding agent.</p>
+      <p class="body-text fade-in">Designer plans before it draws. It first writes a structured design manifest — <code style="font-family:var(--font-mono); font-size:0.875em">design/manifest.json</code> — tying every screen element back to your features, including AI features rendered as real in-context interactions. Then it generates the mock from that plan: a complete, runnable UI as a single HTML file. No frameworks, no external dependencies, no CDN links — just a self-contained file you can open in any browser, share with anyone, and hand directly to your AI coding agent. Designer runs in parallel with the rest of the pipeline — start it any time after Brainstormer.</p>
 
       <div class="areas-grid fade-in" style="margin-top:1.5rem">
         <div class="area-card">
@@ -136,7 +138,7 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">How to use the mock</h2>
-      <p class="body-text fade-in">Designer saves the mock to <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">.spec4/design/mock.html</code> inside your project directory. Once you have it:</p>
+      <p class="body-text fade-in">Designer saves the mock to <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">design/mock.html</code> in the current planning round, alongside its manifest. Once you have it:</p>
 
       <div class="areas-grid fade-in" style="margin-top:1.5rem; grid-template-columns: 1fr 1fr">
         <div class="area-card">
@@ -153,7 +155,7 @@
         </div>
         <div class="area-card">
           <div class="area-title">Visual spec for your agent</div>
-          <div class="area-desc">Hand the mock to Claude Code, Cursor, or your tool of choice as a concrete visual target — not just a text description.</div>
+          <div class="area-desc">Hand the mock to Claude Code, Hermes, Kiro, Antigravity, or your tool of choice as a concrete visual target — not just a text description.</div>
         </div>
       </div>
     </div>
@@ -184,8 +186,8 @@
       </div>
 
       <div class="skip-note fade-in">
-        <strong>Building a CLI, batch processor, or API-only project?</strong> 
-        You can skip Designer — no UI to mock means no mock needed.
+        <strong>Building a CLI, batch processor, or API-only project?</strong>
+        Designer is skipped automatically — no UI to mock means no mock needed.
       </div>
     </div>
   </section>
@@ -196,7 +198,7 @@
         <h2>Ready to visualize your project?</h2>
         <p>Open Spec4 and let Designer generate a UI mock from your vision. See what you're building before you start building it.</p>
         <div class="cta-actions">
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../#get-started" class="btn btn-primary">Get Started →</a>
           <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
         </div>
       </div>
@@ -209,19 +211,20 @@
         <a href="../../" class="nav-logo">
           <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
         </a>
-        <p>Spec-driven development, from idea to implementation plan.</p>
+        <p>From idea to agentic application — spec-driven AI development.</p>
       </div>
       <div class="footer-links">
         <div class="footer-column">
           <h4>Spec4</h4>
           <a href="../../how-it-works/">How It Works</a>
           <a href="../../about/">About</a>
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+          <a href="../../#get-started">Get Started</a>
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
           <a href="../../agents/codescanner/">CodeScanner</a>
           <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/agentifier/">Agentifier</a>
           <a href="../../agents/designer/">Designer</a>
           <a href="../../agents/stackadvisor/">StackAdvisor</a>
           <a href="../../agents/phaser/">Phaser</a>
@@ -232,6 +235,7 @@
           <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
           <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+          <a href="https://github.com/robertcrowe/BWS4" target="_blank" rel="noopener">Built with Spec4</a>
         </div>
       </div>
     </div>
