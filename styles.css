@@ -989,13 +989,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .tier-table th { padding: var(--space-sm) var(--space-lg); }
 .tier-table td { padding: 0.75rem var(--space-lg); font-size: 0.9rem; line-height: 1.55; }
 .tier-table td:first-child { white-space: nowrap; }
-.tier-table .tier-num {
-  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
-  color: var(--color-text-dim); margin-right: 0.5rem;
+.tier-table td:last-child {
+  font-family: inherit; font-size: 0.9rem;
+  color: var(--color-text-muted); white-space: normal;
 }
-.tier-table td:last-child { white-space: nowrap; color: var(--color-text-muted); line-height: 1.7; }
-.tier-table .tier-cost { display: block; }
-.tier-table .tier-dot { display: none; }
 
 /* ===== For-list (About who it's for) ===== */
 .for-list { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-xl); }
@@ -1154,9 +1151,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .tier-table tr:last-child { border-bottom: none; }
   .tier-table td { display: block; border-bottom: none; padding: 0.2rem var(--space-md); white-space: normal; }
   .tier-table td:first-child { font-size: 1rem; }
-  .tier-table td:last-child { white-space: normal; font-size: 0.78rem; }
-  .tier-table .tier-cost { display: inline; }
-  .tier-table .tier-dot { display: inline; }
 }
 
 @media (max-width: 480px) {

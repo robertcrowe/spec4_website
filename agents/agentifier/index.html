@@ -143,54 +143,44 @@
             <tr>
               <th>Tier</th>
               <th>What it is — and when it's the right call</th>
-              <th>Typical cost · latency</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><span class="tier-num">1</span>Deterministic</td>
+              <td>Deterministic</td>
               <td>Not AI at all — rules, lookup tables, regex, state machines, classical algorithms. When the decision space is enumerable and the rules are stable, plain code is cheaper, faster, fully testable, and never hallucinates. It's the default the other eight tiers have to earn their way past.</td>
-              <td><span class="tier-cost">$0</span><span class="tier-dot"> · </span><span class="tier-cost">&lt;0.01&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">2</span>Embeddings</td>
+              <td>Embeddings</td>
               <td>Semantic operations without generation: text becomes vectors for nearest-neighbour search, clustering, deduplication, similarity scoring, topic routing. Stands alone whenever semantic search or grouping <em>is</em> the feature — and doubles as the retrieval half of RAG.</td>
-              <td><span class="tier-cost">$0.00001–0.001 /item</span><span class="tier-dot"> · </span><span class="tier-cost">0.05–0.5&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">3</span>Single call</td>
+              <td>Single call</td>
               <td>One prompt in, one completion out — classify, extract, summarize, draft, structured or free-form. No retrieval, no tools, no multi-step reasoning. The workhorse tier, and the right answer for a large fraction of "add AI here" features.</td>
-              <td><span class="tier-cost">$0.001–0.05</span><span class="tier-dot"> · </span><span class="tier-cost">1–5&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">4</span>RAG</td>
+              <td>RAG</td>
               <td>A single call augmented with retrieved context, generating answers grounded in your own documents. Buys two things a bare call can't: knowledge the model wasn't trained on, and citations back to a source. Retrieval plus generation — not an agent.</td>
-              <td><span class="tier-cost">$0.002–0.08</span><span class="tier-dot"> · </span><span class="tier-cost">1–6&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">5</span>Tool agent</td>
+              <td>Tool agent</td>
               <td>One call (or a short chain) with a small, fixed set of tools. The model decides whether and which tool to call — fetch data, take a bounded action — then responds. Most of Spec4's own agents live in this tier.</td>
-              <td><span class="tier-cost">$0.005–0.15</span><span class="tier-dot"> · </span><span class="tier-cost">2–15&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">6</span>Chained calls</td>
+              <td>Chained calls</td>
               <td>Multiple calls in a fixed, developer-designed sequence — extract → classify → generate — each step feeding the next. The pipeline is decided at design time, not by the model at run time: the same steps, in the same order, every time.</td>
-              <td><span class="tier-cost">$0.01–0.20</span><span class="tier-dot"> · </span><span class="tier-cost">3–20&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">7</span>Planning agent</td>
+              <td>Planning agent</td>
               <td>The model plans, executes, observes, and revises its own plan in a loop, deciding at run time what to do next. The most powerful single-agent tier — and the one where most failed agent projects live, so Agentifier pushes back hard before recommending it.</td>
-              <td><span class="tier-cost">$0.05–2.00+</span><span class="tier-dot"> · </span><span class="tier-cost">10–300&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">8</span>Orchestrated subagents</td>
+              <td>Orchestrated subagents</td>
               <td>One user-facing coordinator delegates to specialist sub-agents and synthesizes their outputs — Agentifier itself is built this way. The bar versus a single well-prompted agent is high: the split has to buy something one agent can't.</td>
-              <td><span class="tier-cost">$0.10–5.00+</span><span class="tier-dot"> · </span><span class="tier-cost">15–600&nbsp;s</span></td>
             </tr>
             <tr>
-              <td><span class="tier-num">9</span>Multi-agent collaboration</td>
+              <td>Multi-agent collaboration</td>
               <td>Autonomous peer agents — potentially across trust boundaries, vendors, or organizations — that discover, negotiate, and exchange work over a protocol like A2A. The narrowest, most expensive, most over-reached tier: justified by necessity, almost never by elegance.</td>
-              <td><span class="tier-cost">$0.20–10.00+</span><span class="tier-dot"> · </span><span class="tier-cost">30–1800&nbsp;s</span></td>
             </tr>
           </tbody>
         </table>
