@@ -188,6 +188,53 @@
     </div>
   </section>
 
+  <!-- The Mechanism Library -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">The mechanism library</h2>
+      <p class="body-text fade-in">Tiers set how much machinery a feature gets; mechanisms are the proven patterns that machinery is built from. Agentifier draws on a curated, community-contributable library of them — each with explicit guidance on when it earns its place and when it's overhead — and writes the chosen mechanisms into every feature's spec.</p>
+
+      <div class="table-wrap fade-in" style="margin-top:1.5rem">
+        <table class="pipeline-table tier-table">
+          <thead>
+            <tr>
+              <th>Mechanism</th>
+              <th>What it is — and when it's the right call</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Human in the loop</td>
+              <td>A human reviews the agent's output before it takes final effect — a gate on the action, not a co-author of every token. Done well, it puts review where mistakes are costly and confidence is low; done badly, it floods a person with rubber-stamp approvals or gates routine actions the agent gets right every time.</td>
+            </tr>
+            <tr>
+              <td>MCP</td>
+              <td>Whether to use the Model Context Protocol for tool and data access. MCP bundles two distinct decisions that must be reasoned about separately: consumption — should you reuse an existing MCP server instead of building an integration? — and exposure — should a capability you build be offered over MCP or just called directly? Conflating the two is the most common source of bad MCP decisions.</td>
+            </tr>
+            <tr>
+              <td>Parallel fan-out</td>
+              <td>Decompose a task into independent subtasks, run them concurrently, and aggregate the results. Buys wall-clock latency and sometimes quality — each branch gets a focused prompt — but only pays off when the decomposition is clean and the aggregation is cheaper than the work it combines.</td>
+            </tr>
+            <tr>
+              <td>Reflection</td>
+              <td>Generate, critique, regenerate — the agent loops over its own output, evaluating each draft (itself, or against a checker) and revising until a termination condition is met. Trades extra calls and latency for quality, and only earns its place when the critique measurably moves the output and the loop reliably terminates.</td>
+            </tr>
+            <tr>
+              <td>Retrieval + reranking</td>
+              <td>Within RAG, a second, more expensive scorer reorders first-stage retrieval candidates by true relevance before they enter the prompt. Embedding search casts a wide, recall-oriented net; the reranker reads each query–candidate pair carefully to pick the best few. Only helps when first-stage recall is good but its ordering is not.</td>
+            </tr>
+            <tr>
+              <td>Structured outputs</td>
+              <td>Schema-constrained generation: the model's output must conform to a defined structure — a JSON Schema, a Pydantic model, an enum. Downstream code gets a parseable object with known fields instead of free text, and bounding what the model can emit suppresses some classes of hallucination.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="body-text fade-in" style="margin-top:1.5rem">The pattern library ships with Spec4 and is open to contributions — if you've battle-tested a mechanism the library doesn't cover, <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">it's the best place to start contributing</a>.</p>
+    </div>
+  </section>
+
   <!-- How It Works Inside -->
   <section class="content-section">
     <div class="section-container">
