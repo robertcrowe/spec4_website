@@ -840,20 +840,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .area-title a:hover { color: var(--color-primary); }
 
 /* In-content links: visibly links, unlike chrome links which inherit */
-.body-text a, .step-body a, .area-desc a, .covers-desc a,
-.principle-body a, .for-text a, .example-followup a,
-.config-bullet-desc a, .use-case-text a, .skip-note a,
-.agent-hero-desc a, .page-hero-sub a, .bws4-body a {
+.body-text a:not(.btn), .step-body a:not(.btn), .area-desc a:not(.btn), .covers-desc a:not(.btn),
+.principle-body a:not(.btn), .for-text a:not(.btn), .example-followup a:not(.btn),
+.config-bullet-desc a:not(.btn), .use-case-text a:not(.btn), .skip-note a:not(.btn),
+.agent-hero-desc a:not(.btn), .page-hero-sub a:not(.btn), .bws4-body a:not(.btn) {
   color: var(--color-primary-light);
   text-decoration: underline;
   text-decoration-color: rgba(66,165,245,0.35);
   text-underline-offset: 3px;
   transition: color var(--transition-fast);
 }
-.body-text a:hover, .step-body a:hover, .area-desc a:hover, .covers-desc a:hover,
-.principle-body a:hover, .for-text a:hover, .example-followup a:hover,
-.config-bullet-desc a:hover, .use-case-text a:hover, .skip-note a:hover,
-.agent-hero-desc a:hover, .page-hero-sub a:hover, .bws4-body a:hover {
+.body-text a:not(.btn):hover, .step-body a:not(.btn):hover, .area-desc a:not(.btn):hover, .covers-desc a:not(.btn):hover,
+.principle-body a:not(.btn):hover, .for-text a:not(.btn):hover, .example-followup a:not(.btn):hover,
+.config-bullet-desc a:not(.btn):hover, .use-case-text a:not(.btn):hover, .skip-note a:not(.btn):hover,
+.agent-hero-desc a:not(.btn):hover, .page-hero-sub a:not(.btn):hover, .bws4-body a:not(.btn):hover {
   color: var(--color-primary);
 }
 
