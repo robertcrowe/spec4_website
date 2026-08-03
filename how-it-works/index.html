@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=3">
+  <link rel="stylesheet" href="../styles.css?v=4">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -161,7 +161,7 @@
         </div>
       </div>
 
-      <p class="body-text fade-in" style="margin-top:1.5rem">Once configured, you move through the pipeline. You can start from scratch with a new idea, begin with CodeScanner if you're planning changes to an existing project, or jump in at any agent — Spec4 tracks what each one needs.</p>
+      <p class="body-text fade-in" style="margin-top:1.5rem">Once configured, you move through the pipeline. You can start from scratch with a new idea, begin with <a href="../agents/codescanner/">CodeScanner</a> if you're planning changes to an existing project, or jump in at any agent — Spec4 tracks what each one needs.</p>
     </div>
   </section>
 
@@ -177,7 +177,7 @@
             <span class="step-optional">optional</span>
           </div>
           <h2 class="step-heading">Understand where you're starting from.</h2>
-          <p class="step-body">If you're building something new from scratch, you can skip straight to Brainstormer. But if you're extending or redesigning an existing project, CodeScanner reads your codebase and produces a structured analysis before any planning begins.</p>
+          <p class="step-body">If you're building something new from scratch, you can skip straight to <a href="../agents/brainstormer/">Brainstormer</a>. But if you're extending or redesigning an existing project, CodeScanner reads your codebase and produces a structured analysis before any planning begins.</p>
           <p class="step-body">It walks through six areas — project type, architecture, languages and frameworks, build system, coding style, and notable observations — and asks you to confirm or correct each one. The result travels with the spec through every downstream agent.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
@@ -276,7 +276,7 @@
           <p class="step-body">Designer reads your vision statement and generates a self-contained HTML
             mock of your application's look and feel — no frameworks, no build step, no external dependencies.
             Open it in any browser, share it with stakeholders, or hand it to your coding agent as a visual spec.</p>
-          <p class="step-body">Designer plans before it draws: it first writes a structured design manifest tying every screen element back to your features — including your AI features, rendered as real in-context interactions — then generates the mock from the plan. Iterative refinement is built in: describe what to change and it regenerates, guided by screenshots or reference images you like or dislike. Designer runs in parallel — start it any time after Brainstormer — and it's skipped automatically for CLI and terminal projects.</p>
+          <p class="step-body">Designer plans before it draws: it first writes a structured design manifest tying every screen element back to your features — including your AI features, rendered as real in-context interactions — then generates the mock from the plan. Iterative refinement is built in: describe what to change and it regenerates, guided by screenshots or reference images you like or dislike. Designer runs in parallel — start it any time after <a href="../agents/brainstormer/">Brainstormer</a> — and it's skipped automatically for CLI and terminal projects.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
             Output: <code>design/mock.html</code> + <code>design/manifest.json</code>
@@ -302,7 +302,7 @@
         <div class="step-content">
           <span class="step-badge">05</span>
           <h2 class="step-heading">Pick a technology stack with confidence.</h2>
-          <p class="step-body">StackAdvisor takes your vision, your AI feature specs, and your UI mock if Designer ran, and walks you through every layer of the technology decision: programming language, deployment platforms, hosting approach, libraries for each functional area, and coding style. Agentifier's tier choices shape the recommendations — a RAG feature brings a vector store into the conversation, a tool agent brings a tool harness.</p>
+          <p class="step-body">StackAdvisor takes your vision, your AI feature specs, and your UI mock if <a href="../agents/designer/">Designer</a> ran, and walks you through every layer of the technology decision: programming language, deployment platforms, hosting approach, libraries for each functional area, and coding style. <a href="../agents/agentifier/">Agentifier</a>'s tier choices shape the recommendations — a RAG feature brings a vector store into the conversation, a tool agent brings a tool harness.</p>
           <p class="step-body">For each choice, it presents ranked options with honest trade-off analysis — maintenance status, adoption, footprint, what you'd have to write yourself without it. When a code review is present, it actively flags conflicts between what you have and what you're considering. ⏩ Fast Forward is available whenever you'd rather review a complete recommendation than decide topic by topic.</p>
           <div class="step-output">
             <span class="step-output-dot"></span>
@@ -404,7 +404,7 @@
         <h2 class="section-title">Then do it again.</h2>
       </div>
 
-      <p class="body-text fade-in">A real product isn't planned once — it's planned in rounds. Every Spec4 planning round is self-contained in a versioned folder: <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">.spec4/v0/</code>, then <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">v1/</code>, then <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">v2/</code>. When your coding agent finishes the last phase of a round, it marks the round implemented — and the next Spec4 session opens a fresh round, starting with a new CodeScanner pass so planning always builds on what actually got built.</p>
+      <p class="body-text fade-in">A real product isn't planned once — it's planned in rounds. Every Spec4 planning round is self-contained in a versioned folder: <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">.spec4/v0/</code>, then <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">v1/</code>, then <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">v2/</code>. When your coding agent finishes the last phase of a round, it marks the round implemented — and the next Spec4 session opens a fresh round, starting with a new <a href="../agents/codescanner/">CodeScanner</a> pass so planning always builds on what actually got built.</p>
 
       <p class="body-text fade-in" style="margin-top:1rem">Inside a round, the Agents page keeps every artifact honest. Each agent shows its state at a glance — <strong>Start</strong>, <strong>Modify</strong>, <strong>Needs Update</strong>, <strong>Required</strong>, or <strong>Not Ready</strong> — driven by the dependency graph between artifacts. Revise your vision, and Spec4 flags exactly which downstream specs need another look. Nothing goes silently stale.</p>
 

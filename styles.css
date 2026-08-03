@@ -839,6 +839,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .area-title a { color: var(--color-primary-light); transition: color var(--transition-fast); }
 .area-title a:hover { color: var(--color-primary); }
 
+/* In-content links: visibly links, unlike chrome links which inherit */
+.body-text a, .step-body a, .area-desc a, .covers-desc a,
+.principle-body a, .for-text a, .example-followup a,
+.config-bullet-desc a, .use-case-text a, .skip-note a,
+.agent-hero-desc a, .page-hero-sub a, .bws4-body a {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-decoration-color: rgba(66,165,245,0.35);
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+.body-text a:hover, .step-body a:hover, .area-desc a:hover, .covers-desc a:hover,
+.principle-body a:hover, .for-text a:hover, .example-followup a:hover,
+.config-bullet-desc a:hover, .use-case-text a:hover, .skip-note a:hover,
+.agent-hero-desc a:hover, .page-hero-sub a:hover, .bws4-body a:hover {
+  color: var(--color-primary);
+}
+
+.area-desc a.text-link, .body-text a.text-link { text-decoration: none; }
+
 .area-desc { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; }
 
 /* ===== Covers List (StackAdvisor) ===== */
