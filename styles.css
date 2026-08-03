@@ -1047,15 +1047,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .bws4-body p:last-of-type { margin-bottom: var(--space-lg); }
 
-.bws4-status {
-  display: inline-block; margin-left: var(--space-sm);
-  padding: 0.125rem 0.625rem; border-radius: 100px;
-  font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  background: rgba(255,189,46,0.12); border: 1px solid rgba(255,189,46,0.35); color: #FFBD2E;
-  vertical-align: middle;
-}
-
 /* ===== Footer ===== */
 .footer {
   padding: var(--space-4xl) 0 var(--space-xl);
