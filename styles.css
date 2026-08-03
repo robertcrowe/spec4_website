@@ -836,6 +836,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: 1rem; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-xs);
 }
 
+.area-title a { color: var(--color-primary-light); transition: color var(--transition-fast); }
+.area-title a:hover { color: var(--color-primary); }
+
 .area-desc { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; }
 
 /* ===== Covers List (StackAdvisor) ===== */
