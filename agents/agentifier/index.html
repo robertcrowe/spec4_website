@@ -137,7 +137,7 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">The nine-tier complexity ladder</h2>
-      <p class="body-text fade-in">Not every AI feature needs an agent — and not every agent needs a team of them. Agentifier assesses each capability against a graduated ladder, drawn from a curated pattern library with per-tier cost and latency envelopes, and recommends the lowest tier that genuinely meets the need. Complexity you don't ship is complexity you don't debug, eval, or pay for.</p>
+      <p class="body-text fade-in">Not every AI feature needs an agent — and not every agent needs a team of them. Agentifier assesses each capability against a graduated ladder, drawn from a curated pattern library with per-tier cost and latency envelopes, and recommends the lowest tier that genuinely meets the need. Every AI tier has a live, runnable example on <a href="https://bw.spec4.ai" target="_blank" rel="noopener">Built with Spec4</a> — click through to see each pattern working. Complexity you don't ship is complexity you don't debug, eval, or pay for.</p>
 
       <div class="table-wrap fade-in" style="margin-top:1.5rem">
         <table class="pipeline-table tier-table">
@@ -153,35 +153,35 @@
               <td>Not AI at all — rules, lookup tables, regex, state machines, classical algorithms. When the decision space is enumerable and the rules are stable, plain code is cheaper, faster, fully testable, and never hallucinates. It's the default the other eight tiers have to earn their way past.</td>
             </tr>
             <tr>
-              <td>Embeddings</td>
+              <td>Embeddings<br><a href="https://bw.spec4.ai/embeddings" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>Semantic operations without generation: text becomes vectors for nearest-neighbour search, clustering, deduplication, similarity scoring, topic routing. Stands alone whenever semantic search or grouping <em>is</em> the feature — and doubles as the retrieval half of RAG.</td>
             </tr>
             <tr>
-              <td>Single call</td>
+              <td>Single call<br><a href="https://bw.spec4.ai/single-call" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>One prompt in, one completion out — classify, extract, summarize, draft, structured or free-form. No retrieval, no tools, no multi-step reasoning. The workhorse tier, and the right answer for a large fraction of "add AI here" features.</td>
             </tr>
             <tr>
-              <td>RAG</td>
+              <td>RAG<br><a href="https://bw.spec4.ai/rag" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>A single call augmented with retrieved context, generating answers grounded in your own documents. Buys two things a bare call can't: knowledge the model wasn't trained on, and citations back to a source. Retrieval plus generation — not an agent.</td>
             </tr>
             <tr>
-              <td>Tool agent</td>
+              <td>Tool agent<br><a href="https://bw.spec4.ai/tool-use" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>One call (or a short chain) with a small, fixed set of tools. The model decides whether and which tool to call — fetch data, take a bounded action — then responds. Most of Spec4's own agents live in this tier.</td>
             </tr>
             <tr>
-              <td>Chained calls</td>
+              <td>Chained calls<br><a href="https://bw.spec4.ai/chained-calls" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>Multiple calls in a fixed, developer-designed sequence — extract → classify → generate — each step feeding the next. The pipeline is decided at design time, not by the model at run time: the same steps, in the same order, every time.</td>
             </tr>
             <tr>
-              <td>Planning agent</td>
+              <td>Planning agent<br><a href="https://bw.spec4.ai/planning" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>The model plans, executes, observes, and revises its own plan in a loop, deciding at run time what to do next. The most powerful single-agent tier — and the one where most failed agent projects live, so Agentifier pushes back hard before recommending it.</td>
             </tr>
             <tr>
-              <td>Orchestrated subagents</td>
+              <td>Orchestrated subagents<br><a href="https://bw.spec4.ai/orchestrated" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>One user-facing coordinator delegates to specialist sub-agents and synthesizes their outputs — Agentifier itself is built this way. The bar versus a single well-prompted agent is high: the split has to buy something one agent can't.</td>
             </tr>
             <tr>
-              <td>Multi-agent collaboration</td>
+              <td>Multi-agent collaboration<br><a href="https://bw.spec4.ai/collab" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
               <td>Autonomous peer agents — potentially across trust boundaries, vendors, or organizations — that discover, negotiate, and exchange work over a protocol like A2A. The narrowest, most expensive, most over-reached tier: justified by necessity, almost never by elegance.</td>
             </tr>
           </tbody>
