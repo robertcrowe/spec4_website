@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PS571XRB2G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PS571XRB2G');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentifier — Spec4 AI</title>
+  <meta name="description" content="Agentifier identifies every AI opportunity in your vision, right-sizes each one on a nine-tier complexity ladder, and drafts a full implementation spec per feature — the AI inside your app, designed before you build.">
+  <link rel="canonical" href="https://spec4.ai/agents/agentifier/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spec4.ai/agents/agentifier/">
+  <meta property="og:site_name" content="Spec4 AI">
+  <meta property="og:title" content="Agentifier — Spec4 AI">
+  <meta property="og:description" content="Agentifier identifies every AI opportunity in your vision, right-sizes each one on a nine-tier complexity ladder, and drafts a full implementation spec per feature — the AI inside your app, designed before you build.">
+  <meta property="og:image" content="https://spec4.ai/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Spec4 AI — Design and deploy agentic applications">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agentifier — Spec4 AI">
+  <meta name="twitter:description" content="Agentifier identifies every AI opportunity in your vision, right-sizes each one on a nine-tier complexity ladder, and drafts a full implementation spec per feature — the AI inside your app, designed before you build.">
+  <meta name="twitter:image" content="https://spec4.ai/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo">
+        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../../GitHub_Invertocat_Black.png" alt="GitHub"></a>
+        <a href="../../how-it-works/">How It Works</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../agents/codescanner/">CodeScanner</a>
+            <a href="../../agents/brainstormer/">Brainstormer</a>
+            <a href="../../agents/agentifier/" aria-current="page">Agentifier</a>
+            <a href="../../agents/designer/">Designer</a>
+            <a href="../../agents/stackadvisor/">StackAdvisor</a>
+            <a href="../../agents/phaser/">Phaser</a>
+            <a href="../../agents/deployer/">Deployer</a>
+          </div>
+        </div>
+        <a href="../../bws4/">BWS4</a>
+        <a href="../../about/">About</a>
+        <a href="../../#get-started" class="nav-cta">Get Started →</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="../../how-it-works/">How It Works</a>
+    <div class="mobile-divider"></div>
+    <span class="mobile-label">Agents</span>
+    <a href="../../agents/codescanner/">CodeScanner</a>
+    <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/agentifier/">Agentifier</a>
+    <a href="../../agents/designer/">Designer</a>
+    <a href="../../agents/stackadvisor/">StackAdvisor</a>
+    <a href="../../agents/phaser/">Phaser</a>
+    <a href="../../agents/deployer/">Deployer</a>
+    <div class="mobile-divider"></div>
+    <a href="../../bws4/">BWS4</a>
+    <a href="../../about/">About</a>
+    <a href="../../#get-started" class="mobile-cta">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="agent-hero-wrap">
+    <div class="agent-hero">
+      <div class="agent-hero-badge">Agent 03 — Agentifier</div>
+      <h1 class="agent-hero-title">Agentifier</h1>
+      <p class="agent-hero-sub">Design the AI inside your app.</p>
+      <p class="agent-hero-desc">Most plans treat AI features as an afterthought — "add a chatbot" scribbled in the margin. Agentifier reads your vision, identifies every place AI can genuinely help, right-sizes each one, and drafts a full implementation spec per feature — before a line of code is written.</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <section style="padding: 0 0 4rem">
+    <div class="section-container">
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:0 auto">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Agentifier interface</span>
+        </div>
+        <img src="../../screenshots/Agentifier_panel.png" alt="Agentifier's breadth selection panel — choosing which AI features to include">
+      </div>
+    </div>
+  </section>
+
+  <!-- What Agentifier Does -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What Agentifier does</h2>
+      <p class="body-text fade-in">Agentifier turns "we should use AI somewhere" into an engineering artifact. It scans the vision and feature specs from <a href="../brainstormer/">Brainstormer</a>, surfaces every candidate AI capability, and presents them in an interactive selection panel — you choose how ambitious to be, and Agentifier keeps the selection consistent, automatically pulling in anything your choices depend on. Then it specs each selected feature in full.</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem">
+        <div class="area-card">
+          <div class="area-title">Per-feature implementation specs</div>
+          <div class="area-desc">Every AI feature gets a complete spec: what it does, its inputs and outputs, the mechanisms it uses, how to evaluate it, its failure modes, and what it depends on. Ready for StackAdvisor and Phaser to build on.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Right-sized complexity</div>
+          <div class="area-desc">Each feature is placed on a nine-tier complexity ladder — the cheapest tier that does the job, not agents-for-everything. Sometimes the right answer is deterministic code with no AI at all, and Agentifier will say so.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Proven mechanism patterns</div>
+          <div class="area-desc">Specs draw on a curated, community-contributable pattern library: human-in-the-loop, MCP, parallel fan-out, reflection, retrieval + reranking, and structured outputs.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title">Cross-cutting recommendations</div>
+          <div class="area-desc">Beyond individual features, Agentifier recommends the shared concerns of an AI-powered app: observability, evaluation cadence, provider strategy, and tool-protocol strategy.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Nine-Tier Ladder -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">The nine-tier complexity ladder</h2>
+      <p class="body-text fade-in">Not every AI feature needs an agent — and not every agent needs a team of them. Agentifier assesses each capability against a graduated ladder, drawn from a curated pattern library with per-tier cost and latency envelopes, and recommends the lowest tier that genuinely meets the need. Every AI tier has a live, runnable example on <a href="https://bw.spec4.ai" target="_blank" rel="noopener">Built with Spec4</a> — click through to see each pattern working. Complexity you don't ship is complexity you don't debug, eval, or pay for.</p>
+
+      <div class="table-wrap fade-in" style="margin-top:1.5rem">
+        <table class="pipeline-table tier-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>What it is — and when it's the right call</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Deterministic</td>
+              <td>Not AI at all — rules, lookup tables, regex, state machines, classical algorithms. When the decision space is enumerable and the rules are stable, plain code is cheaper, faster, fully testable, and never hallucinates. It's the default the other eight tiers have to earn their way past.</td>
+            </tr>
+            <tr>
+              <td>Embeddings<br><a href="https://bw.spec4.ai/embeddings" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>Semantic operations without generation: text becomes vectors for nearest-neighbour search, clustering, deduplication, similarity scoring, topic routing. Stands alone whenever semantic search or grouping <em>is</em> the feature — and doubles as the retrieval half of RAG.</td>
+            </tr>
+            <tr>
+              <td>Single call<br><a href="https://bw.spec4.ai/single-call" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>One prompt in, one completion out — classify, extract, summarize, draft, structured or free-form. No retrieval, no tools, no multi-step reasoning. The workhorse tier, and the right answer for a large fraction of "add AI here" features.</td>
+            </tr>
+            <tr>
+              <td>RAG<br><a href="https://bw.spec4.ai/rag" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>A single call augmented with retrieved context, generating answers grounded in your own documents. Buys two things a bare call can't: knowledge the model wasn't trained on, and citations back to a source. Retrieval plus generation — not an agent.</td>
+            </tr>
+            <tr>
+              <td>Tool agent<br><a href="https://bw.spec4.ai/tool-use" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>One call (or a short chain) with a small, fixed set of tools. The model decides whether and which tool to call — fetch data, take a bounded action — then responds. Most of Spec4's own agents live in this tier.</td>
+            </tr>
+            <tr>
+              <td>Chained calls<br><a href="https://bw.spec4.ai/chained-calls" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>Multiple calls in a fixed, developer-designed sequence — extract → classify → generate — each step feeding the next. The pipeline is decided at design time, not by the model at run time: the same steps, in the same order, every time.</td>
+            </tr>
+            <tr>
+              <td>Planning agent<br><a href="https://bw.spec4.ai/planning" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>The model plans, executes, observes, and revises its own plan in a loop, deciding at run time what to do next. The most powerful single-agent tier — and the one where most failed agent projects live, so Agentifier pushes back hard before recommending it.</td>
+            </tr>
+            <tr>
+              <td>Orchestrated subagents<br><a href="https://bw.spec4.ai/orchestrated" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>One user-facing coordinator delegates to specialist sub-agents and synthesizes their outputs — Agentifier itself is built this way. The bar versus a single well-prompted agent is high: the split has to buy something one agent can't.</td>
+            </tr>
+            <tr>
+              <td>Multi-agent collaboration<br><a href="https://bw.spec4.ai/collab" target="_blank" rel="noopener" class="text-link" style="font-size:0.8125rem; font-weight:500">See it live →</a></td>
+              <td>Autonomous peer agents — potentially across trust boundaries, vendors, or organizations — that discover, negotiate, and exchange work over a protocol like A2A. The narrowest, most expensive, most over-reached tier: justified by necessity, almost never by elegance.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Mechanism Library -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">The mechanism library</h2>
+      <p class="body-text fade-in">Tiers set how much machinery a feature gets; mechanisms are the proven patterns that machinery is built from. Agentifier draws on a curated, community-contributable library of them — each with explicit guidance on when it earns its place and when it's overhead — and writes the chosen mechanisms into every feature's spec.</p>
+
+      <div class="table-wrap fade-in" style="margin-top:1.5rem">
+        <table class="pipeline-table tier-table">
+          <thead>
+            <tr>
+              <th>Mechanism</th>
+              <th>What it is — and when it's the right call</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Human in the loop</td>
+              <td>A human reviews the agent's output before it takes final effect — a gate on the action, not a co-author of every token. Done well, it puts review where mistakes are costly and confidence is low; done badly, it floods a person with rubber-stamp approvals or gates routine actions the agent gets right every time.</td>
+            </tr>
+            <tr>
+              <td>MCP</td>
+              <td>Whether to use the Model Context Protocol for tool and data access. MCP bundles two distinct decisions that must be reasoned about separately: consumption — should you reuse an existing MCP server instead of building an integration? — and exposure — should a capability you build be offered over MCP or just called directly? Conflating the two is the most common source of bad MCP decisions.</td>
+            </tr>
+            <tr>
+              <td>Parallel fan-out</td>
+              <td>Decompose a task into independent subtasks, run them concurrently, and aggregate the results. Buys wall-clock latency and sometimes quality — each branch gets a focused prompt — but only pays off when the decomposition is clean and the aggregation is cheaper than the work it combines.</td>
+            </tr>
+            <tr>
+              <td>Reflection</td>
+              <td>Generate, critique, regenerate — the agent loops over its own output, evaluating each draft (itself, or against a checker) and revising until a termination condition is met. Trades extra calls and latency for quality, and only earns its place when the critique measurably moves the output and the loop reliably terminates.</td>
+            </tr>
+            <tr>
+              <td>Retrieval + reranking</td>
+              <td>Within RAG, a second, more expensive scorer reorders first-stage retrieval candidates by true relevance before they enter the prompt. Embedding search casts a wide, recall-oriented net; the reranker reads each query–candidate pair carefully to pick the best few. Only helps when first-stage recall is good but its ordering is not.</td>
+            </tr>
+            <tr>
+              <td>Structured outputs</td>
+              <td>Schema-constrained generation: the model's output must conform to a defined structure — a JSON Schema, a Pydantic model, an enum. Downstream code gets a parseable object with known fields instead of free text, and bounding what the model can emit suppresses some classes of hallucination.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="body-text fade-in" style="margin-top:1.5rem">The pattern library ships with Spec4 and is open to contributions — if you've battle-tested a mechanism the library doesn't cover, <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">it's the best place to start contributing</a>.</p>
+    </div>
+  </section>
+
+  <!-- How It Works Inside -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">How it works</h2>
+      <p class="body-text fade-in">Agentifier is itself an orchestrated team of specialists — Spec4 practicing what it preaches. A Scout surveys your vision for AI opportunities. You select the breadth you want in the interactive panel. Then a Tier Analyst right-sizes each capability, a Spec Drafter writes the per-feature specs, a Cross-Cutting Analyst covers the shared concerns, and a Prioritizer sorts everything into <code style="font-family:var(--font-mono); font-size:0.875em">steel_thread</code>, <code style="font-family:var(--font-mono); font-size:0.875em">mvp</code>, and later — so Phaser knows exactly what to build first.</p>
+      <p class="body-text fade-in">In a hurry? <strong>⏩ Fast Forward</strong> sweeps the remaining decisions with Agentifier's best recommendations, then presents the complete set for your review.</p>
+
+      <div class="screenshot-frame fade-in" style="max-width:800px; margin:2rem auto 0">
+        <div class="screenshot-chrome">
+          <span class="chrome-dot"></span><span class="chrome-dot"></span><span class="chrome-dot"></span>
+          <span class="chrome-title">Agentifier — completed feature specs</span>
+        </div>
+        <img src="../../screenshots/Agentifier_end.png" alt="Agentifier's completed AI feature specifications">
+      </div>
+    </div>
+  </section>
+
+  <!-- Downstream -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">What happens downstream</h2>
+      <p class="body-text fade-in">Agentifier saves its output as <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">ai_features.json</code> — and the rest of the pipeline builds on it:</p>
+
+      <div class="areas-grid fade-in" style="margin-top:1.5rem">
+        <div class="area-card">
+          <div class="area-title"><a href="../stackadvisor/">StackAdvisor →</a></div>
+          <div class="area-desc">Tier and mechanism choices inform the stack — vector stores for RAG, tool harnesses for agents, the right provider strategy for your budget.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title"><a href="../designer/">Designer →</a></div>
+          <div class="area-desc">AI surfaces show up in the UI mock as real in-context interactions, not a marketing grid of sparkle icons.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title"><a href="../phaser/">Phaser →</a></div>
+          <div class="area-desc">Development phases account for each AI capability explicitly — steel-thread features land first, with their infrastructure in place.</div>
+        </div>
+        <div class="area-card">
+          <div class="area-title"><a href="../deployer/">Deployer →</a></div>
+          <div class="area-desc">The deployment plan covers the AI channel: keys and secrets, observability, evals, and cost controls in production.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- When to Use -->
+  <section class="content-section">
+    <div class="section-container">
+      <h2 class="fade-in">When Agentifier earns its keep</h2>
+
+      <div class="use-cases fade-in">
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You know your app should have AI features but haven't pinned down which, where, or how complex</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You want AI features specified like engineering — inputs, outputs, evals, failure modes — not improvised mid-build</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're wary of over-building — you want the cheapest tier that works, and an honest "no AI needed" when that's the answer</span>
+        </div>
+        <div class="use-case">
+          <span class="use-case-check">✓</span>
+          <span class="use-case-text">You're adding AI to an existing product and need it to fit the features you already have</span>
+        </div>
+      </div>
+
+      <div class="skip-note fade-in">
+        <strong>Building something with no AI in it at all?</strong>
+        Agentifier still runs — quickly. It confirms that deterministic code is the right call and records the decision, so the rest of your spec is built on a deliberate choice rather than an omission.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="section-container">
+      <div class="cta-card fade-in">
+        <h2>Ready to design the AI in your app?</h2>
+        <p>Open Spec4 and let Agentifier turn "we should use AI" into a real, right-sized, build-ready specification.</p>
+        <div class="cta-actions">
+          <a href="../../#get-started" class="btn btn-primary">Get Started →</a>
+          <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo">
+          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
+        </a>
+        <p>From idea to agentic application — spec-driven AI development.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Spec4</h4>
+          <a href="../../how-it-works/">How It Works</a>
+          <a href="../../about/">About</a>
+          <a href="../../#get-started">Get Started</a>
+        </div>
+        <div class="footer-column">
+          <h4>Agents</h4>
+          <a href="../../agents/codescanner/">CodeScanner</a>
+          <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/agentifier/">Agentifier</a>
+          <a href="../../agents/designer/">Designer</a>
+          <a href="../../agents/stackadvisor/">StackAdvisor</a>
+          <a href="../../agents/phaser/">Phaser</a>
+          <a href="../../agents/deployer/">Deployer</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
+          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+          <a href="../../bws4/">Built with Spec4</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://spec4.ai/agents/agentifier/",
+        "url": "https://spec4.ai/agents/agentifier/",
+        "name": "Agentifier — Spec4 AI",
+        "description": "Agentifier identifies every AI opportunity in your vision, right-sizes each one on a nine-tier complexity ladder, and drafts a full implementation spec per feature — the AI inside your app, designed before you build.",
+        "isPartOf": { "@id": "https://spec4.ai/" },
+        "breadcrumb": { "@id": "https://spec4.ai/agents/agentifier/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://spec4.ai/agents/agentifier/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://spec4.ai/how-it-works/" },
+          { "@type": "ListItem", "position": 3, "name": "Agentifier", "item": "https://spec4.ai/agents/agentifier/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</body>
+</html>

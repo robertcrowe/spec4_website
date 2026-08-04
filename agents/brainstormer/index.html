@@ -22,7 +22,7 @@
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Spec4 AI — Spec-driven development for developers">
+  <meta property="og:image:alt" content="Spec4 AI — Design and deploy agentic applications">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Brainstormer — Spec4 AI">
   <meta name="twitter:description" content="Brainstormer turns a rough idea into a complete, well-defined vision — by asking focused questions, one at a time, and building a structured vision statement as you go.">
@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../styles.css?v=5">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -49,14 +49,16 @@
           <div class="nav-dropdown-menu">
             <a href="../../agents/codescanner/">CodeScanner</a>
             <a href="../../agents/brainstormer/" aria-current="page">Brainstormer</a>
+            <a href="../../agents/agentifier/">Agentifier</a>
             <a href="../../agents/designer/">Designer</a>
             <a href="../../agents/stackadvisor/">StackAdvisor</a>
             <a href="../../agents/phaser/">Phaser</a>
             <a href="../../agents/deployer/">Deployer</a>
           </div>
         </div>
+        <a href="../../bws4/">BWS4</a>
         <a href="../../about/">About</a>
-        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
+        <a href="../../#get-started" class="nav-cta">Get Started →</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -70,13 +72,15 @@
     <span class="mobile-label">Agents</span>
     <a href="../../agents/codescanner/">CodeScanner</a>
     <a href="../../agents/brainstormer/">Brainstormer</a>
+    <a href="../../agents/agentifier/">Agentifier</a>
     <a href="../../agents/designer/">Designer</a>
     <a href="../../agents/stackadvisor/">StackAdvisor</a>
     <a href="../../agents/phaser/">Phaser</a>
     <a href="../../agents/deployer/">Deployer</a>
     <div class="mobile-divider"></div>
+    <a href="../../bws4/">BWS4</a>
     <a href="../../about/">About</a>
-    <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="mobile-cta">Get Started →</a>
+    <a href="../../#get-started" class="mobile-cta">Get Started →</a>
   </div>
 
   <!-- Hero -->
@@ -126,7 +130,7 @@
         </div>
         <div class="area-card">
           <div class="area-title">Stays in its lane</div>
-          <div class="area-desc">Won't ask about technology, libraries, hosting, or infrastructure. Those decisions belong to StackAdvisor. Here, the focus is entirely on <em>what</em> you're building, <em>who</em> it's for, and <em>why</em> it matters.</div>
+          <div class="area-desc">Won't ask about technology, libraries, hosting, or infrastructure. Those decisions belong to <a href="../stackadvisor/">StackAdvisor</a>. Here, the focus is entirely on <em>what</em> you're building, <em>who</em> it's for, and <em>why</em> it matters.</div>
         </div>
         <div class="area-card">
           <div class="area-title">Verifies references</div>
@@ -184,7 +188,7 @@
   <section class="content-section">
     <div class="section-container">
       <h2 class="fade-in">What the vision statement includes</h2>
-      <p class="body-text fade-in">The final <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">vision_statement</code> JSON covers:</p>
+      <p class="body-text fade-in">The final <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">vision.json</code> covers:</p>
 
       <div class="areas-grid fade-in" style="margin-top:1.5rem">
         <div class="area-card">
@@ -212,6 +216,8 @@
           <div class="area-desc">Canonical URLs for every technical standard mentioned during the conversation.</div>
         </div>
       </div>
+
+      <p class="body-text fade-in" style="margin-top:2rem">Alongside the vision, Brainstormer writes <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">feature_specs.json</code> — a behavioral spec for every feature: purpose, how it's invoked, inputs, outputs, success criteria, failure modes, and dependencies, plus project-level non-functional goals. It's the specificity that lets <a href="../agentifier/">Agentifier</a>, next in the pipeline, decide which features deserve AI — and lets every downstream agent work from facts instead of summaries.</p>
     </div>
   </section>
 
@@ -221,7 +227,7 @@
         <h2>Ready to define your vision?</h2>
         <p>Open Spec4 and start a conversation with Brainstormer. Bring any idea — even a rough one.</p>
         <div class="cta-actions">
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="btn btn-primary">Get Started →</a>
+          <a href="../../#get-started" class="btn btn-primary">Get Started →</a>
           <a href="../../how-it-works/" class="btn btn-secondary">See the full pipeline</a>
         </div>
       </div>
@@ -234,19 +240,20 @@
         <a href="../../" class="nav-logo">
           <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
         </a>
-        <p>Spec-driven development, from idea to implementation plan.</p>
+        <p>From idea to agentic application — spec-driven AI development.</p>
       </div>
       <div class="footer-links">
         <div class="footer-column">
           <h4>Spec4</h4>
           <a href="../../how-it-works/">How It Works</a>
           <a href="../../about/">About</a>
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">Get Started</a>
+          <a href="../../#get-started">Get Started</a>
         </div>
         <div class="footer-column">
           <h4>Agents</h4>
           <a href="../../agents/codescanner/">CodeScanner</a>
           <a href="../../agents/brainstormer/">Brainstormer</a>
+          <a href="../../agents/agentifier/">Agentifier</a>
           <a href="../../agents/designer/">Designer</a>
           <a href="../../agents/stackadvisor/">StackAdvisor</a>
           <a href="../../agents/phaser/">Phaser</a>
@@ -257,6 +264,7 @@
           <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
           <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+          <a href="../../bws4/">Built with Spec4</a>
         </div>
       </div>
     </div>

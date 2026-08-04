@@ -447,6 +447,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pipeline-pill.phaser      { background: rgba(255,189,46,0.12);  border: 1px solid rgba(255,189,46,0.35);  color: #FFBD2E; }
 .pipeline-pill.deployer    { background: rgba(0,188,212,0.12);   border: 1px solid rgba(0,188,212,0.35);   color: #00BCD4; }
 .pipeline-pill.designer    { background: rgba(255,112,67,0.12);  border: 1px solid rgba(255,112,67,0.35);  color: #FF7043; }
+.pipeline-pill.agentifier  { background: rgba(171,71,188,0.12);  border: 1px solid rgba(171,71,188,0.35);  color: #CE93D8; }
 
 .pipeline-arrow { color: var(--color-text-dim); font-size: 0.875rem; user-select: none; }
 
@@ -835,6 +836,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: 1rem; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-xs);
 }
 
+.area-title a { color: var(--color-primary-light); transition: color var(--transition-fast); }
+.area-title a:hover { color: var(--color-primary); }
+
+/* In-content links: visibly links, unlike chrome links which inherit */
+.body-text a:not(.btn), .step-body a:not(.btn), .area-desc a:not(.btn), .covers-desc a:not(.btn),
+.principle-body a:not(.btn), .for-text a:not(.btn), .example-followup a:not(.btn),
+.config-bullet-desc a:not(.btn), .use-case-text a:not(.btn), .skip-note a:not(.btn),
+.agent-hero-desc a:not(.btn), .page-hero-sub a:not(.btn), .bws4-body a:not(.btn) {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-decoration-color: rgba(66,165,245,0.35);
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+.body-text a:not(.btn):hover, .step-body a:not(.btn):hover, .area-desc a:not(.btn):hover, .covers-desc a:not(.btn):hover,
+.principle-body a:not(.btn):hover, .for-text a:not(.btn):hover, .example-followup a:not(.btn):hover,
+.config-bullet-desc a:not(.btn):hover, .use-case-text a:not(.btn):hover, .skip-note a:not(.btn):hover,
+.agent-hero-desc a:not(.btn):hover, .page-hero-sub a:not(.btn):hover, .bws4-body a:not(.btn):hover {
+  color: var(--color-primary);
+}
+
+.area-desc a.text-link, .body-text a.text-link { text-decoration: none; }
+
 .area-desc { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; }
 
 /* ===== Covers List (StackAdvisor) ===== */
@@ -984,6 +1008,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pipeline-table td:first-child { font-weight: 600; color: var(--color-text); }
 .pipeline-table td:last-child { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-accent); }
 
+/* Compact tier ladder (Agentifier) */
+.tier-table th { padding: var(--space-sm) var(--space-lg); }
+.tier-table td { padding: 0.75rem var(--space-lg); font-size: 0.9rem; line-height: 1.55; }
+.tier-table td:first-child { white-space: nowrap; }
+.tier-table td:last-child {
+  font-family: inherit; font-size: 0.9rem;
+  color: var(--color-text-muted); white-space: normal;
+}
+
 /* ===== For-list (About who it's for) ===== */
 .for-list { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-xl); }
 
@@ -1018,6 +1051,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .cta-actions { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; }
+
+/* ===== Built with Spec4 (BWS4) ===== */
+.bws4-card {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: var(--space-2xl); align-items: center;
+  padding: var(--space-2xl) var(--space-3xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.bws4-logo img { max-width: 100%; height: auto; display: block; }
+
+.bws4-body p {
+  font-size: 1rem; color: var(--color-text-muted);
+  line-height: 1.7; margin-bottom: var(--space-md);
+}
+.bws4-body p:last-of-type { margin-bottom: var(--space-lg); }
 
 /* ===== Footer ===== */
 .footer {
@@ -1101,9 +1152,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   .cta-card { padding: var(--space-2xl) var(--space-lg); }
 
+  .bws4-card { grid-template-columns: 1fr; text-align: center; padding: var(--space-2xl) var(--space-lg); }
+  .bws4-logo img { max-width: 200px; margin: 0 auto; }
+
   .conv-row { padding: var(--space-md) var(--space-lg); }
 
   .table-wrap { overflow-x: auto; }
+
+  /* Tier ladder collapses to stacked cards on small screens */
+  .tier-table thead { display: none; }
+  .tier-table tr { display: block; padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
+  .tier-table tr:last-child { border-bottom: none; }
+  .tier-table td { display: block; border-bottom: none; padding: 0.2rem var(--space-md); white-space: normal; }
+  .tier-table td:first-child { font-size: 1rem; }
 }
 
 @media (max-width: 480px) {
