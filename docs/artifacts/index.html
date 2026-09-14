@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifacts — Spec4 docs</title>
+  <meta name="description" content="Everything Spec4 produces is a file under .spec4/ in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.">
+  <link rel="canonical" href="https://spec4.ai/docs/artifacts/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Artifacts</h1>
+
+    <hr>
+
+    <p>Everything Spec4 produces is a file under <code>.spec4/</code> in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.</p>
+
+<pre><code>.spec4/
+└── v1/                        # one directory per planning round
+    ├── code_review.json       # CodeScanner — the existing codebase, as facts with sources
+    ├── vision.json            # Brainstormer — purpose, audiences, MVP features
+    ├── feature_specs.json     # Brainstormer — a behavioral spec per MVP feature
+    ├── ai_catalog.json        # Agentifier — its recommendation and your decision, per feature
+    ├── ai_features.json       # Agentifier — where AI belongs, at what tier, built how
+    ├── design/
+    │   ├── mock.html          # Designer — a self-contained mock of the starting screen
+    │   └── manifest.json      # Designer — the design decisions the mock embodies
+    ├── stack.json             # StackAdvisor — the technology stack, with canonical doc links
+    ├── phases/                # Phaser — ordered phase files, one per implementation step
+    │   ├── phase1.md
+    │   ├── phase2.md
+    │   └── ...
+    ├── deployment-plan.md     # Deployer — infrastructure, CI/CD, config files, Terraform
+    ├── usage.json             # what each agent cost this round, per call
+    └── IMPLEMENTED            # the coding agent's marker that the round is built</code></pre>
+
+    <p>Three kinds of file, and the app's Artifacts view colours them by kind:</p>
+
+    <ul>
+      <li><strong>Prompt for the agent</strong> — <code>phases/</code>. What your coding agent is handed, one file per run.</li>
+      <li><strong>Reference for the agent</strong> — every JSON file and the mock. The decisions the coding agent grounds against; the phase files cite them by path.</li>
+      <li><strong>Record for you</strong> — <code>deployment-plan.md</code> and <code>usage.json</code>. Read by no agent.</li>
+    </ul>
+
+    <p>Every file is plain JSON, HTML, or Markdown, readable and editable by hand. A phase file reads the same to a person as to an agent.</p>
+
+    <section>
+      <h2><code>code_review.json</code></h2>
+
+      <p>Written by CodeScanner. Read by Brainstormer, Agentifier, StackAdvisor, and Phaser.</p>
+
+      <p>What is actually in the repository, as facts with provenance. CodeScanner reads the tree locally and sends the model a bounded summary — manifests, entry points, samples — and every fact it records carries a <code>source</code> (the file it was read from) or <code>inferred_from</code> (the file it was deduced from). A greenfield directory reports <code>is_software_project: false</code>.</p>
+
+      <p>From Spec4's <code>.spec4/v2/code_review.json</code>, trimmed:</p>
+
+<pre><code>{
+  "code_review": {
+    "schema_version": 1,
+    "is_software_project": true,
+    "project_type": "web application — Dash SPA implementing an AI-assisted software-planning pipeline",
+    "existing_self_description": {
+      "text": "AI-assisted software project planning — from idea to executable coding phases.",
+      "source": "README.md"
+    },
+    "architecture": {
+      "summary": "Spec4 is a Dash single-page app whose UI (layouts/, callbacks/) drives a pipeline of seven specialized LLM agents …",
+      "pattern": "layered pipeline / multi-agent orchestration",
+      "inferred_from": "src/spec4/app.py"
+    },
+    "languages": [
+      { "name": "Python", "source": "pyproject.toml" },
+      …
+    ],
+    …
+  }
+}</code></pre>
+
+      <p>Across rounds: rewritten from scratch every round. Round N's review is of the code as it stands, including what the coding agent built and whatever you changed by hand. <code>notes.change_risks</code> is where StackAdvisor is told to look before proposing a swap.</p>
+    </section>
+
+    <section>
+      <h2><code>vision.json</code></h2>
+
+      <p>Written by Brainstormer. Read by Agentifier, Designer, StackAdvisor, and Phaser.</p>
+
+      <p>What the product is and for whom: purpose, audiences, MVP features, non-functional goals. In a revision round it also carries the round's delta.</p>
+
+      <p><code>revision_history</code> accumulates one entry per revision round. The entry below is from Spec4's <code>.spec4/v2/vision.json</code>. The model writes the goal, the change lists, and the rationale; Spec4 writes <code>version</code> and <code>based_on_version</code> from the folders on disk and reconciles the change lists against the feature names in the previous implemented vision.</p>
+
+<pre><code>{
+  "version": 2,
+  "based_on_version": 1,
+  "goal": "Finish the UI rework by extending the dev-tool register to the five remaining screens (directory picker, project-mode question, setup wizard, gate card, Designer wizard), reorder the project view so agent rows lead, and add explicit per-agent reasoning-effort selection alongside per-agent model selection. After this round, future_enhancements is empty.",
+  "changes": {
+    "added": [
+      "Entry Screens Register",
+      "Setup Wizard Register",
+      "Gate Card Register",
+      "Designer Wizard Register",
+      "Per-Agent Effort"
+    ],
+    "modified": [
+      "Development Tool Shell",
+      "Round Tree",
+      "Agent Rows",
+      "Round Cost",
+      "Artifact View",
+      "Chat Frame Register",
+      "Open To The Project"
+    ],
+    "removed": []
+  },
+  "rationale": "Completes the dev-tool register rollout across every remaining screen and reorders the project view so its controls (agent rows) lead over its record (round tree); corrects existing features' dependencies to their true prior-version relationships, ensuring nothing pre-existing depends on a feature added this round; and adds a single, LiteLLM-mediated per-agent effort control alongside the existing per-agent model control."
+}</code></pre>
+
+      <p>Across rounds: a revision round's vision is the full vision as it will be after the round, never a diff, with the new <code>revision_history</code> entry appended. Every agent downstream reads the last entry as the delta it scopes to.</p>
+    </section>
+
+    <section>
+      <h2><code>feature_specs.json</code></h2>
+
+      <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and Deployer.</p>
+
+      <p>A technology-agnostic behavioural spec for every MVP feature: invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities involved. Non-functional goals get ids of the form <code>nfr_&lt;slug&gt;</code> that the stack and the phase files refer back to.</p>
+
+      <p>From Spec4's <code>.spec4/v2/feature_specs.json</code>, one feature, trimmed:</p>
+
+<pre><code>{
+  "id": "gate_card_register",
+  "name": "Gate Card Register",
+  "purpose": "Turns the shared per-agent model gate into a compact one-line panel naming the agent and its default model, with a small, clear set of choices, reused identically wherever a model must be confirmed.",
+  "invocation": {
+    "trigger": "An agent is about to run and its model has not yet been confirmed for this round."
+  },
+  "inputs": [
+    { "name": "agent_name", "type": "text", "description": "The agent the gate is confirming a model for.", "required": true },
+    { "name": "default_model", "type": "text", "description": "The model that would be used if the default is accepted.", "required": true },
+    …
+  ],
+  …
+}</code></pre>
+
+      <p>Across rounds: the whole spec is inlined into every phase file that builds the feature, so the coding agent never reads it from a pointer.</p>
+    </section>
+
+    <section>
+      <h2><code>ai_catalog.json</code> and <code>ai_features.json</code></h2>
+
+      <p>Written by Agentifier. <code>ai_features.json</code> is read by Designer, StackAdvisor, Phaser, and Deployer; <code>ai_catalog.json</code> is the record of how it was decided.</p>
+
+      <p>The catalog holds, per candidate feature, Agentifier's <code>tier_recommendation</code>, your <code>tier_decision</code>, and your <code>tier_decision_rationale</code> — empty when you took the recommendation, your words when you didn't. The reviewed artifact holds the spec the coding agent sees for each AI feature: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach.</p>
+
+      <p>Spec4's own rounds didn't run Agentifier: its AI features were built before it was mature enough to plan itself, and none of the three rounds added one. This record is from <code>.spec4/v0/ai_catalog.json</code> in the <a href="/bws4/">Built With Spec4</a> repository:</p>
+
+<pre><code>{
+  "name": "rag_example_app",
+  "tier_recommendation": "single_call",
+  "tier_decision": "rag",
+  "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is intentional despite the small dataset size."
+}</code></pre>
+
+      <p>Across rounds: a revision round carries the previous round's <code>ai_features.json</code> as reference and writes only this round's features, each stamped <code>introduced_in_version</code>, which is how Phaser tells what to plan from what already exists. ▸ Agentifier<!-- /docs/agentifier/ --></p>
+    </section>
+
+    <section>
+      <h2><code>design/mock.html</code> and <code>design/manifest.json</code></h2>
+
+      <p>Written by Designer. The manifest is read by StackAdvisor; the mock is read by Phaser and Deployer, which hand it to the coding agent by path.</p>
+
+      <p>The mock is a self-contained HTML file of the application's starting screen, drawn from the vision and AI features or captured from screenshots of what you already have. The manifest is the decisions the mock embodies: the entities the UI is built on, with their fields; the screens, each with an audience and purpose; and the surfaces — one per interactive region — with what each reads and writes, which features it implements, and an advisory ordering hint.</p>
+
+      <p>One surface from Spec4's <code>.spec4/v2/design/manifest.json</code>:</p>
+
+<pre><code>{
+  "name": "Project Mode Question",
+  "kind": "non_ai",
+  "screen": "mode-inset",
+  "implements_features": [
+    "Entry Screens Register"
+  ],
+  "inputs": [
+    "Existing project",
+    "New project"
+  ],
+  "output": "The recorded project mode for this session",
+  "states": [
+    "asked",
+    "answered"
+  ],
+  "reads": [
+    "ProjectMode",
+    "WorkingDirectory"
+  ],
+  "writes": [
+    "ProjectMode"
+  ],
+  "depends_on": [
+    "Select Directory Action"
+  ],
+  "implements_feature_ids": [
+    "entry_screens_register"
+  ]
+}</code></pre>
+
+      <p>StackAdvisor depends on the manifest and not the mock: a purely visual change can't invalidate a stack choice. Surface names and counts vary between draws; <code>implements_feature_ids</code> is the stable join, pinned by Spec4 from the feature ids.</p>
+
+      <p>Across rounds: a revision round starts from the previous round's approved mock and changes it only where the delta does. <a href="/examples/mock.html">Example mock.</a></p>
+    </section>
+
+    <section>
+      <h2><code>stack.json</code></h2>
+
+      <p>Written by StackAdvisor. Read by Phaser and Deployer.</p>
+
+      <p>The approved component list — languages, libraries, persistence, infrastructure, security, deployment targets — each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies. Phaser treats it as authoritative: a phase that needs something not in it has to ask you, and the answer is recorded here.</p>
+
+      <p>From Spec4's <code>.spec4/v2/stack.json</code>, one persistence collection:</p>
+
+<pre><code>{
+  "name": "usage_records",
+  "entities": [
+    "UsageRecord"
+  ],
+  "purpose": "per-round usage/cost rollup; deliberately excluded from the artifact dependency graph and never marked needs-update; now also the durable record of which reasoning effort was actually used per call, including fallback-from-rejected-value outcomes",
+  "physical": [
+    "usage.json, one per round, per-agent model/tokens/cost totals; each call's record now also carries an effort field, holding either the effort actually used or 'default (fallback from &lt;value&gt;)' when a rejected effort value triggered the no-effort retry"
+  ],
+  "serves_features": [
+    "round_cost",
+    "agent_rows",
+    "chat_frame_register",
+    "per_agent_effort"
+  ],
+  "satisfies_nfr": [
+    "nfr_cost_and_token_figures_stay_accurate_and_reflect_the_latest_completed_run__never_showing_an_unknown_cost_as_zero"
+  ]
+}</code></pre>
+
+      <p><code>serves_features</code> and <code>satisfies_nfr</code> are what Spec4 uses to route stack entries and non-functional goals into the phase files deterministically. A library with no <code>serves_features</code> is a project-wide staple and appears in every phase.</p>
+
+      <p>Across rounds: a revision round carries the previous round's stack forward as the baseline and records only the incremental changes.</p>
+    </section>
+
+    <section>
+      <h2><code>phases/phase{N}.md</code></h2>
+
+      <p>Written by Phaser. Read by your coding agent, one file per run, in order. Deployer reads the set.</p>
+
+      <p>Each file is JSON frontmatter — the phase as structured data, for round-tripping — followed by the same content rendered as Markdown for the coding agent: title and summary; the feature specifications this phase builds, inlined and declared authoritative; the tech stack for the phase, with the approved entries routed from <code>stack.json</code>; numbered instructions; a risk assessment; a Verification section; and references.</p>
+
+      <p>Two parts of a phase are written by Spec4, not the model. The feature-spec preamble is assembled from <code>feature_specs.json</code> and <code>ai_features.json</code>, verbatim, at every phase that touches the feature. The non-functional acceptance block is derived from <code>stack.json</code>: every goal a stack entry claims to satisfy is threaded into the Verification section of each phase whose declared work that entry serves, and goals claimed only by project-wide entries land in the final phase.</p>
+
+      <p>From Spec4's <code>.spec4/v0/phases/phase3.md</code>, the preamble:</p>
+
+<pre><code>## Feature Specifications
+
+These specifications are authoritative for this phase. Implement to them; the instructions below tell you how and in what order.
+
+### Round Tree — product feature — introduced in this phase
+
+Gives the user an at-a-glance, ordered view of every artifact in the current round and whether each is present, needs updating, or missing, so they know what to work on next.
+
+**Invocation**
+
+- Trigger: The project view loads or the active round changes
+
+**Inputs**
+
+- `current_round_artifacts` (list of items, required) — The set of artifacts belonging to the current round in pipeline order
+- `artifact_dependency_graph` (structured data, required) — Relationships used to determine whether an artifact is stale relative to its upstream artifacts
+…</code></pre>
+
+      <p>From Spec4's <code>.spec4/v2/phases/phase5.md</code>, the end of the Verification section:</p>
+
+<pre><code>… Every step shows exactly one filled-primary action in the single accent colour, with Clear saved credentials and Back as neutral outlines (nfr_a_single_accent_color_and_consistent_low_chrome_visual_language_across_every_screen__with_no_exceptions). The entered credential remains in the browser prefs store only (nfr_provider_credentials_remain_visible_only_to_the_user_s_own_browser_and_are_never_transmitted_elsewhere_or_written_to_disk).
+
+**Non-functional acceptance** (deterministic, from the stack spec):
+
+- `nfr_cost_and_token_figures_stay_accurate_and_reflect_the_latest_completed_run__never_showing_an_unknown_cost_as_zero`: Cost and token figures stay accurate and reflect the latest completed run, never showing an unknown cost as zero — delivered by usage_records</code></pre>
+
+      <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>, appended by Spec4.</p>
+
+      <p>Across rounds: each round's phases are numbered from 1 as a self-contained set. Phase 1 of a first round is a steel thread; Phase 1 of a revision is an integration thread into the existing code, and no phases are emitted for unchanged features. The first phase of Spec4's own first round is quoted in full on the <a href="/">front page</a>.</p>
+    </section>
+
+    <section>
+      <h2><code>deployment-plan.md</code></h2>
+
+      <p>Written by Deployer. Read by no agent; it's for you.</p>
+
+      <p>The plan for the whole running system: target platform, containerization, CI/CD, environment and secrets, monitoring, and — for AI features — model observability, eval cadence, and guardrails, as complete files and exact commands rather than pointers. It opens with setup instructions for the coding agent you named: how to load and execute the phase files in that agent. Deployer can also author the project's <code>README.md</code>.</p>
+
+      <p>Spec4's own rounds didn't run Deployer, since its deployment didn't change. <a href="/examples/deployment-plan.html">Example plan.</a></p>
+
+      <p>Across rounds: a revision round carries the previous plan forward and updates it for the delta; the README update, if requested, is scoped the same way.</p>
+    </section>
+
+    <section>
+      <h2><code>usage.json</code></h2>
+
+      <p>Written by Spec4 after every model call. Read by no agent, and never makes another artifact stale.</p>
+
+      <p>One record per call, filed under the agent that made it. Sub-agents file under their parent — Phaser's seam check appears as <code>phaser_seam</code> inside <code>phaser</code>. Per-agent rollups and the round <code>totals</code> are recomputed from the history on every write; re-running an agent appends, and nothing is overwritten.</p>
+
+      <p>One call and the totals, from Spec4's <code>.spec4/v2/usage.json</code>:</p>
+
+<pre><code>{
+  "timestamp": "2026-09-07T22:41:22.091465+00:00",
+  "agent": "phaser",
+  "model": "claude-opus-5",
+  "provider": "anthropic",
+  "streamed": true,
+  "duration_s": 257.6,
+  "prompt_tokens": 52643,
+  "completion_tokens": 20524,
+  "total_tokens": 73167,
+  "cached_tokens": 0,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 0,
+  "computed_cost_usd": 0.7763150000000001,
+  "usage_missing": false,
+  "error": null
+}</code></pre>
+
+<pre><code>"totals": {
+  "calls": 40,
+  "calls_missing_usage": 0,
+  "calls_missing_cost": 0,
+  "input_tokens": 975767,
+  "output_tokens": 211590,
+  "total_tokens": 1187357,
+  "cached_input_tokens": 0,
+  "computed_cost_usd": 5.880532
+}</code></pre>
+
+      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. The two capability probes the setup wizard runs are not recorded.</p>
+
+      <h3>Per agent, Spec4's three rounds</h3>
+
+      <p>Calls · tokens · cost · model, from each round's <code>usage.json</code>. Brainstormer includes its feature-speccing calls; Phaser includes the seam check.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Agent</th>
+            <th scope="col"><code>v0</code></th>
+            <th scope="col"><code>v1</code></th>
+            <th scope="col"><code>v2</code></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CodeScanner</td>
+            <td>— (ran before usage was recorded)</td>
+            <td>3 · 118k · $0.53 · <code>claude-sonnet-5</code></td>
+            <td>3 · 116k · $0.46 · <code>claude-sonnet-5</code></td>
+          </tr>
+          <tr>
+            <td>Brainstormer</td>
+            <td>16 · 253k · $0.67 · <code>claude-sonnet-5</code></td>
+            <td>4 · 66k · $0.32 · <code>claude-sonnet-5</code></td>
+            <td>27 · 485k · $1.60 · <code>claude-sonnet-5</code></td>
+          </tr>
+          <tr>
+            <td>Agentifier</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Designer</td>
+            <td>2 · 56k · $1.64 · <code>claude-fable-5-1</code></td>
+            <td>1 · 55k · $1.97 · <code>claude-fable-5-1</code></td>
+            <td>1 · 63k · $0.93 · <code>claude-opus-5</code></td>
+          </tr>
+          <tr>
+            <td>StackAdvisor</td>
+            <td>35 · 1.15M · $3.02 · <code>claude-sonnet-5</code></td>
+            <td>4 · 193k · $0.56 · <code>claude-sonnet-5</code></td>
+            <td>5 · 282k · $0.80 · <code>claude-sonnet-5</code></td>
+          </tr>
+          <tr>
+            <td>Phaser</td>
+            <td>6 · 231k · $1.72 · <code>claude-opus-5</code></td>
+            <td>4 · 189k · $1.70 · <code>claude-opus-5</code></td>
+            <td>4 · 242k · $2.09 · <code>claude-opus-5</code></td>
+          </tr>
+          <tr>
+            <td>Deployer</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>59 · 1.69M · $7.04</strong></td>
+            <td><strong>16 · 0.62M · $5.09</strong></td>
+            <td><strong>40 · 1.19M · $5.88</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>No Agentifier or Deployer calls in any round: none of the three rounds added an AI feature, and the deployment didn't change. No retries — every call has <code>error: null</code> — and no cached input. The largest line is a different agent each round: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>. Phaser is first or second every time because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model.</p>
+    </section>
+
+    <section>
+      <h2><code>IMPLEMENTED</code></h2>
+
+      <p>Written by your coding agent, as the last instruction of the last phase. Read by Spec4.</p>
+
+      <p>An empty marker. Its presence is what tells Spec4 the round is built: the project page shows CodeScanner as <strong>Required</strong> and every other agent as <strong>Not Ready</strong>, and the next round can open. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2>Pointing a coding agent at the folder</h2>
+
+      <p>Hand your coding agent one phase file at a time, in order. Each phase is self-contained: the specs it builds to are inlined, the stack entries it may use are listed, and the reference artifacts it should read are cited by path under <code>.spec4/v{N}/</code>. <code>deployment-plan.md</code> opens with instructions for loading and running the phases in the agent you named. Spec4 has no commands inside your coding agent; you hand it the files.</p>
+    </section>
+
+    <section>
+      <h2>Reading and editing by hand</h2>
+
+      <p>Every file is plain JSON, HTML, or Markdown. Edit one and the project page recomputes which downstream agents need to re-run, from the files' modification times, the next time it renders. The app's Artifacts view shows every file of every round and can download them.</p>
+    </section>
+  </main>
+</body>
+</html>

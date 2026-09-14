@@ -42,7 +42,7 @@ spec4</code></pre>
       <li><strong>Your code stays in the repo.</strong> CodeScanner reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
       <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never written to disk; never sent anywhere but the provider they belong to.</li>
       <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and reasoning effort for any agent, chosen when it starts or on a retry after a provider error.</li>
-      <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; Deployer writes the setup instructions for the agent you name. The folder is documented. ▸ Artifacts<!-- /docs/artifacts/ --></li>
+      <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; Deployer writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
       <li><strong>Apache 2.0.</strong> Free. You pay your provider, and every round records what it cost.</li>
     </ul>
 
@@ -79,7 +79,7 @@ spec4</code></pre>
     ├── usage.json             # what each agent cost this round, per call
     └── IMPLEMENTED            # the coding agent's marker that the round is built</code></pre>
 
-      <p>Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. <code>deployment-plan.md</code> and <code>usage.json</code> are a record for you. ▸ Artifacts<!-- /docs/artifacts/ --></p>
+      <p>Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. <code>deployment-plan.md</code> and <code>usage.json</code> are a record for you. <a href="/docs/artifacts/">Artifacts</a></p>
 
       <p>The phase files are the point. Each one is written for a coding agent, not for you. This is from Spec4's own repository — <code>.spec4/v0/phases/phase1.md</code>, the first phase of the round that reworked this app's UI, and the thing a coding agent is handed:</p>
 
