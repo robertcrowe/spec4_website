@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rounds — Spec4 docs</title>
+  <meta name="description" content="A round is one pass over the project. Its output is one folder — .spec4/v0/ for the first round, v1/ for the next, and so on — and every round after the first starts from the code, not from the previous plan.">
+  <link rel="canonical" href="https://spec4.ai/docs/rounds/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Rounds</h1>
+
+    <p>A round is one pass over the project. Its output is one folder — <code>.spec4/v0/</code> for the first round, <code>v1/</code> for the next, and so on — and every round after the first starts from the code, not from the previous plan.</p>
+
+    <p>A round is a feature or a rework. For a change smaller than that, don't run one.</p>
+
+    <section>
+      <h2>Starting on existing code</h2>
+
+      <p>A directory with files in it gets one question when you open it — <em>Is there an existing project here?</em> — because a <code>uv init</code> skeleton and a codebase you're modifying look the same to a file listing. <em>Existing project</em> starts the round with CodeScanner; <em>New project</em> starts with Brainstormer. You're asked again next session; the answer isn't written to disk.</p>
+
+      <p>CodeScanner reads the repository locally and sends the model a bounded summary — manifests, entry points, samples — not the tree. What comes back is <code>code_review.json</code>: architecture, stack, commands, entry points, and conventions, each as a fact with a <code>source</code> or <code>inferred_from</code>. Every later agent plans against that file rather than against what it would guess.</p>
+    </section>
+
+    <section>
+      <h2>Revision rounds</h2>
+
+      <p>A revision round is any round after one that has been implemented. Four things are different from a first round:</p>
+
+      <ul>
+        <li><strong>CodeScanner reads what was actually built — by anyone.</strong> The code review for round N is of the code as it stands, including what the coding agent did that the plan didn't say and whatever you changed yourself in between. A hotfix, a refactor, or a week of work done without Spec4 is just what the next round plans against.</li>
+        <li><strong>Brainstormer stamps a delta.</strong> <code>vision.json</code> gains a <code>revision_history</code> entry — <code>version</code>, <code>based_on_version</code>, the round's goal, the features added, modified, and removed, and the rationale — and the downstream agents scope to that delta rather than re-deriving the whole application.</li>
+        <li><strong>Phaser plans only the change.</strong> Phase 1 of a revision is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread. The new phases are numbered from 1 as a self-contained set, and no phases are emitted for established, unchanged features.</li>
+        <li><strong>The previous round is the baseline, not the input.</strong> Each of the other agents reads the delta from <code>vision.json</code> and the corresponding artifact from the latest implemented round, and works on the difference.</li>
+      </ul>
+
+      <p>What that means per agent:</p>
+
+      <ul>
+        <li><strong>Brainstormer</strong> writes the <code>revision_history</code> entry deterministically. The version numbers come from the folder on disk, not the model; the <code>added</code>, <code>modified</code>, and <code>removed</code> lists are reconciled against the feature names in the previous implemented vision, so a feature the previous round didn't have is recorded as <code>added</code> however the model labelled it, and a rename reads as remove plus add.</li>
+        <li><strong>Agentifier</strong> carries the previous round's <code>ai_features.json</code> — the AI features already built, with their cross-cutting decisions — as reference, not as this round's working artifact. Each feature it writes in a revision round carries <code>introduced_in_version</code>, which is how the agents downstream tell this round's AI work from what already exists.</li>
+        <li><strong>Designer</strong> starts from the previous round's approved <code>design/mock.html</code> and applies the revision to it, so the established look carries forward and the mock changes only where the delta does. It can also capture the look from screenshots of the running app.</li>
+        <li><strong>StackAdvisor</strong> carries the previous round's <code>stack.json</code> forward as the baseline and guides you through only the incremental changes the new or changed features require. It does not re-decide the established stack or re-run the full topic sequence.</li>
+        <li><strong>Phaser</strong> carries nothing forward: the fresh <code>code_review.json</code> describes what's built, the AI-feature context is partitioned by <code>introduced_in_version</code> so only this round's features are planned, and the coverage check after generation looks only at those.</li>
+        <li><strong>Deployer</strong> carries the previous round's <code>deployment-plan.md</code> forward when there is one, and updates it for the delta rather than re-deriving it. A deployment plan describes the whole running system, so the update is whole-system-scoped. If Deployer authors the README, a revision round scopes the update to this round's feature changes and leaves the rest of the document intact.</li>
+      </ul>
+
+      <p>In Spec4's own rounds, <code>.spec4/v2/vision.json</code> records that <code>v1</code> deferred the setup wizard, the gate card, the directory picker, and the Designer wizard, and that <code>v2</code> picked them up — a decision carried across rounds, visible in the file.</p>
+    </section>
+
+    <section>
+      <h2>Stale inputs</h2>
+
+      <p>Every artifact is dated against the ones upstream of it. The project page recomputes each agent's state from the files on disk every time it renders; nothing is cached.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Agent</th>
+            <th scope="col">Goes stale when any of these is newer than its output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Brainstormer</td>
+            <td><code>code_review.json</code></td>
+          </tr>
+          <tr>
+            <td>Agentifier</td>
+            <td><code>vision.json</code>, <code>code_review.json</code></td>
+          </tr>
+          <tr>
+            <td>Designer</td>
+            <td><code>vision.json</code>, <code>ai_features.json</code></td>
+          </tr>
+          <tr>
+            <td>StackAdvisor</td>
+            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
+          </tr>
+          <tr>
+            <td>Phaser</td>
+            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>stack.json</code>, <code>code_review.json</code>, <code>design/mock.html</code></td>
+          </tr>
+          <tr>
+            <td>Deployer</td>
+            <td><code>ai_features.json</code>, <code>stack.json</code>, <code>feature_specs.json</code>, <code>phases/</code>, <code>design/mock.html</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>CodeScanner reads the repository, not an artifact, so it has no upstream. <code>usage.json</code> is a record for you, read by no agent, and never makes anything stale.</p>
+
+      <p>StackAdvisor depends on Designer's <code>manifest.json</code> — the data model and screen structure — and not on <code>mock.html</code>: a purely visual change cannot invalidate a stack choice. The mock is Phaser's and Deployer's dependency, because they hand it to the coding agent.</p>
+
+      <p>What you see on the project page:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td>The agent's inputs exist and it hasn't produced its output yet.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>Same as Start, but this session already has an unfinished conversation with the agent.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td>The agent's output exists and is at least as new as every input it depends on.</td>
+          </tr>
+          <tr>
+            <td><strong>Needs Update</strong></td>
+            <td>The output exists, but an upstream artifact has changed since it was written.</td>
+          </tr>
+          <tr>
+            <td><strong>Not Ready</strong></td>
+            <td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td>
+          </tr>
+          <tr>
+            <td><strong>Required</strong></td>
+            <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>So if you re-run Brainstormer after StackAdvisor, the project page shows StackAdvisor as <strong>Needs Update</strong>. Re-running an agent appends to <code>usage.json</code>; nothing is overwritten.</p>
+    </section>
+
+    <section>
+      <h2><code>IMPLEMENTED</code></h2>
+
+      <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>. It is appended to the phase file by Spec4, not written by the model.</p>
+
+      <p>When your coding agent has built the phases, that marker is what tells Spec4 the round is done: the project page shows CodeScanner as <strong>Required</strong> and every other agent as <strong>Not Ready</strong>, because the next round always begins by reading what was built — even when the previous round was greenfield. Choose <em>Existing project</em> and run CodeScanner to open <code>v{N+1}/</code>.</p>
+
+      <p>The screenshot on the front page is this state: Spec4's own project page after <code>v2</code> was implemented, waiting for the re-scan.</p>
+    </section>
+
+    <section>
+      <h2>Evidence</h2>
+
+      <ul>
+        <li>Spec4's own three rounds, <code>.spec4/v0/</code> to <code>v2/</code> in the <a href="https://github.com/robertcrowe/spec4">repository</a>: the UI rework, the artifacts view and chat frame, and the remaining screens. Every phase file and every call's cost.</li>
+        <li><a href="/bws4/">Built With Spec4</a>: nine rounds on a deployed app, hand edits in between. Between its <code>v0</code> and <code>v1</code>, three things entered the codebase that no <code>v0</code> artifact mentions; <code>v1</code>'s <code>code_review.json</code> recorded all three, and later rounds' specs picked them up.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
