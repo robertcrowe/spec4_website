@@ -106,6 +106,8 @@
 
       <p>StackAdvisor depends on Designer's <code>manifest.json</code> — the data model and screen structure — and not on <code>mock.html</code>: a purely visual change cannot invalidate a stack choice. The mock is Phaser's and Deployer's dependency, because they hand it to the coding agent.</p>
 
+      <p>One exception. A newer <code>feature_specs.json</code> is caught when Deployer runs — the conversation opens with a staleness note — but not yet by the project page's button, which does not consider that file. A Deployer whose only newer input is <code>feature_specs.json</code> shows <strong>Modify</strong>, not <strong>Needs Update</strong>.</p>
+
       <p>What you see on the project page:</p>
 
       <table>
