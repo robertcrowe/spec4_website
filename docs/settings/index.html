@@ -119,7 +119,7 @@
         <li><strong>The retry.</strong> When a provider returns an error, the retry panel offers a different provider, model, and effort. What you pick becomes the agent's selection for the rest of the round.</li>
       </ul>
 
-      <p>An override holds its own key and never changes the default. Sub-agents inherit their parent's choice — Brainstormer's feature speccer runs on Brainstormer's model, Phaser's seam check on Phaser's. The status bar, the chip, and each agent's row on the project page show the selection as <code>&lt;model&gt; · &lt;effort&gt;</code>, and <code>usage.json</code> records what every call actually ran on.</p>
+      <p>An override holds its own key and never changes the default. Sub-agents inherit their parent's choice — Brainstormer's feature speccer runs on Brainstormer's model, Phaser's seam check on Phaser's. The status bar, the chip, and each agent's row on the project page show the selection as <code>&lt;model&gt; · &lt;effort&gt;</code>, or the model alone when the effort is <code>default</code>, and <code>usage.json</code> records what every call actually ran on.</p>
 
       <p>The developer picks, every time. Nothing in Spec4 routes a call to a model on its own.</p>
     </section>
