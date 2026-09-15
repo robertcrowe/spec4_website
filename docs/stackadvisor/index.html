@@ -39,22 +39,23 @@
     <section>
       <h2>Asks</h2>
 
-      <p>Seven topics, in order, one at a time, with comparisons and recommendations given for each. You aren't limited to the candidates it suggests, and you can return to any earlier topic to change a decision.</p>
+      <p>Eight topics, in order, one at a time, with comparisons and recommendations given for each. You aren't limited to the candidates it suggests, and you can return to any earlier topic to change a decision.</p>
 
       <ol>
         <li><strong>Language(s).</strong> Which, at what version, in what role — one entry per language.</li>
         <li><strong>Deployment and hosting.</strong> Every separately shipped piece is a target — a browser client and the API it calls are two — with a kind and where it runs.</li>
         <li><strong>Provider and model.</strong> Which provider serves which AI features, and the model family for each.</li>
         <li><strong>External integrations.</strong> External services the app calls, and how the app authenticates its own users — a list, since an admin console and a public read path need not share a mechanism. An app with no accounts records no <code>security</code> block; that absence is a decision, and Phaser and Deployer are told to respect it rather than re-ask.</li>
-        <li><strong>Libraries.</strong> For each functional area — database access, UI, HTTP client, validation, caching, testing, logging, error tracking — candidate libraries as numbered options, one area at a time, each with what it does for this project, how maintained and widely adopted it is, its footprint, its strengths and weaknesses against the alternatives, and how much custom code you'd write without it. You aren't limited to the candidates it suggests.  A well-chosen library is always preferred over custom code.</li>
+        <li><strong>Libraries.</strong> For each functional area — database access, UI, HTTP client, validation, caching, testing, logging, error tracking — candidate libraries as numbered options, one area at a time, each with what it does for this project, how maintained and widely adopted it is, its footprint, its strengths and weaknesses against the alternatives, and how much custom code you'd write without it. A well-chosen library is always preferred over custom code.</li>
         <li><strong>Data and persistence.</strong> Stores and collections, keyed to the entities the manifest and feature specs name.</li>
+        <li><strong>Infrastructure.</strong> Only when the AI features require it: each required substrate — an agent loop runtime, a tool-execution harness, an embedding pipeline — walked to a concrete choice, and recorded even when a library fills it.</li>
         <li><strong>Coding style and tooling.</strong> Linter, formatter, key style rules, naming conventions, type checking, and code patterns, per language, and the project structure.</li>
       </ol>
 
       <p>Four modes, chosen from what's on disk when the agent starts:</p>
 
       <ul>
-        <li><strong>Fresh start.</strong> No prior stack or code. The seven topics from the top.</li>
+        <li><strong>Fresh start.</strong> No prior stack or code. The eight topics from the top.</li>
         <li><strong>Brownfield, no stack.</strong> A code review exists. StackAdvisor describes the technology it found and offers two options: draft an initial stack from it for you to refine, or start the topic sequence fresh.</li>
         <li><strong>Update.</strong> A stack already exists this round. It's summarized; you say whether to refine it or start over.</li>
         <li><strong>Revision.</strong> A previous round is implemented. The established stack is the baseline; languages and deployment are not re-asked. StackAdvisor recommends only the additions or swaps the new or changed features require, warns about conflicts with what's there, and on confirmation writes the full updated stack, never a diff.</li>
