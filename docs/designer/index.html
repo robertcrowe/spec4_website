@@ -24,16 +24,16 @@
   <main>
     <h1>Designer</h1>
 
-    <p>Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: <code>design/mock.html</code>, which Phaser directs the coding agent to build to, and <code>design/manifest.json</code>, the design decisions the mock embodies.  The HTML only defines a look, so it can be used with any application that has a UI, including mobile.</p>
+    <p>Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: <code>design/mock.html</code>, which Phaser directs the coding agent to build to, and <code>design/manifest.json</code>, the design decisions the mock embodies. The HTML only defines a look, so it can be used with any application that has a UI, including mobile.</p>
 
     <p>It is optional, and it has no chat: it's a short wizard.</p>
 
     <section>
       <h2>Reads</h2>
 
-      <p><code>vision.json</code> and, when they exist, <code>ai_features.json</code> and <code>feature_specs.json</code> — every AI surface is drawn as a real interaction, with its inputs as controls and its output as a result. In a brownfield project, up to twenty of your existing UI source files, so the mock captures the look you already have. Reference images you upload, with a note on each about what to take or avoid. In a revision round, the previous implemented round's approved mock.</p>
+      <p><code>vision.json</code> and, when they exist, <code>ai_features.json</code> and <code>feature_specs.json</code> — every AI surface is drawn as a real interaction, with its inputs as controls and its output as a result. In a brownfield project, up to twenty of your existing UI source files, 8,000 characters of each, so the mock captures the look you already have. Reference images you upload, with a note on each about what to take or avoid. In a revision round, the previous implemented round's approved mock.</p>
 
-      <p>Reference images and screenshots need a model that accepts images; on one that doesn't, the upload step is unavailable and Designer draws from text alone.</p>
+      <p>Reference images and screenshots need a model that accepts images; on one that doesn't, upload is off and Designer draws from text alone.</p>
     </section>
 
     <section>
@@ -89,7 +89,7 @@
           </tr>
           <tr>
             <td><strong>Modify</strong></td>
-            <td><code>design/mock.html</code> exists and is newer than the vision and the AI features. Opens on the start-or-resume step.</td>
+            <td><code>design/mock.html</code> exists and is newer than the vision and the AI features. Opens on the Start / Resume step.</td>
           </tr>
           <tr>
             <td><strong>Needs Update</strong></td>
