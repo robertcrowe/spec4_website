@@ -24,14 +24,14 @@
   <main>
     <h1>Designer</h1>
 
-    <p>Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: <code>design/mock.html</code>, which Phaser directs the coding agent to build to, and <code>design/manifest.json</code>, the design decisions the mock embodies. The HTML only defines a look, so it can be used with any application that has a UI, including mobile.</p>
+    <p>Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: <a href="/docs/artifacts/"><code>design/mock.html</code></a>, which <a href="/docs/phaser/">Phaser</a> directs the coding agent to build to, and <code>design/manifest.json</code>, the design decisions the mock embodies. The HTML only defines a look, so it can be used with any application that has a UI, including mobile.</p>
 
     <p>It is optional, and it has no chat: it's a short wizard.</p>
 
     <section>
       <h2>Reads</h2>
 
-      <p><code>vision.json</code> and, when they exist, <code>ai_features.json</code> and <code>feature_specs.json</code> — every AI surface is drawn as a real interaction, with its inputs as controls and its output as a result. In a brownfield project, up to twenty of your existing UI source files, 8,000 characters of each, so the mock captures the look you already have. Reference images you upload, with a note on each about what to take or avoid. In a revision round, the previous implemented round's approved mock.</p>
+      <p><code>vision.json</code> and, when they exist, <code>ai_features.json</code> and <code>feature_specs.json</code> — every AI surface is drawn as a real interaction, with its inputs as controls and its output as a result. In a brownfield project, up to twenty of your existing UI source files, 8,000 characters of each, so the mock captures the look you already have. Reference images you upload, with a note on each about what to take or avoid. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's approved mock.</p>
 
       <p>Reference images and screenshots need a model that accepts images; on one that doesn't, upload is off and Designer draws from text alone.</p>
     </section>
@@ -61,7 +61,7 @@
 
       <p><code>design/manifest.json</code> — the plan the mock was drawn from. Designer writes the manifest first, then renders the HTML to match it: <code>entities</code>, the conceptual data the UI presents and edits, with fields; <code>screens</code>, one per audience, each with a purpose and the surfaces placed on it; and <code>surfaces</code>, one per interactive region, with what it reads and writes, its states, the features it implements, and an advisory ordering hint. Feature ids are pinned by Spec4 from the vision, so downstream agents can join a surface to its feature however the model named it.</p>
 
-      <p>The manifest is written on the first draw of a mock. Refinements change the HTML and leave it as it is; <em>Start over</em> clears both. StackAdvisor reads the manifest and not the mock: a purely visual change can't invalidate a stack choice. <a href="/docs/artifacts/">Artifacts</a></p>
+      <p>The manifest is written on the first draw of a mock. Refinements change the HTML and leave it as it is; <em>Start over</em> clears both. <a href="/docs/stackadvisor/">StackAdvisor</a> reads the manifest and not the mock: a purely visual change can't invalidate a stack choice. <a href="/docs/artifacts/">Artifacts</a></p>
 
       <p>Designer also keeps <code>design/session.json</code> — the step, your description, and the current mock — so a closed wizard resumes where it was. No agent reads it.</p>
 
@@ -102,7 +102,7 @@
         </tbody>
       </table>
 
-      <p>Designer can run any time after Brainstormer; it doesn't wait for Agentifier. Skipping it is allowed: Phaser plans without a mock and the coding agent chooses the look.</p>
+      <p>Designer can run any time after <a href="/docs/brainstormer/">Brainstormer</a>; it doesn't wait for <a href="/docs/agentifier/">Agentifier</a>. Skipping it is allowed: Phaser plans without a mock and the coding agent chooses the look.</p>
     </section>
 
     <section>

@@ -24,14 +24,14 @@
   <main>
     <h1>StackAdvisor</h1>
 
-    <p>StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes <code>stack.json</code>: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.</p>
+    <p>StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes <a href="/docs/artifacts/"><code>stack.json</code></a>: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.</p>
 
-    <p>The file is the approved component list. Phaser treats it as authoritative: a phase that needs anything not in it has to ask you first, and the answer is written back here.</p>
+    <p>The file is the approved component list. <a href="/docs/phaser/">Phaser</a> treats it as authoritative: a phase that needs anything not in it has to ask you first, and the answer is written back here.</p>
 
     <section>
       <h2>Reads</h2>
 
-      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks CodeScanner noted. In a revision round, the previous implemented round's <code>stack.json</code> as the baseline.</p>
+      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
 
       <p>Web search, if enabled, to verify a library's maintenance status and recent release activity before recommending it, and to find the canonical documentation link for each entry.</p>
     </section>
@@ -45,7 +45,7 @@
         <li><strong>Language(s).</strong> Which, at what version, in what role — one entry per language.</li>
         <li><strong>Deployment and hosting.</strong> Every separately shipped piece is a target — a browser client and the API it calls are two — with a kind and where it runs.</li>
         <li><strong>Provider and model.</strong> Which provider serves which AI features, and the model family for each.</li>
-        <li><strong>External integrations.</strong> External services the app calls, and how the app authenticates its own users — a list, since an admin console and a public read path need not share a mechanism. An app with no accounts records no <code>security</code> block; that absence is a decision, and Phaser and Deployer are told to respect it rather than re-ask.</li>
+        <li><strong>External integrations.</strong> External services the app calls, and how the app authenticates its own users — a list, since an admin console and a public read path need not share a mechanism. An app with no accounts records no <code>security</code> block; that absence is a decision, and Phaser and <a href="/docs/deployer/">Deployer</a> are told to respect it rather than re-ask.</li>
         <li><strong>Libraries.</strong> For each functional area — database access, UI, HTTP client, validation, caching, testing, logging, error tracking — candidate libraries as numbered options, one area at a time, each with what it does for this project, how maintained and widely adopted it is, its footprint, its strengths and weaknesses against the alternatives, and how much custom code you'd write without it. A well-chosen library is always preferred over custom code.</li>
         <li><strong>Data and persistence.</strong> Stores and collections, keyed to the entities the manifest and feature specs name.</li>
         <li><strong>Infrastructure.</strong> Only when the AI features require it: each required substrate — an agent loop runtime, a tool-execution harness, an embedding pipeline — walked to a concrete choice, and recorded even when a library fills it.</li>
@@ -117,7 +117,7 @@
         </tbody>
       </table>
 
-      <p>StackAdvisor depends on Designer's manifest and not the mock: a purely visual change can't invalidate a stack choice.</p>
+      <p>StackAdvisor depends on <a href="/docs/designer/">Designer</a>'s manifest and not the mock: a purely visual change can't invalidate a stack choice.</p>
     </section>
 
     <section>

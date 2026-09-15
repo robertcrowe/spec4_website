@@ -8,6 +8,9 @@
   <link rel="canonical" href="https://spec4.ai/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://spec4.ai/">
+  <meta property="og:image" content="https://spec4.ai/project.png">
+  <meta property="og:image:width" content="941">
+  <meta property="og:image:height" content="421">
   <meta property="og:title" content="From a rough idea to ordered, executable development phases — files a coding agent can build from.">
   <meta property="og:description" content="Spec4 turns an idea into a set of structured, ordered development phases — plus an optional UI mock and a deployment plan — that you hand to whichever coding agent you use. Everything it produces is a file in a .spec4/ folder inside your project. It runs on your machine, talks only to the model provider you choose, and keeps your API key in your browser.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +33,7 @@
 
     <p>Spec4 turns an idea into a set of structured, ordered development phases — plus an optional UI mock and a deployment plan — that you hand to whichever coding agent you use. Everything it produces is a file in a <code>.spec4/</code> folder inside your project. It runs on your machine, talks only to the model provider you choose, and keeps your API key in your browser.</p>
 
-    <p>It is not a coding agent. It doesn't write your application; it writes the plan your coding agent builds from — with the failure modes, acceptance criteria, and deployment configuration a production system needs, not just the happy path. And the plan is not written once: each pass over the project is a new round, planned against the code as it actually exists.</p>
+    <p>It is not a coding agent. It doesn't write your application; it writes the plan your coding agent builds from — with the failure modes, acceptance criteria, and deployment configuration a production system needs, not just the happy path. And the plan is not written once: each pass over the project is a new <a href="/docs/rounds/">round</a>, planned against the code as it actually exists.</p>
 
 <pre><code>uv tool install spec4 --refresh
 spec4</code></pre>
@@ -39,10 +42,10 @@ spec4</code></pre>
 
     <ul>
       <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
-      <li><strong>Your code stays in the repo.</strong> CodeScanner reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
+      <li><strong>Your code stays in the repo.</strong> <a href="/docs/codescanner/">CodeScanner</a> reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
       <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never written to disk; never sent anywhere but the provider they belong to.</li>
-      <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and reasoning effort for any agent, chosen when it starts or on a retry after a provider error.</li>
-      <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; Deployer writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
+      <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and <a href="/docs/settings/">reasoning effort</a> for any agent, chosen when it starts or on a retry after a provider error.</li>
+      <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; <a href="/docs/deployer/">Deployer</a> writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
       <li><strong>Apache 2.0.</strong> Free. You pay your provider, and every round records what it cost.</li>
     </ul>
 
@@ -53,7 +56,7 @@ spec4</code></pre>
 
       <figure>
         <img src="project.png" alt="Spec4's project page on its own repository" width="941" height="421">
-        <figcaption>Spec4's project page on its own repository after round <code>v2</code> was implemented: every artifact, the model that produced it, what it cost, and the next action — a re-scan, since the code has changed since the plan. Agentifier is blank because Spec4's AI features were added before it was mature enough to use on itself.</figcaption>
+        <figcaption>Spec4's project page on its own repository after round <code>v2</code> was implemented: every artifact, the model that produced it, what it cost, and the next action — a re-scan, since the code has changed since the plan. <a href="/docs/agentifier/">Agentifier</a> is blank because Spec4's AI features were added before it was mature enough to use on itself.</figcaption>
       </figure>
 
       <p>Every file of every round is readable in the app's Artifacts view.</p>
@@ -79,7 +82,7 @@ spec4</code></pre>
     ├── usage.json             # what each agent cost this round, per call
     └── IMPLEMENTED            # the coding agent's marker that the round is built</code></pre>
 
-      <p>Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. <code>deployment-plan.md</code> and <code>usage.json</code> are a record for you. <a href="/docs/artifacts/">Artifacts</a></p>
+      <p>Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. <a href="/docs/artifacts/"><code>deployment-plan.md</code></a> and <code>usage.json</code> are a record for you. <a href="/docs/artifacts/">Artifacts</a></p>
 
       <p>The phase files are the point. Each one is written for a coding agent, not for you. This is from Spec4's own repository — <code>.spec4/v0/phases/phase1.md</code>, the first phase of the round that reworked this app's UI, and the thing a coding agent is handed:</p>
 
@@ -185,13 +188,13 @@ serves HTTP on localhost:8050 only.
 
       <p><strong>CodeScanner</strong> reads an existing directory and records its architecture, stack, commands, entry points, and conventions as facts with sources, so the later agents plan against what's there rather than what they'd guess.</p>
 
-      <p><strong>Brainstormer</strong> develops the vision through focused questions — purpose, audiences, MVP features — and, on completion, derives a technology-agnostic behavioral spec for every MVP feature: inputs, outputs, success criteria, failure modes. It searches the web for the standards it names and embeds canonical documentation links.</p>
+      <p><strong><a href="/docs/brainstormer/">Brainstormer</a></strong> develops the vision through focused questions — purpose, audiences, MVP features — and, on completion, derives a technology-agnostic behavioral spec for every MVP feature: inputs, outputs, success criteria, failure modes. It searches the web for the standards it names and embeds canonical documentation links.</p>
 
       <p><strong>Agentifier</strong> looks for places in the vision where an AI feature would serve it, recommends how much AI each one needs, and drafts a spec for each feature you keep. The next section shows what it records.</p>
 
-      <p><strong>Designer</strong> generates a self-contained HTML mock of the application's starting screen from the vision and AI features — or from screenshots of what you already have. Approve it, refine it with a description of changes, or start over. Phaser directs the coding agent to build to it. <a href="/examples/mock.html">Example mock.</a></p>
+      <p><strong><a href="/docs/designer/">Designer</a></strong> generates a self-contained HTML mock of the application's starting screen from the vision and AI features — or from screenshots of what you already have. Approve it, refine it with a description of changes, or start over. <a href="/docs/phaser/">Phaser</a> directs the coding agent to build to it. <a href="/examples/mock.html">Example mock.</a></p>
 
-      <p><strong>StackAdvisor</strong> recommends a technology stack that serves the features and the AI tiers, with canonical documentation links for every library it names.</p>
+      <p><strong><a href="/docs/stackadvisor/">StackAdvisor</a></strong> recommends a technology stack that serves the features and the AI tiers, with canonical documentation links for every library it names.</p>
 
       <p><strong>Phaser</strong> turns all of it into ordered implementation phases, one file each, written for a coding agent. It treats the stack as the approved component list: a phase that needs something not in it has to ask you first, so a dependency never appears in a plan without your having said yes to it.</p>
 
@@ -356,7 +359,7 @@ spec4                              # then select the spec4 directory as the proj
 
       <p>The project page opens on the latest round with its artifacts and costs. Choose "existing project" and run CodeScanner to start a fourth.</p>
 
-      <p><a href="/bws4/">Built With Spec4</a>, a gallery of small apps at <a href="https://bw.spec4.ai">bw.spec4.ai</a>, was planned in nine rounds, hand edits in between; the history is in its repo.</p>
+      <p>Built With Spec4, a gallery of small apps at <a href="https://bw.spec4.ai">bw.spec4.ai</a>, was planned in nine rounds, hand edits in between; the history is in its repo.</p>
     </section>
   </main>
 </body>

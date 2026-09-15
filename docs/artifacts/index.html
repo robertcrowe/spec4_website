@@ -24,7 +24,7 @@
   <main>
     <h1>Artifacts</h1>
 
-    <p>Everything Spec4 produces is a file under <code>.spec4/</code> in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.</p>
+    <p>Everything Spec4 produces is a file under <code>.spec4/</code> in your project, one folder per <a href="/docs/rounds/">round</a>. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.</p>
 
 <pre><code>.spec4/
 └── v1/                        # one directory per planning round
@@ -58,7 +58,7 @@
     <section>
       <h2><code>code_review.json</code></h2>
 
-      <p>Written by CodeScanner. Read by Brainstormer, Agentifier, StackAdvisor, and Phaser.</p>
+      <p>Written by <a href="/docs/codescanner/">CodeScanner</a>. Read by <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and <a href="/docs/phaser/">Phaser</a>.</p>
 
       <p>What is actually in the repository, as facts with provenance. CodeScanner reads the tree locally and sends the model a bounded summary — manifests, entry points, samples — and every fact it records carries a <code>source</code> (the file it was read from) or <code>inferred_from</code> (the file it was deduced from). A greenfield directory reports <code>is_software_project: false</code>.</p>
 
@@ -92,7 +92,7 @@
     <section>
       <h2><code>vision.json</code></h2>
 
-      <p>Written by Brainstormer. Read by Agentifier, Designer, StackAdvisor, and Phaser.</p>
+      <p>Written by Brainstormer. Read by Agentifier, <a href="/docs/designer/">Designer</a>, StackAdvisor, and Phaser.</p>
 
       <p>What the product is and for whom: purpose, audiences, MVP features, non-functional goals. In a revision round it also carries the round's delta.</p>
 
@@ -130,7 +130,7 @@
     <section>
       <h2><code>feature_specs.json</code></h2>
 
-      <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and Deployer.</p>
+      <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and <a href="/docs/deployer/">Deployer</a>.</p>
 
       <p>A technology-agnostic behavioural spec for every MVP feature: invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities involved. Non-functional goals get ids of the form <code>nfr_&lt;slug&gt;</code> that the stack and the phase files refer back to.</p>
 
@@ -344,7 +344,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
   "computed_cost_usd": 5.880532
 }</code></pre>
 
-      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. The two capability probes the setup wizard runs are not recorded.</p>
+      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. The two capability probes the <a href="/docs/settings/">setup wizard</a> runs are not recorded.</p>
 
       <h3>Per agent, Spec4's three rounds</h3>
 

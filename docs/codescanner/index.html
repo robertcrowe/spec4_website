@@ -24,9 +24,9 @@
   <main>
     <h1>CodeScanner</h1>
 
-    <p>CodeScanner reads an existing directory and writes <code>code_review.json</code>: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.</p>
+    <p>CodeScanner reads an existing directory and writes <a href="/docs/artifacts/"><code>code_review.json</code></a>: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.</p>
 
-    <p>It is the first agent of any round on existing code, and the first agent of every round after the first.</p>
+    <p>It is the first agent of any <a href="/docs/rounds/">round</a> on existing code, and the first agent of every round after the first.</p>
 
     <section>
       <h2>Reads</h2>
@@ -85,7 +85,7 @@
         <li>Every fact carries a <code>source</code> — the file it was read from — or <code>inferred_from</code> — the file it was deduced from. A fact with neither is not written.</li>
         <li><code>commands</code> has a closed set of keys: <code>build</code>, <code>test</code>, <code>lint</code>, <code>typecheck</code>, <code>run</code>, <code>dev</code>, <code>deploy</code>. <code>entrypoints</code> likewise: <code>main</code>, <code>wsgi_app</code>, <code>cli_script</code>, <code>dev_server</code>, <code>ui_root</code>. Anything else the project has goes in <code>notes.other_notes</code> as a line of text, so a downstream agent reading <code>commands.test</code> always finds the same thing.</li>
         <li>A key the model can't verify is omitted, never filled with "none" or "n/a".</li>
-        <li><code>notes.change_risks</code> records where a change is likely to break something; StackAdvisor is told to read it before proposing a swap. <code>notes.security_observations</code> and <code>existing_self_description</code> (quoted from the README or a package description, never from a config file) are also there.</li>
+        <li><code>notes.change_risks</code> records where a change is likely to break something; <a href="/docs/stackadvisor/">StackAdvisor</a> is told to read it before proposing a swap. <code>notes.security_observations</code> and <code>existing_self_description</code> (quoted from the README or a package description, never from a config file) are also there.</li>
         <li>An empty directory, or one without code, gets <code>is_software_project: false</code> and a one-line summary.</li>
       </ul>
 
@@ -130,7 +130,7 @@
         </tbody>
       </table>
 
-      <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with Brainstormer.</p>
+      <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with <a href="/docs/brainstormer/">Brainstormer</a>.</p>
     </section>
 
     <section>

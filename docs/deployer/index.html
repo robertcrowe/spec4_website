@@ -24,12 +24,12 @@
   <main>
     <h1>Deployer</h1>
 
-    <p>Deployer is the last agent. It asks which coding agent you're using and writes <code>deployment-plan.md</code>: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's <code>README.md</code>.</p>
+    <p>Deployer is the last agent. It asks which coding agent you're using and writes <a href="/docs/artifacts/"><code>deployment-plan.md</code></a>: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's <code>README.md</code>.</p>
 
     <section>
       <h2>Reads</h2>
 
-      <p><code>stack.json</code>, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its <code>credentials_env</code>; the stores and infrastructure to provision; and the roadmap entries to record rather than build. <code>phases/</code>, for the configurations the phases will need. <code>feature_specs.json</code>, for the non-functional goals. <code>ai_features.json</code>, when it exists, for the AI channel. <code>code_review.json</code>, when it exists, for the deployment, environment variables, persistence, and auth already in place. <code>design/mock.html</code>, cited by path in the coding-agent guidance. In a revision round, the previous implemented round's <code>deployment-plan.md</code> as the baseline.</p>
+      <p><code>stack.json</code>, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its <code>credentials_env</code>; the stores and infrastructure to provision; and the roadmap entries to record rather than build. <code>phases/</code>, for the configurations the phases will need. <code>feature_specs.json</code>, for the non-functional goals. <code>ai_features.json</code>, when it exists, for the AI channel. <code>code_review.json</code>, when it exists, for the deployment, environment variables, persistence, and auth already in place. <code>design/mock.html</code>, cited by path in the coding-agent guidance. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>deployment-plan.md</code> as the baseline.</p>
 
       <p>Two absences are read as decisions, not omissions: a stack with no <code>security.auth</code> has no accounts, and one with no <code>integrations</code> calls no external services. Deployer doesn't re-ask either.</p>
 
@@ -51,7 +51,7 @@
         <li><strong>Containerization.</strong> Keep or update an existing Dockerfile if the code review found one; otherwise whether to containerize, and with what base image.</li>
         <li><strong>CI/CD.</strong> Whether to build and deploy on push, on which platform, with which stages.</li>
         <li><strong>Environment.</strong> Deployer assembles the required variables from every source in context — the code review's <code>env_vars</code>, every phase's configurations, each auth mechanism's and AI provider's <code>credentials_env</code>, and whatever the target itself requires — and presents the list for correction rather than asking cold. Names only, never values. Then how secrets are managed.</li>
-        <li><strong>Monitoring.</strong> Error tracking and metrics. When AI features exist, also model observability, eval cadence, a feedback loop, and safety guardrails — sized to the tiers in use, so a single low-tier feature gets lightweight error tracking and a <code>rag</code> or <code>tool_agent</code> feature justifies evals.</li>
+        <li><strong>Monitoring.</strong> Error tracking and metrics. When AI features exist, also model observability, eval cadence, a feedback loop, and safety guardrails — sized to the tiers in use, so a single low-tier feature gets lightweight error tracking and a <a href="/docs/agentifier/"><code>rag</code></a> or <code>tool_agent</code> feature justifies evals.</li>
         <li><strong>Terraform.</strong> Cloud targets only. Whether you want the infrastructure provisioned as <code>.tf</code> files, and what that would cover.</li>
       </ol>
 

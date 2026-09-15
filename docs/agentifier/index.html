@@ -24,9 +24,9 @@
   <main>
     <h1>Agentifier</h1>
 
-    <p>Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to <code>ai_catalog.json</code>, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to <code>ai_features.json</code>.</p>
+    <p>Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to <a href="/docs/artifacts/"><code>ai_catalog.json</code></a>, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to <code>ai_features.json</code>.</p>
 
-    <p>It is optional. Spec4's own three rounds didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.</p>
+    <p>It is optional. Spec4's own three <a href="/docs/rounds/">rounds</a> didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.</p>
 
     <section>
       <h2>The ladder</h2>
@@ -191,7 +191,7 @@
 
       <p>The tool argued against the agent; the developer decided; the file records both.</p>
 
-      <p><code>ai_features.json</code> — for each feature you kept, the spec the coding agent will see: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach; the mechanisms chosen; the infrastructure the tier implies, added deterministically from the pattern file's <code>required_infrastructure</code> (an <code>embeddings</code> feature brings an <code>embedding_pipeline</code> and a <code>vector_index</code>; <code>rag</code> adds a <code>chunking_pipeline</code> and a <code>retriever</code>; shared components appear once); the cross-cutting decisions — provider and model access, tool protocol, prompt versioning — for the project; and a priority order. Phaser inlines each spec, verbatim, into every phase that builds the feature. <a href="/docs/artifacts/">Artifacts</a></p>
+      <p><code>ai_features.json</code> — for each feature you kept, the spec the coding agent will see: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach; the mechanisms chosen; the infrastructure the tier implies, added deterministically from the pattern file's <code>required_infrastructure</code> (an <code>embeddings</code> feature brings an <code>embedding_pipeline</code> and a <code>vector_index</code>; <code>rag</code> adds a <code>chunking_pipeline</code> and a <code>retriever</code>; shared components appear once); the cross-cutting decisions — provider and model access, tool protocol, prompt versioning — for the project; and a priority order. <a href="/docs/phaser/">Phaser</a> inlines each spec, verbatim, into every phase that builds the feature. <a href="/docs/artifacts/">Artifacts</a></p>
     </section>
 
     <section>
@@ -228,7 +228,7 @@
         </tbody>
       </table>
 
-      <p>Skipping Agentifier is allowed: Designer, StackAdvisor, and Phaser run without <code>ai_features.json</code> and plan no AI features.</p>
+      <p>Skipping Agentifier is allowed: <a href="/docs/designer/">Designer</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and Phaser run without <code>ai_features.json</code> and plan no AI features.</p>
     </section>
 
     <section>
@@ -240,7 +240,7 @@
     <section>
       <h2>In Spec4's own rounds</h2>
 
-      <p>Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The <a href="/bws4/">Built With Spec4</a> rounds ran Agentifier in eight of nine, with a feature at every tier from <code>embeddings</code> up.</p>
+      <p>Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The Built With Spec4 rounds ran Agentifier in eight of nine, with a feature at every tier from <code>embeddings</code> up.</p>
     </section>
   </main>
 </body>
