@@ -39,20 +39,22 @@
     <section>
       <h2>Asks</h2>
 
-      <p>Six steps, in the prompt's order:</p>
+      <p>Eight steps, in the prompt's order:</p>
 
       <ol>
         <li><strong>Analyze</strong> the inputs.</li>
         <li><strong>Clarify.</strong> If drafting would force a guess — a key feature's details, an integration target, the deployment shape, a conflict between vision and stack — Phaser asks, one question per turn, and only what it needs. If the inputs are complete, it skips this step. A question that presents options ends by asking which one; a question whose answer would add a dependency names the dependency in the option, so choosing it approves it.</li>
-        <li><strong>Steel thread.</strong> The simplest architecturally live version of the app. This is Phase 1.</li>
-        <li><strong>Count.</strong> Each significant feature vertical is typically its own phase; more smaller phases are preferred over fewer large ones.</li>
-        <li><strong>Draft.</strong> Title, summary, instructions, risk assessment, and verification per phase.</li>
+        <li><strong>Steel Thread.</strong> The simplest architecturally live version of the app. This is Phase 1.</li>
+        <li><strong>Determine N.</strong> Each significant feature vertical is typically its own phase; more smaller phases are preferred over fewer large ones.</li>
+        <li><strong>Draft phases.</strong> Title, summary, instructions, risk assessment, and verification per phase.</li>
         <li><strong>Present.</strong> The set, for your yes or your edits.</li>
+        <li><strong>Revise.</strong> If you ask for changes, the affected phases are revised and the full list is presented again before any JSON is generated.</li>
+        <li><strong>Output.</strong> On your yes, every phase is emitted at once as JSON, which Spec4 validates against the phase schema and renders into the Markdown phase files.</li>
       </ol>
 
       <p><strong>Stack fidelity.</strong> The stack is the approved component list. If a phase needs a component, library, or service not in it, Phaser may not add it on its own, not even when the choice seems obvious. It stops and asks — what it is, why it's needed, what it adds — and on your yes records a <code>stack_addition</code> in <code>stack.json</code> with the same join keys StackAdvisor uses. A companion an approved component can't run without — the client SDK for an approved managed service, a system binary an approved library invokes — is gathered with the others into a single confirmation rather than asked one at a time. <a href="/docs/stackadvisor/">StackAdvisor</a></p>
 
-      <p><strong>Two checks before the set is yours.</strong> After the model emits a phase set, Spec4 validates it deterministically: every phase against the schema; the set for completeness, numbered 1 to <em>k</em> with none missing; and coverage — every MVP feature is declared by some phase, an excluded feature by none, and infrastructure is built before the phases that need it. A failure goes back to the model with the specific fault named, and you can reply <em>try again</em> or point at the phase to fix. What the plan deliberately doesn't build — deferred features, excluded ones — is listed under <em>Not built by these phases</em> so nothing drops silently.</p>
+      <p><strong>Two checks before the set is yours.</strong> After the model emits a phase set, Spec4 validates it deterministically: every phase against the schema; the set for completeness, numbered 1 to <em>k</em> with none missing; and coverage — every MVP feature is declared by some phase, an excluded feature by none, and infrastructure is stood up no later than the first phase that needs it. A failure goes back to the model with the specific fault named, and you can reply <em>try again</em> or point at the phase to fix. What the plan deliberately doesn't build — deferred features, excluded ones — is listed under <em>Not built by these phases</em> so nothing drops silently.</p>
 
       <p>Then, on a greenfield set, an advisory seam check: a second model call extracts a data-flow graph from the phases — which phase creates each table, which reads it; which defines each endpoint, which consumes it; which features each phase covers — and deterministic checks look for a table read before it's created, an endpoint called before it's defined, a feature no phase covers. Findings are shown alongside the ready phases. They never block, and they never trigger a retry.</p>
     </section>
