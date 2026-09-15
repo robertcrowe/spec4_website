@@ -53,7 +53,7 @@ spec4</code></pre>
 
       <figure>
         <img src="project.png" alt="Spec4's project page on its own repository" width="941" height="421">
-        <figcaption>Spec4's project page on its own repository after round <code>v2</code> was implemented: every artifact, the model that produced it, what it cost, and the next action — a re-scan, since the code has changed since the plan. Agentifier is blank because Spec4 has no AI features of its own to plan.</figcaption>
+        <figcaption>Spec4's project page on its own repository after round <code>v2</code> was implemented: every artifact, the model that produced it, what it cost, and the next action — a re-scan, since the code has changed since the plan. Agentifier is blank because Spec4's AI features were added before it was mature enough to use on itself.</figcaption>
       </figure>
 
       <p>Every file of every round is readable in the app's Artifacts view.</p>
@@ -187,7 +187,7 @@ serves HTTP on localhost:8050 only.
 
       <p><strong>Brainstormer</strong> develops the vision through focused questions — purpose, audiences, MVP features — and, on completion, derives a technology-agnostic behavioral spec for every MVP feature: inputs, outputs, success criteria, failure modes. It searches the web for the standards it names and embeds canonical documentation links.</p>
 
-      <p><strong>Agentifier</strong> finds where AI belongs in the vision, recommends a complexity tier for each candidate, and drafts a full spec. The next section shows what it records.</p>
+      <p><strong>Agentifier</strong> looks for places in the vision where an AI feature would serve it, recommends how much AI each one needs, and drafts a spec for each feature you keep. The next section shows what it records.</p>
 
       <p><strong>Designer</strong> generates a self-contained HTML mock of the application's starting screen from the vision and AI features — or from screenshots of what you already have. Approve it, refine it with a description of changes, or start over. Phaser directs the coding agent to build to it. <a href="/examples/mock.html">Example mock.</a></p>
 
@@ -203,9 +203,9 @@ serves HTTP on localhost:8050 only.
     <section>
       <h2>Which features get AI, and how much</h2>
 
-      <p>Agentifier finds where AI belongs in the vision. For each candidate it recommends a complexity tier from a nine-rung ladder (deterministic code → embeddings → single call → RAG → tool use → … → multi-agent collaboration), picks implementation mechanisms, and drafts a full spec. The tiers are the same ones the <a href="/bws4/">Built With Spec4</a> gallery demonstrates as working apps.</p>
+      <p>Agentifier looks for places in the vision where an AI feature would serve it and recommends how much AI each one needs: a complexity tier from a nine-tier ladder (deterministic code → embeddings → single call → RAG → tool use → … → multi-agent collaboration) and the mechanisms to build it with. You choose the candidates and decide each tier; it records both and drafts a full spec for each feature you keep. The tiers are the same ones the <a href="/bws4/">Built With Spec4</a> gallery demonstrates as working apps.</p>
 
-      <p>The ladder starts at deterministic code: the cheapest tier that does the job, and sometimes that is no model at all. ▸ Agentifier<!-- /docs/agentifier/ --></p>
+      <p>The ladder starts at deterministic code: the cheapest tier that does the job, and sometimes that is no model at all. <a href="/docs/agentifier/">Agentifier</a></p>
 
       <p>Agentifier writes its recommendation and the developer's decision to the same file, side by side. This record is from <code>.spec4/v0/ai_catalog.json</code> in the Built With Spec4 repository:</p>
 
