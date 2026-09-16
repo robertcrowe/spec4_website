@@ -1,0 +1,655 @@
+{
+  "entities": [
+    {
+      "name": "Page",
+      "fields": [
+        "path",
+        "title",
+        "section",
+        "h1",
+        "description",
+        "body"
+      ]
+    },
+    {
+      "name": "Section",
+      "fields": [
+        "id",
+        "label",
+        "href",
+        "is_current"
+      ]
+    },
+    {
+      "name": "Navigation",
+      "fields": [
+        "wordmark",
+        "version",
+        "sections[]",
+        "current_section"
+      ]
+    },
+    {
+      "name": "Figure",
+      "fields": [
+        "subject",
+        "alt",
+        "caption",
+        "width",
+        "height"
+      ]
+    },
+    {
+      "name": "Table",
+      "fields": [
+        "columns[]",
+        "rows[]",
+        "min_width",
+        "scrolls_horizontally"
+      ]
+    },
+    {
+      "name": "CodeSample",
+      "fields": [
+        "kind",
+        "language",
+        "text",
+        "scrolls_horizontally"
+      ]
+    },
+    {
+      "name": "ColorScheme",
+      "fields": [
+        "source",
+        "background",
+        "text",
+        "muted",
+        "rule",
+        "code_tint",
+        "accent_green",
+        "wordmark_blue"
+      ]
+    },
+    {
+      "name": "Agent",
+      "fields": [
+        "name",
+        "reads",
+        "writes",
+        "runs_when",
+        "doc_path"
+      ]
+    },
+    {
+      "name": "ArtifactFile",
+      "fields": [
+        "path",
+        "written_by",
+        "kind",
+        "comment"
+      ]
+    },
+    {
+      "name": "ExampleApp",
+      "fields": [
+        "name",
+        "tier",
+        "round",
+        "url"
+      ]
+    },
+    {
+      "name": "Round",
+      "fields": [
+        "version",
+        "what_it_planned",
+        "agents_run"
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "id": "front",
+      "audience": "Primary \u2014 a working developer arriving from Hacker News, Reddit, or search, deciding in a few minutes whether Spec4 is worth installing",
+      "purpose": "The front page: install command and a real artifact first, then the guarantees, what a round leaves on disk, the agent table, and the reasoning \u2014 reads as documentation with a front page, not a landing page",
+      "surfaces": [
+        "SiteNav",
+        "ReadingColumn",
+        "FrontLede",
+        "InstallCommand",
+        "GuaranteeList",
+        "ProjectPageFigure",
+        "ArtifactTree",
+        "PhaseExcerpt",
+        "AgentTable",
+        "ProseSections",
+        "SiteFooter"
+      ]
+    },
+    {
+      "id": "docs",
+      "audience": "Secondary \u2014 a developer who has installed Spec4 and returns to the docs via the app's Docs link to look up how a part works",
+      "purpose": "The docs index: install, first run, the round table, the button vocabulary, and the list of reference pages, in the identical shell and typography as the front page",
+      "surfaces": [
+        "SiteNav",
+        "ReadingColumn",
+        "DocsLede",
+        "DocsInstall",
+        "FirstRunSteps",
+        "RoundTable",
+        "ButtonTable",
+        "DocsPageList",
+        "SiteFooter"
+      ]
+    },
+    {
+      "id": "examples",
+      "audience": "Both \u2014 the evaluating developer who wants to see real output and the returning developer checking what a tier looks like as software",
+      "purpose": "Built With Spec4: the live gallery's apps and the nine rounds that planned it, as two tables and a JSON excerpt",
+      "surfaces": [
+        "SiteNav",
+        "ReadingColumn",
+        "ExamplesLede",
+        "AppsTable",
+        "RoundsTable",
+        "CatalogExcerpt",
+        "SiteFooter"
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "name": "SiteNav",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [
+        "section links: Docs, Examples, GitHub"
+      ],
+      "output": "One-line nav: two-colour wordmark (Spec blue, 4 green), version 1.5.0 in monospace, three text links; the current section carries a short green rule; identical on every page",
+      "states": [
+        "front (no section active)",
+        "docs active",
+        "examples active",
+        "narrow (wraps, no horizontal breakage)",
+        "light",
+        "dark"
+      ],
+      "reads": [
+        "Navigation",
+        "Section",
+        "ColorScheme"
+      ],
+      "writes": [],
+      "depends_on": [],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "ReadingColumn",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "A single ~70-character text column in a serif face with generous line-height; headings in the same face at a larger size; system colour scheme applied with no toggle",
+      "states": [
+        "light",
+        "dark",
+        "narrow"
+      ],
+      "reads": [
+        "Page",
+        "ColorScheme"
+      ],
+      "writes": [],
+      "depends_on": [
+        "SiteNav"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "FrontLede",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [],
+      "inputs": [],
+      "output": "An h1 that is a full sentence and two paragraphs saying what Spec4 is and is not",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "InstallCommand",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Two-line install command in a plain code panel (one tint, 2px radius, no syntax colour, no line numbers), followed by a version/licence line",
+      "states": [
+        "default",
+        "long line scrolls within panel"
+      ],
+      "reads": [
+        "CodeSample"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "GuaranteeList",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [],
+      "inputs": [],
+      "output": "Six short bold-led bullets: runs locally, code stays in the repo, keys in the browser, any model any step, any coding agent, Apache 2.0",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "ProjectPageFigure",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Full-column-width figure of the app's project page on Spec4's own repository with an italic caption below",
+      "states": [
+        "default",
+        "narrow (scales to column)"
+      ],
+      "reads": [
+        "Figure"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "ArtifactTree",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "The .spec4/v1/ file tree in a code panel with a per-file comment naming the agent that writes it",
+      "states": [
+        "default",
+        "wide lines scroll within panel"
+      ],
+      "reads": [
+        "CodeSample",
+        "ArtifactFile"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "PhaseExcerpt",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "A long Markdown excerpt of .spec4/v0/phases/phase1.md in a code panel \u2014 the thing a coding agent is handed",
+      "states": [
+        "default",
+        "wide lines scroll within panel"
+      ],
+      "reads": [
+        "CodeSample"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "AgentTable",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Four-column table \u2014 Agent, Reads, Writes, Runs \u2014 header row distinguished by weight and a rule, no fill; scrolls horizontally inside its wrapper on narrow screens",
+      "states": [
+        "default",
+        "narrow (wrapper scrolls)"
+      ],
+      "reads": [
+        "Table",
+        "Agent"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "ProseSections",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [],
+      "inputs": [],
+      "output": "Many paragraphs under h2 headings: how a round works, what it is not, what it costs, providers and keys, where the plan can be wrong, read next",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page",
+        "Section"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "SiteFooter",
+      "kind": "non_ai",
+      "screen": "front",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "One plain line above a rule: version, licence, source, no analytics",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Navigation"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "DocsLede",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [],
+      "inputs": [],
+      "output": "h1 'Spec4 docs', the one-paragraph description, and the version line",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "DocsInstall",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Install from PyPI and from source, two code panels, plus the upgrade line",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "CodeSample"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "FirstRunSteps",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [],
+      "inputs": [],
+      "output": "Three-step ordered list: pick a directory, connect a provider, start the first agent",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "RoundTable",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Agent / Reads / Writes table for the seven agents in a scrolling wrapper",
+      "states": [
+        "default",
+        "narrow (wrapper scrolls)"
+      ],
+      "reads": [
+        "Table",
+        "Agent"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "ButtonTable",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Button / Meaning table: Start, Continue, Modify, Needs Update, Not Ready, Required",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Table"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "DocsPageList",
+      "kind": "non_ai",
+      "screen": "docs",
+      "implements_features": [],
+      "inputs": [
+        "links to the twelve reference pages"
+      ],
+      "output": "A plain list of the docs pages \u2014 seven agents, Artifacts, Rounds, Settings \u2014 each with a one-line description",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "ExamplesLede",
+      "kind": "non_ai",
+      "screen": "examples",
+      "implements_features": [],
+      "inputs": [],
+      "output": "h1 'Built With Spec4' and the paragraph describing the gallery and its nine rounds",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Page"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": []
+    },
+    {
+      "name": "AppsTable",
+      "kind": "non_ai",
+      "screen": "examples",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "App / Tier / Round table of the nine gallery apps",
+      "states": [
+        "default"
+      ],
+      "reads": [
+        "Table",
+        "ExampleApp"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "RoundsTable",
+      "kind": "non_ai",
+      "screen": "examples",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "Round / What it planned / Agents run table for v0\u2013v8 in a scrolling wrapper",
+      "states": [
+        "default",
+        "narrow (wrapper scrolls)"
+      ],
+      "reads": [
+        "Table",
+        "Round"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    },
+    {
+      "name": "CatalogExcerpt",
+      "kind": "non_ai",
+      "screen": "examples",
+      "implements_features": [
+        "Unified_Stylesheet"
+      ],
+      "inputs": [],
+      "output": "ai_catalog.json excerpt showing recommendation and decision side by side, in a code panel",
+      "states": [
+        "default",
+        "wide lines scroll within panel"
+      ],
+      "reads": [
+        "CodeSample"
+      ],
+      "writes": [],
+      "depends_on": [
+        "ReadingColumn"
+      ],
+      "implements_feature_ids": [
+        "unified_stylesheet"
+      ]
+    }
+  ],
+  "shared_layout": {
+    "nav": "One text line inside the reading column: wordmark 'Spec4' (Spec in the app's blue, 4 in the app's green, monospace, the only blue on the site), version '1.5.0' in monospace muted, then Docs \u00b7 Examples \u00b7 GitHub as plain text links; the current section is marked by a short green rule beneath the word. No fill, no pill, no icons.",
+    "shell": [
+      "ReadingColumn (max-width \u2248 70 characters, serif prose, line-height 1.65)",
+      "SiteNav",
+      "SiteFooter",
+      "ColorScheme rules driven by prefers-color-scheme with paired light/dark values and no on-page control",
+      "Code panel treatment (one tint, 2px radius, horizontal scroll)",
+      "Table wrapper (horizontal scroll, header by weight and rule)",
+      "Figure treatment (full column width, italic caption)"
+    ]
+  }
+}

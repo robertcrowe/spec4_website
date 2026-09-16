@@ -1,0 +1,244 @@
+{
+  "stack_spec": {
+    "name": "Spec4.ai website",
+    "description": "The public reference-documentation website for Spec4 \u2014 a hand-written, static, no-JavaScript multi-page site served from GitHub Pages, unified this round by a single shared stylesheet.",
+    "languages": [
+      {
+        "name": "HTML",
+        "version": "HTML Living Standard (WHATWG)",
+        "role": "markup for the thirteen styled pages (front page, eleven docs pages, bws4) and the meta-refresh redirect stubs (about/, how-it-works/, agents/*/)",
+        "linter": "none \u2014 manual review",
+        "formatter": "none \u2014 hand-formatted",
+        "indentation": "2 spaces",
+        "quotes": "double quotes for attributes",
+        "naming_conventions": {
+          "files_and_folders": "lowercase, hyphenated (kebab-case), matching existing repo structure",
+          "classes_and_ids": "kebab-case"
+        }
+      },
+      {
+        "name": "CSS",
+        "version": "CSS3, including the prefers-color-scheme media feature",
+        "role": "the single shared stylesheet (styles.css) driving typography, nav, tables, code blocks, figures, and the light/dark scheme across all thirteen styled pages",
+        "linter": "none \u2014 manual review",
+        "formatter": "none \u2014 hand-formatted",
+        "indentation": "2 spaces",
+        "quotes": "double quotes for any quoted values (e.g. font-family names, url())",
+        "naming_conventions": {
+          "custom_properties": "kebab-case, e.g. --color-bg, --font-mono",
+          "classes_and_ids": "kebab-case"
+        },
+        "vendor_prefixes": "none used",
+        "css_custom_properties": "every color and font declared as a custom property on :root",
+        "file_organization": "single stylesheet, ordered: design tokens (:root custom properties) \u2192 base elements \u2192 nav \u2192 components (table wrapper, code panel, figure) \u2192 page-specific overrides"
+      }
+    ],
+    "deployment": {
+      "targets": [
+        {
+          "name": "website",
+          "kind": "static_site",
+          "purpose": "the public Spec4 reference site \u2014 thirteen hand-written HTML pages, redirect stubs, one shared stylesheet, self-hosted fonts, images, and SEO/sharing metadata",
+          "language": "HTML",
+          "hosting": "GitHub Pages, served under the existing custom domain via the repository's CNAME file",
+          "build": "none \u2014 files are served exactly as authored, no build step, no bundler",
+          "distribution": "published on push to the repository's configured GitHub Pages branch/directory",
+          "exposure": {
+            "transport": "HTTPS only \u2014 GitHub Pages 'Enforce HTTPS' enabled for the custom domain"
+          }
+        }
+      ]
+    },
+    "persistence": {
+      "site_source": {
+        "choice": "Hand-written HTML files (thirteen styled pages plus meta-refresh redirect stubs) and one shared CSS file, committed to the repository and served as-is with no build step",
+        "durability": "source of truth; survives via git history. Content is hand-authored in two places kept manually in sync \u2014 the rework/ copy files (the authoritative text source) and the corresponding HTML (the served mirror) \u2014 with no automated build tying them together",
+        "purpose": "the entire site's content and presentation, published directly by GitHub Pages on push",
+        "satisfies_nfr": [
+          "nfr_every_page_loads_and_renders_correctly_without_requiring_any_script_to_run",
+          "nfr_pages_load_quickly_even_on_slow_connections__given_they_contain_no_scripts__media_playback__or_heavy_assets"
+        ],
+        "collections": [
+          {
+            "name": "pages",
+            "entities": [
+              "Page"
+            ],
+            "physical": [
+              "one index.html per route path \u2014 front page, 11 docs pages, bws4 (13 total); plus separate meta-refresh redirect stubs for about/, how-it-works/, agents/*/ that do not carry the stylesheet"
+            ],
+            "serves_features": [
+              "unified_stylesheet"
+            ]
+          },
+          {
+            "name": "stylesheet",
+            "entities": [
+              "ColorScheme",
+              "Table",
+              "CodeSample",
+              "Figure",
+              "Navigation"
+            ],
+            "physical": [
+              "single styles.css file, referenced by every one of the thirteen styled pages"
+            ],
+            "serves_features": [
+              "unified_stylesheet"
+            ],
+            "satisfies_nfr": [
+              "nfr_the_shared_visual_presentation_can_be_updated_once_and_take_effect_consistently_across_all_pages",
+              "nfr_text_and_code_remain_readable_at_sufficient_contrast_in_both_light_and_dark_reading_schemes",
+              "nfr_pages_remain_fully_readable_and_navigable_on_narrow_viewports_without_horizontal_breakage_of_the_overall_layout"
+            ]
+          },
+          {
+            "name": "copy_source",
+            "entities": [
+              "Page"
+            ],
+            "physical": [
+              "one Markdown copy file per styled page, plus register.md, under rework/"
+            ],
+            "purpose": "the authoritative text source each page's HTML is hand-mirrored against; not served, not templated"
+          },
+          {
+            "name": "examples",
+            "entities": [
+              "ExampleApp"
+            ],
+            "physical": [
+              "static generated example artifacts under examples/ (deployment-plan.html, mock.html), self-contained with their own inline styles"
+            ],
+            "purpose": "Spec4's own generated example output, displayed as reference material; unaffected by the unified stylesheet"
+          }
+        ]
+      },
+      "bundled_assets": {
+        "choice": "Self-hosted JetBrains Mono webfont files (two weights, .woff2) plus existing images, committed to the repo and served statically; the reading typeface is a system font stack declared in CSS, with no font files shipped for it",
+        "durability": "read-only; changes only by redeploy/commit",
+        "purpose": "typography and imagery assets referenced by the stylesheet and pages without any third-party runtime request",
+        "satisfies_nfr": [
+          "nfr_the_site_collects_no_analytics_or_tracking_information_about_readers"
+        ],
+        "collections": [
+          {
+            "name": "fonts",
+            "entities": [],
+            "purpose": "two weights of JetBrains Mono, .woff2 only, for monospace/code/nav/version text; the reading face is a system font stack with no files",
+            "physical": [
+              "two .woff2 files under fonts/"
+            ],
+            "serves_features": [
+              "unified_stylesheet"
+            ]
+          },
+          {
+            "name": "images",
+            "entities": [
+              "Figure"
+            ],
+            "physical": [
+              "favicon.svg",
+              "og-image.png",
+              "project.png",
+              "figure images referenced by pages"
+            ],
+            "serves_features": [
+              "unified_stylesheet"
+            ]
+          }
+        ]
+      }
+    },
+    "libraries": [],
+    "project_structure": [
+      {
+        "path": "index.html",
+        "purpose": "front page \u2014 one of the thirteen styled pages"
+      },
+      {
+        "path": "docs/ (index + rounds, artifacts, settings, codescanner, brainstormer, agentifier, designer, stackadvisor, phaser, deployer)",
+        "purpose": "product documentation pages \u2014 eleven of the thirteen styled pages"
+      },
+      {
+        "path": "bws4/",
+        "purpose": "rebuilt page, one of the thirteen styled pages"
+      },
+      {
+        "path": "about/, how-it-works/, agents/*/",
+        "purpose": "meta-refresh redirect stubs to corresponding /docs/ pages, kept only so old inbound links still land; no stylesheet reference; untouched this round"
+      },
+      {
+        "path": "examples/",
+        "purpose": "Spec4's own generated output artifacts, self-contained with their own inline styles; not styled or touched this round"
+      },
+      {
+        "path": "rework/",
+        "purpose": "the copy files, one per page, and register.md \u2014 the source every page's text is edited against; not served, not reorganised, not touched by this round"
+      },
+      {
+        "path": "styles.css",
+        "purpose": "the single shared stylesheet \u2014 tokens, base elements, nav, components, page-specific overrides, in that order"
+      },
+      {
+        "path": "fonts/",
+        "purpose": "two weights of JetBrains Mono, .woff2 only"
+      },
+      {
+        "path": "favicon.svg, og-image.png, project.png",
+        "purpose": "existing image/icon assets"
+      },
+      {
+        "path": "robots.txt, sitemap.xml, CNAME",
+        "purpose": "crawl configuration, sitemap, and custom-domain mapping for GitHub Pages"
+      }
+    ],
+    "coding_style": {
+      "patterns": [
+        "identical page skeleton across all thirteen styled pages: head \u2192 nav \u2192 main, with no footer \u2014 the nav already carries the version, and every fact the mock's footer line held is already present on the front page's trust strip"
+      ],
+      "documentation": [
+        "every styled page has a corresponding copy file under rework/ that is its authoritative source; the page's rendered text matches that file word-for-word; a change is made in the copy file first, then mirrored into the HTML",
+        "styles.css uses section-header comments marking the ordering: tokens \u2192 base elements \u2192 nav \u2192 components (table wrapper, code panel, figure) \u2192 page-specific overrides"
+      ]
+    },
+    "additional_decisions": [
+      {
+        "name": "html_validation_convention",
+        "description": "The manual pre-commit check applied to HTML markup",
+        "value": "Every page is checked against the W3C Nu Html Checker (https://validator.w3.org/nu/) before commit; no automated CI enforcement, no library dependency"
+      }
+    ],
+    "references": [
+      {
+        "standard": "prefers-color-scheme (CSS media feature)",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme"
+      },
+      {
+        "standard": "Open Graph protocol",
+        "url": "https://ogp.me"
+      },
+      {
+        "standard": "Sitemaps protocol",
+        "url": "https://www.sitemaps.org/protocol.html"
+      },
+      {
+        "standard": "GitHub Pages",
+        "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
+      },
+      {
+        "standard": "Google Fonts (source/license for the self-hosted JetBrains Mono files)",
+        "url": "https://developers.google.com/fonts"
+      },
+      {
+        "standard": "WHATWG HTML Living Standard (meta http-equiv=refresh, used by the redirect stubs)",
+        "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh"
+      },
+      {
+        "standard": "W3C Nu Html Checker",
+        "url": "https://validator.w3.org/nu/"
+      }
+    ]
+  }
+}

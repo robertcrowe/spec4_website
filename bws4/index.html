@@ -1,234 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PS571XRB2G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-PS571XRB2G');
-  </script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Built with Spec4 (BWS4) — Spec4 AI</title>
-  <meta name="description" content="Built with Spec4 (BWS4) is a live showcase of common AI application patterns — from embeddings up to planning agents and multi-agent collaboration — as small, self-contained example apps. Every one was planned and specced with Spec4, and the full planning round ships in the repo.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Built With Spec4 — Spec4</title>
+  <meta name="description" content="Built With Spec4 is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder Agentifier recommends from, so you can see what a tier looks like as software. It was planned in nine rounds, with hand edits between them, and its full .spec4/ history — v0 through v8, every artifact and every phase file — is in its repository.">
   <link rel="canonical" href="https://spec4.ai/bws4/">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://spec4.ai/bws4/">
-  <meta property="og:site_name" content="Spec4 AI">
-  <meta property="og:title" content="Built with Spec4 (BWS4) — Spec4 AI">
-  <meta property="og:description" content="Built with Spec4 (BWS4) is a live showcase of common AI application patterns — from embeddings up to planning agents and multi-agent collaboration — as small, self-contained example apps. Every one was planned and specced with Spec4, and the full planning round ships in the repo.">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Spec4 AI — Design and deploy agentic applications">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Built with Spec4 (BWS4) — Spec4 AI">
-  <meta name="twitter:description" content="Built with Spec4 (BWS4) is a live showcase of common AI application patterns — from embeddings up to planning agents and multi-agent collaboration — as small, self-contained example apps. Every one was planned and specced with Spec4, and the full planning round ships in the repo.">
-  <meta name="twitter:image" content="https://spec4.ai/og-image.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=11">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <div class="blueprint-grid"></div>
-
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../" class="nav-logo">
-        <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
-      </a>
-      <div class="nav-links">
-        <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener" class="nav-github" aria-label="View on GitHub"><img src="../GitHub_Invertocat_Black.png" alt="GitHub"></a>
-        <a href="../how-it-works/">How It Works</a>
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle">Agents <span class="dropdown-arrow">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="../agents/codescanner/">CodeScanner</a>
-            <a href="../agents/brainstormer/">Brainstormer</a>
-            <a href="../agents/agentifier/">Agentifier</a>
-            <a href="../agents/designer/">Designer</a>
-            <a href="../agents/stackadvisor/">StackAdvisor</a>
-            <a href="../agents/phaser/">Phaser</a>
-            <a href="../agents/deployer/">Deployer</a>
-          </div>
-        </div>
-        <a href="../bws4/" aria-current="page">BWS4</a>
-        <a href="../about/">About</a>
-        <a href="../#get-started" class="nav-cta">Get Started →</a>
-      </div>
-      <button class="nav-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
+    <a href="/docs/">Docs</a>
+    <a href="/bws4/" aria-current="page">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
   </nav>
 
-  <div class="mobile-menu">
-    <a href="../how-it-works/">How It Works</a>
-    <div class="mobile-divider"></div>
-    <span class="mobile-label">Agents</span>
-    <a href="../agents/codescanner/">CodeScanner</a>
-    <a href="../agents/brainstormer/">Brainstormer</a>
-    <a href="../agents/agentifier/">Agentifier</a>
-    <a href="../agents/designer/">Designer</a>
-    <a href="../agents/stackadvisor/">StackAdvisor</a>
-    <a href="../agents/phaser/">Phaser</a>
-    <a href="../agents/deployer/">Deployer</a>
-    <div class="mobile-divider"></div>
-    <a href="../bws4/">BWS4</a>
-    <a href="../about/">About</a>
-    <a href="../#get-started" class="mobile-cta">Get Started →</a>
-  </div>
+  <details class="sitemap">
+    <summary>Contents</summary>
+    <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
+      <p class="group">Docs</p>
+      <ul>
+        <li><a href="/docs/">Install and first run</a></li>
+        <li><a href="/docs/codescanner/">CodeScanner</a></li>
+        <li><a href="/docs/brainstormer/">Brainstormer</a></li>
+        <li><a href="/docs/agentifier/">Agentifier</a></li>
+        <li><a href="/docs/designer/">Designer</a></li>
+        <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
+        <li><a href="/docs/phaser/">Phaser</a></li>
+        <li><a href="/docs/deployer/">Deployer</a></li>
+        <li><a href="/docs/artifacts/">Artifacts</a></li>
+        <li><a href="/docs/rounds/">Rounds</a></li>
+        <li><a href="/docs/settings/">Settings</a></li>
+      </ul>
+      <p class="group">Examples</p>
+      <ul>
+        <li><span aria-current="page">Built With Spec4</span>
+          <ul>
+            <li><a href="#the-apps">The apps</a></li>
+            <li><a href="#the-nine-rounds">The nine rounds</a></li>
+            <li><a href="#the-recommendation-and-the-decision">The recommendation and the decision</a></li>
+            <li><a href="#hand-edits-reconciled">Hand edits, reconciled</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p class="group">Source</p>
+      <ul>
+        <li><a href="https://github.com/robertcrowe/spec4">GitHub</a></li>
+      </ul>
+    </nav>
+  </details>
 
-  <!-- Hero -->
-  <div class="page-hero-wrap">
-    <div class="page-hero">
-      <span class="section-label">Built with Spec4</span>
-      <h1 class="page-hero-title">See what a Spec4 spec becomes.</h1>
-      <p class="page-hero-sub">Built with Spec4 (BWS4) is a live showcase of common AI application patterns, presented as small, self-contained example apps. Each one demonstrates a pattern end-to-end — how it's built, what it depends on, and how it behaves — so you understand it by seeing it work, not by reading about it abstractly. And every one of them was planned and specced with Spec4 itself.</p>
-      <div class="hero-actions" style="margin-top:2rem; justify-content:center">
-        <a href="https://bw.spec4.ai" target="_blank" rel="noopener" class="btn btn-primary">Visit the showcase →</a>
-        <a href="https://github.com/robertcrowe/BWS4" target="_blank" rel="noopener" class="btn btn-secondary">View the repo</a>
+  <main>
+    <h1>Built With Spec4</h1>
+
+    <p><a href="https://bw.spec4.ai">Built With Spec4</a> is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder <a href="/docs/agentifier/">Agentifier</a> recommends from, so you can see what a tier looks like as software. It was planned in nine <a href="/docs/rounds/">rounds</a>, with hand edits between them, and its full <code>.spec4/</code> history — <code>v0</code> through <code>v8</code>, every artifact and every phase file — is in <a href="https://github.com/robertcrowe/BWS4">its repository</a>.</p>
+
+    <section>
+      <h2 id="the-apps">The apps</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">App</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Round</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
+              <td><code>embeddings</code></td>
+              <td><code>v1</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
+              <td><code>single_call</code></td>
+              <td><code>v2</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
+              <td><code>rag</code></td>
+              <td><code>v0</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
+              <td><code>tool_agent</code></td>
+              <td><code>v0</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
+              <td><code>chained_calls</code></td>
+              <td><code>v3</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
+              <td><code>planning_agent</code></td>
+              <td><code>v4</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/react">ReAct Loop</a></td>
+              <td><code>planning_agent</code></td>
+              <td><code>v7</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
+              <td><code>orchestrated_subagents</code></td>
+              <td><code>v5</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
+              <td><code>multi_agent_collaboration</code></td>
+              <td><code>v6</code></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
 
-  <!-- The Example Apps -->
-  <section class="content-section">
-    <div class="section-container">
-      <h2 class="fade-in">The example apps</h2>
-      <p class="body-text fade-in">The gallery walks up <a href="../agents/agentifier/">Agentifier</a>'s complexity ladder — embeddings, single call, RAG, tool use, chained calls, and more, each live and self-contained. Here are two from the top of the ladder:</p>
+      <p>Two apps share the <code>planning_agent</code> tier on purpose: Planning Agent fixes its plan up front, and ReAct Loop discovers it one observation at a time. The tier ladder is on the <a href="/docs/agentifier/">Agentifier</a> page.</p>
 
-      <div class="areas-grid fade-in" style="margin-top:1.5rem">
-        <div class="area-card">
-          <div class="area-title"><a href="https://bw.spec4.ai/planning" target="_blank" rel="noopener">Planning agent</a></div>
-          <div class="area-desc">A planner call decomposes a trip-day goal into a visible plan of research and synthesis steps — and because the plan is produced and displayed before execution, you can inspect exactly what the agent intends to do, and nothing runs until you say so. On your go-ahead, the agent executes the research steps with a live web-search tool and composes a one-day itinerary.<br><a href="https://bw.spec4.ai/planning" target="_blank" rel="noopener" class="text-link" style="margin-top:0.75rem; display:inline-block">Run it live →</a></div>
-        </div>
-        <div class="area-card">
-          <div class="area-title"><a href="https://bw.spec4.ai/collab" target="_blank" rel="noopener">Multi-agent collaboration</a></div>
-          <div class="area-desc">A buyer agent negotiates with two rival seller agents that hold private constraints neither can see. The agents are peers, not workers — each with its own goals and private information, communicating only through explicit sender→recipient messages, with opacity enforced by the plumbing rather than by asking a model nicely. Modeled on the A2A protocol's data model — and when the deal closes, you unseal every hidden position.<br><a href="https://bw.spec4.ai/collab" target="_blank" rel="noopener" class="text-link" style="margin-top:0.75rem; display:inline-block">Run it live →</a></div>
-        </div>
+      <p>Every app runs on free OpenRouter models through LiteLLM, with per-session run caps so a public demo can't spend the quota. The caps are stated on each app's page.</p>
+    </section>
+
+    <section>
+      <h2 id="the-nine-rounds">The nine rounds</h2>
+
+      <p>One line per round, from each <a href="/docs/artifacts/"><code>vision.json</code></a>'s <code>revision_history</code>:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Round</th>
+              <th scope="col">What it planned</th>
+              <th scope="col">Agents run</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>v0</code></td>
+              <td>The framework — landing page, shared model and embedding services, the Exa search integration — and the first two apps, RAG and Tool Use. Hosted on Render's free tier.</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td><code>v1</code></td>
+              <td>Embeddings, as a visual explorer on the framework's existing embedding model.</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td><code>v2</code></td>
+              <td>Single Call, in simple and schema-constrained modes.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v3</code></td>
+              <td>Chained Calls: a writer and a critic, capped at two calls.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v4</code></td>
+              <td>Planning Agent: plan, approve, then execute, under a per-run call cap.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v5</code></td>
+              <td>Orchestrated Subagents: a coordinator briefs two of four specialists, runs them concurrently, merges.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v6</code></td>
+              <td>Multi-Agent Collaboration: a buyer negotiates against two sellers holding private constraints, over A2A-shaped messages.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v7</code></td>
+              <td>ReAct Loop, in deliberate contrast with <code>v4</code>.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v8</code></td>
+              <td>Hosting moved from Render to a self-hosted VPS, behaviour-preserving; PostgreSQL with pgvector stays on Neon.</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <p class="body-text fade-in" style="margin-top:1.5rem">The rest of the gallery — <a href="https://bw.spec4.ai/embeddings" target="_blank" rel="noopener">embeddings</a>, <a href="https://bw.spec4.ai/single-call" target="_blank" rel="noopener">single call</a>, <a href="https://bw.spec4.ai/rag" target="_blank" rel="noopener">RAG</a>, <a href="https://bw.spec4.ai/tool-use" target="_blank" rel="noopener">tool use</a>, <a href="https://bw.spec4.ai/chained-calls" target="_blank" rel="noopener">chained calls</a>, and <a href="https://bw.spec4.ai/orchestrated" target="_blank" rel="noopener">orchestrated subagents</a> — is live too, and the gallery is designed to grow.  Have you written something amazing with Spec4?  Let us know and we may add it to BWS4!</p>
-    </div>
-  </section>
+      <p><code>IMPLEMENTED</code> is present in all nine. Seven of the eight brownfield rounds open with an integration thread; <code>v3</code> went straight to backend work. <code>v8</code> skipped <a href="/docs/designer/">Designer</a> and Agentifier, since nothing it planned had a screen or a model call; <a href="/docs/deployer/">Deployer</a> ran only when the deployment changed — <code>v0</code>, <code>v1</code>, and <code>v8</code>. Run the agents a round needs.</p>
 
-  <!-- The Dogfooding Story -->
-  <section class="content-section">
-    <div class="section-container">
-      <h2 class="fade-in">Specced by Spec4, naturally</h2>
-      <p class="body-text fade-in">BWS4 exists to answer a fair question: <em>what does a Spec4 spec actually produce?</em> The showcase's own planning round — vision, feature specs, AI feature catalog, stack spec, development phases, and deployment plan — ships in the repo under <code style="font-family:var(--font-mono); color:var(--color-accent); font-size:0.9em">.spec4/v0/</code>. You can read the spec, then look at the running code it produced.</p>
-      <p class="body-text fade-in" style="margin-top:1rem">The examples map directly onto <a href="../agents/agentifier/">Agentifier's</a> nine-tier ladder: the planning agent is tier 7, the peer-to-peer collaboration is tier 9, and the rest of the gallery covers the rungs below — each one right-sized, exactly as Agentifier would spec it.</p>
-    </div>
-  </section>
+      <p>Phases in <code>v0</code>–<code>v4</code> run 7 to 14 instructions; the agentic-pattern rounds <code>v5</code>–<code>v8</code> run 14 to 26.</p>
+    </section>
 
-  <!-- Under the Hood -->
-  <section class="content-section">
-    <div class="section-container">
-      <h2 class="fade-in">Under the hood</h2>
-      <p class="body-text fade-in">BWS4 is a real production deployment, not a slide deck — and it runs entirely within free usage tiers, so it's easy to fork, run locally, and deploy without a billing surprise.</p>
+    <section>
+      <h2 id="the-recommendation-and-the-decision">The recommendation and the decision</h2>
 
-      <div class="areas-grid fade-in" style="margin-top:1.5rem">
-        <div class="area-card">
-          <div class="area-title">Frontend</div>
-          <div class="area-desc">TypeScript, React Router, Tailwind CSS, and Vite — with per-example code-splitting, so each app is lazy-loaded independently and the gallery can grow without slowing the landing page.</div>
-        </div>
-        <div class="area-card">
-          <div class="area-title">Backend</div>
-          <div class="area-desc">Python 3.12 with FastAPI and SQLAlchemy. Shared framework services — generation, embeddings, storage — are reused across example apps, so each new pattern only adds what's unique to it.</div>
-        </div>
-        <div class="area-card">
-          <div class="area-title">Models &amp; data</div>
-          <div class="area-desc">LiteLLM routing across OpenRouter and Groq free-tier model chains, in-process sentence-transformers embeddings, and Neon serverless Postgres with pgvector as both the relational store and the vector index.</div>
-        </div>
-        <div class="area-card">
-          <div class="area-title">Operations</div>
-          <div class="area-desc">Deployed on Render free tiers from a checked-in blueprint, with Sentry error tracking and model-call observability that no-ops cleanly when unconfigured — the deployment story straight out of its Spec4 deployment plan.</div>
-        </div>
+      <p>Agentifier writes its recommendation and the developer's decision to the same file. From <code>.spec4/v0/ai_catalog.json</code>:</p>
+
+<pre><code>{
+  "name": "rag_example_app",
+  "tier_recommendation": "single_call",
+  "tier_decision": "rag",
+  "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is intentional despite the small dataset size."
+}</code></pre>
+
+      <p>The tool argued against the agent; the developer decided; the file records both. Every other product feature across <code>v1</code>–<code>v7</code> shows recommendation and decision agreeing; the infrastructure entries — <code>embedding_pipeline</code>, <code>vector_index</code>, <code>agent_loop_runtime</code>, and the rest — carry no recommendation, because they're injected from the tier's pattern file rather than chosen.</p>
+    </section>
+
+    <section>
+      <h2 id="hand-edits-reconciled">Hand edits, reconciled</h2>
+
+      <p>Between <code>v0</code> and <code>v1</code> the developer changed the code without Spec4, and the next round's <a href="/docs/codescanner/">CodeScanner</a> read it. Three things entered the codebase that no <code>v0</code> artifact mentions:</p>
+
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">Term</th>
+              <th scope="col">In a <code>v0</code> artifact?</th>
+              <th scope="col">In <code>v1</code>'s <code>code_review.json</code>?</th>
+              <th scope="col">Later in a spec?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Groq</td>
+              <td>no</td>
+              <td>yes — <code>change_risks</code>, from the README</td>
+              <td><code>v6</code> on in phases; <code>stack.json</code> in <code>v8</code></td>
+            </tr>
+            <tr>
+              <td><code>model_registry</code></td>
+              <td>no</td>
+              <td>yes — <code>change_risks</code>, from the README</td>
+              <td>phases in <code>v2</code>–<code>v4</code> and <code>v6</code>–<code>v8</code>; <code>stack.json</code> from <code>v7</code></td>
+            </tr>
+            <tr>
+              <td>oxlint</td>
+              <td>no</td>
+              <td>yes — <code>coding_style.linter</code>, from <code>package.json</code></td>
+              <td><code>v4</code> and <code>v6</code> phases; <code>stack.json</code> in <code>v8</code></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </section>
 
-  <section class="cta-section">
-    <div class="section-container">
-      <div class="cta-card fade-in">
-        <h2>See it work, then read the spec.</h2>
-        <p>Explore the live examples, then open the repo and compare what was planned with what got built.</p>
-        <div class="cta-actions">
-          <a href="https://bw.spec4.ai" target="_blank" rel="noopener" class="btn btn-primary">Visit the showcase →</a>
-          <a href="https://github.com/robertcrowe/BWS4" target="_blank" rel="noopener" class="btn btn-secondary">View the repo</a>
-        </div>
-      </div>
-    </div>
-  </section>
+      <p>The <code>v1</code> review's one recorded change risk is the free-tier model chains in <code>model_registry.py</code> rotting as providers retire slugs — a risk in code the plan never asked for, caught on the next scan. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
 
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <a href="../" class="nav-logo">
-          <span class="logo-spec">Spec</span><span class="logo-4">4</span><span class="logo-ai"> AI</span>
-        </a>
-        <p>From idea to agentic application — spec-driven AI development.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-column">
-          <h4>Spec4</h4>
-          <a href="../how-it-works/">How It Works</a>
-          <a href="../about/">About</a>
-          <a href="../#get-started">Get Started</a>
-        </div>
-        <div class="footer-column">
-          <h4>Agents</h4>
-          <a href="../agents/codescanner/">CodeScanner</a>
-          <a href="../agents/brainstormer/">Brainstormer</a>
-          <a href="../agents/agentifier/">Agentifier</a>
-          <a href="../agents/designer/">Designer</a>
-          <a href="../agents/stackadvisor/">StackAdvisor</a>
-          <a href="../agents/phaser/">Phaser</a>
-          <a href="../agents/deployer/">Deployer</a>
-        </div>
-        <div class="footer-column">
-          <h4>Resources</h4>
-          <a href="https://github.com/robertcrowe/Spec4/discussions" target="_blank" rel="noopener">Community</a>
-          <a href="https://github.com/robertcrowe/Spec4" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/robertcrowe/Spec4/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
-          <a href="../bws4/">Built with Spec4</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Robert Crowe. Open source under Apache 2.0 License.</p>
-    </div>
-  </footer>
+    <section>
+      <h2 id="deployment">Deployment</h2>
 
-  <script src="../script.js"></script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://spec4.ai/bws4/",
-        "url": "https://spec4.ai/bws4/",
-        "name": "Built with Spec4 (BWS4) — Spec4 AI",
-        "description": "Built with Spec4 (BWS4) is a live showcase of common AI application patterns — from embeddings up to planning agents and multi-agent collaboration — as small, self-contained example apps. Every one was planned and specced with Spec4, and the full planning round ships in the repo.",
-        "isPartOf": { "@id": "https://spec4.ai/" },
-        "breadcrumb": { "@id": "https://spec4.ai/bws4/#breadcrumb" }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://spec4.ai/bws4/#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spec4.ai/" },
-          { "@type": "ListItem", "position": 2, "name": "Built with Spec4", "item": "https://spec4.ai/bws4/" }
-        ]
-      }
-    ]
-  }
-  </script>
+      <p>The VPS runs the plan Deployer wrote in <code>v8</code>. It opens with instructions for the coding agent named for the round, then the whole system, one target at a time. The web client's block, from <code>.spec4/v8/deployment-plan.md</code>:</p>
+
+<pre><code>### `web_client`
+
+- **Type:** on-premise (self-hosted VPS)
+- **Provider:** netcup — VPS 500 G12 (2 vCore, 4 GB DDR5 ECC, 128 GB NVMe, always-on)
+- **Service:** Caddy 2 serving static files from `/srv/bws4/frontend/dist`
+- **Region:** netcup European datacenter (Nuremberg / Vienna / Amsterdam). Choose the one nearest your primary audience — this bears directly on `nfr_pages_appear_within_about_a_second`.
+- **Transport:** HTTPS only. Automatic Let's Encrypt issuance and renewal by Caddy, automatic HTTP→HTTPS redirect.
+- **CORS:** not applicable — serves the browser origin itself rather than consuming one.
+
+Build: `npm ci &amp;&amp; npm run build` executed **on the VPS** by `deploy/deploy.sh`, producing a hashed bundle with route-based lazy-loaded chunks per example app. Served with SPA history fallback.</code></pre>
+
+      <p>The plan's Configuration Files section carries the Caddyfile, the systemd unit, <code>deploy/deploy.sh</code>, and a <code>CLAUDE.md</code> for the coding agent, complete. Its Roadmap records what was considered and not provisioned — CI, <code>fail2ban</code>, snapshots — so a later round can pick them up.</p>
+
+      <p>The nine rounds predate Spec4's usage recording, so there is no cost line for them; Spec4's own rounds carry one on the <a href="/">front page</a>.</p>
+    </section>
+  </main>
 </body>
 </html>

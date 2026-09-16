@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser — Spec4 docs</title>
+  <meta name="description" content="Phaser turns everything the earlier agents wrote into ordered implementation phases, one file each, written for a coding agent. Phase 1 is a steel thread — the thinnest live end-to-end path — and every phase after it builds on the one before, ends with the command that proves it's done, and names where a coding agent is likely to go wrong.">
+  <link rel="canonical" href="https://spec4.ai/docs/phaser/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Phaser</h1>
+
+    <p>Phaser turns everything the earlier agents wrote into ordered implementation phases, one file each, written for a coding agent. Phase 1 is a steel thread — the thinnest live end-to-end path — and every phase after it builds on the one before, ends with the command that proves it's done, and names where a coding agent is likely to go wrong.</p>
+
+    <p>It is the agent whose output you hand over. Everything else in the pipeline exists to make these files right.</p>
+
+    <section>
+      <h2>Reads</h2>
+
+      <p>Everything above it: <a href="/docs/artifacts/"><code>vision.json</code></a>, <code>feature_specs.json</code>, <code>stack.json</code>, and — when they exist — <code>code_review.json</code>, <code>ai_features.json</code>, <code>design/manifest.json</code>, and <code>design/mock.html</code>. The stack arrives as the approved component list; the specs arrive per feature; the mock is cited by path for the coding agent to match. In a <a href="/docs/rounds/">revision round</a>, the code review of the implemented system and the delta from the vision.</p>
+
+      <p>Web search, if enabled, for the canonical documentation of every standard, protocol, or SDK a phase names.</p>
+    </section>
+
+    <section>
+      <h2>Asks</h2>
+
+      <p>Eight steps, in the prompt's order:</p>
+
+      <ol>
+        <li><strong>Analyze</strong> the inputs.</li>
+        <li><strong>Clarify.</strong> If drafting would force a guess — a key feature's details, an integration target, the deployment shape, a conflict between vision and stack — Phaser asks, one question per turn, and only what it needs. If the inputs are complete, it skips this step. A question that presents options ends by asking which one; a question whose answer would add a dependency names the dependency in the option, so choosing it approves it.</li>
+        <li><strong>Steel Thread.</strong> The simplest architecturally live version of the app. This is Phase 1.</li>
+        <li><strong>Determine N.</strong> Each significant feature vertical is typically its own phase; more smaller phases are preferred over fewer large ones.</li>
+        <li><strong>Draft phases.</strong> Title, summary, instructions, risk assessment, and verification per phase.</li>
+        <li><strong>Present.</strong> The set, for your yes or your edits.</li>
+        <li><strong>Revise.</strong> If you ask for changes, the affected phases are revised and the full list is presented again before any JSON is generated.</li>
+        <li><strong>Output.</strong> On your yes, every phase is emitted at once as JSON, which Spec4 validates against the phase schema and renders into the Markdown phase files.</li>
+      </ol>
+
+      <p><strong>Stack fidelity.</strong> The stack is the approved component list. If a phase needs a component, library, or service not in it, Phaser may not add it on its own, not even when the choice seems obvious. It stops and asks — what it is, why it's needed, what it adds — and on your yes records a <code>stack_addition</code> in <code>stack.json</code> with the same join keys <a href="/docs/stackadvisor/">StackAdvisor</a> uses. A companion an approved component can't run without — the client SDK for an approved managed service, a system binary an approved library invokes — is gathered with the others into a single confirmation rather than asked one at a time. <a href="/docs/stackadvisor/">StackAdvisor</a></p>
+
+      <p><strong>Two checks before the set is yours.</strong> After the model emits a phase set, Spec4 validates it deterministically: every phase against the schema; the set for completeness, numbered 1 to <em>k</em> with none missing; and coverage — every MVP feature is declared by some phase, an excluded feature by none, and infrastructure is stood up no later than the first phase that needs it. A failure goes back to the model with the specific fault named, and you can reply <em>try again</em> or point at the phase to fix. What the plan deliberately doesn't build — deferred features, excluded ones — is listed under <em>Not built by these phases</em> so nothing drops silently.</p>
+
+      <p>Then, on a greenfield set, an advisory seam check: a second model call extracts a data-flow graph from the phases — which phase creates each table, which reads it; which defines each endpoint, which consumes it; which features each phase covers — and deterministic checks look for a table read before it's created, an endpoint called before it's defined, a feature no phase covers. Findings are shown alongside the ready phases. They never block, and they never trigger a retry.</p>
+    </section>
+
+    <section>
+      <h2>Writes</h2>
+
+      <p><code>phases/phase1.md</code> through <code>phase{k}.md</code>. Each file is the phase as JSON frontmatter followed by the same content rendered as Markdown for the coding agent:</p>
+
+      <ul>
+        <li><strong>Title and summary</strong> — what the phase does, and what it does not do yet.</li>
+        <li><strong>Feature specifications</strong> — the spec of every feature this phase builds, from <code>feature_specs.json</code> and <code>ai_features.json</code>, inlined verbatim by Spec4 and declared authoritative. The coding agent never reads a spec from a pointer.</li>
+        <li><strong>Tech stack</strong> — the entries routed to this phase from <code>stack.json</code>: every entry that serves a feature the phase declares, plus every foundational entry. Routed by Spec4, not chosen by the model.</li>
+        <li><strong>Instructions</strong> — numbered, one actionable step each, specific enough that a coding agent can't misinterpret them.</li>
+        <li><strong>Risk assessment</strong> — the likely execution bottlenecks and the places an AI coder tends to hallucinate, each with a mitigation.</li>
+        <li><strong>Verification</strong> — the exact command or observable that proves the phase is done, followed by the non-functional acceptance block: every goal a routed stack entry claims, threaded here by Spec4 from <code>satisfies_nfr</code>. Goals claimed only by foundational entries land in the final phase.</li>
+        <li><strong>References</strong> — the canonical documentation links, from live search.</li>
+      </ul>
+
+      <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>, appended by Spec4. Phase 1 of Spec4's own first round is quoted in full on the <a href="/">front page</a>; the spec preamble and an NFR block from later phases are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+    </section>
+
+    <section>
+      <h2>Buttons</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td><code>vision.json</code> and <code>stack.json</code> exist and no phases have been written this round.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>This session has an unfinished conversation with Phaser.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td><code>phases/</code> exists and is newer than every input it depends on.</td>
+          </tr>
+          <tr>
+            <td><strong>Needs Update</strong></td>
+            <td>The vision, AI features, stack, code review, or mock is newer than the phases.</td>
+          </tr>
+          <tr>
+            <td><strong>Not Ready</strong></td>
+            <td>No vision or no stack yet, or the inputs are out of order.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Phaser depends on the mock and not the manifest, since it hands the mock to the coding agent by path.</p>
+    </section>
+
+    <section>
+      <h2>Across rounds</h2>
+
+      <p>Nothing carries forward. In a revision round Phaser is told to treat everything in the code review as built and in place, and to plan only the new or changed surface named in the delta. The new phases are numbered from 1 as a self-contained set; Phase 1 is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread; no phases are emitted for unchanged features. AI features are partitioned by <code>introduced_in_version</code>, so only this round's are planned, and the coverage check looks only at those. The seam check is skipped, since a revision's graph is partial by design. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2>In Spec4's own rounds</h2>
+
+      <p>6 calls, about 231k tokens, and $1.72 in <code>v0</code>; 4 calls, 189k, and $1.70 in <code>v1</code>; 4 calls, 242k, and $2.09 in <code>v2</code> — seam checks included — all on <code>claude-opus-5</code>, the one agent Spec4's rounds always ran on a stronger model than the default. Phaser was the first or second largest line in every round because it holds every upstream artifact in context while it drafts. Its single largest call, the <code>v2</code> draft, was 73k tokens over 4 minutes 18 seconds.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,63 @@
+Spec4 1.5.0 Docs Examples GitHub
+Rounds
+A round is one pass over the project. Its output is one folder — .spec4/v0/ for the first round, v1/ for the next, and so on — and every round after the first starts from the code, not from the previous plan.
+A round is a feature or a rework. For a change smaller than that, don't run one.
+Starting on existing code
+A directory with files in it gets one question when you open it — Is there an existing project here? — because a uv init skeleton and a codebase you're modifying look the same to a file listing. Existing project starts the round with CodeScanner; New project starts with Brainstormer. You're asked again next session; the answer isn't written to disk.
+CodeScanner reads the repository locally and sends the model a bounded summary — manifests, entry points, samples — not the tree. What comes back is code_review.json: architecture, stack, commands, entry points, and conventions, each as a fact with a source or inferred_from. Every later agent plans against that file rather than against what it would guess.
+Revision rounds
+A revision round is any round after one that has been implemented. Four things are different from a first round:
+CodeScanner reads what was actually built — by anyone. The code review for round N is of the code as it stands, including what the coding agent did that the plan didn't say and whatever you changed yourself in between. A hotfix, a refactor, or a week of work done without Spec4 is just what the next round plans against.
+Brainstormer stamps a delta. vision.json gains a revision_history entry — version, based_on_version, the round's goal, the features added, modified, and removed, and the rationale — and the downstream agents scope to that delta rather than re-deriving the whole application.
+Phaser plans only the change. Phase 1 of a revision is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread. The new phases are numbered from 1 as a self-contained set, and no phases are emitted for established, unchanged features.
+The previous round is the baseline, not the input. Each of the other agents reads the delta from vision.json and the corresponding artifact from the latest implemented round, and works on the difference.
+What that means per agent:
+Brainstormer writes the revision_history entry deterministically. The version numbers come from the folder on disk, not the model; the added, modified, and removed lists are reconciled against the feature names in the previous implemented vision, so a feature the previous round didn't have is recorded as added however the model labelled it, and a rename reads as remove plus add.
+Agentifier carries the previous round's ai_features.json — the AI features already built, with their cross-cutting decisions — as reference, not as this round's working artifact. Each feature it writes in a revision round carries introduced_in_version, which is how the agents downstream tell this round's AI work from what already exists.
+Designer starts from the previous round's approved design/mock.html and applies the revision to it, so the established look carries forward and the mock changes only where the delta does. It can also capture the look from screenshots of the running app.
+StackAdvisor carries the previous round's stack.json forward as the baseline and guides you through only the incremental changes the new or changed features require. It does not re-decide the established stack or re-run the full topic sequence.
+Phaser carries nothing forward: the fresh code_review.json describes what's built, the AI-feature context is partitioned by introduced_in_version so only this round's features are planned, and the coverage check after generation looks only at those.
+Deployer carries the previous round's deployment-plan.md forward when there is one, and updates it for the delta rather than re-deriving it. A deployment plan describes the whole running system, so the update is whole-system-scoped. If Deployer authors the README, a revision round scopes the update to this round's feature changes and leaves the rest of the document intact.
+In Spec4's own rounds, .spec4/v2/vision.json records that v1 deferred the setup wizard, the gate card, the directory picker, and the Designer wizard, and that v2 picked them up — a decision carried across rounds, visible in the file.
+Stale inputs
+Every artifact is dated against the ones upstream of it. The project page recomputes each agent's state from the files on disk every time it renders; nothing is cached.
+Agent
+Goes stale when any of these is newer than its output
+Brainstormer
+code_review.json
+Agentifier
+vision.json, code_review.json
+Designer
+vision.json, ai_features.json
+StackAdvisor
+vision.json, ai_features.json, code_review.json, design/manifest.json
+Phaser
+vision.json, ai_features.json, stack.json, code_review.json, design/mock.html
+Deployer
+ai_features.json, stack.json, feature_specs.json, phases/, design/mock.html
+CodeScanner reads the repository, not an artifact, so it has no upstream. usage.json is a record for you, read by no agent, and never makes anything stale.
+StackAdvisor depends on Designer's manifest.json — the data model and screen structure — and not on mock.html: a purely visual change cannot invalidate a stack choice. The mock is Phaser's and Deployer's dependency, because they hand it to the coding agent.
+One exception. A newer feature_specs.json is caught when Deployer runs — the conversation opens with a staleness note — but not yet by the project page's button, which does not consider that file. A Deployer whose only newer input is feature_specs.json shows Modify, not Needs Update.
+What you see on the project page:
+Button
+Meaning
+Start
+The agent's inputs exist and it hasn't produced its output yet.
+Continue
+Same as Start, but this session already has an unfinished conversation with the agent.
+Modify
+The agent's output exists and is at least as new as every input it depends on.
+Needs Update
+The output exists, but an upstream artifact has changed since it was written.
+Not Ready
+A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.
+Required
+The previous round is implemented and the next hasn't started. Only CodeScanner shows this.
+So if you re-run Brainstormer after StackAdvisor, the project page shows StackAdvisor as Needs Update. Re-running an agent appends to usage.json; nothing is overwritten.
+IMPLEMENTED
+The last phase's final instruction is touch .spec4/v{N}/IMPLEMENTED. It is appended to the phase file by Spec4, not written by the model.
+When your coding agent has built the phases, that marker is what tells Spec4 the round is done: the project page shows CodeScanner as Required and every other agent as Not Ready, because the next round always begins by reading what was built — even when the previous round was greenfield. Choose Existing project and run CodeScanner to open v{N+1}/.
+The screenshot on the front page is this state: Spec4's own project page after v2 was implemented, waiting for the re-scan.
+Evidence
+Spec4's own three rounds, .spec4/v0/ to v2/ in the repository: the UI rework, the artifacts view and chat frame, and the remaining screens. Every phase file and every call's cost.
+Built With Spec4: nine rounds on a deployed app, hand edits in between. Between its v0 and v1, three things entered the codebase that no v0 artifact mentions; v1's code_review.json recorded all three, and later rounds' specs picked them up.

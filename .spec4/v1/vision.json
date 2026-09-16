@@ -1,0 +1,71 @@
+{
+  "vision_statement": {
+    "name": "Spec4.ai website",
+    "vision": {
+      "purpose": "The public website for **Spec4** \u2014 **reference documentation with a front page**, not a marketing site. It exists so a developer arriving from Hacker News, Reddit, or a search engine can decide in a few minutes whether Spec4 is worth installing, and, having installed it, can look up how any part works.",
+      "ui_surface": "Static website \u2014 hand-written HTML files, one shared CSS stylesheet, no JavaScript, no build step, served from GitHub Pages.",
+      "target_audience": [
+        "Primary: Working software developers who use a coding agent (Claude Code, Cursor, Codex, Copilot) and read Hacker News \u2014 skeptical of marketing, allergic to AI hype, and used to judging a tool by its README and docs.",
+        "Secondary: Developers who have installed Spec4 and return to the docs via the app's Docs link.",
+        "No non-technical audience."
+      ],
+      "key_features_mvp": [
+        {
+          "Unified_Stylesheet": {
+            "description": "A single shared stylesheet implementing the site's 'look principle' \u2014 brand elements shared with the Spec4 app, reading layout otherwise \u2014 applied to all thirteen pages. Components: wordmark in the app's colors (Spec blue, 4 green, the only blue on the site); typography using the app's monospace font for code/filenames/nav version and a reading typeface for prose at proper measure and line-height; a nav of wordmark, version, and three text links with the current section marked; tables that scroll horizontally inside a wrapper on narrow viewports; code blocks as plain scrollable panels with no syntax coloring and no line numbers; figures at full column width with a caption; and a dark scheme that follows the reader's system setting via prefers-color-scheme using the app's background and text colors, with no toggle. Explicitly excludes icons, cards, hero, shadows, gradients, animation, a second accent color, and analytics.",
+            "example": "A reader who installs Spec4 recognizes the site's look in the tool itself.",
+            "id": "unified_stylesheet"
+          }
+        }
+      ],
+      "acceptance_criteria": [
+        "Every page renders without horizontal scroll of the body at 380px and 1280px viewport widths; wide tables and code blocks scroll only inside their own container.",
+        "No page loads any resource except its own HTML, the one stylesheet, the fonts, and its images.",
+        "Copy is byte-identical before and after this round: the round changes only styles.css and the minimum markup the stylesheet needs (a table wrapper, a class on the wordmark).",
+        "Text remains readable with the stylesheet disabled."
+      ],
+      "differentiators": [
+        "Vs. other developer-tool sites: reads like documentation, not a landing page \u2014 the front page opens with the install command and a real artifact.",
+        "Vs. the previous version of this site: no decoration at all \u2014 the copy is the design.",
+        "Visual continuity with the app: the site's look mirrors the app's, so a reader who installs Spec4 recognizes the site in the tool."
+      ],
+      "future_enhancements": [
+        {
+          "GitHub_Mark": {
+            "description": "Possibly add the GitHub mark/icon beside the nav's GitHub link.",
+            "example": "Not in scope for this round."
+          }
+        }
+      ],
+      "monetization": {
+        "current": "None \u2014 free, open-source project site."
+      },
+      "references": [
+        {
+          "standard": "prefers-color-scheme (CSS media feature)",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme"
+        },
+        {
+          "standard": "Open Graph protocol",
+          "url": "https://ogp.me"
+        },
+        {
+          "standard": "Sitemaps protocol",
+          "url": "https://www.sitemaps.org/protocol.html"
+        },
+        {
+          "standard": "GitHub Pages",
+          "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
+        },
+        {
+          "standard": "Google Fonts",
+          "url": "https://developers.google.com/fonts"
+        },
+        {
+          "standard": "WHATWG HTML Living Standard (meta http-equiv=refresh)",
+          "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh"
+        }
+      ]
+    }
+  }
+}

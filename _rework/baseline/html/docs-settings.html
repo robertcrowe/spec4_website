@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Spec4 docs</title>
+  <meta name="description" content="Spec4 has three settings: a model provider and key, a default model and reasoning effort, and an optional web-search provider. The setup wizard asks for them in that order the first time you open a project; the Settings page carries the same three steps afterwards.">
+  <link rel="canonical" href="https://spec4.ai/docs/settings/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Settings</h1>
+
+    <p>Spec4 has three settings: a model provider and key, a default model and reasoning effort, and an optional web-search provider. The setup wizard asks for them in that order the first time you open a project; the Settings page carries the same three steps afterwards.</p>
+
+    <p>This is the Settings page, on the provider step:</p>
+
+    <figure>
+      <img src="settings.png" alt="Spec4's Settings page, provider step" width="959" height="381">
+      <figcaption>The provider step: provider, API key, the note that the key is stored in this browser only, and the opt-in to remember it. Clear saved credentials removes the remembered key; Connect validates it against the provider and fetches its model list.</figcaption>
+    </figure>
+
+    <section>
+      <h2>Providers</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">Models fetched from</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Anthropic</td>
+            <td><code>api.anthropic.com/v1/models</code></td>
+          </tr>
+          <tr>
+            <td>AWS Bedrock</td>
+            <td><code>bedrock.amazonaws.com</code></td>
+          </tr>
+          <tr>
+            <td>Cohere</td>
+            <td><code>api.cohere.com/v2/models</code></td>
+          </tr>
+          <tr>
+            <td>Google Gemini</td>
+            <td><code>generativelanguage.googleapis.com</code></td>
+          </tr>
+          <tr>
+            <td>Mistral</td>
+            <td><code>api.mistral.ai/v1/models</code></td>
+          </tr>
+          <tr>
+            <td>Nebius</td>
+            <td><code>api.tokenfactory.nebius.com/v1/</code></td>
+          </tr>
+          <tr>
+            <td>OpenAI</td>
+            <td><code>api.openai.com/v1/models</code></td>
+          </tr>
+          <tr>
+            <td>OpenRouter</td>
+            <td><code>openrouter.ai/api/v1/models</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Models are fetched live from the provider when you connect, with a hardcoded fallback list if the API is unavailable.</p>
+
+      <p>AWS Bedrock accepts Bedrock API keys, IAM access keys, or ambient AWS credentials — environment variables, <code>~/.aws/credentials</code>, or IAM roles.</p>
+    </section>
+
+    <section>
+      <h2>Where keys live</h2>
+
+      <p>The key you enter is held in your browser and sent to one place: the provider it belongs to. It is never written to disk and never sent to spec4.ai or anywhere else.</p>
+
+      <p>Two browser stores are involved. The session store (<code>sessionStorage</code>) holds the key for the current tab. If you tick <em>Remember provider and keys in this browser</em>, the preferences store (<code>localStorage</code>) keeps it across sessions and upgrades; that is the opt-in. <em>Clear saved credentials</em> empties the preferences store. The server process holds no credential.</p>
+    </section>
+
+    <section>
+      <h2>Default model and effort</h2>
+
+      <p>The model step sets the project's default: one provider, one model, and one reasoning effort. Every agent uses the default unless you choose otherwise for that agent (next section).</p>
+
+      <p>Effort is sent to the provider as LiteLLM's <code>reasoning_effort</code>. The values offered are <code>default</code>, <code>low</code>, <code>medium</code>, and <code>high</code>, plus <code>max</code> on Anthropic models and <code>xhigh</code> on OpenAI models. Whether a model accepts the parameter at all is checked with a network-free capability probe; which levels it accepts is not, so:</p>
+
+      <ul>
+        <li><code>default</code> sends no effort parameter.</li>
+        <li>A model that doesn't accept the parameter ignores it; the call goes through.</li>
+        <li>A model that accepts the parameter but rejects the level is retried once with no effort, and the call is recorded in <a href="/docs/artifacts/"><code>usage.json</code></a> as <code>default (fallback from &lt;level&gt;)</code>.</li>
+      </ul>
+
+      <p>Spec4 never sends a provider-specific thinking or budget parameter. <code>reasoning_effort</code> is the only mechanism.</p>
+    </section>
+
+    <section>
+      <h2>Per-agent model and effort</h2>
+
+      <p>Each agent can run on a different provider, model, and effort from the default, chosen in three places:</p>
+
+      <ul>
+        <li><strong>The gate.</strong> Before an agent starts, a one-line panel names the agent and what it is about to run on — <code>Model for Phaser: claude-sonnet-5 · default</code> — with three choices: use the default, pick a model, or keep the override carried forward from the agent's last run.</li>
+        <li><strong>The chip.</strong> Under the composer while an agent is running, <code>Model: &lt;name&gt; · Change</code> reopens the choice mid-agent.</li>
+        <li><strong>The retry.</strong> When a provider returns an error, the retry panel offers a different provider, model, and effort. What you pick becomes the agent's selection for the rest of the <a href="/docs/rounds/">round</a>.</li>
+      </ul>
+
+      <p>An override holds its own key and never changes the default. Sub-agents inherit their parent's choice — <a href="/docs/brainstormer/">Brainstormer</a>'s feature speccer runs on Brainstormer's model, <a href="/docs/phaser/">Phaser</a>'s seam check on Phaser's. The status bar, the chip, and each agent's row on the project page show the selection as <code>&lt;model&gt; · &lt;effort&gt;</code>, or the model alone when the effort is <code>default</code>, and <code>usage.json</code> records what every call actually ran on.</p>
+
+      <p>The developer picks, every time. Nothing in Spec4 routes a call to a model on its own.</p>
+    </section>
+
+    <section>
+      <h2>Search</h2>
+
+      <p>Web search is optional and off unless you give it a key. With one, every agent can search for the standards, protocols, and SDKs it names and embed the canonical documentation link rather than recall one.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">Endpoint</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://tavily.com/">Tavily</a></td>
+            <td><code>mcp.tavily.com/mcp/</code></td>
+          </tr>
+          <tr>
+            <td><a href="https://exa.ai/">Exa</a></td>
+            <td><code>mcp.exa.ai/mcp</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Both are reached over MCP; the key is sent only to the provider it belongs to. The key is stored like the provider key, in the same two browser stores under the same opt-in.</p>
+    </section>
+
+    <section>
+      <h2>What the published rounds ran on</h2>
+
+      <p>Spec4's three rounds on itself, from each round's <code>usage.json</code>:</p>
+
+      <ul>
+        <li>Default: <code>claude-sonnet-5</code> on Anthropic, in all three rounds.</li>
+        <li>Phaser: <code>claude-opus-5</code>, in all three rounds.</li>
+        <li><a href="/docs/designer/">Designer</a>: <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code>; <code>claude-opus-5</code> in <code>v2</code>.</li>
+        <li>Every other agent that ran — <a href="/docs/codescanner/">CodeScanner</a>, Brainstormer, <a href="/docs/stackadvisor/">StackAdvisor</a> — on the default.</li>
+      </ul>
+
+      <p>That is practice, not a recommendation. Phaser got the stronger model because it holds every upstream artifact in context while it drafts and was the first or second largest line in every round; Designer got one because its single call is the whole mock. The three rounds predate per-agent effort, so every call ran at the provider's default. Per-agent figures are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+    </section>
+  </main>
+</body>
+</html>

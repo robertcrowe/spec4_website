@@ -1,0 +1,75 @@
+Spec4 1.5.0 Docs Examples GitHub
+Spec4 docs
+Spec4 is a local tool that turns a rough idea, or a change to an existing codebase, into a set of ordered development phases written for a coding agent. Seven planning agents run in order. Each reads what the ones before it wrote, and everything they write is a file under .spec4/ in your project. Spec4 doesn't write code; your coding agent does, one phase at a time.
+Version 1.5.0 · Apache 2.0 · GitHub
+Install
+Requires Python 3.12+ and uv, plus an API key for at least one supported provider.
+uv tool install spec4 --refresh spec4
+From source:
+git clone https://github.com/robertcrowe/spec4 cd spec4 make spec4
+Either way the app is at localhost:8050. To upgrade: uv tool upgrade spec4 (PyPI) or git pull && make install (source). Upgrades never touch your artifacts; everything lives in .spec4/ inside your project.
+First run
+Pick a project directory. An empty directory is a new project. A directory with files in it gets one question — Is there an existing project here? — because a uv init skeleton and a codebase you're modifying look the same to a file listing. Existing project starts with CodeScanner; New project starts with Brainstormer. You're asked again next session; the answer isn't written to disk.
+Connect a provider. Choose one of eight — Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter — enter its key, and pick a default model and reasoning effort. The key is held in your browser's localStorage, opt-in, and is never written to disk or sent anywhere but the provider it belongs to. Optionally add a Tavily or Exa key so the agents can ground their recommendations with live search. Settings
+Start the first agent. The project page lists the seven agents in order with one button each. Press Start on the first one that offers it.
+The round
+A round is one pass through the pipeline. Its output is a folder, .spec4/v0/ for the first round, v1/ for the next, and so on.
+Agent
+Reads
+Writes
+CodeScanner
+your repository (locally; the model gets a bounded summary)
+code_review.json
+Brainstormer
+code_review.json, your answers
+vision.json, feature_specs.json
+Agentifier
+vision.json, feature_specs.json
+ai_catalog.json, ai_features.json
+Designer
+vision.json, ai_features.json, optional screenshots
+design/mock.html, design/manifest.json
+StackAdvisor
+vision.json, ai_features.json, code_review.json, design/manifest.json
+stack.json
+Phaser
+everything above
+phases/phase1.md … phaseN.md
+Deployer
+phases/, stack.json, ai_features.json, feature_specs.json, design/mock.html
+deployment-plan.md, optionally README.md
+Run the agents a round needs. Brainstormer, StackAdvisor, and Phaser are the spine; CodeScanner is required when there's code; Agentifier, Designer, and Deployer are optional. Spec4's own three rounds ran five of the seven.
+The last phase's final instruction is touch .spec4/v{N}/IMPLEMENTED. When your coding agent has built the phases, that marker is what tells Spec4 the round is done and the next one may begin. The next round starts with CodeScanner reading what was actually built — including anything you or the agent changed that the plan didn't say. Rounds
+The buttons
+Each agent's row on the project page carries one button. Its label is computed from the files on disk every time the page renders; nothing is cached.
+Button
+Meaning
+Start
+The agent's inputs exist and it hasn't produced its output yet.
+Continue
+Same as Start, but this session already has an unfinished conversation with the agent.
+Modify
+The agent's output exists and is at least as new as every input it depends on.
+Needs Update
+The output exists, but an upstream artifact has changed since it was written.
+Not Ready
+A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.
+Required
+The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because the next round always begins by reading what was built, even when the previous round was greenfield; every other agent is Not Ready until it runs.
+Every agent works from files on disk, so any agent can be re-run in any order the files allow.
+The folder
+After a round, .spec4/v{N}/ contains:
+.spec4/v1/ code_review.json what's actually in the repo, with provenance vision.json what the product is, for whom, with a revision_history delta feature_specs.json inputs, outputs, success criteria, failure modes per feature ai_catalog.json Agentifier's recommendation and your decision, per feature ai_features.json where AI belongs, at what tier, built how design/mock.html the UI target design/manifest.json entities, screens, and surfaces the mock embodies stack.json approved components with canonical doc links phases/phase1.md … what the coding agent is handed, one per run deployment-plan.md complete deployment files, not pointers usage.json every call: agent, model, tokens, estimated cost
+Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. deployment-plan.md and usage.json are a record for you. The app's Artifacts view shows every file of every round. Artifacts
+Every file is plain JSON, HTML, or Markdown, readable and editable by hand, with no agent-specific format.
+Models and cost
+The default model and effort apply to every agent. At any agent's gate you can pick a different provider, model, and effort for that agent alone, and on a provider error the retry offers the same choice. Sub-agents inherit their parent's choice. usage.json records what each agent actually ran on and what each call cost; the cost strip on the project page shows the round's total. Dollar figures are LiteLLM's estimate from its community cost map and may lag provider price sheets; your provider's bill is authoritative. Settings
+Where your data goes
+Spec4 is a local process. The only network calls are to the model provider you chose and, if you enable it, the search provider. Your repository stays where it is; CodeScanner sends the model a bounded summary — manifests, entry points, samples — not the tree. Keys stay in your browser. Nothing is sent to spec4.ai.
+Reference
+CodeScanner · Brainstormer · Agentifier · Designer · StackAdvisor · Phaser · Deployer
+Settings — providers, effort, the gate, search, credentials
+Artifacts — every file's shape, with excerpts from real rounds
+Rounds — brownfield, revisions, staleness, IMPLEMENTED
+Built With Spec4 — nine rounds of Spec4 planning a deployed app
+Source · Issues

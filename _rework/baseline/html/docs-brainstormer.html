@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstormer — Spec4 docs</title>
+  <meta name="description" content="Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed: vision.json, which every later agent reads, and feature_specs.json, a behavioural spec for each MVP feature.">
+  <link rel="canonical" href="https://spec4.ai/docs/brainstormer/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Brainstormer</h1>
+
+    <p>Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed: <a href="/docs/artifacts/"><code>vision.json</code></a>, which every later agent reads, and <code>feature_specs.json</code>, a behavioural spec for each MVP feature.</p>
+
+    <p>It asks about the product and never about technology. The one implementation question it asks is the UI surface — web, mobile, desktop, CLI, API — because <a href="/docs/designer/">Designer</a> and <a href="/docs/phaser/">Phaser</a> need it.</p>
+
+    <section>
+      <h2>Reads</h2>
+
+      <p>You, one question at a time. If the <a href="/docs/rounds/">round</a> started with <a href="/docs/codescanner/">CodeScanner</a>, <code>code_review.json</code> as well, and the conversation is framed around the project that exists. In a revision round, the previous implemented round's <code>vision.json</code> as read-only reference.</p>
+    </section>
+
+    <section>
+      <h2>Asks</h2>
+
+      <p>Nine topics, in order, one at a time. It doesn't move to the next until you've confirmed your answer to the current one, and it recaps the decisions so far after each so you can go back and change any of them.</p>
+
+      <ol>
+        <li>Project name — always asked; it offers options if you don't have one.</li>
+        <li>Purpose — the problem it solves, and who has that problem today.</li>
+        <li>Target audience — primary users, and any secondary users or stakeholders.</li>
+        <li>Core features — the smallest set that delivers value on day one.</li>
+        <li>UI surface.</li>
+        <li>Differentiators.</li>
+        <li>Future enhancements.</li>
+        <li>Monetization — skipped when it clearly doesn't apply.</li>
+        <li>Technical standards and integrations — protocols, APIs, SDKs, compliance standards.</li>
+      </ol>
+
+      <p>When you name a standard, protocol, or SDK and web search is on, Brainstormer searches for its canonical documentation and embeds the link. Without a search key it still asks; it just can't look anything up.</p>
+
+      <p>There are four modes, chosen from what's on disk when the agent starts:</p>
+
+      <ul>
+        <li><strong>Fresh start.</strong> No prior context. The nine topics from the top.</li>
+        <li><strong>Existing project.</strong> A code review is present. Brainstormer summarizes its reading of the project, then runs the topics framed around what's there.</li>
+        <li><strong>Update.</strong> A vision already exists this round. It's presented as a summary; you say what to change, and the changes are worked one at a time.</li>
+        <li><strong>Revision.</strong> A previous round has been implemented. The identity is settled — no name, no topic sequence. Brainstormer states what's built and asks what this round's goal is and what to add, change, or remove, then works those one at a time as changes to the existing product.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Writes</h2>
+
+      <p><code>vision.json</code> — the confirmed vision as a document: name, purpose, target audience, <code>key_features_mvp</code>, UI surface, differentiators, future enhancements, monetization, and references with canonical links. Each MVP feature gets a stable id, assigned by Spec4 from its name, that every later artifact uses to refer to it.</p>
+
+      <p>In a revision round, the model also emits a <code>revision</code> block — the goal, the features added, modified, and removed, and the rationale — which Spec4 stamps with <code>version</code> and <code>based_on_version</code> from the folders on disk, reconciles against the previous vision's feature names, and appends to <code>revision_history</code>. The revision's vision is the full vision as it will be after the round, never a diff. <a href="/docs/rounds/">Rounds</a></p>
+
+      <p><code>feature_specs.json</code> — written by Brainstormer's feature speccer, a second pass that runs once the vision is confirmed. For every MVP feature: purpose, invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities it touches; plus <code>nfr_goals</code>, the project's non-functional goals as outcomes. The pass is technology-agnostic by rule: it may not name a language, framework, library, database, UI control, or storage mechanism anywhere in the spec.</p>
+
+      <p>The speccer's shape is a deterministic scaffold — one entry per feature, id and name assigned by Spec4 — that one model call fills in. Dependencies between features are pruned to a directed acyclic graph. If the call fails, the scaffold is written as is, so confirming a vision never fails on this step.</p>
+
+      <p>The chat shows a digest of the specs. To change one, change the feature in the vision; the specs regenerate from it.</p>
+
+      <p>Excerpts from both files are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+    </section>
+
+    <section>
+      <h2>Buttons</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td>No vision this round; if the directory has code, <code>code_review.json</code> exists.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>This session has an unfinished conversation with Brainstormer.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td><code>vision.json</code> exists and is newer than <code>code_review.json</code>. Opens in update mode.</td>
+          </tr>
+          <tr>
+            <td><strong>Needs Update</strong></td>
+            <td><code>code_review.json</code> is newer than <code>vision.json</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>Not Ready</strong></td>
+            <td>The directory has code and hasn't been scanned yet.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Re-running Brainstormer after later agents have run marks those agents <strong>Needs Update</strong>, since they all read the vision.</p>
+    </section>
+
+    <section>
+      <h2>Across rounds</h2>
+
+      <p>The first round's vision is the product. Every later round's is the product as it will be after that round, with one more entry in <code>revision_history</code>. The delta in that entry is what <a href="/docs/agentifier/">Agentifier</a>, Designer, <a href="/docs/stackadvisor/">StackAdvisor</a>, Phaser, and <a href="/docs/deployer/">Deployer</a> scope their work to.</p>
+    </section>
+
+    <section>
+      <h2>In Spec4's own rounds</h2>
+
+      <p>16 calls, about 253k tokens, and $0.67 in <code>v0</code>; 4 calls, 66k, and $0.32 in <code>v1</code>; 27 calls, 485k, and $1.60 in <code>v2</code>, feature-speccer calls included, all on <code>claude-sonnet-5</code>. It was Brainstormer's longest dialogue of the three, and <code>v2</code>'s most expensive line on the default model.</p>
+    </section>
+  </main>
+</body>
+</html>

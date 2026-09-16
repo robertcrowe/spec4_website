@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentifier — Spec4 docs</title>
+  <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
+  <link rel="canonical" href="https://spec4.ai/docs/agentifier/">
+  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <details class="sitemap">
+    <summary>Contents</summary>
+    <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
+      <p class="group">Docs</p>
+      <ul>
+        <li><a href="/docs/">Install and first run</a></li>
+        <li><a href="/docs/codescanner/">CodeScanner</a></li>
+        <li><a href="/docs/brainstormer/">Brainstormer</a></li>
+        <li><span aria-current="page">Agentifier</span>
+          <ul>
+            <li><a href="#the-ladder">The ladder</a></li>
+            <li><a href="#the-rubric">The rubric</a></li>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
+        <li><a href="/docs/designer/">Designer</a></li>
+        <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
+        <li><a href="/docs/phaser/">Phaser</a></li>
+        <li><a href="/docs/deployer/">Deployer</a></li>
+        <li><a href="/docs/artifacts/">Artifacts</a></li>
+        <li><a href="/docs/rounds/">Rounds</a></li>
+        <li><a href="/docs/settings/">Settings</a></li>
+      </ul>
+      <p class="group">Examples</p>
+      <ul>
+        <li><a href="/bws4/">Built With Spec4</a></li>
+      </ul>
+      <p class="group">Source</p>
+      <ul>
+        <li><a href="https://github.com/robertcrowe/spec4">GitHub</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <main>
+    <h1>Agentifier</h1>
+
+    <p>Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to <a href="/docs/artifacts/"><code>ai_catalog.json</code></a>, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to <code>ai_features.json</code>.</p>
+
+    <p>It is optional. Spec4's own three <a href="/docs/rounds/">rounds</a> didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.</p>
+
+    <section>
+      <h2 id="the-ladder">The ladder</h2>
+
+      <p>Nine tiers, cheapest first. Every cell below is from the frontmatter of the tier's pattern file in the repository; the live example is the <a href="/bws4/">Built With Spec4</a> app that demonstrates the tier.</p>
+
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Cost per invocation</th>
+              <th scope="col">Latency (s)</th>
+              <th scope="col">Reviewed</th>
+              <th scope="col">Live example</th>
+              <th scope="col">Pattern file</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>deterministic</code></td>
+              <td>$0 (no model inference)</td>
+              <td>&lt;0.01</td>
+              <td>2026-05-30</td>
+              <td>— (not AI; no app)</td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/01_deterministic.md"><code>01_deterministic.md</code></a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>embeddings</code></td>
+              <td>$0.00001–$0.001 per item embedded</td>
+              <td>0.05–0.5</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/02_embeddings.md"><code>02_embeddings.md</code></a></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>single_call</code></td>
+              <td>$0.001–$0.05</td>
+              <td>1–5</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/03_single_call.md"><code>03_single_call.md</code></a></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>rag</code></td>
+              <td>$0.002–$0.08</td>
+              <td>1–6</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/04_rag.md"><code>04_rag.md</code></a></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>tool_agent</code></td>
+              <td>$0.005–$0.15</td>
+              <td>2–15</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/05_tool_agent.md"><code>05_tool_agent.md</code></a></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><code>chained_calls</code></td>
+              <td>$0.01–$0.20</td>
+              <td>3–20</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/06_chained_calls.md"><code>06_chained_calls.md</code></a></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><code>planning_agent</code></td>
+              <td>$0.05–$2.00+</td>
+              <td>10–300+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/07_planning_agent.md"><code>07_planning_agent.md</code></a></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><code>orchestrated_subagents</code></td>
+              <td>$0.10–$5.00+</td>
+              <td>15–600+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/08_orchestrated_subagents.md"><code>08_orchestrated_subagents.md</code></a></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><code>multi_agent_collaboration</code></td>
+              <td>$0.20–$10.00+</td>
+              <td>30–1800+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/09_multi_agent_collaboration.md"><code>09_multi_agent_collaboration.md</code></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Tier 1 is not AI. The deterministic pattern file describes itself as the default the other eight tiers have to earn their way past, and its purpose is to let Agentifier recommend no model at all. Spec4's own Agentifier is a tier-8 system, as its pattern file notes.</p>
+    </section>
+
+    <section>
+      <h2 id="the-rubric">The rubric</h2>
+
+      <p>Each tier's pattern file has the same six sections — Description, When it works, When it doesn't, Over-engineering signs, Under-engineering signs, References — and a loader validates every file against that schema on startup. The Tier Analyst, the sub-agent that makes the recommendation, is given all nine files and a set of framing rules. Two of them, verbatim from <code>tier_analyst.py</code>:</p>
+
+      <blockquote>
+        <p>Testability, debuggability, observability, caching, validation of intermediate results, and the cost of splitting work are engineering choices, not tier drivers — they do NOT justify escalating a tier.</p>
+      </blockquote>
+
+      <blockquote>
+        <p>A feature is not more complex because its backing data is large, changes frequently, or "can't fit in a prompt."</p>
+      </blockquote>
+
+      <p>Its evaluation starts at <code>deterministic</code> and moves up one tier at a time, and it may not recommend anything above tier 1 without naming a specific input that a deterministic implementation would get wrong.</p>
+
+      <p>Six mechanisms — <code>mcp</code>, <code>parallel_fanout</code>, <code>reflection</code>, <code>human_in_the_loop</code>, <code>retrieval_reranking</code>, <code>structured_outputs</code> — live in <code>patterns/mechanisms/</code>. A mechanism is a choice about how a tier is built. It lives inside whatever tier the task requires and never moves a feature up the ladder: running the same call over eighty items is <code>parallel_fanout</code> at <code>single_call</code>, not orchestration; an approval step is <code>human_in_the_loop</code>, not a higher tier.</p>
+
+      <p>The pattern library is Markdown. A disagreement with a tier is a pull request against one file.</p>
+    </section>
+
+    <section>
+      <h2 id="reads">Reads</h2>
+
+      <p><code>vision.json</code> and <code>feature_specs.json</code>. <code>code_review.json</code> when the round has one, so candidates are found against what exists. In a revision round, the previous implemented round's <code>ai_features.json</code> as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.</p>
+    </section>
+
+    <section>
+      <h2 id="asks">Asks</h2>
+
+      <p>Agentifier is a sub-pipeline. Scout reads the vision and finds candidate AI features; Linker relates them to each other and to the product features; Composer assembles the catalog; Tier Analyst recommends a tier for each; Spec Drafter writes the spec for each feature you keep; two passes then add cross-cutting concerns and a priority order. Sub-agents run on Agentifier's model.</p>
+
+      <p>What you see:</p>
+
+      <ol>
+        <li><strong>Breadth.</strong> Scout's candidates, as a set. You can accept them or send Scout back with guidance on what to look for.</li>
+        <li><strong>One candidate at a time.</strong> Its name and description; where it sits among the other features; the Tier Analyst's recommendation in bold with its rationale; what going one tier cheaper would mean instead, so you can push back if the recommendation over-engineers; the seams to watch if the call is borderline; and all nine tiers as numbered options, plus a tenth: suggest your own.</li>
+        <li><strong>Your decision.</strong> Pick the recommendation and it's recorded. Pick a different tier and Agentifier names the specific risk in one or two sentences and asks you to confirm; on yes, your choice and your reason are recorded. It doesn't lecture and it doesn't refuse.</li>
+        <li><strong>The running catalog.</strong> After each decision, a table of every feature decided so far: recommended and decided. Say <em>revise &lt;name&gt;</em> at any point to go back.</li>
+        <li><strong>Confirmation.</strong> The full catalog, and the question of whether it's right.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 id="writes">Writes</h2>
+
+      <p><code>ai_catalog.json</code> — one record per candidate: <code>name</code>, <code>scope</code>, <code>rough_description</code>, <code>linked_existing_workflow</code> (the current implementation it would replace, if any), <code>tier_recommendation</code>, <code>tier_decision</code>, and <code>tier_decision_rationale</code>. The rationale is empty when your decision matched the recommendation and your words when it didn't.</p>
+
+      <p>Agentifier writes its recommendation and the developer's decision to the same file, side by side. This record is from <code>.spec4/v0/ai_catalog.json</code> in the Built With Spec4 repository:</p>
+
+<pre><code>{
+  "name": "rag_example_app",
+  "tier_recommendation": "single_call",
+  "tier_decision": "rag",
+  "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is intentional despite the small dataset size."
+}</code></pre>
+
+      <p>The tool argued against the agent; the developer decided; the file records both.</p>
+
+      <p><code>ai_features.json</code> — for each feature you kept, the spec the coding agent will see: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach; the mechanisms chosen; the infrastructure the tier implies, added deterministically from the pattern file's <code>required_infrastructure</code> (an <code>embeddings</code> feature brings an <code>embedding_pipeline</code> and a <code>vector_index</code>; <code>rag</code> adds a <code>chunking_pipeline</code> and a <code>retriever</code>; shared components appear once); the cross-cutting decisions — provider and model access, tool protocol, prompt versioning — for the project; and a priority order. <a href="/docs/phaser/">Phaser</a> inlines each spec, verbatim, into every phase that builds the feature. <a href="/docs/artifacts/">Artifacts</a></p>
+    </section>
+
+    <section>
+      <h2 id="buttons">Buttons</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>vision.json</code> exists and no AI features have been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with Agentifier.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>ai_features.json</code> exists and is newer than the vision and the code review.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td><code>vision.json</code> or <code>code_review.json</code> is newer than <code>ai_features.json</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No vision yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Skipping Agentifier is allowed: <a href="/docs/designer/">Designer</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and Phaser run without <code>ai_features.json</code> and plan no AI features.</p>
+    </section>
+
+    <section>
+      <h2 id="across-rounds">Across rounds</h2>
+
+      <p>A revision round carries the previous implemented round's <code>ai_features.json</code> as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped <code>introduced_in_version</code>. Phaser plans only those. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
+
+      <p>Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The Built With Spec4 rounds ran Agentifier in eight of nine, with a feature at every tier from <code>embeddings</code> up.</p>
+    </section>
+  </main>
+</body>
+</html>
