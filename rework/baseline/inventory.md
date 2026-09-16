@@ -279,3 +279,33 @@ other term in that grep — shadow, gradient, animation, transition,
 counter-increment — still returns nothing, and those are the exclusions the
 specification's success criteria actually name. Radius is not on the excluded
 list in register §14 or §17.
+
+---
+
+# Copy drift found
+
+**None.** Checked in Phase 6, per its instruction 13, by comparing each page's
+rendered text against its authoritative copy file under `rework/`. Every prose
+sentence in every copy file appears on its page.
+
+The comparison flagged a number of candidates that were each traced and
+dismissed as artifacts of the comparison rather than real drift:
+
+- **Editorial front-matter in the copy files** — `*Draft for review — /docs/
+  index...*`, `*Page metadata: <title> and og:title take the <h1> line...*`,
+  and the note that links marked ▸ point at pages not yet written. These are
+  instructions to the writer and are correctly not rendered on any page.
+- **Sentences split across list items.** Numbered lists in the copy files wrap
+  across lines, so a naive sentence splitter produced fragments spanning two
+  items ("...isn't written to disk. 2. **Connect a provider.**") that are not
+  contiguous in the rendered page. Every such fragment was found on the page in
+  its proper two pieces.
+- **Identifiers containing underscores** — `wsgi_app`, `cli_script`,
+  `dev_server`, `ui_root` on the CodeScanner page appeared missing only because
+  the comparison stripped underscores as Markdown emphasis. All four are
+  present.
+- **The front-page testimonial** was the one candidate worth chasing on its
+  own; it is present at `index.html:329-330` and in the pre-round baseline, and
+  was flagged only by the same sentence-splitting artifact.
+
+Nothing is outstanding for a later round to carry.
