@@ -1,131 +1,52 @@
-Spec4
-1.5.0
-Docs
-Examples
-GitHub
+Spec4 1.5.0 Docs Examples GitHub
 Deployer
-Deployer is the last agent. It asks which coding agent you're using and writes
-deployment-plan.md
-: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's
-README.md
-.
+Deployer is the last agent. It asks which coding agent you're using and writes deployment-plan.md: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's README.md.
 Reads
-stack.json
-, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its
-credentials_env
-; the stores and infrastructure to provision; and the roadmap entries to record rather than build.
-phases/
-, for the configurations the phases will need.
-feature_specs.json
-, for the non-functional goals.
-ai_features.json
-, when it exists, for the AI channel.
-code_review.json
-, when it exists, for the deployment, environment variables, persistence, and auth already in place.
-design/mock.html
-, cited by path in the coding-agent guidance. In a
-revision round
-, the previous implemented round's
-deployment-plan.md
-as the baseline.
-Two absences are read as decisions, not omissions: a stack with no
-security.auth
-has no accounts, and one with no
-integrations
-calls no external services. Deployer doesn't re-ask either.
+stack.json, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its credentials_env; the stores and infrastructure to provision; and the roadmap entries to record rather than build. phases/, for the configurations the phases will need. feature_specs.json, for the non-functional goals. ai_features.json, when it exists, for the AI channel. code_review.json, when it exists, for the deployment, environment variables, persistence, and auth already in place. design/mock.html, cited by path in the coding-agent guidance. In a revision round, the previous implemented round's deployment-plan.md as the baseline.
+Two absences are read as decisions, not omissions: a stack with no security.auth has no accounts, and one with no integrations calls no external services. Deployer doesn't re-ask either.
 Web search, if enabled, before every platform-specific recommendation — the coding agent's documentation, current pricing and free tiers, the recommended base image, CI setup for the chosen platform, the Terraform provider.
 Asks
 One question at a time, in two parts.
-Part 1: your coding agent.
-First, whether you want a
-README.md
-authored once the plan is done. Then which coding agent you'll use, so the plan's opening section can say how to start it in the project directory, where the Spec4 files live, the exact syntax to reference a phase file in that agent, and the workflow for working through the phases.
-Part 2: deployment.
-Seven topics:
-Target.
-Each surface the stack declares — a static frontend and an API are two — gets its own hosting decision: cloud, PaaS, on-premise, or serverless. If you're unsure, a recommendation from the stack and the scale the vision implies.
-Service.
-Which one on that target — ECS or App Runner or Lambda; Fly.io or Render or Railway — with current pricing checked first.
-Containerization.
-Keep or update an existing Dockerfile if the code review found one; otherwise whether to containerize, and with what base image.
-CI/CD.
-Whether to build and deploy on push, on which platform, with which stages.
-Environment.
-Deployer assembles the required variables from every source in context — the code review's
-env_vars
-, every phase's configurations, each auth mechanism's and AI provider's
-credentials_env
-, and whatever the target itself requires — and presents the list for correction rather than asking cold. Names only, never values. Then how secrets are managed.
-Monitoring.
-Error tracking and metrics. When AI features exist, also model observability, eval cadence, a feedback loop, and safety guardrails — sized to the tiers in use, so a single low-tier feature gets lightweight error tracking and a
-rag
-or
-tool_agent
-feature justifies evals.
-Terraform.
-Cloud targets only. Whether you want the infrastructure provisioned as
-.tf
-files, and what that would cover.
+Part 1: your coding agent. First, whether you want a README.md authored once the plan is done. Then which coding agent you'll use, so the plan's opening section can say how to start it in the project directory, where the Spec4 files live, the exact syntax to reference a phase file in that agent, and the workflow for working through the phases.
+Part 2: deployment. Seven topics:
+Target. Each surface the stack declares — a static frontend and an API are two — gets its own hosting decision: cloud, PaaS, on-premise, or serverless. If you're unsure, a recommendation from the stack and the scale the vision implies.
+Service. Which one on that target — ECS or App Runner or Lambda; Fly.io or Render or Railway — with current pricing checked first.
+Containerization. Keep or update an existing Dockerfile if the code review found one; otherwise whether to containerize, and with what base image.
+CI/CD. Whether to build and deploy on push, on which platform, with which stages.
+Environment. Deployer assembles the required variables from every source in context — the code review's env_vars, every phase's configurations, each auth mechanism's and AI provider's credentials_env, and whatever the target itself requires — and presents the list for correction rather than asking cold. Names only, never values. Then how secrets are managed.
+Monitoring. Error tracking and metrics. When AI features exist, also model observability, eval cadence, a feedback loop, and safety guardrails — sized to the tiers in use, so a single low-tier feature gets lightweight error tracking and a rag or tool_agent feature justifies evals.
+Terraform. Cloud targets only. Whether you want the infrastructure provisioned as .tf files, and what that would cover.
 Then a summary of the decisions for your yes, and the plan.
 Non-functional goals are sorted honestly: latency, availability, and durability goals are the deployment's to address; answer correctness, citation verifiability, and tone are the coding agent's. The plan's Notes record which is which, so no goal is silently dropped, and never claim that a hosting choice satisfies a goal it can't.
 Writes
-deployment-plan.md
-, in a fixed structure with inapplicable sections omitted:
-Coding Agent Guidance
-— everything from Part 1.
-Target
-— one block per surface: type, provider, service, region, transport, CORS.
-Containerization
-— base image and registry.
-CI/CD
-— platform, trigger branch, stages.
-Environment
-— the required variables and the secrets strategy.
-Monitoring
-— error tracking, metrics, and the AI-channel items.
-Deployment Steps
-— ordered provisioning steps, each with the exact shell commands.
-Configuration Files
-— every file the deployment needs, complete and ready to use: the Dockerfile, the pipeline YAML, provider config. No placeholders.
-Terraform
-— if requested, every
-.tf
-file to provision the infrastructure from scratch:
-main.tf
-,
-variables.tf
-,
-outputs.tf
-.
-Notes
-— caveats, cost estimates, and the record of which non-functional goals the deployment addresses and which are the coding agent's.
-An
-example plan
-is on this site.
-README.md
-, in the project root, if you said yes: the vision, key features, install and setup, and usage, so anyone or any coding agent opening the repository has the picture in one place. An existing README is updated in place, not replaced.
+deployment-plan.md, in a fixed structure with inapplicable sections omitted:
+Coding Agent Guidance — everything from Part 1.
+Target — one block per surface: type, provider, service, region, transport, CORS.
+Containerization — base image and registry.
+CI/CD — platform, trigger branch, stages.
+Environment — the required variables and the secrets strategy.
+Monitoring — error tracking, metrics, and the AI-channel items.
+Deployment Steps — ordered provisioning steps, each with the exact shell commands.
+Configuration Files — every file the deployment needs, complete and ready to use: the Dockerfile, the pipeline YAML, provider config. No placeholders.
+Terraform — if requested, every .tf file to provision the infrastructure from scratch: main.tf, variables.tf, outputs.tf.
+Notes — caveats, cost estimates, and the record of which non-functional goals the deployment addresses and which are the coding agent's.
+An example plan is on this site.
+README.md, in the project root, if you said yes: the vision, key features, install and setup, and usage, so anyone or any coding agent opening the repository has the picture in one place. An existing README is updated in place, not replaced.
 Buttons
 Button
 When
 Start
-phases/
-exists and no plan has been written this round.
+phases/ exists and no plan has been written this round.
 Continue
 This session has an unfinished conversation with Deployer.
 Modify
-deployment-plan.md
-exists and is newer than every input it depends on. Offers to keep the plan and answer questions about it, refine parts of it, or start over.
+deployment-plan.md exists and is newer than every input it depends on. Offers to keep the plan and answer questions about it, refine parts of it, or start over.
 Needs Update
 The stack, phases, AI features, or mock is newer than the plan.
 Not Ready
 No phases yet.
-A newer
-feature_specs.json
-is caught when Deployer runs, but not yet by the button.
-Rounds
+A newer feature_specs.json is caught when Deployer runs, but not yet by the button. Rounds
 Across rounds
 A revision round carries the previous implemented round's plan forward as the established baseline. Deployer confirms it, asks which coding agent you'll use for this round's phases, and updates the deployment only for what the round changed — new environment variables or keys, infrastructure for a new surface, observability for a newly introduced AI feature — without re-asking settled decisions. A deployment plan describes the whole running system, so the update is whole-system-scoped. The README update, if requested, is scoped to this round's feature changes and leaves the rest intact.
 In Spec4's own rounds
-Not run. Spec4's deployment — a local process installed from PyPI — didn't change in any of the three rounds. The
-Built With Spec4
-app is deployed from a Deployer plan.
+Not run. Spec4's deployment — a local process installed from PyPI — didn't change in any of the three rounds. The Built With Spec4 app is deployed from a Deployer plan.

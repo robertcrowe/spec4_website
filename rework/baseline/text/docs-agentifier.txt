@@ -1,21 +1,9 @@
-Spec4
-1.5.0
-Docs
-Examples
-GitHub
+Spec4 1.5.0 Docs Examples GitHub
 Agentifier
-Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to
-ai_catalog.json
-, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to
-ai_features.json
-.
-It is optional. Spec4's own three
-rounds
-didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.
+Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.
+It is optional. Spec4's own three rounds didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.
 The ladder
-Nine tiers, cheapest first. Every cell below is from the frontmatter of the tier's pattern file in the repository; the live example is the
-Built With Spec4
-app that demonstrates the tier.
+Nine tiers, cheapest first. Every cell below is from the frontmatter of the tier's pattern file in the repository; the live example is the Built With Spec4 app that demonstrates the tier.
 #
 Tier
 Cost per invocation
@@ -88,136 +76,43 @@ Multi-Agent Collaboration
 09_multi_agent_collaboration.md
 Tier 1 is not AI. The deterministic pattern file describes itself as the default the other eight tiers have to earn their way past, and its purpose is to let Agentifier recommend no model at all. Spec4's own Agentifier is a tier-8 system, as its pattern file notes.
 The rubric
-Each tier's pattern file has the same six sections — Description, When it works, When it doesn't, Over-engineering signs, Under-engineering signs, References — and a loader validates every file against that schema on startup. The Tier Analyst, the sub-agent that makes the recommendation, is given all nine files and a set of framing rules. Two of them, verbatim from
-tier_analyst.py
-:
+Each tier's pattern file has the same six sections — Description, When it works, When it doesn't, Over-engineering signs, Under-engineering signs, References — and a loader validates every file against that schema on startup. The Tier Analyst, the sub-agent that makes the recommendation, is given all nine files and a set of framing rules. Two of them, verbatim from tier_analyst.py:
 Testability, debuggability, observability, caching, validation of intermediate results, and the cost of splitting work are engineering choices, not tier drivers — they do NOT justify escalating a tier.
 A feature is not more complex because its backing data is large, changes frequently, or "can't fit in a prompt."
-Its evaluation starts at
-deterministic
-and moves up one tier at a time, and it may not recommend anything above tier 1 without naming a specific input that a deterministic implementation would get wrong.
-Six mechanisms —
-mcp
-,
-parallel_fanout
-,
-reflection
-,
-human_in_the_loop
-,
-retrieval_reranking
-,
-structured_outputs
-— live in
-patterns/mechanisms/
-. A mechanism is a choice about how a tier is built. It lives inside whatever tier the task requires and never moves a feature up the ladder: running the same call over eighty items is
-parallel_fanout
-at
-single_call
-, not orchestration; an approval step is
-human_in_the_loop
-, not a higher tier.
+Its evaluation starts at deterministic and moves up one tier at a time, and it may not recommend anything above tier 1 without naming a specific input that a deterministic implementation would get wrong.
+Six mechanisms — mcp, parallel_fanout, reflection, human_in_the_loop, retrieval_reranking, structured_outputs — live in patterns/mechanisms/. A mechanism is a choice about how a tier is built. It lives inside whatever tier the task requires and never moves a feature up the ladder: running the same call over eighty items is parallel_fanout at single_call, not orchestration; an approval step is human_in_the_loop, not a higher tier.
 The pattern library is Markdown. A disagreement with a tier is a pull request against one file.
 Reads
-vision.json
-and
-feature_specs.json
-.
-code_review.json
-when the round has one, so candidates are found against what exists. In a revision round, the previous implemented round's
-ai_features.json
-as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.
+vision.json and feature_specs.json. code_review.json when the round has one, so candidates are found against what exists. In a revision round, the previous implemented round's ai_features.json as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.
 Asks
 Agentifier is a sub-pipeline. Scout reads the vision and finds candidate AI features; Linker relates them to each other and to the product features; Composer assembles the catalog; Tier Analyst recommends a tier for each; Spec Drafter writes the spec for each feature you keep; two passes then add cross-cutting concerns and a priority order. Sub-agents run on Agentifier's model.
 What you see:
-Breadth.
-Scout's candidates, as a set. You can accept them or send Scout back with guidance on what to look for.
-One candidate at a time.
-Its name and description; where it sits among the other features; the Tier Analyst's recommendation in bold with its rationale; what going one tier cheaper would mean instead, so you can push back if the recommendation over-engineers; the seams to watch if the call is borderline; and all nine tiers as numbered options, plus a tenth: suggest your own.
-Your decision.
-Pick the recommendation and it's recorded. Pick a different tier and Agentifier names the specific risk in one or two sentences and asks you to confirm; on yes, your choice and your reason are recorded. It doesn't lecture and it doesn't refuse.
-The running catalog.
-After each decision, a table of every feature decided so far: recommended and decided. Say
-revise <name>
-at any point to go back.
-Confirmation.
-The full catalog, and the question of whether it's right.
+Breadth. Scout's candidates, as a set. You can accept them or send Scout back with guidance on what to look for.
+One candidate at a time. Its name and description; where it sits among the other features; the Tier Analyst's recommendation in bold with its rationale; what going one tier cheaper would mean instead, so you can push back if the recommendation over-engineers; the seams to watch if the call is borderline; and all nine tiers as numbered options, plus a tenth: suggest your own.
+Your decision. Pick the recommendation and it's recorded. Pick a different tier and Agentifier names the specific risk in one or two sentences and asks you to confirm; on yes, your choice and your reason are recorded. It doesn't lecture and it doesn't refuse.
+The running catalog. After each decision, a table of every feature decided so far: recommended and decided. Say revise <name> at any point to go back.
+Confirmation. The full catalog, and the question of whether it's right.
 Writes
-ai_catalog.json
-— one record per candidate:
-name
-,
-scope
-,
-rough_description
-,
-linked_existing_workflow
-(the current implementation it would replace, if any),
-tier_recommendation
-,
-tier_decision
-, and
-tier_decision_rationale
-. The rationale is empty when your decision matched the recommendation and your words when it didn't.
-Agentifier writes its recommendation and the developer's decision to the same file, side by side. This record is from
-.spec4/v0/ai_catalog.json
-in the Built With Spec4 repository:
+ai_catalog.json — one record per candidate: name, scope, rough_description, linked_existing_workflow (the current implementation it would replace, if any), tier_recommendation, tier_decision, and tier_decision_rationale. The rationale is empty when your decision matched the recommendation and your words when it didn't.
+Agentifier writes its recommendation and the developer's decision to the same file, side by side. This record is from .spec4/v0/ai_catalog.json in the Built With Spec4 repository:
 { "name": "rag_example_app", "tier_recommendation": "single_call", "tier_decision": "rag", "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is intentional despite the small dataset size." }
 The tool argued against the agent; the developer decided; the file records both.
-ai_features.json
-— for each feature you kept, the spec the coding agent will see: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach; the mechanisms chosen; the infrastructure the tier implies, added deterministically from the pattern file's
-required_infrastructure
-(an
-embeddings
-feature brings an
-embedding_pipeline
-and a
-vector_index
-;
-rag
-adds a
-chunking_pipeline
-and a
-retriever
-; shared components appear once); the cross-cutting decisions — provider and model access, tool protocol, prompt versioning — for the project; and a priority order.
-Phaser
-inlines each spec, verbatim, into every phase that builds the feature.
-Artifacts
+ai_features.json — for each feature you kept, the spec the coding agent will see: inputs and outputs, failure modes, privacy and safety, escalation on failure, and the eval approach; the mechanisms chosen; the infrastructure the tier implies, added deterministically from the pattern file's required_infrastructure (an embeddings feature brings an embedding_pipeline and a vector_index; rag adds a chunking_pipeline and a retriever; shared components appear once); the cross-cutting decisions — provider and model access, tool protocol, prompt versioning — for the project; and a priority order. Phaser inlines each spec, verbatim, into every phase that builds the feature. Artifacts
 Buttons
 Button
 When
 Start
-vision.json
-exists and no AI features have been written this round.
+vision.json exists and no AI features have been written this round.
 Continue
 This session has an unfinished conversation with Agentifier.
 Modify
-ai_features.json
-exists and is newer than the vision and the code review.
+ai_features.json exists and is newer than the vision and the code review.
 Needs Update
-vision.json
-or
-code_review.json
-is newer than
-ai_features.json
-.
+vision.json or code_review.json is newer than ai_features.json.
 Not Ready
 No vision yet.
-Skipping Agentifier is allowed:
-Designer
-,
-StackAdvisor
-, and Phaser run without
-ai_features.json
-and plan no AI features.
+Skipping Agentifier is allowed: Designer, StackAdvisor, and Phaser run without ai_features.json and plan no AI features.
 Across rounds
-A revision round carries the previous implemented round's
-ai_features.json
-as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped
-introduced_in_version
-. Phaser plans only those.
-Rounds
+A revision round carries the previous implemented round's ai_features.json as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped introduced_in_version. Phaser plans only those. Rounds
 In Spec4's own rounds
-Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The Built With Spec4 rounds ran Agentifier in eight of nine, with a feature at every tier from
-embeddings
-up.
+Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The Built With Spec4 rounds ran Agentifier in eight of nine, with a feature at every tier from embeddings up.

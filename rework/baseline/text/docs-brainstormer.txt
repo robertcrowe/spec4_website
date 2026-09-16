@@ -1,29 +1,9 @@
-Spec4
-1.5.0
-Docs
-Examples
-GitHub
+Spec4 1.5.0 Docs Examples GitHub
 Brainstormer
-Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed:
-vision.json
-, which every later agent reads, and
-feature_specs.json
-, a behavioural spec for each MVP feature.
-It asks about the product and never about technology. The one implementation question it asks is the UI surface — web, mobile, desktop, CLI, API — because
-Designer
-and
-Phaser
-need it.
+Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed: vision.json, which every later agent reads, and feature_specs.json, a behavioural spec for each MVP feature.
+It asks about the product and never about technology. The one implementation question it asks is the UI surface — web, mobile, desktop, CLI, API — because Designer and Phaser need it.
 Reads
-You, one question at a time. If the
-round
-started with
-CodeScanner
-,
-code_review.json
-as well, and the conversation is framed around the project that exists. In a revision round, the previous implemented round's
-vision.json
-as read-only reference.
+You, one question at a time. If the round started with CodeScanner, code_review.json as well, and the conversation is framed around the project that exists. In a revision round, the previous implemented round's vision.json as read-only reference.
 Asks
 Nine topics, in order, one at a time. It doesn't move to the next until you've confirmed your answer to the current one, and it recaps the decisions so far after each so you can go back and change any of them.
 Project name — always asked; it offers options if you don't have one.
@@ -37,81 +17,32 @@ Monetization — skipped when it clearly doesn't apply.
 Technical standards and integrations — protocols, APIs, SDKs, compliance standards.
 When you name a standard, protocol, or SDK and web search is on, Brainstormer searches for its canonical documentation and embeds the link. Without a search key it still asks; it just can't look anything up.
 There are four modes, chosen from what's on disk when the agent starts:
-Fresh start.
-No prior context. The nine topics from the top.
-Existing project.
-A code review is present. Brainstormer summarizes its reading of the project, then runs the topics framed around what's there.
-Update.
-A vision already exists this round. It's presented as a summary; you say what to change, and the changes are worked one at a time.
-Revision.
-A previous round has been implemented. The identity is settled — no name, no topic sequence. Brainstormer states what's built and asks what this round's goal is and what to add, change, or remove, then works those one at a time as changes to the existing product.
+Fresh start. No prior context. The nine topics from the top.
+Existing project. A code review is present. Brainstormer summarizes its reading of the project, then runs the topics framed around what's there.
+Update. A vision already exists this round. It's presented as a summary; you say what to change, and the changes are worked one at a time.
+Revision. A previous round has been implemented. The identity is settled — no name, no topic sequence. Brainstormer states what's built and asks what this round's goal is and what to add, change, or remove, then works those one at a time as changes to the existing product.
 Writes
-vision.json
-— the confirmed vision as a document: name, purpose, target audience,
-key_features_mvp
-, UI surface, differentiators, future enhancements, monetization, and references with canonical links. Each MVP feature gets a stable id, assigned by Spec4 from its name, that every later artifact uses to refer to it.
-In a revision round, the model also emits a
-revision
-block — the goal, the features added, modified, and removed, and the rationale — which Spec4 stamps with
-version
-and
-based_on_version
-from the folders on disk, reconciles against the previous vision's feature names, and appends to
-revision_history
-. The revision's vision is the full vision as it will be after the round, never a diff.
-Rounds
-feature_specs.json
-— written by Brainstormer's feature speccer, a second pass that runs once the vision is confirmed. For every MVP feature: purpose, invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities it touches; plus
-nfr_goals
-, the project's non-functional goals as outcomes. The pass is technology-agnostic by rule: it may not name a language, framework, library, database, UI control, or storage mechanism anywhere in the spec.
+vision.json — the confirmed vision as a document: name, purpose, target audience, key_features_mvp, UI surface, differentiators, future enhancements, monetization, and references with canonical links. Each MVP feature gets a stable id, assigned by Spec4 from its name, that every later artifact uses to refer to it.
+In a revision round, the model also emits a revision block — the goal, the features added, modified, and removed, and the rationale — which Spec4 stamps with version and based_on_version from the folders on disk, reconciles against the previous vision's feature names, and appends to revision_history. The revision's vision is the full vision as it will be after the round, never a diff. Rounds
+feature_specs.json — written by Brainstormer's feature speccer, a second pass that runs once the vision is confirmed. For every MVP feature: purpose, invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities it touches; plus nfr_goals, the project's non-functional goals as outcomes. The pass is technology-agnostic by rule: it may not name a language, framework, library, database, UI control, or storage mechanism anywhere in the spec.
 The speccer's shape is a deterministic scaffold — one entry per feature, id and name assigned by Spec4 — that one model call fills in. Dependencies between features are pruned to a directed acyclic graph. If the call fails, the scaffold is written as is, so confirming a vision never fails on this step.
 The chat shows a digest of the specs. To change one, change the feature in the vision; the specs regenerate from it.
-Excerpts from both files are on the
-Artifacts
-page.
+Excerpts from both files are on the Artifacts page.
 Buttons
 Button
 When
 Start
-No vision this round; if the directory has code,
-code_review.json
-exists.
+No vision this round; if the directory has code, code_review.json exists.
 Continue
 This session has an unfinished conversation with Brainstormer.
 Modify
-vision.json
-exists and is newer than
-code_review.json
-. Opens in update mode.
+vision.json exists and is newer than code_review.json. Opens in update mode.
 Needs Update
-code_review.json
-is newer than
-vision.json
-.
+code_review.json is newer than vision.json.
 Not Ready
 The directory has code and hasn't been scanned yet.
-Re-running Brainstormer after later agents have run marks those agents
-Needs Update
-, since they all read the vision.
+Re-running Brainstormer after later agents have run marks those agents Needs Update, since they all read the vision.
 Across rounds
-The first round's vision is the product. Every later round's is the product as it will be after that round, with one more entry in
-revision_history
-. The delta in that entry is what
-Agentifier
-, Designer,
-StackAdvisor
-, Phaser, and
-Deployer
-scope their work to.
+The first round's vision is the product. Every later round's is the product as it will be after that round, with one more entry in revision_history. The delta in that entry is what Agentifier, Designer, StackAdvisor, Phaser, and Deployer scope their work to.
 In Spec4's own rounds
-16 calls, about 253k tokens, and $0.67 in
-v0
-; 4 calls, 66k, and $0.32 in
-v1
-; 27 calls, 485k, and $1.60 in
-v2
-, feature-speccer calls included, all on
-claude-sonnet-5
-. It was Brainstormer's longest dialogue of the three, and
-v2
-'s most expensive line on the default model.
+16 calls, about 253k tokens, and $0.67 in v0; 4 calls, 66k, and $0.32 in v1; 27 calls, 485k, and $1.60 in v2, feature-speccer calls included, all on claude-sonnet-5. It was Brainstormer's longest dialogue of the three, and v2's most expensive line on the default model.

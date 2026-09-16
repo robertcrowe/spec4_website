@@ -1,15 +1,7 @@
-Spec4
-1.5.0
-Docs
-Examples
-GitHub
+Spec4 1.5.0 Docs Examples GitHub
 CodeScanner
-CodeScanner reads an existing directory and writes
-code_review.json
-: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.
-It is the first agent of any
-round
-on existing code, and the first agent of every round after the first.
+CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.
+It is the first agent of any round on existing code, and the first agent of every round after the first.
 Reads
 The repository, locally. What the model receives is a bounded summary assembled by Spec4 before any call is made:
 Part
@@ -19,143 +11,29 @@ File tree
 Every path under the directory, skipping vendored and build directories
 150 files
 Manifests
-pyproject.toml
-,
-package.json
-,
-Cargo.toml
-,
-go.mod
-,
-Makefile
-, linter and type-checker configs, and the like
+pyproject.toml, package.json, Cargo.toml, go.mod, Makefile, linter and type-checker configs, and the like
 3,000 characters per file, 10,000 in total
 README
 The root README, if there is one
 80 lines
 Deployment and CI signals
-Dockerfile
-,
-docker-compose.yml
-,
-Procfile
-,
-fly.toml
-,
-render.yaml
-,
-.github/workflows/
-, Terraform directories, and the like
+Dockerfile, docker-compose.yml, Procfile, fly.toml, render.yaml, .github/workflows/, Terraform directories, and the like
 Source samples
-The head of up to eight non-test source files, entry-point candidates first (
-main
-,
-app
-,
-index
-,
-server
-,
-cli
-,
-__main__
-)
+The head of up to eight non-test source files, entry-point candidates first (main, app, index, server, cli, __main__)
 80 lines per file, 8,000 characters in total
-Skipped:
-.git
-,
-node_modules
-,
-.venv
-,
-__pycache__
-,
-dist
-,
-build
-,
-target
-,
-.spec4
-, and the other cache and vendor directories. Test directories are excluded from the samples.
+Skipped: .git, node_modules, .venv, __pycache__, dist, build, target, .spec4, and the other cache and vendor directories. Test directories are excluded from the samples.
 Before the call, the chat shows how many files were indexed and roughly how many tokens are about to be sent, and to which model. Nothing else leaves the machine.
 Writes
-code_review.json
-. The shape is fixed:
-project_type
-,
-languages
-,
-frameworks
-,
-build_system
-,
-commands
-,
-entrypoints
-,
-ui_summary
-, and
-notes
-are required when the directory holds a software project.
-Every fact carries a
-source
-— the file it was read from — or
-inferred_from
-— the file it was deduced from. A fact with neither is not written.
-commands
-has a closed set of keys:
-build
-,
-test
-,
-lint
-,
-typecheck
-,
-run
-,
-dev
-,
-deploy
-.
-entrypoints
-likewise:
-main
-,
-wsgi_app
-,
-cli_script
-,
-dev_server
-,
-ui_root
-. Anything else the project has goes in
-notes.other_notes
-as a line of text, so a downstream agent reading
-commands.test
-always finds the same thing.
+code_review.json. The shape is fixed:
+project_type, languages, frameworks, build_system, commands, entrypoints, ui_summary, and notes are required when the directory holds a software project.
+Every fact carries a source — the file it was read from — or inferred_from — the file it was deduced from. A fact with neither is not written.
+commands has a closed set of keys: build, test, lint, typecheck, run, dev, deploy. entrypoints likewise: main, wsgi_app, cli_script, dev_server, ui_root. Anything else the project has goes in notes.other_notes as a line of text, so a downstream agent reading commands.test always finds the same thing.
 A key the model can't verify is omitted, never filled with "none" or "n/a".
-notes.change_risks
-records where a change is likely to break something;
-StackAdvisor
-is told to read it before proposing a swap.
-notes.security_observations
-and
-existing_self_description
-(quoted from the README or a package description, never from a config file) are also there.
-An empty directory, or one without code, gets
-is_software_project: false
-and a one-line summary.
-An excerpt from Spec4's own
-.spec4/v2/code_review.json
-is on the
-Artifacts
-page.
+notes.change_risks records where a change is likely to break something; StackAdvisor is told to read it before proposing a swap. notes.security_observations and existing_self_description (quoted from the README or a package description, never from a config file) are also there.
+An empty directory, or one without code, gets is_software_project: false and a one-line summary.
+An excerpt from Spec4's own .spec4/v2/code_review.json is on the Artifacts page.
 Asks
-Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the file — or press
-Modify
-later to reopen it.
+Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the file — or press Modify later to reopen it.
 Web search, if you've given it a key, is available to CodeScanner for the standards and protocols it names.
 Buttons
 Button
@@ -165,29 +43,11 @@ The directory has code and no review has been written this round.
 Continue
 This session has an unfinished conversation with CodeScanner.
 Modify
-code_review.json
-exists for this round.
+code_review.json exists for this round.
 Required
 The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan — even if the previous round was greenfield.
-CodeScanner has no upstream artifact, so it is never
-Needs Update
-or
-Not Ready
-. A directory you answered
-New project
-to skips it and starts with
-Brainstormer
-.
+CodeScanner has no upstream artifact, so it is never Needs Update or Not Ready. A directory you answered New project to skips it and starts with Brainstormer.
 Across rounds
-The review is rewritten from scratch each round, of the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan.
-Rounds
+The review is rewritten from scratch each round, of the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan. Rounds
 In Spec4's own rounds
-Three calls, about 118k tokens, and $0.53 in
-v1
-; three calls, about 116k tokens, and $0.46 in
-v2
-, on
-claude-sonnet-5
-.
-v0
-'s scan ran before usage was recorded.
+Three calls, about 118k tokens, and $0.53 in v1; three calls, about 116k tokens, and $0.46 in v2, on claude-sonnet-5. v0's scan ran before usage was recorded.
