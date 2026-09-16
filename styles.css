@@ -31,15 +31,19 @@
   --color-rule: #d9d9d4;
   --color-code-tint: #f3f3ef;/* code panel fill; --color-text on it: 15.43:1 */
 
-  /* The wordmark's two colours. Blue appears in the wordmark and nowhere
-     else on the site. Green additionally marks links and the active section. */
+  /* The wordmark's two colours, and the accent. The first two are spent in the
+     wordmark and nowhere else on the site; the third marks links and the active
+     section as well. Both wordmark colours are exempt from WCAG 2.1 SC 1.4.3,
+     which sets no contrast requirement for text that is part of a logo or brand
+     name; --accent-green is not, and is held to 4.5:1. */
   --wordmark-blue: #1565c0; /* the app's blue, darkened for a white page; 5.75:1 */
-  --accent-green: #157f00;  /* the app's green, darkened for a white page; 5.16:1,
-                               and 4.64:1 on --color-code-tint for a link round a code span.
-                               Hue 110 and full saturation, which is #39ff14's own hue: the
-                               previous value sat at hue 139 and 68% saturation, close enough
-                               in luminance to --wordmark-blue (1.06:1) that the wordmark's 4
-                               read as part of Spec rather than as the accent. */
+  --wordmark-green: #15cf00;/* the app's green, bright enough on a white page to read as
+                               green beside --wordmark-blue rather than as another dark
+                               letter. 2.11:1, which the logotype exemption allows and
+                               which nothing outside .wordmark-four may rely on. */
+  --accent-green: #157f00;  /* the same hue as --wordmark-green, darkened until it carries
+                               body text: 5.16:1 on --color-bg and 4.64:1 on
+                               --color-code-tint, for a link wrapped round a code span. */
 
   /* Fonts. Exactly two: a self-hosted monospace for code, the wordmark and
      version text, and a system stack for reading prose — no files are shipped
@@ -86,6 +90,9 @@
     --color-rule: #2a2a3a;
     --color-code-tint: #14141c;    /* --color-text on it: 16.82:1 */
     --wordmark-blue: #42a5f5;    /* 7.46:1 */
+    --wordmark-green: #39ff14;   /* 14.57:1 -- on a dark page the accent is already bright
+                                    enough for the wordmark, so the two greens coincide here
+                                    and the dark scheme renders exactly as it did before. */
     --accent-green: #39ff14;   /* 14.57:1 */
   }
 }
@@ -276,13 +283,16 @@ em {
   text-decoration: none;
 }
 
-/* The only rule in the stylesheet permitted to use the blue token. */
+/* The only two rules in the stylesheet permitted to use the wordmark tokens,
+   and the only place either colour appears. Neither token may be borrowed by
+   anything else: --wordmark-green is brighter than body text on a white page
+   can be, and is legible here only because a wordmark is a logotype. */
 .wordmark-spec {
   color: var(--wordmark-blue);
 }
 
 .wordmark-four {
-  color: var(--accent-green);
+  color: var(--wordmark-green);
 }
 
 /* Sits with the wordmark at the start; its trailing auto margin is what

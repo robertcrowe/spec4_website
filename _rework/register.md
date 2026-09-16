@@ -31,7 +31,7 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 14. No gradients, grid backgrounds, badges, pills, kickers, or eyebrow labels.
 15. No animation, fade-ins, scroll effects, or decorative motion.
 16. No CTA banners, buttons styled as hero actions, or "Get Started" buttons in the nav.
-17. No second accent colour. No blue, except in the Spec4 wordmark, where it is the app's.
+17. No second accent colour. No blue, except in the Spec4 wordmark, where it is the app's. *(Amended 2026-09-15: the wordmark's `4` takes a brighter green than the accent — `--wordmark-green`, the same hue — because at the accent's darkness it read as part of `Spec` rather than as the mark's second half. It is a wordmark colour, not a second accent: nothing outside `.wordmark-four` may use it, and the accent itself is still one colour.)*
 18. No analytics, no external fonts beyond what the existing pages already load, no JavaScript beyond what the existing pages already load.
 
 ## Nav (every page)
