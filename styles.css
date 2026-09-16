@@ -316,6 +316,158 @@ em {
   text-decoration: none;
 }
 
+/* CANONICAL SITE-MAP MARKUP CONTRACT
+   The whole site map -- thirteen pages, three groups -- sits on every styled
+   page directly below the one-line nav, in one native <details>. It is the
+   same markup at every width; the two presentations below are the
+   stylesheet's doing and nothing else's.
+
+     <details class="sitemap">
+       <summary>Contents</summary>
+       <nav aria-label="Site map">
+         <p class="group">Docs</p>
+         <ul>
+           <li><a href="/docs/">Install and first run</a></li>
+           ... one <li> per page, in the order fixed by the register ...
+         </ul>
+         <p class="group">Examples</p>   ... <p class="group">Source</p> ...
+       </nav>
+     </details>
+
+   NO SCRIPT. <details> opens and closes itself, and the wide-screen sidebar
+   is this element forced open by CSS. Nothing here may be reimplemented with
+   a click handler, and no role= or aria-expanded= is ever added: the element
+   already exposes both, and a hand-written pair would go stale on toggle.
+
+   CURRENT PAGE. The page's own entry is not a link. It is
+   <span aria-current="page">Title</span>, and it carries the same short green
+   rule the one-line nav's current section carries. The front page at / is not
+   in the site map, so index.html has no marked entry.
+
+   NO ICON. The summary is the word "Contents" and nothing else: the marker is
+   removed, and no glyph, arrow, or rule is put in its place. Blue does not
+   appear anywhere in this element. */
+
+.sitemap {
+  /* Narrow scheme: the same text edges as the one-line nav and the prose. */
+  width: min(var(--measure) - 2 * var(--gutter), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  padding-block: 0.6rem 0.2rem;
+  font-size: 0.95rem;
+}
+
+/* list-style removes the disclosure triangle in every engine that renders one
+   as a list marker; the -webkit- pseudo-element covers the one that doesn't.
+   Neither is replaced by anything -- the word is the whole control. */
+.sitemap > summary {
+  display: block;
+  list-style: none;
+  padding-block: 0.3rem;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.sitemap > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sitemap > summary:hover {
+  color: var(--color-text);
+}
+
+.sitemap > summary:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* Group labels: the reading face, set small and raised, so they read as
+   headings for the lists without a rule, a box, or a second colour. */
+.sitemap .group {
+  margin-block: 1.1rem 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.sitemap .group:first-child {
+  margin-top: 0.5rem;
+}
+
+.sitemap ul {
+  margin-block: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sitemap li {
+  margin-bottom: 0.35rem;
+  line-height: 1.45;
+}
+
+/* The links take the base element rule untouched -- they are body links, and
+   no rule here may give them a colour, a size, or a face of their own. */
+
+/* The page's own entry, which is a span and not a link: the one-line nav's
+   current-section treatment, applied to plain text. */
+.sitemap [aria-current="page"] {
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid var(--accent-green);
+}
+
+/* Wide scheme. The breakpoint is arithmetic, not taste: the reading column is
+   --measure (37em = 39.3rem at the base size) and must not shrink by a pixel,
+   so the two flanking columns have to hold the 14.5rem sidebar on their own --
+   39.3 + 2 x 14.5 = 68.3rem, taken up to 70rem for slack. Below it the
+   sidebar would have to eat into the measure, so below it there is none.
+
+   The three columns keep main exactly where it is at every other width --
+   centred, its left edge under the one-line nav's -- and spend the left
+   gutter, which was empty, on the site map. The sidebar scrolls with the
+   page: nothing here is sticky or fixed. */
+@media (min-width: 70rem) {
+  body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) min(var(--measure), 100%) minmax(0, 1fr);
+  }
+
+  .site-nav {
+    grid-column: 1 / -1;
+  }
+
+  main {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .sitemap {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    width: 14.5rem;
+    margin-inline: 0;
+    padding-block: 2.5rem 0;
+    padding-inline-end: 2rem;
+  }
+
+  /* Forced open, not opened: no attribute is written and no script runs. The
+     first two rules are for engines that hide the content by displaying it
+     none, the third for those that hide it on the ::details-content box. */
+  .sitemap > summary {
+    display: none;
+  }
+
+  .sitemap > nav {
+    display: block;
+  }
+
+  .sitemap::details-content {
+    content-visibility: visible;
+    block-size: auto;
+  }
+}
+
 /* ===== components (table wrapper, code panel, figure) ===== */
 
 /* COMPONENTS MARKUP CONTRACT

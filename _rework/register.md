@@ -11,7 +11,7 @@ Rules for every page on spec4.ai. Every build task follows this file. The pages 
 
 ## Markup
 
-5. Semantic HTML: one `<nav>`, `<main>`, `<h1>`–`<h3>` in order, real `<table>` with `<thead>`, `<pre><code>` for code blocks and excerpts, `<figure>`/`<figcaption>` for screenshots. No layout `<div>`s where an element exists for the purpose. The look is applied later as CSS, so the markup must not encode a look.
+5. Semantic HTML: two labelled `<nav>`s — the one-line site nav of §19 and the site map's of §25 — plus `<main>`, `<h1>`–`<h3>` in order, real `<table>` with `<thead>`, `<pre><code>` for code blocks and excerpts, `<figure>`/`<figcaption>` for screenshots. No layout `<div>`s where an element exists for the purpose. The look is applied later as CSS, so the markup must not encode a look.
 6. Until the look pass, pages use the site's existing stylesheet as is. Do not add styling beyond what §2 needs. Do not port styles from the Spec4 app.
 
 ## Look (applies at the look pass; read now so the markup doesn't fight it)
@@ -19,7 +19,7 @@ Rules for every page on spec4.ai. Every build task follows this file. The pages 
 The site is consistent with the Spec4 app in its brand elements and is a reading layout otherwise. It does not reproduce the app's UI.
 
 7. **Consistent with the app:** the `Spec4` wordmark; the app's green as the single accent (`#39FF14`, or the variable the app defines); dark background; monospace for every path, filename, command, model name, and figure; text-only nav; no decoration.
-8. **The site's own:** typography scale, measure (about 70 characters), line height, section spacing, and table styling for reading rather than scanning. Serif prose — a system stack, Charter first, Georgia fallback; no font files. Left-aligned. *(Amended 2026-09-15: was "Sans-serif prose". The design round settled on a serif and the approved mock ships one.)*
+8. **The site's own:** typography scale, measure (about 70 characters), line height, section spacing, and table styling for reading rather than scanning. **Reading layout:** one reading column, centred at every width, with its left edge under the one-line nav's. At wide widths the site map sits beside it as a text-only sidebar in the left gutter, which the reading column never narrows to make room for — the breakpoint is wherever the sidebar, the full measure, and the gutters fit as they are. At narrow widths there is no sidebar: the site map is a collapsed `Contents` disclosure directly under the one-line nav, full width. One set of markup serves both; the stylesheet alone decides which is shown. Serif prose — a system stack, Charter first, Georgia fallback; no font files. Left-aligned. *(Amended 2026-09-15: was "Sans-serif prose". The design round settled on a serif and the approved mock ships one.)* *(Amended 2026-09-15: reading layout added; the site map beside the column is §25.)*
 9. Tables: thin rules, dim header, no zebra striping; on narrow viewports they scroll horizontally and never break the layout.
 10. Code blocks and excerpts are plain bordered panels. No window chrome, no traffic-light dots, no titlebar.
 11. Screenshots of the app appear in the app's own look, with the caption the copy supplies. They are the only place the app's UI appears.
@@ -37,6 +37,18 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 ## Nav (every page)
 
 19. Text links: `Docs · Examples · GitHub`, current section marked. `Examples` → `/bws4/`; `GitHub` → `https://github.com/robertcrowe/spec4`. The `Spec4` wordmark links to `/`. Version `1.5.0` in monospace. How it is laid out is the look pass's decision; the markup is one `<nav>` with those links.
+
+## Site map (every page)
+
+*(Added 2026-09-15. Numbering continues from the end of the file rather than renumbering §20–§24, which are cited elsewhere.)*
+
+25. Below the one-line nav, every styled page carries the whole site map — all thirteen pages, in the three groups of §26 — in a native `<details class="sitemap">` whose `<summary>` reads `Contents`. The same markup serves every width: CSS forces it open as the wide-screen sidebar and leaves it collapsed at narrow widths. There is no `open` attribute in the HTML and no script anywhere near it; nothing here is ever reimplemented with a click handler. No icon: the summary's marker is removed and nothing takes its place — no ☰, no arrow, no glyph, no rule. No `role=` and no `aria-expanded=`; `<details>` exposes both already and a hand-written pair would go stale on toggle. The page's own entry is not a link: it is `<span aria-current="page">Title</span>`, carrying the same short green rule the current section carries in the one-line nav. The front page at `/` is not in the site map, so `index.html` marks nothing. Group labels are the reading face, set small; the links take the site's ordinary link styling. Blue appears nowhere in it (§17), and the sidebar is not sticky.
+
+26. **Link order, fixed here.** A page is added to the site in three places in the same change: this list, the Reference list on `/docs/`, and the site map on every page. The link text is the text below, verbatim.
+
+    - **Docs** — `Install and first run` → `/docs/`; `CodeScanner`; `Brainstormer`; `Agentifier`; `Designer`; `StackAdvisor`; `Phaser`; `Deployer`; `Artifacts`; `Rounds`; `Settings` — each at `/docs/<name>/`.
+    - **Examples** — `Built With Spec4` → `/bws4/`.
+    - **Source** — `GitHub` → `https://github.com/robertcrowe/spec4`.
 
 ## Links to pages that don't exist yet
 
