@@ -7,7 +7,7 @@ Rules for every page on spec4.ai. Every build task follows this file. The pages 
 1. Use the supplied copy verbatim: headings, order, tables, code blocks, and paragraphs. Do not rewrite, shorten, reorder, or add.
 2. Every term in backticks renders in monospace.
 3. Oxford commas are already in the copy; keep them.
-4. Nothing is added that isn't in the copy: no taglines, no calls to action, no summary boxes, no "learn more" links, no alt text that editorialises. Naming the practice ("spec-driven development") is a fact and is allowed; ranking Spec4 within it ("the only…", "the first…") is the claim this rule bars. *(Amended 2026-09-16.)*
+4. Nothing is added that isn't in the copy: no taglines, no calls to action, no summary boxes, no "learn more" links, no alt text that editorialises.
 
 ## Markup
 
@@ -33,6 +33,7 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 16. No CTA banners, buttons styled as hero actions, or "Get Started" buttons in the nav.
 17. No second accent colour. No blue, except in the Spec4 wordmark, where it is the app's. *(Amended 2026-09-15: the wordmark's `4` takes a brighter green than the accent — `--wordmark-green`, the same hue — because at the accent's darkness it read as part of `Spec` rather than as the mark's second half. It is a wordmark colour, not a second accent: nothing outside `.wordmark-four` may use it, and the accent itself is still one colour.)*
 18. No analytics, no external fonts beyond what the existing pages already load, no JavaScript beyond what the existing pages already load.
+27. No category claims: "the only", "the first", "unlike other tools", or any other ranking of Spec4 within a category. Naming the practice — "spec-driven development" — is a fact and is allowed. *(Added 2026-09-16.)*
 
 ## Nav (every page)
 
@@ -59,5 +60,5 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 
 21. Open the page at desktop and at ~380px width.
 22. Links resolve; no unclosed tags.
-23. Show the full page HTML and any stylesheet diff. Do not commit or push.
+23. Show the full page HTML and any stylesheet diff. Commit and push when the task's instructions say to; otherwise leave the work uncommitted. *(Amended 2026-09-16: was "Do not commit or push." Tasks now name the commit themselves.)*
 24. Cross-links. On each page, the first mention of an agent links to its page, the first mention of an artifact filename links to `/docs/artifacts/`, and the first mention of rounds, settings, the front page's subject, or Built With Spec4 links to that page. Later mentions on the same page are plain. No links inside code blocks, tables of verbatim data, quoted excerpts, headings, or the nav. A page never links to itself. A link's text is the term as written; nothing is reworded to make a link.
