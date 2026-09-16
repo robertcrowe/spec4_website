@@ -1,6 +1,6 @@
 # spec4.ai register
 
-Rules for every page on spec4.ai. Every build task follows this file. The copy for each page is supplied separately under `/rework/`; do not rewrite it.
+Rules for every page on spec4.ai. Every build task follows this file. The pages themselves are the copy: edits are made in the HTML directly, and a build task changes only what it names.
 
 ## Copy
 
