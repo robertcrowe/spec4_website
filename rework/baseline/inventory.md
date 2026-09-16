@@ -214,3 +214,24 @@ creep: the `a` rule belongs where Phase 3 put it and only its colour changes.
 Contrast for the green link colour is already measured and recorded beside the
 token: 5.42:1 on the light background and 14.57:1 on the dark background, both
 clearing SC 1.4.3's 4.5:1 for body text.
+
+## A3 — The prose face is a serif, against register §8 (Phase 3, recorded retrospectively)
+
+**Amends:** register §8.
+
+Register §8 (Look) says "Sans-serif prose." The approved mock sets the body
+face to `Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text",
+Cambria, Georgia, serif`, and the Designer's `ReadingColumn` surface — carried
+into every phase file — describes "a single ~70-character text column in **a
+serif face**". Phases 2 and 3 were written to the mock, and the implementation
+followed them, so `--font-prose` is a serif stack.
+
+This is recorded rather than resolved. The design pass is later than the
+register and is what was approved, so the serif stands; but §8 still reads
+"sans-serif", and a future round's CodeScanner reading the register against the
+stylesheet would otherwise flag it as a defect. Either the register should be
+amended to match the design, or the decision revisited deliberately — not left
+as a silent contradiction between two governing documents.
+
+No other part of §8 is affected: the measure is ~70 characters as it requires
+(73 at 1280px), and the layout is left-aligned.
