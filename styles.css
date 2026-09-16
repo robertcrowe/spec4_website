@@ -26,15 +26,15 @@
      Contrast measured against WCAG 2.1 SC 1.4.3 (4.5:1 for body text);
      ratios noted below are text-on-background in this scheme. */
   --color-bg: #ffffff;
-  --color-fg: #1b1b1f;      /* on --color-bg: 17.17:1 */
-  --color-muted: #5b5b64;   /* on --color-bg:  6.72:1 */
+  --color-text: #1b1b1f;      /* on --color-bg: 17.17:1 */
+  --color-muted: #5b5b64;    /* on --color-bg:  6.72:1 */
   --color-rule: #d9d9d4;
-  --color-tint: #f3f3ef;    /* code panel fill; --color-fg on it: 15.43:1 */
+  --color-code-tint: #f3f3ef;/* code panel fill; --color-text on it: 15.43:1 */
 
   /* The wordmark's two colours. Blue appears in the wordmark and nowhere
      else on the site. Green additionally marks links and the active section. */
-  --color-blue: #1565c0;    /* the app's blue, darkened for a white page; 5.75:1 */
-  --color-green: #177a36;   /* the app's green, darkened for a white page; 5.42:1 */
+  --wordmark-blue: #1565c0; /* the app's blue, darkened for a white page; 5.75:1 */
+  --accent-green: #177a36;  /* the app's green, darkened for a white page; 5.42:1 */
 
   /* Fonts. Exactly two: a self-hosted monospace for code, the wordmark and
      version text, and a system stack for reading prose — no files are shipped
@@ -73,11 +73,138 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #0a0a0f;
-    --color-fg: #f5f5f7;      /* on --color-bg: 18.14:1 */
+    --color-text: #f5f5f7;      /* on --color-bg: 18.14:1 */
     --color-muted: #a0a0b0;   /* on --color-bg:  7.67:1 */
     --color-rule: #2a2a3a;
-    --color-tint: #14141c;    /* --color-fg on it: 16.82:1 */
-    --color-blue: #42a5f5;    /* 7.46:1 */
-    --color-green: #39ff14;   /* 14.57:1 */
+    --color-code-tint: #14141c;    /* --color-text on it: 16.82:1 */
+    --wordmark-blue: #42a5f5;    /* 7.46:1 */
+    --accent-green: #39ff14;   /* 14.57:1 */
   }
+}
+
+/* ===== base elements ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-prose);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+/* The reading column. Its width is the --measure token and nothing else, so
+   the line length of every page is adjusted in one place. The inline padding
+   keeps text off the viewport edge down to 380px. No overflow is set here or
+   on body — bounded scrolling belongs to the components section alone. */
+main {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+p {
+  margin-block: 0 1.1rem;
+}
+
+/* Headings sit in the prose face at a light weight, each with more space above
+   than below so a heading groups with the text it introduces. scroll-margin-top
+   keeps an in-page anchor from landing flush against the viewport top. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.3;
+  scroll-margin-top: 2rem;
+}
+
+h1 {
+  margin-block: 2.2rem 1.1rem;
+  font-size: 1.7rem;
+  letter-spacing: -0.005em;
+}
+
+h2 {
+  margin-block: 2.6rem 0.8rem;
+  font-size: 1.3rem;
+}
+
+h3 {
+  margin-block: 1.8rem 0.6rem;
+  font-size: 1.1rem;
+}
+
+h4 {
+  margin-block: 1.5rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Links carry their meaning in the underline, not in a colour: body text and
+   link text are the same token. The wordmark tokens are not used here. */
+a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+ul,
+ol {
+  margin-block: 0 1.2rem;
+  padding-left: 1.4rem;
+}
+
+li {
+  margin-bottom: 0.45rem;
+}
+
+li > p {
+  margin-block: 0 0.4rem;
+}
+
+/* Inline code only. The code panel (pre) is a components-section rule.
+   The reduced size keeps a code span from inflating the prose line-height. */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-code-tint);
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+}
+
+hr {
+  margin-block: 2.4rem;
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
 }
