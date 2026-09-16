@@ -1,0 +1,124 @@
+{
+  "code_review": {
+    "schema_version": 1,
+    "is_software_project": true,
+    "project_type": "static website \u2014 marketing & documentation site (HTML/CSS multi-page site)",
+    "architecture": {
+      "summary": "A directory-per-route static site: each page is a folder containing its own index.html (e.g. /about/, /docs/rounds/, /agents/phaser/), sharing a single styles.css and a small set of image/icon assets. A parallel rework/ directory holds Markdown drafts that appear to mirror several of the published HTML pages, suggesting an authoring/staging workflow that precedes hand-conversion to HTML.",
+      "pattern": "static multi-page site (MPA), folder-per-route",
+      "inferred_from": "file tree layout: about/index.html, docs/*/index.html, agents/*/index.html"
+    },
+    "languages": [
+      {
+        "name": "HTML",
+        "source": "index.html and per-page index.html files throughout the tree"
+      },
+      {
+        "name": "CSS",
+        "source": "styles.css"
+      }
+    ],
+    "frameworks": [],
+    "entrypoints": {
+      "ui_root": "index.html"
+    },
+    "directory_map": [
+      {
+        "path": "index.html",
+        "role": "Site homepage"
+      },
+      {
+        "path": "about/",
+        "role": "About page"
+      },
+      {
+        "path": "how-it-works/",
+        "role": "\"How it works\" explainer page"
+      },
+      {
+        "path": "agents/",
+        "role": "Per-agent marketing/landing pages, one per Spec4 pipeline agent (agentifier, brainstormer, codescanner, deployer, designer, phaser, reviewer, stackadvisor)"
+      },
+      {
+        "path": "docs/",
+        "role": "Product documentation pages (index, agentifier, artifacts, brainstormer, codescanner, deployer, designer, phaser, rounds, settings) plus a settings screenshot asset"
+      },
+      {
+        "path": "bws4/",
+        "role": "Standalone page of unclear purpose (possibly a sub-brand/feature)"
+      },
+      {
+        "path": "examples/",
+        "role": "Static example artifacts: deployment-plan.html/.md, mock.html"
+      },
+      {
+        "path": "rework/",
+        "role": "Markdown drafts mirroring several docs/* and other pages, plus a scratch 'temp' file"
+      },
+      {
+        "path": "styles.css",
+        "role": "Shared stylesheet"
+      },
+      {
+        "path": "favicon.svg",
+        "role": "Site favicon"
+      },
+      {
+        "path": "og-image.png",
+        "role": "Open Graph share image"
+      },
+      {
+        "path": "project.png",
+        "role": "Project image asset"
+      },
+      {
+        "path": "robots.txt",
+        "role": "Search-engine crawl configuration"
+      },
+      {
+        "path": "sitemap.xml",
+        "role": "Search-engine sitemap"
+      },
+      {
+        "path": "CNAME",
+        "role": "Custom-domain mapping for static hosting"
+      }
+    ],
+    "deployment": {
+      "paas": {
+        "platform": "GitHub Pages",
+        "config_path": "CNAME",
+        "source": "CNAME"
+      }
+    },
+    "ui_summary": {
+      "has_ui": true,
+      "kind": "mpa",
+      "framework": "Static HTML/CSS (no JavaScript framework detected)",
+      "styling": "Shared custom stylesheet (styles.css) applied across all pages",
+      "routing": "Folder-per-page structure yields clean URLs (e.g. /about/, /docs/rounds/, /agents/phaser/); no client-side router",
+      "entry_files": [
+        "index.html",
+        "about/index.html",
+        "how-it-works/index.html"
+      ]
+    },
+    "notes": {
+      "test_coverage": {
+        "has_tests": false
+      },
+      "ci_cd": {
+        "present": false
+      },
+      "incomplete_or_dead_code": [
+        "rework/temp is an extensionless file of unclear purpose alongside the Markdown drafts, likely a scratch/staging artifact rather than shipped content; Phaser should avoid building on it.",
+        "rework/*.md files (e.g. rework/docs-phaser.md) closely mirror published docs/*/index.html and agents/*/index.html pages but have no build step tying them together, creating content-drift risk between drafts and live HTML."
+      ],
+      "other_notes": [
+        "robots.txt and sitemap.xml present, indicating the site is configured for search-engine indexing.",
+        "bws4/index.html (with corresponding rework/bws4.md draft) is a distinct sub-page whose purpose is unclear from the file tree alone.",
+        "examples/deployment-plan.html/.md and examples/mock.html appear to be static example/demo artifacts displayed on the marketing site, not live application output."
+      ]
+    }
+  }
+}

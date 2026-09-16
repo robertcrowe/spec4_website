@@ -441,3 +441,17 @@ figcaption {
 figcaption code {
   font-style: normal;
 }
+
+/* ===== page-specific overrides ===== */
+
+/* Intentionally empty, and the Phase 7 consistency audit confirmed it can stay
+   that way: all thirteen pages resolve to identical computed typography, nav
+   placement and wordmark treatment from the rules above -- same prose stack,
+   17px/28.05px, 27.2px h1, nav and prose sharing one left edge -- with zero
+   inline style attributes and zero <style> elements across the site, and one
+   stylesheet loaded.
+
+   Anything added here is a failure of the sections above to express something
+   shared. If a rule must go here, give it a comment saying why it could not be
+   a shared component, so the next round can judge whether that reason still
+   holds. */

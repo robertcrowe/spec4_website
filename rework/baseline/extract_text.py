@@ -5,6 +5,10 @@ Local verification aid for the rework round. Never served, never referenced by
 any page, no third-party dependencies -- Python 3 standard library only.
 
 Usage:  python3 extract_text.py <path-to-html>
+        python3 extract_text.py --check-balance <path-to-html> [...]
+
+The --check-balance mode (added in Phase 7) reports any tag closed out of order
+or left open at end of file. Void elements are ignored, per the WHATWG list.
 
 Discards <head>, <script> and <style> contents entirely. Emits one line per
 block-level element, with the text of any inline elements inside it joined as
@@ -22,6 +26,7 @@ with this version from the untouched pre-round snapshots in html/, and the full
 word sequence was verified unchanged against the previous output.
 """
 
+import pathlib
 import sys
 from html.parser import HTMLParser
 
@@ -95,9 +100,68 @@ def extract(path):
     return parser.blocks
 
 
+class BalanceChecker(HTMLParser):
+    """Pushes on start tags, pops on end tags, ignoring void elements."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack = []
+        self.errors = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag not in VOID_TAGS:
+            self.stack.append((tag, self.getpos()))
+
+    def handle_endtag(self, tag):
+        if tag in VOID_TAGS:
+            return
+        if not self.stack:
+            self.errors.append(f"line {self.getpos()[0]}: </{tag}> with nothing open")
+            return
+        if self.stack[-1][0] == tag:
+            self.stack.pop()
+            return
+        # Closed out of order: report against whatever was actually open.
+        if any(t == tag for t, _ in self.stack):
+            open_tag, open_pos = self.stack[-1]
+            self.errors.append(
+                f"line {self.getpos()[0]}: </{tag}> closes out of order; "
+                f"<{open_tag}> opened at line {open_pos[0]} is still open")
+            while self.stack and self.stack[-1][0] != tag:
+                self.stack.pop()
+            if self.stack:
+                self.stack.pop()
+        else:
+            self.errors.append(f"line {self.getpos()[0]}: </{tag}> was never opened")
+
+    def report(self):
+        for tag, pos in self.stack:
+            self.errors.append(f"line {pos[0]}: <{tag}> left open at end of file")
+        return self.errors
+
+
+def check_balance(paths):
+    failed = 0
+    for path in paths:
+        checker = BalanceChecker()
+        checker.feed(pathlib.Path(path).read_text(encoding="utf-8"))
+        checker.close()
+        errors = checker.report()
+        if errors:
+            failed = 1
+            print(f"{path}: UNBALANCED")
+            for e in errors:
+                print(f"    {e}")
+        else:
+            print(f"{path}: balanced")
+    return failed
+
+
 def main(argv):
+    if len(argv) >= 3 and argv[1] == "--check-balance":
+        return check_balance(argv[2:])
     if len(argv) != 2:
-        sys.stderr.write("usage: extract_text.py <path-to-html>\n")
+        sys.stderr.write("usage: extract_text.py [--check-balance] <path-to-html>\n")
         return 2
     for block in extract(argv[1]):
         print(block)

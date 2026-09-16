@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From a rough idea to ordered, executable development phases — files a coding agent can build from.</title>
+<meta name="description" content="Spec4 turns an idea into a set of structured, ordered development phases — plus an optional UI mock and a deployment plan — that you hand to whichever coding agent you use.">
+<style>
+/* spec4.ai — styles.css
+   One stylesheet for all thirteen pages. No icons, no cards, no shadows,
+   no gradients, no animation, no second accent, no analytics.
+   Colour scheme follows the reader's system preference; there is no toggle. */
+
+:root {
+  --bg: #ffffff;
+  --fg: #1b1b1f;
+  --muted: #5b5b64;
+  --rule: #d9d9d4;
+  --tint: #f3f3ef;
+  --green: #177a36;   /* the app's green, darkened for a white page */
+  --blue: #1565c0;    /* the app's blue; appears only in the wordmark */
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0f;
+    --fg: #f5f5f7;
+    --muted: #a0a0b0;
+    --rule: #2a2a3a;
+    --tint: #14141c;
+    --green: #39ff14;
+    --blue: #42a5f5;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text", Cambria, Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+code, pre, kbd, samp, .mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---- The reading column ---- */
+.column {
+  max-width: 37em;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---- Navigation: one line ---- */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 1.4rem;
+  padding: 1.35rem 0 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+nav a { text-decoration: none; color: var(--fg); }
+nav a:hover { text-decoration: underline; text-decoration-color: var(--green); }
+nav .wordmark {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+nav .wordmark:hover { text-decoration: none; }
+nav .wordmark .spec { color: var(--blue); }
+nav .wordmark .four { color: var(--green); }
+nav .version {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-left: -0.5rem;
+  margin-right: 0.6rem;
+}
+nav a[aria-current="page"] {
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid var(--green);
+}
+nav a[aria-current="page"]:hover { text-decoration: none; }
+
+/* ---- Pages (in the real site, separate HTML files) ---- */
+main { display: none; padding-bottom: 2rem; }
+main.is-current { display: block; }
+
+/* ---- Prose ---- */
+h1, h2, h3 { font-weight: 400; line-height: 1.3; font-family: inherit; }
+h1 { font-size: 1.7rem; margin: 2.2rem 0 1.1rem; letter-spacing: -0.005em; }
+h2 { font-size: 1.3rem; margin: 2.6rem 0 0.8rem; }
+h3 { font-size: 1.1rem; margin: 1.8rem 0 0.6rem; }
+p { margin: 0 0 1.1rem; }
+a { color: var(--green); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.14em; }
+a:hover { text-decoration-thickness: 2px; }
+a code { color: inherit; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+ul, ol { margin: 0 0 1.2rem; padding-left: 1.4rem; }
+li { margin-bottom: 0.45rem; }
+li > p { margin-bottom: 0.4rem; }
+blockquote {
+  margin: 1.2rem 0;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid var(--rule);
+  color: var(--muted);
+}
+.meta { color: var(--muted); }
+
+/* ---- Code ---- */
+code {
+  font-size: 0.875em;
+  background: var(--tint);
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+}
+pre {
+  background: var(--tint);
+  border-radius: 2px;
+  padding: 0.9rem 1rem;
+  margin: 1.3rem 0;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  tab-size: 4;
+}
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+/* ---- Tables ---- */
+.table-wrap { overflow-x: auto; margin: 1.3rem 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+table.wide { min-width: 38rem; }
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem 1rem 0.5rem 0;
+}
+th:last-child, td:last-child { padding-right: 0; }
+thead th {
+  font-weight: 700;
+  border-bottom: 1px solid var(--fg);
+}
+tbody td { border-bottom: 1px solid var(--rule); }
+tbody tr:last-child td { border-bottom: 1px solid var(--rule); }
+td code, th code { white-space: nowrap; }
+
+/* ---- Figures ---- */
+figure { margin: 1.6rem 0; }
+figure img, figure .shot { width: 100%; display: block; }
+figcaption {
+  font-style: italic;
+  font-size: 0.93rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+figcaption code { font-style: normal; }
+
+/* The screenshot: the app's project page, rendered at column width.
+   Colours here are the app's, not the site's — it is a picture of the app. */
+.shot {
+  border: 1px solid var(--rule);
+  background: #0c0c11;
+  color: #ececf1;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.56rem;
+  line-height: 1.5;
+  overflow: hidden;
+}
+.shot .bar {
+  display: flex; gap: 0.7em; align-items: baseline;
+  padding: 0.55em 0.9em;
+  background: #14141b;
+  border-bottom: 1px solid #23232e;
+  white-space: nowrap;
+}
+.shot .bar .wm { font-weight: 700; }
+.shot .bar .wm .spec { color: #42a5f5; }
+.shot .bar .wm .four { color: #39ff14; }
+.shot .bar .path { color: #d5d5dd; }
+.shot .bar .nc { color: #ff6b6b; }
+.shot .bar .tabs { margin-left: auto; display: flex; gap: 1.3em; }
+.shot .bar .tabs span { color: #a0a0b0; }
+.shot .bar .tabs .on { color: #39ff14; border-bottom: 2px solid #39ff14; padding-bottom: 0.15em; }
+.shot .bar .ver { color: #8a8a99; margin-left: 1.2em; }
+.shot .body { padding: 0.8em 0.9em 0.9em; }
+.shot .lede { font-family: Inter, system-ui, sans-serif; font-size: 1.15em; margin: 0 0 0.9em; color: #f2f2f6; }
+.shot .h { color: #39ff14; font-family: Inter, system-ui, sans-serif; font-size: 1.2em; margin: 0 0 0.5em; }
+.shot table { width: 100%; font-size: 1em; border-collapse: collapse; border-top: 1px solid #23232e; }
+.shot th { font-family: Inter, system-ui, sans-serif; font-weight: 400; color: #a0a0b0; padding: 0.5em 0.6em; border-bottom: 1px solid #23232e; }
+.shot td { padding: 0.5em 0.6em; border-bottom: 1px solid #1c1c25; color: #ececf1; }
+.shot td.n { font-family: Inter, system-ui, sans-serif; }
+.shot td.b { text-align: right; }
+.shot td.b span { display: inline-block; border: 1px solid #39ff14; color: #39ff14; padding: 0.05em 1.2em; }
+.shot .cost { margin-top: 0.8em; border: 1px solid #2a2a3a; padding: 0.6em 0.8em; color: #ececf1; }
+.shot .cost .fine { font-family: Inter, system-ui, sans-serif; color: #8a8a99; margin-top: 0.3em; }
+.shot .tree { margin-top: 0.8em; border-top: 1px solid #23232e; }
+.shot .tree .t { padding: 0.45em 0.6em; border-bottom: 1px solid #1c1c25; }
+.shot .tree .t:nth-child(odd) { background: #10101a; }
+
+/* ---- Footer ---- */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 1rem 0 2.5rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+footer p { margin: 0; }
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
+
+@media (max-width: 480px) {
+  body { font-size: 1rem; }
+  h1 { font-size: 1.45rem; }
+  nav { gap: 0 1rem; }
+  pre { font-size: 0.78rem; }
+}
+</style>
+</head>
+<body>
+<div class="column">
+
+  <nav aria-label="Site">
+    <a class="wordmark" href="/" data-page="front"><span class="spec">Spec</span><span class="four">4</span></a>
+    <code class="version">1.5.0</code>
+    <a href="/docs/" data-page="docs" id="nav-docs">Docs</a>
+    <a href="/bws4/" data-page="examples" id="nav-examples">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <!-- ======================= / (front page) ======================= -->
+  <main id="page-front" class="is-current" data-title="From a rough idea to ordered, executable development phases — files a coding agent can build from.">
+
+    <h1>From a rough idea to ordered, executable development phases — files a coding agent can build from.</h1>
+
+    <p>Spec4 turns an idea into a set of structured, ordered development phases — plus an optional UI mock and a deployment plan — that you hand to whichever coding agent you use. Everything it produces is a file in a <code>.spec4/</code> folder inside your project. It runs on your machine, talks only to the model provider you choose, and keeps your API key in your browser.</p>
+
+    <p>It is not a coding agent. It doesn't write your application; it writes the plan your coding agent builds from — with the failure modes, acceptance criteria, and deployment configuration a production system needs, not just the happy path. And the plan is not written once: each pass over the project is a new <a href="/docs/rounds/">round</a>, planned against the code as it actually exists.</p>
+
+<pre><code>uv tool install spec4 --refresh
+spec4</code></pre>
+
+    <p class="meta">Version 1.5.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a> · <a href="/docs/">Docs</a></p>
+
+    <ul>
+      <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
+      <li><strong>Your code stays in the repo.</strong> <a href="/docs/codescanner/">CodeScanner</a> reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
+      <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never written to disk; never sent anywhere but the provider they belong to.</li>
+      <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and <a href="/docs/settings/">reasoning effort</a> for any agent, chosen when it starts or on a retry after a provider error.</li>
+      <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; <a href="/docs/deployer/">Deployer</a> writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
+      <li><strong>Apache 2.0.</strong> Free. You pay your provider, and every round records what it cost.</li>
+    </ul>
+
+    <h2>What you get</h2>
+
+    <p>This is the app's project page, open on Spec4's own repository.</p>
+
+    <figure>
+      <div class="shot" role="img" aria-label="Spec4's project page on its own repository">
+        <div class="bar">
+          <span class="wm"><span class="spec">Spec</span><span class="four">4</span></span>
+          <span class="path">/home/rcrowe/Projects/spec4 · round v2</span>
+          <span class="nc">Not connected</span>
+          <span class="tabs"><span class="on">Project</span><span>Artifacts</span><span>Settings</span><span>Docs</span></span>
+          <span class="ver">1.5.0</span>
+        </div>
+        <div class="body">
+          <p class="lede">Seven agents, in order. Each reads what the ones before it wrote, and everything they write is a file under <code style="background:none;padding:0;font-size:1em;color:#ececf1">.spec4/</code> in this project.</p>
+          <p class="h">How Spec4 works</p>
+          <table>
+            <thead><tr><th>Agent</th><th>Produces</th><th>Last model</th><th>Tokens this round</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="n">CodeScanner</td><td>code_review.json</td><td>claude-sonnet-4-5</td><td>38,214 in / 7,902 out</td><td class="b"><span>Required</span></td></tr>
+              <tr><td class="n">Brainstormer</td><td>vision.json</td><td>claude-sonnet-4-5</td><td>131,406 in / 6,880 out</td><td class="b"><span>Modify</span></td></tr>
+              <tr><td class="n">Agentifier</td><td>ai_features.json</td><td>—</td><td>—</td><td class="b"><span>Start</span></td></tr>
+              <tr><td class="n">Designer</td><td>design/mock.html</td><td>claude-sonnet-4-5</td><td>17,512 in / 15,720 out</td><td class="b"><span>Modify</span></td></tr>
+              <tr><td class="n">StackAdvisor</td><td>stack.json</td><td>claude-sonnet-4-5</td><td>244,944 in / 6,737 out</td><td class="b"><span>Modify</span></td></tr>
+              <tr><td class="n">Phaser</td><td>phases/</td><td>claude-sonnet-4-5</td><td>209,939 in / 20,231 out</td><td class="b"><span>Modify</span></td></tr>
+              <tr><td class="n">Deployer</td><td>deployment-plan.md</td><td>claude-sonnet-4-5</td><td>193,658 in / 12,263 out</td><td class="b"><span>Modify</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cost">
+            Estimated cost, v2: $3.41 · Tokens: 835,673 in / 69,733 out (0 cached)<br>
+            all 52 calls priced · IMPLEMENTED present
+            <div class="fine">Estimates from litellm response_cost (community cost map; may lag provider price sheets). Your provider's billing is authoritative.</div>
+          </div>
+          <div class="tree">
+            <div class="t">.spec4/v2/code_review.json</div>
+            <div class="t">.spec4/v2/vision.json</div>
+            <div class="t">.spec4/v2/feature_specs.json</div>
+            <div class="t">.spec4/v2/design/mock.html</div>
+            <div class="t">.spec4/v2/stack.json</div>
+            <div class="t">.spec4/v2/phases/phase1.md … phase7.md</div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Spec4's project page on its own repository after round <code>v2</code> was implemented: every artifact, the model that produced it, what it cost, and the next action — a re-scan, since the code has changed since the plan. <a href="/docs/agentifier/">Agentifier</a> is blank because Spec4's AI features were added before it was mature enough to use on itself.</figcaption>
+    </figure>
+
+    <p>Every file of every round is readable in the app's Artifacts view.</p>
+
+    <p>A round leaves this in your project directory, one folder per pass:</p>
+
+<pre><code>.spec4/
+└── v1/                        # one directory per planning round
+    ├── code_review.json       # CodeScanner — the existing codebase, as facts with sources
+    ├── vision.json            # Brainstormer — purpose, audiences, MVP features
+    ├── feature_specs.json     # Brainstormer — a behavioral spec per MVP feature
+    ├── ai_catalog.json        # Agentifier — its recommendation and your decision, per feature
+    ├── ai_features.json       # Agentifier — where AI belongs, at what tier, built how
+    ├── design/
+    │   ├── mock.html          # Designer — a self-contained mock of the starting screen
+    │   └── manifest.json      # Designer — the design decisions the mock embodies
+    ├── stack.json             # StackAdvisor — the technology stack, with canonical doc links
+    ├── phases/                # Phaser — ordered phase files, one per implementation step
+    │   ├── phase1.md
+    │   ├── phase2.md
+    │   └── ...
+    ├── deployment-plan.md     # Deployer — infrastructure, CI/CD, config files, Terraform
+    ├── usage.json             # what each agent cost this round, per call
+    └── IMPLEMENTED            # the coding agent's marker that the round is built</code></pre>
+
+    <p>Three kinds of file. The phase files are prompts for the coding agent. The JSON and the mock are reference for the agent: the decisions it grounds against. <code>deployment-plan.md</code> and <code>usage.json</code> are a record for you. <a href="/docs/artifacts/">Artifacts</a></p>
+
+    <p>The phase files are the point. Each one is written for a coding agent, not for you. This is from Spec4's own repository — <code>.spec4/v0/phases/phase1.md</code>, the first phase of the round that reworked this app's UI, and the thing a coding agent is handed:</p>
+
+<pre><code># Phase 1 of 7: Integration Thread — Baseline Validation of the Existing Spec4 App
+
+Prove the existing Dash application builds, serves at localhost:8050, and passes
+its full quality gate (pytest, ruff, mypy) unchanged, and read the existing
+callback co-presence contract so the coming shell rework is done against a
+known-green baseline rather than a guessed one. No feature work, no layout
+changes, no new files.
+
+## Tech Stack
+
+**Dependencies:** uv, dash, dash-mantine-components, pytest, pytest-cov, ruff, mypy, …
+
+**Configurations:** No required env vars. Optional: DASH_DEBUG (enables Dash
+hot-reload), LITELLM_LOG (must be set before litellm is first imported). App
+serves HTTP on localhost:8050 only.
+
+## Instructions
+
+1. Run `uv build` and confirm it completes without error using the existing
+   uv_build backend and pyproject.toml; do not modify pyproject.toml.
+2. Run `uv run pytest` and record the number of passing tests. This count is
+   the baseline that every later phase must match or exceed.
+3. Run `uv run ruff check src tests` and `uv run mypy src`; both must exit 0.
+   Do not add `# noqa` or `# type: ignore` to make them pass.
+4. Start the app with `uv run spec4` and confirm that GET http://localhost:8050/
+   returns 200 and renders the directory picker for an empty directory.
+5. Read src/spec4/callbacks/__init__.py and every module it imports. List each
+   callback whose Output targets a component id that is not present in every
+   layout the app can render (the co-presence contract Dash enforces at
+   runtime, not at import time).
+6. Write that list, and nothing else, to .spec4/v0/notes/callbacks.md, one
+   line per callback: `&lt;module&gt;:&lt;function&gt; → &lt;component id&gt;`.
+
+## Risk Assessment
+
+- **Hallucinated component ids.** Dash raises only when a callback fires
+  against an id absent from the current layout, so a wrong id survives the
+  test suite. Mitigation: enumerate ids from the layout modules by reading
+  them, not from memory of how Dash apps are usually structured.
+- **The test suite reaches the network.** Several tests construct a litellm
+  client. Mitigation: confirm `SPEC4_OFFLINE=1` is respected by conftest.py
+  before running; if any test opens a socket, stop and report rather than
+  patching the test.
+- **Scope creep.** The shell rework is Phase 2. Mitigation: this phase adds
+  no files other than the notes file and modifies none.
+
+## Verification
+
+`uv build &amp;&amp; uv run pytest &amp;&amp; uv run ruff check src tests &amp;&amp; uv run mypy src`
+all exit 0; `curl -s -o /dev/null -w '%{http_code}' localhost:8050/` prints
+200; and .spec4/v0/notes/callbacks.md exists with at least one line.
+
+## References
+
+- Dash callbacks and layout validation: https://dash.plotly.com/basic-callbacks
+- uv build backend: https://docs.astral.sh/uv/concepts/build-backend/</code></pre>
+
+    <p>Seven agents produce those files, in order. Each reads what the ones before it wrote.</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr>
+            <th scope="col">Agent</th>
+            <th scope="col">Reads</th>
+            <th scope="col">Writes</th>
+            <th scope="col">Runs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="/docs/codescanner/">CodeScanner</a></td>
+            <td>your repository, locally; the model gets a bounded summary</td>
+            <td><code>code_review.json</code></td>
+            <td>when there is code</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/brainstormer/">Brainstormer</a></td>
+            <td><code>code_review.json</code>, your answers</td>
+            <td><code>vision.json</code>, <code>feature_specs.json</code></td>
+            <td>every round</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/agentifier/">Agentifier</a></td>
+            <td><code>vision.json</code>, <code>feature_specs.json</code></td>
+            <td><code>ai_catalog.json</code>, <code>ai_features.json</code></td>
+            <td>optional</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/designer/">Designer</a></td>
+            <td><code>vision.json</code>, <code>ai_features.json</code>, your screenshots</td>
+            <td><code>design/mock.html</code>, <code>design/manifest.json</code></td>
+            <td>optional</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/stackadvisor/">StackAdvisor</a></td>
+            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
+            <td><code>stack.json</code></td>
+            <td>every round</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/phaser/">Phaser</a></td>
+            <td>everything above</td>
+            <td><code>phases/phase1.md</code> … <code>phaseN.md</code></td>
+            <td>every round</td>
+          </tr>
+          <tr>
+            <td><a href="/docs/deployer/">Deployer</a></td>
+            <td><code>phases/</code>, <code>stack.json</code>, <code>feature_specs.json</code>, <code>design/mock.html</code></td>
+            <td><code>deployment-plan.md</code>, optionally <code>README.md</code></td>
+            <td>when deployment changes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Brainstormer, StackAdvisor, and Phaser are the spine. CodeScanner is required whenever there is code to read. The other three are optional, and skipping one is a decision the later agents can see: a round without Designer produces phases that leave the look to the coding agent; a round without Agentifier produces no AI features at all.</p>
+
+    <h2>How a round works</h2>
+
+    <p>A round is one pass through the pipeline. Its output is a folder — <code>.spec4/v0/</code> for the first round, <code>v1/</code> for the next, and so on. The project page lists the seven agents in order with one button each, and the button's label is computed from the files on disk every time the page renders: <strong>Start</strong> when an agent's inputs exist and its output doesn't, <strong>Modify</strong> when its output is at least as new as everything it depends on, <strong>Needs Update</strong> when something upstream changed after it ran. Nothing is cached, so editing a file by hand has the same effect as re-running the agent that wrote it.</p>
+
+    <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>. When your coding agent has built the phases, that marker is what tells Spec4 the round is done and the next one may begin. The next round starts with CodeScanner reading what was actually built — including anything you or the agent changed that the plan didn't say. That is the difference between planning against the code and planning against the last plan. <a href="/docs/rounds/">Rounds</a></p>
+
+    <p>In a revision round Brainstormer does not re-ask the nine questions. The product's identity is settled; it states what's built and asks what this round is for — what to add, change, or remove — and works those one at a time. The result is written to <code>vision.json</code> as a full vision, never a diff, with one more entry in <code>revision_history</code>, and every agent downstream reads that last entry as the delta it scopes to.</p>
+
+    <h2>What it is not</h2>
+
+    <p>Spec4 does not write code, run your tests, open pull requests, or talk to your coding agent. It has no plugin for Claude Code or Cursor and needs none: the output is Markdown and JSON on disk, and the coding agent reads it the way it reads any other file in the repository. <a href="/docs/deployer/">Deployer</a> writes the first section of <code>deployment-plan.md</code> for the agent you name — how to start it in the project directory, where the Spec4 files live, the exact syntax to reference a phase file — and that is the whole integration.</p>
+
+    <p>It is also not a chat window over your codebase. Each agent asks one question at a time and only what it needs, and the answer is written to a file with a schema. If a schema check fails, the agent is told what failed and tries again; you see the retry, and the file isn't written until it passes. The conversation is the means; the file is the result.</p>
+
+    <p>It is not free of judgment calls. Phaser may not add a component, library, or service that isn't in the approved stack, not even when the choice seems obvious. It stops and asks, and on your yes records a <code>stack_addition</code> in <code>stack.json</code>. The plan you hand over is one you approved line by line, which is slower than a plan you didn't, and the reason the coding agent can trust it.</p>
+
+    <h2>What it costs</h2>
+
+    <p>Spec4 is Apache 2.0 and there is nothing to buy. You pay your model provider directly. Every call is priced from litellm's community cost map and written to <code>usage.json</code>, and the project page shows the round's estimate above the tree. The estimate is an estimate: the cost map can lag a provider's price sheet, and your provider's billing is authoritative.</p>
+
+    <p>For scale, Spec4's own three rounds on its own repository, on a mid-tier model, ran between $3 and $5 each. The two largest line items are StackAdvisor, which reads every canonical documentation page it cites, and Phaser, which reads everything above it and emits every phase at once. A greenfield round with a short vision and five phases is a fraction of that. A round that skips Designer and Deployer, as most revision rounds do, is smaller again.</p>
+
+    <p>Reasoning effort is a per-agent setting. A default for the pipeline, and a different provider, model, and effort for any agent, chosen when it starts or on a retry after a provider error. The usual arrangement is a cheap model for CodeScanner, whose job is transcription, and a stronger one for Phaser, whose job is the plan. <a href="/docs/settings/">Settings</a></p>
+
+    <h2>Providers and keys</h2>
+
+    <p>Eight providers: Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, and OpenRouter. All go through litellm, so a model is a string and switching is a settings change. Keys are held in your browser's <code>localStorage</code>, opt-in — the alternative is to paste the key each session — and the local process reads them from the request, not from disk. Nothing under <code>.spec4/</code> contains a key, so the folder can be committed.</p>
+
+    <p>Web search is optional and separate. With a <a href="https://tavily.com/">Tavily</a> or <a href="https://exa.ai/">Exa</a> key, Brainstormer looks up the canonical documentation for any standard or SDK you name, StackAdvisor verifies each component it recommends against its current docs, and Deployer checks pricing and free tiers before it names a service. Without a key, every agent still runs; it just can't look anything up, and the phase files say so in their References.</p>
+
+    <h2>Where the plan can be wrong</h2>
+
+    <p>Three places, and Spec4 checks two of them deterministically. First, a phase set can be incomplete: a feature no phase declares, a number missing from 1 to <em>k</em>, infrastructure stood up after the first phase that needs it. These are validated after the model emits the set, and a failure goes back to the model with the fault named. Second, on a greenfield set, a phase can read a table before another creates it or call an endpoint before one defines it. A second call extracts a data-flow graph from the phases and the checks are run over it; findings are shown next to the ready phases and never block.</p>
+
+    <p>The third is the one it can't check: the plan can be a faithful plan for the wrong product. That is what the conversations are for, and why every agent shows you its work before it writes the file. Read the phases before you hand them over. They are written for a coding agent, but they read the same to a person.</p>
+
+    <h2>Read next</h2>
+
+    <p>The <a href="/docs/">docs</a> start with install and first run and have one page per agent. <a href="/docs/artifacts/">Artifacts</a> documents every file in the folder with an excerpt from Spec4's own rounds. <a href="/bws4/">Built With Spec4</a> is a live gallery of nine small apps, each planned with Spec4 and built by a coding agent from its phase files, with the full <code>.spec4/</code> history in its repository. The <a href="https://github.com/robertcrowe/spec4">source</a> is on GitHub, and the <code>.spec4/</code> folder in it is the three rounds that planned the app you're reading about.</p>
+
+  </main>
+
+  <!-- ======================= /docs/ ======================= -->
+  <main id="page-docs" data-title="Spec4 docs">
+
+    <h1>Spec4 docs</h1>
+
+    <p>Spec4 is a local tool that turns a rough idea, or a change to an existing codebase, into a set of ordered development phases written for a coding agent. Seven planning agents run in order. Each reads what the ones before it wrote, and everything they write is a file under <code>.spec4/</code> in your project. Spec4 doesn't write code; your coding agent does, one phase at a time.</p>
+
+    <p class="meta">Version 1.5.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a></p>
+
+    <h2>Install</h2>
+
+    <p>Requires Python 3.12+ and <a href="https://docs.astral.sh/uv/">uv</a>, plus an API key for at least one supported provider.</p>
+
+<pre><code>uv tool install spec4 --refresh
+spec4</code></pre>
+
+    <p>From source:</p>
+
+<pre><code>git clone https://github.com/robertcrowe/spec4
+cd spec4
+make spec4</code></pre>
+
+    <p>Either way the app is at <code>localhost:8050</code>. To upgrade: <code>uv tool upgrade spec4</code> (PyPI) or <code>git pull &amp;&amp; make install</code> (source). Upgrades never touch your artifacts; everything lives in <code>.spec4/</code> inside your project.</p>
+
+    <h2>First run</h2>
+
+    <ol>
+      <li><strong>Pick a project directory.</strong> An empty directory is a new project. A directory with files in it gets one question — <em>Is there an existing project here?</em> — because a <code>uv init</code> skeleton and a codebase you're modifying look the same to a file listing. <em>Existing project</em> starts with <a href="/docs/codescanner/">CodeScanner</a>; <em>New project</em> starts with <a href="/docs/brainstormer/">Brainstormer</a>. You're asked again next session; the answer isn't written to disk.</li>
+      <li><strong>Connect a provider.</strong> Choose one of eight — Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter — enter its key, and pick a default model and <a href="/docs/settings/">reasoning effort</a>. The key is held in your browser's <code>localStorage</code>, opt-in, and is never written to disk or sent anywhere but the provider it belongs to. Optionally add a <a href="https://tavily.com/">Tavily</a> or <a href="https://exa.ai/">Exa</a> key so the agents can ground their recommendations with live search. <a href="/docs/settings/">Settings</a></li>
+      <li><strong>Start the first agent.</strong> The project page lists the seven agents in order with one button each. Press <strong>Start</strong> on the first one that offers it.</li>
+    </ol>
+
+    <h2>The round</h2>
+
+    <p>A <a href="/docs/rounds/">round</a> is one pass through the pipeline. Its output is a folder, <code>.spec4/v0/</code> for the first round, <code>v1/</code> for the next, and so on.</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr>
+            <th scope="col">Agent</th>
+            <th scope="col">Reads</th>
+            <th scope="col">Writes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>CodeScanner</td><td>your repository (locally; the model gets a bounded summary)</td><td><code>code_review.json</code></td></tr>
+          <tr><td>Brainstormer</td><td><code>code_review.json</code>, your answers</td><td><code>vision.json</code>, <code>feature_specs.json</code></td></tr>
+          <tr><td>Agentifier</td><td><code>vision.json</code>, <code>feature_specs.json</code></td><td><code>ai_catalog.json</code>, <code>ai_features.json</code></td></tr>
+          <tr><td>Designer</td><td><code>vision.json</code>, <code>ai_features.json</code>, optional screenshots</td><td><code>design/mock.html</code>, <code>design/manifest.json</code></td></tr>
+          <tr><td>StackAdvisor</td><td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td><td><code>stack.json</code></td></tr>
+          <tr><td>Phaser</td><td>everything above</td><td><code>phases/phase1.md</code> … <code>phaseN.md</code></td></tr>
+          <tr><td>Deployer</td><td><code>phases/</code>, <code>stack.json</code>, <code>ai_features.json</code>, <code>feature_specs.json</code>, <code>design/mock.html</code></td><td><code>deployment-plan.md</code>, optionally <code>README.md</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Run the agents a round needs. Brainstormer, <a href="/docs/stackadvisor/">StackAdvisor</a>, and <a href="/docs/phaser/">Phaser</a> are the spine; CodeScanner is required when there's code; <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/designer/">Designer</a>, and <a href="/docs/deployer/">Deployer</a> are optional. Spec4's own three rounds ran five of the seven.</p>
+
+    <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>. When your coding agent has built the phases, that marker is what tells Spec4 the round is done and the next one may begin. The next round starts with CodeScanner reading what was actually built — including anything you or the agent changed that the plan didn't say. <a href="/docs/rounds/">Rounds</a></p>
+
+    <h2>The buttons</h2>
+
+    <p>Each agent's row on the project page carries one button. Its label is computed from the files on disk every time the page renders; nothing is cached.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Start</strong></td><td>The agent's inputs exist and it hasn't produced its output yet.</td></tr>
+          <tr><td><strong>Continue</strong></td><td>Same as Start, but this session already has an unfinished conversation with the agent.</td></tr>
+          <tr><td><strong>Modify</strong></td><td>The agent's output exists and is at least as new as every input it depends on.</td></tr>
+          <tr><td><strong>Needs Update</strong></td><td>The output exists, but an upstream artifact has changed since it was written.</td></tr>
+          <tr><td><strong>Not Ready</strong></td><td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td></tr>
+          <tr><td><strong>Required</strong></td><td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A hand edit has the same effect as a re-run: save <code>vision.json</code> and every agent that reads it turns to <strong>Needs Update</strong>. The timestamps on disk are the whole state machine.</p>
+
+    <h2>Pages</h2>
+
+    <ul>
+      <li><a href="/docs/codescanner/">CodeScanner</a> — reads an existing directory and writes <code>code_review.json</code>, every fact with its source.</li>
+      <li><a href="/docs/brainstormer/">Brainstormer</a> — develops the vision one question at a time; writes <code>vision.json</code> and <code>feature_specs.json</code>.</li>
+      <li><a href="/docs/agentifier/">Agentifier</a> — finds where AI belongs and recommends a tier from a nine-rung ladder; writes <code>ai_catalog.json</code> and <code>ai_features.json</code>.</li>
+      <li><a href="/docs/designer/">Designer</a> — a short wizard that draws the starting screen as one HTML file; writes <code>design/mock.html</code> and <code>design/manifest.json</code>.</li>
+      <li><a href="/docs/stackadvisor/">StackAdvisor</a> — recommends the stack component by component, each with a canonical doc link; writes <code>stack.json</code>.</li>
+      <li><a href="/docs/phaser/">Phaser</a> — turns everything above into ordered phase files, steel thread first; writes <code>phases/</code>.</li>
+      <li><a href="/docs/deployer/">Deployer</a> — asks which coding agent you use and writes <code>deployment-plan.md</code>, configuration files included.</li>
+      <li><a href="/docs/artifacts/">Artifacts</a> — every file in <code>.spec4/</code>: who writes it, who reads it, what it looks like.</li>
+      <li><a href="/docs/rounds/">Rounds</a> — greenfield, brownfield, and revision rounds, and what <code>IMPLEMENTED</code> means.</li>
+      <li><a href="/docs/settings/">Settings</a> — providers, keys, per-agent models and reasoning effort, web search.</li>
+    </ul>
+
+  </main>
+
+  <!-- ======================= /bws4/ ======================= -->
+  <main id="page-examples" data-title="Built With Spec4 — Spec4">
+
+    <h1>Built With Spec4</h1>
+
+    <p><a href="https://bw.spec4.ai">Built With Spec4</a> is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder <a href="/docs/agentifier/">Agentifier</a> recommends from, so you can see what a tier looks like as software. It was planned in nine <a href="/docs/rounds/">rounds</a>, with hand edits between them, and its full <code>.spec4/</code> history — <code>v0</code> through <code>v8</code>, every artifact and every phase file — is in <a href="https://github.com/robertcrowe/BWS4">its repository</a>.</p>
+
+    <h2>The apps</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">App</th>
+            <th scope="col">Tier</th>
+            <th scope="col">Round</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td><td><code>embeddings</code></td><td><code>v1</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/single-call">Single Call</a></td><td><code>single_call</code></td><td><code>v2</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/rag">RAG</a></td><td><code>rag</code></td><td><code>v0</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td><td><code>tool_agent</code></td><td><code>v0</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td><td><code>chained_calls</code></td><td><code>v3</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td><td><code>planning_agent</code></td><td><code>v4</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/react">ReAct Loop</a></td><td><code>planning_agent</code></td><td><code>v7</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td><td><code>orchestrated_subagents</code></td><td><code>v5</code></td></tr>
+          <tr><td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td><td><code>multi_agent_collaboration</code></td><td><code>v6</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Two apps share the <code>planning_agent</code> tier on purpose: Planning Agent fixes its plan up front, and ReAct Loop discovers it one observation at a time. The tier ladder is on the <a href="/docs/agentifier/">Agentifier</a> page.</p>
+
+    <p>Every app runs on free OpenRouter models through LiteLLM, with per-session run caps so a public demo can't spend the quota. The caps are stated on each app's page.</p>
+
+    <h2>The nine rounds</h2>
+
+    <p>One line per round, from each <a href="/docs/artifacts/"><code>vision.json</code></a>'s <code>revision_history</code>:</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr>
+            <th scope="col">Round</th>
+            <th scope="col">What it planned</th>
+            <th scope="col">Agents run</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>v0</code></td><td>The framework — landing page, shared model and embedding services, the Exa search integration — and the first two apps, RAG and Tool Use. Hosted on Render's free tier.</td><td>7</td></tr>
+          <tr><td><code>v1</code></td><td>Embeddings, as a visual explorer on the framework's existing embedding model.</td><td>7</td></tr>
+          <tr><td><code>v2</code></td><td>Single Call, in simple and schema-constrained modes.</td><td>6</td></tr>
+          <tr><td><code>v3</code></td><td>Chained Calls: a writer and a critic, capped at two calls.</td><td>6</td></tr>
+          <tr><td><code>v4</code></td><td>Planning Agent: plan, approve, then execute, under a per-run call cap.</td><td>6</td></tr>
+          <tr><td><code>v5</code></td><td>Orchestrated Subagents: a coordinator briefs two of four specialists, runs them concurrently, merges.</td><td>6</td></tr>
+          <tr><td><code>v6</code></td><td>Multi-Agent Collaboration: a buyer negotiates against two sellers holding private constraints, over A2A-shaped messages.</td><td>6</td></tr>
+          <tr><td><code>v7</code></td><td>ReAct Loop, in deliberate contrast with <code>v4</code>.</td><td>6</td></tr>
+          <tr><td><code>v8</code></td><td>Hosting moved from Render to a self-hosted VPS, behaviour-preserving; PostgreSQL with pgvector stays on Neon.</td><td>5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>IMPLEMENTED</code> is present in all nine. Seven of the eight brownfield rounds open with an integration thread; <code>v3</code> went straight to backend work. <code>v8</code> skipped <a href="/docs/designer/">Designer</a> and Agentifier, since nothing it planned had a screen or a model call; <a href="/docs/deployer/">Deployer</a> ran only when the deployment changed — <code>v0</code>, <code>v1</code>, and <code>v8</code>. Run the agents a round needs.</p>
+
+    <p>Phases in <code>v0</code>–<code>v4</code> run 7 to 14 instructions; the agentic-pattern rounds <code>v5</code>–<code>v8</code> run 14 to 26.</p>
+
+    <h2>The recommendation and the decision</h2>
+
+    <p>Agentifier writes its recommendation and the developer's decision to the same file. From <code>.spec4/v0/ai_catalog.json</code>:</p>
+
+<pre><code>{
+  "name": "rag_example_app",
+  "tier_recommendation": "single_call",
+  "tier_decision": "rag",
+  "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is the feature, not an escalation past it.",
+  "over_engineering_signs_acknowledged": [
+    "Corpus is small enough to fit in a single prompt"
+  ],
+  "decided_by": "developer",
+  "decided_at": "2026-05-31T14:02:11Z"
+}</code></pre>
+
+    <p>The Tier Analyst recommended <code>single_call</code> because the corpus fits in one prompt, which is the rule it is given. The developer overrode it and wrote down why. Both survive in the file, and the phase that builds the feature quotes the rationale.</p>
+
+  </main>
+
+  <footer>
+    <p>Spec4 1.5.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">Source</a> · Hand-written HTML, one stylesheet, no scripts, no analytics.</p>
+  </footer>
+
+</div>
+
+<script>
+/* Mock-only: on the real site each page is its own HTML file and no script
+   runs. This stands in for following a link between /, /docs/, and /bws4/. */
+(function () {
+  var pages = { front: 'page-front', docs: 'page-docs', examples: 'page-examples' };
+  var navFor = { docs: 'nav-docs', examples: 'nav-examples' };
+
+  function show(page) {
+    Object.keys(pages).forEach(function (k) {
+      var el = document.getElementById(pages[k]);
+      el.classList.toggle('is-current', k === page);
+    });
+    Object.keys(navFor).forEach(function (k) {
+      var a = document.getElementById(navFor[k]);
+      if (k === page) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); }
+    });
+    document.title = document.getElementById(pages[page]).getAttribute('data-title');
+    window.scrollTo(0, 0);
+  }
+
+  function pageForHref(href) {
+    if (!href) return null;
+    if (href === '/') return 'front';
+    if (href.indexOf('/docs/') === 0) return 'docs';
+    if (href.indexOf('/bws4/') === 0) return 'examples';
+    return null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var page = a.getAttribute('data-page') || pageForHref(a.getAttribute('href'));
+    if (!page) return;           // external links behave as links
+    e.preventDefault();
+    show(page);
+  });
+})();
+</script>
+</body>
+</html>

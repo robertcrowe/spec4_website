@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "features": [
+    {
+      "id": "unified_stylesheet",
+      "name": "Unified_Stylesheet",
+      "purpose": "Gives every page of the site one consistent visual presentation so the site reads as a single coherent reference work rather than a marketing site, while sharing a few brand cues with the Spec4 app.",
+      "invocation": {
+        "trigger": "A reader opens or navigates to any page on the site"
+      },
+      "inputs": [
+        {
+          "name": "page content",
+          "type": "structured text",
+          "description": "The prose, code samples, tables, figures, and navigation links that make up a given page",
+          "required": true
+        },
+        {
+          "name": "system color scheme preference",
+          "type": "setting",
+          "description": "The reader's device-level preference for a light or dark reading scheme",
+          "required": false
+        },
+        {
+          "name": "viewport width",
+          "type": "measurement",
+          "description": "The width of the reader's window or screen, used to decide when wide content needs to scroll",
+          "required": false
+        },
+        {
+          "name": "current section identifier",
+          "type": "text",
+          "description": "Which of the three main sections the current page belongs to, so navigation can mark it as active",
+          "required": true
+        }
+      ],
+      "outputs": {
+        "primary": "A visually consistent rendering of the page",
+        "format": "visual page layout",
+        "schema_notes": "Every page shows the same wordmark, navigation, typography choices, table behavior, code presentation, figure treatment, and color scheme rules; only content differs between pages"
+      },
+      "success_criteria": [
+        "All thirteen pages share identical navigation placement, wordmark treatment, and typography choices",
+        "The wordmark's two-color treatment is the only place blue appears on the site",
+        "Switching a device between light and dark reading preference changes the site's appearance without any control on the page",
+        "Wide tables and code samples scroll within their own bounded area instead of breaking the page layout on narrow screens",
+        "Figures appear at a consistent full-column width with a visible caption",
+        "The active section is visibly indicated in the navigation on every page in that section",
+        "No icons, card shapes, hero banners, shadows, gradients, animation, a second accent color, or analytics indicators appear anywhere on the site"
+      ],
+      "failure_modes": [
+        {
+          "mode": "One or more pages render with different typography, spacing, or navigation than the rest",
+          "likelihood": "medium",
+          "mitigation": "Apply the same shared presentation rules to every page rather than page-specific overrides"
+        },
+        {
+          "mode": "Dark reading scheme produces low-contrast or unreadable text",
+          "likelihood": "medium",
+          "mitigation": "Define paired light and dark colors for background and text that both meet clear readability at normal reading distance"
+        },
+        {
+          "mode": "A wide table or long code sample overflows and breaks the page layout on a narrow screen",
+          "likelihood": "medium",
+          "mitigation": "Contain such content in a bounded, independently scrollable area"
+        },
+        {
+          "mode": "A visible control for switching color scheme appears, contradicting the no-toggle guarantee",
+          "likelihood": "low",
+          "mitigation": "Drive the scheme purely from the reader's system-level preference with no on-page control"
+        },
+        {
+          "mode": "Excluded decorative elements (icons, shadows, gradients, animation, extra accent color, analytics) creep back in over time",
+          "likelihood": "low",
+          "mitigation": "Treat the exclusion list as a standing constraint checked whenever the shared presentation is changed"
+        }
+      ],
+      "dependencies": [],
+      "entities": [
+        "Page",
+        "Section",
+        "Navigation",
+        "Figure",
+        "Table",
+        "CodeSample",
+        "ColorScheme"
+      ],
+      "references": []
+    }
+  ],
+  "nfr_goals": [
+    "Every page loads and renders correctly without requiring any script to run",
+    "Pages remain fully readable and navigable on narrow viewports without horizontal breakage of the overall layout",
+    "Text and code remain readable at sufficient contrast in both light and dark reading schemes",
+    "The shared visual presentation can be updated once and take effect consistently across all pages",
+    "The site collects no analytics or tracking information about readers",
+    "Pages load quickly even on slow connections, given they contain no scripts, media playback, or heavy assets"
+  ]
+}
