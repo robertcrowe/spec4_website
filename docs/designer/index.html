@@ -98,7 +98,7 @@
 
       <p><code>design/manifest.json</code> — the plan the mock was drawn from. Designer writes the manifest first, then renders the HTML to match it: <code>entities</code>, the conceptual data the UI presents and edits, with fields; <code>screens</code>, one per audience, each with a purpose and the surfaces placed on it; and <code>surfaces</code>, one per interactive region, with what it reads and writes, its states, the features it implements, and an advisory ordering hint. Feature ids are pinned by Spec4 from the vision, so downstream agents can join a surface to its feature however the model named it.</p>
 
-      <p>The manifest is written on the first draw of a mock. Refinements change the HTML and leave it as it is; <em>Start over</em> clears both. <a href="/docs/stackadvisor/">StackAdvisor</a> reads the manifest and not the mock: a purely visual change can't invalidate a stack choice. <a href="/docs/artifacts/">Artifacts</a></p>
+      <p>Every draw produces the manifest — the first, and each refinement after it. A refinement re-states the whole manifest for the mock as it now is: screens, surfaces, and entities the change didn't touch carry through, and anything it adds or removes is added or removed. The file is rewritten only when that differs from what's on disk, so a purely visual refinement leaves it untouched. <em>Start over</em> clears both. <a href="/docs/stackadvisor/">StackAdvisor</a> reads the manifest and not the mock: a purely visual change can't invalidate a stack choice. <a href="/docs/artifacts/">Artifacts</a></p>
 
       <p>Designer also keeps <code>design/session.json</code> — the step, your description, and the current mock — so a closed wizard resumes where it was. No agent reads it.</p>
 
@@ -147,7 +147,7 @@
     <section>
       <h2 id="across-rounds">Across rounds</h2>
 
-      <p>In a revision round, <em>Carry forward</em> loads the previous implemented round's approved mock as the baseline and prefills the refine note from this round's delta — the features added, changed, and removed, named by Brainstormer, with an instruction to preserve everything the changes don't touch. The established look carries forward; the mock changes only where the round does. <a href="/docs/rounds/">Rounds</a></p>
+      <p>In a revision round, <em>Carry forward</em> loads the previous implemented round's approved mock as the baseline and prefills the refine note from this round's delta — the features added, changed, and removed, named by Brainstormer, with an instruction to preserve everything the changes don't touch. The established look carries forward; the mock changes only where the round does. The draw produces this round's manifest for the revised mock. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
