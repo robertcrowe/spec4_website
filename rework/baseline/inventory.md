@@ -235,3 +235,8 @@ as a silent contradiction between two governing documents.
 
 No other part of §8 is affected: the measure is ~70 characters as it requires
 (73 at 1280px), and the layout is left-aligned.
+
+**Resolved 2026-09-15.** Register §8 was amended to read "Serif prose — a
+system stack, Charter first, Georgia fallback; no font files", with a dated
+note recording that the design round settled it. The two governing documents
+now agree and nothing is outstanding for a later round to rediscover.
