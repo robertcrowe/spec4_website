@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Designer — Spec4 docs</title>
   <meta name="description" content="Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: design/mock.html, which Phaser directs the coding agent to build to, and design/manifest.json, the design decisions the mock embodies. The HTML only defines a look, so it can be used with any application that has a UI, including mobile.">
   <link rel="canonical" href="https://spec4.ai/docs/designer/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -71,36 +68,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td><code>vision.json</code> exists and no mock has been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has a Designer wizard in progress.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>design/mock.html</code> exists and is newer than the vision and the AI features. Opens on the Start / Resume step.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td><code>vision.json</code> or <code>ai_features.json</code> is newer than the mock.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>No vision yet.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>vision.json</code> exists and no mock has been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has a Designer wizard in progress.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>design/mock.html</code> exists and is newer than the vision and the AI features. Opens on the Start / Resume step.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td><code>vision.json</code> or <code>ai_features.json</code> is newer than the mock.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No vision yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Designer can run any time after <a href="/docs/brainstormer/">Brainstormer</a>; it doesn't wait for <a href="/docs/agentifier/">Agentifier</a>. Skipping it is allowed: Phaser plans without a mock and the coding agent chooses the look.</p>
     </section>

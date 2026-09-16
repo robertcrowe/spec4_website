@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spec4 docs</title>
   <meta name="description" content="Spec4 is a local tool that turns a rough idea, or a change to an existing codebase, into a set of ordered development phases written for a coding agent.">
   <link rel="canonical" href="https://spec4.ai/docs/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -60,52 +57,54 @@ make spec4</code></pre>
 
       <p>A <a href="/docs/rounds/">round</a> is one pass through the pipeline. Its output is a folder, <code>.spec4/v0/</code> for the first round, <code>v1/</code> for the next, and so on.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Agent</th>
-            <th scope="col">Reads</th>
-            <th scope="col">Writes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CodeScanner</td>
-            <td>your repository (locally; the model gets a bounded summary)</td>
-            <td><code>code_review.json</code></td>
-          </tr>
-          <tr>
-            <td>Brainstormer</td>
-            <td><code>code_review.json</code>, your answers</td>
-            <td><code>vision.json</code>, <code>feature_specs.json</code></td>
-          </tr>
-          <tr>
-            <td>Agentifier</td>
-            <td><code>vision.json</code>, <code>feature_specs.json</code></td>
-            <td><code>ai_catalog.json</code>, <code>ai_features.json</code></td>
-          </tr>
-          <tr>
-            <td>Designer</td>
-            <td><code>vision.json</code>, <code>ai_features.json</code>, optional screenshots</td>
-            <td><code>design/mock.html</code>, <code>design/manifest.json</code></td>
-          </tr>
-          <tr>
-            <td>StackAdvisor</td>
-            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
-            <td><code>stack.json</code></td>
-          </tr>
-          <tr>
-            <td>Phaser</td>
-            <td>everything above</td>
-            <td><code>phases/phase1.md</code> … <code>phaseN.md</code></td>
-          </tr>
-          <tr>
-            <td>Deployer</td>
-            <td><code>phases/</code>, <code>stack.json</code>, <code>ai_features.json</code>, <code>feature_specs.json</code>, <code>design/mock.html</code></td>
-            <td><code>deployment-plan.md</code>, optionally <code>README.md</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Agent</th>
+              <th scope="col">Reads</th>
+              <th scope="col">Writes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CodeScanner</td>
+              <td>your repository (locally; the model gets a bounded summary)</td>
+              <td><code>code_review.json</code></td>
+            </tr>
+            <tr>
+              <td>Brainstormer</td>
+              <td><code>code_review.json</code>, your answers</td>
+              <td><code>vision.json</code>, <code>feature_specs.json</code></td>
+            </tr>
+            <tr>
+              <td>Agentifier</td>
+              <td><code>vision.json</code>, <code>feature_specs.json</code></td>
+              <td><code>ai_catalog.json</code>, <code>ai_features.json</code></td>
+            </tr>
+            <tr>
+              <td>Designer</td>
+              <td><code>vision.json</code>, <code>ai_features.json</code>, optional screenshots</td>
+              <td><code>design/mock.html</code>, <code>design/manifest.json</code></td>
+            </tr>
+            <tr>
+              <td>StackAdvisor</td>
+              <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
+              <td><code>stack.json</code></td>
+            </tr>
+            <tr>
+              <td>Phaser</td>
+              <td>everything above</td>
+              <td><code>phases/phase1.md</code> … <code>phaseN.md</code></td>
+            </tr>
+            <tr>
+              <td>Deployer</td>
+              <td><code>phases/</code>, <code>stack.json</code>, <code>ai_features.json</code>, <code>feature_specs.json</code>, <code>design/mock.html</code></td>
+              <td><code>deployment-plan.md</code>, optionally <code>README.md</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Run the agents a round needs. Brainstormer, <a href="/docs/stackadvisor/">StackAdvisor</a>, and <a href="/docs/phaser/">Phaser</a> are the spine; CodeScanner is required when there's code; <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/designer/">Designer</a>, and <a href="/docs/deployer/">Deployer</a> are optional. Spec4's own three rounds ran five of the seven.</p>
 
@@ -117,40 +116,42 @@ make spec4</code></pre>
 
       <p>Each agent's row on the project page carries one button. Its label is computed from the files on disk every time the page renders; nothing is cached.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">Meaning</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td>The agent's inputs exist and it hasn't produced its output yet.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>Same as Start, but this session already has an unfinished conversation with the agent.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td>The agent's output exists and is at least as new as every input it depends on.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td>The output exists, but an upstream artifact has changed since it was written.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td>
-          </tr>
-          <tr>
-            <td><strong>Required</strong></td>
-            <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because the next round always begins by reading what was built, even when the previous round was greenfield; every other agent is Not Ready until it runs.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td>The agent's inputs exist and it hasn't produced its output yet.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>Same as Start, but this session already has an unfinished conversation with the agent.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td>The agent's output exists and is at least as new as every input it depends on.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td>The output exists, but an upstream artifact has changed since it was written.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td>
+            </tr>
+            <tr>
+              <td><strong>Required</strong></td>
+              <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because the next round always begins by reading what was built, even when the previous round was greenfield; every other agent is Not Ready until it runs.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Every agent works from files on disk, so any agent can be re-run in any order the files allow.</p>
     </section>

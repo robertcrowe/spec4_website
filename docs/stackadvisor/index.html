@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>StackAdvisor — Spec4 docs</title>
   <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
   <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -86,36 +83,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td><code>vision.json</code> exists and no stack has been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with StackAdvisor.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>stack.json</code> exists and is newer than every input it depends on. Opens in update mode.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td>The vision, AI features, code review, or design manifest is newer than <code>stack.json</code>.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>No vision yet.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>vision.json</code> exists and no stack has been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with StackAdvisor.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>stack.json</code> exists and is newer than every input it depends on. Opens in update mode.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td>The vision, AI features, code review, or design manifest is newer than <code>stack.json</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No vision yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>StackAdvisor depends on <a href="/docs/designer/">Designer</a>'s manifest and not the mock: a purely visual change can't invalidate a stack choice.</p>
     </section>

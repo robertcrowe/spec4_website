@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Phaser — Spec4 docs</title>
   <meta name="description" content="Phaser turns everything the earlier agents wrote into ordered implementation phases, one file each, written for a coding agent. Phase 1 is a steel thread — the thinnest live end-to-end path — and every phase after it builds on the one before, ends with the command that proves it's done, and names where a coding agent is likely to go wrong.">
   <link rel="canonical" href="https://spec4.ai/docs/phaser/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -80,36 +77,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td><code>vision.json</code> and <code>stack.json</code> exist and no phases have been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with Phaser.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>phases/</code> exists and is newer than every input it depends on.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td>The vision, AI features, stack, code review, or mock is newer than the phases.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>No vision or no stack yet, or the inputs are out of order.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>vision.json</code> and <code>stack.json</code> exist and no phases have been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with Phaser.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>phases/</code> exists and is newer than every input it depends on.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td>The vision, AI features, stack, code review, or mock is newer than the phases.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No vision or no stack yet, or the inputs are out of order.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Phaser depends on the mock and not the manifest, since it hands the mock to the coding agent by path.</p>
     </section>

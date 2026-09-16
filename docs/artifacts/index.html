@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Artifacts — Spec4 docs</title>
   <meta name="description" content="Everything Spec4 produces is a file under .spec4/ in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.">
   <link rel="canonical" href="https://spec4.ai/docs/artifacts/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -350,66 +347,68 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
 
       <p>Calls · tokens · cost · model, from each round's <code>usage.json</code>. Brainstormer includes its feature-speccing calls; Phaser includes the seam check.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Agent</th>
-            <th scope="col"><code>v0</code></th>
-            <th scope="col"><code>v1</code></th>
-            <th scope="col"><code>v2</code></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CodeScanner</td>
-            <td>— (ran before usage was recorded)</td>
-            <td>3 · 118k · $0.53 · <code>claude-sonnet-5</code></td>
-            <td>3 · 116k · $0.46 · <code>claude-sonnet-5</code></td>
-          </tr>
-          <tr>
-            <td>Brainstormer</td>
-            <td>16 · 253k · $0.67 · <code>claude-sonnet-5</code></td>
-            <td>4 · 66k · $0.32 · <code>claude-sonnet-5</code></td>
-            <td>27 · 485k · $1.60 · <code>claude-sonnet-5</code></td>
-          </tr>
-          <tr>
-            <td>Agentifier</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td>Designer</td>
-            <td>2 · 56k · $1.64 · <code>claude-fable-5-1</code></td>
-            <td>1 · 55k · $1.97 · <code>claude-fable-5-1</code></td>
-            <td>1 · 63k · $0.93 · <code>claude-opus-5</code></td>
-          </tr>
-          <tr>
-            <td>StackAdvisor</td>
-            <td>35 · 1.15M · $3.02 · <code>claude-sonnet-5</code></td>
-            <td>4 · 193k · $0.56 · <code>claude-sonnet-5</code></td>
-            <td>5 · 282k · $0.80 · <code>claude-sonnet-5</code></td>
-          </tr>
-          <tr>
-            <td>Phaser</td>
-            <td>6 · 231k · $1.72 · <code>claude-opus-5</code></td>
-            <td>4 · 189k · $1.70 · <code>claude-opus-5</code></td>
-            <td>4 · 242k · $2.09 · <code>claude-opus-5</code></td>
-          </tr>
-          <tr>
-            <td>Deployer</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td><strong>Total</strong></td>
-            <td><strong>59 · 1.69M · $7.04</strong></td>
-            <td><strong>16 · 0.62M · $5.09</strong></td>
-            <td><strong>40 · 1.19M · $5.88</strong></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">Agent</th>
+              <th scope="col"><code>v0</code></th>
+              <th scope="col"><code>v1</code></th>
+              <th scope="col"><code>v2</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CodeScanner</td>
+              <td>— (ran before usage was recorded)</td>
+              <td>3 · 118k · $0.53 · <code>claude-sonnet-5</code></td>
+              <td>3 · 116k · $0.46 · <code>claude-sonnet-5</code></td>
+            </tr>
+            <tr>
+              <td>Brainstormer</td>
+              <td>16 · 253k · $0.67 · <code>claude-sonnet-5</code></td>
+              <td>4 · 66k · $0.32 · <code>claude-sonnet-5</code></td>
+              <td>27 · 485k · $1.60 · <code>claude-sonnet-5</code></td>
+            </tr>
+            <tr>
+              <td>Agentifier</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Designer</td>
+              <td>2 · 56k · $1.64 · <code>claude-fable-5-1</code></td>
+              <td>1 · 55k · $1.97 · <code>claude-fable-5-1</code></td>
+              <td>1 · 63k · $0.93 · <code>claude-opus-5</code></td>
+            </tr>
+            <tr>
+              <td>StackAdvisor</td>
+              <td>35 · 1.15M · $3.02 · <code>claude-sonnet-5</code></td>
+              <td>4 · 193k · $0.56 · <code>claude-sonnet-5</code></td>
+              <td>5 · 282k · $0.80 · <code>claude-sonnet-5</code></td>
+            </tr>
+            <tr>
+              <td>Phaser</td>
+              <td>6 · 231k · $1.72 · <code>claude-opus-5</code></td>
+              <td>4 · 189k · $1.70 · <code>claude-opus-5</code></td>
+              <td>4 · 242k · $2.09 · <code>claude-opus-5</code></td>
+            </tr>
+            <tr>
+              <td>Deployer</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td><strong>59 · 1.69M · $7.04</strong></td>
+              <td><strong>16 · 0.62M · $5.09</strong></td>
+              <td><strong>40 · 1.19M · $5.88</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>No Agentifier or Deployer calls in any round: none of the three rounds added an AI feature, and the deployment didn't change. No retries — every call has <code>error: null</code> — and no cached input. The largest line is a different agent each round: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>. Phaser is first or second every time because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model.</p>
     </section>

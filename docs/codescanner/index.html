@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CodeScanner — Spec4 docs</title>
   <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.">
   <link rel="canonical" href="https://spec4.ai/docs/codescanner/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -33,42 +30,44 @@
 
       <p>The repository, locally. What the model receives is a bounded summary assembled by Spec4 before any call is made:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Part</th>
-            <th scope="col">What's included</th>
-            <th scope="col">Limit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>File tree</td>
-            <td>Every path under the directory, skipping vendored and build directories</td>
-            <td>150 files</td>
-          </tr>
-          <tr>
-            <td>Manifests</td>
-            <td><code>pyproject.toml</code>, <code>package.json</code>, <code>Cargo.toml</code>, <code>go.mod</code>, <code>Makefile</code>, linter and type-checker configs, and the like</td>
-            <td>3,000 characters per file, 10,000 in total</td>
-          </tr>
-          <tr>
-            <td>README</td>
-            <td>The root README, if there is one</td>
-            <td>80 lines</td>
-          </tr>
-          <tr>
-            <td>Deployment and CI signals</td>
-            <td><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Procfile</code>, <code>fly.toml</code>, <code>render.yaml</code>, <code>.github/workflows/</code>, Terraform directories, and the like</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Source samples</td>
-            <td>The head of up to eight non-test source files, entry-point candidates first (<code>main</code>, <code>app</code>, <code>index</code>, <code>server</code>, <code>cli</code>, <code>__main__</code>)</td>
-            <td>80 lines per file, 8,000 characters in total</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Part</th>
+              <th scope="col">What's included</th>
+              <th scope="col">Limit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>File tree</td>
+              <td>Every path under the directory, skipping vendored and build directories</td>
+              <td>150 files</td>
+            </tr>
+            <tr>
+              <td>Manifests</td>
+              <td><code>pyproject.toml</code>, <code>package.json</code>, <code>Cargo.toml</code>, <code>go.mod</code>, <code>Makefile</code>, linter and type-checker configs, and the like</td>
+              <td>3,000 characters per file, 10,000 in total</td>
+            </tr>
+            <tr>
+              <td>README</td>
+              <td>The root README, if there is one</td>
+              <td>80 lines</td>
+            </tr>
+            <tr>
+              <td>Deployment and CI signals</td>
+              <td><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Procfile</code>, <code>fly.toml</code>, <code>render.yaml</code>, <code>.github/workflows/</code>, Terraform directories, and the like</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Source samples</td>
+              <td>The head of up to eight non-test source files, entry-point candidates first (<code>main</code>, <code>app</code>, <code>index</code>, <code>server</code>, <code>cli</code>, <code>__main__</code>)</td>
+              <td>80 lines per file, 8,000 characters in total</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Skipped: <code>.git</code>, <code>node_modules</code>, <code>.venv</code>, <code>__pycache__</code>, <code>dist</code>, <code>build</code>, <code>target</code>, <code>.spec4</code>, and the other cache and vendor directories. Test directories are excluded from the samples.</p>
 
@@ -103,32 +102,34 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td>The directory has code and no review has been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with CodeScanner.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>code_review.json</code> exists for this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Required</strong></td>
-            <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan — even if the previous round was greenfield.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td>The directory has code and no review has been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with CodeScanner.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>code_review.json</code> exists for this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Required</strong></td>
+              <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan — even if the previous round was greenfield.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with <a href="/docs/brainstormer/">Brainstormer</a>.</p>
     </section>

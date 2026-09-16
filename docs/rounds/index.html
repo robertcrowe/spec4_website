@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rounds — Spec4 docs</title>
   <meta name="description" content="A round is one pass over the project. Its output is one folder — .spec4/v0/ for the first round, v1/ for the next, and so on — and every round after the first starts from the code, not from the previous plan.">
   <link rel="canonical" href="https://spec4.ai/docs/rounds/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -67,40 +64,42 @@
 
       <p>Every artifact is dated against the ones upstream of it. The project page recomputes each agent's state from the files on disk every time it renders; nothing is cached.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Agent</th>
-            <th scope="col">Goes stale when any of these is newer than its output</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Brainstormer</td>
-            <td><code>code_review.json</code></td>
-          </tr>
-          <tr>
-            <td>Agentifier</td>
-            <td><code>vision.json</code>, <code>code_review.json</code></td>
-          </tr>
-          <tr>
-            <td>Designer</td>
-            <td><code>vision.json</code>, <code>ai_features.json</code></td>
-          </tr>
-          <tr>
-            <td>StackAdvisor</td>
-            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
-          </tr>
-          <tr>
-            <td>Phaser</td>
-            <td><code>vision.json</code>, <code>ai_features.json</code>, <code>stack.json</code>, <code>code_review.json</code>, <code>design/mock.html</code></td>
-          </tr>
-          <tr>
-            <td>Deployer</td>
-            <td><code>ai_features.json</code>, <code>stack.json</code>, <code>feature_specs.json</code>, <code>phases/</code>, <code>design/mock.html</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Agent</th>
+              <th scope="col">Goes stale when any of these is newer than its output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Brainstormer</td>
+              <td><code>code_review.json</code></td>
+            </tr>
+            <tr>
+              <td>Agentifier</td>
+              <td><code>vision.json</code>, <code>code_review.json</code></td>
+            </tr>
+            <tr>
+              <td>Designer</td>
+              <td><code>vision.json</code>, <code>ai_features.json</code></td>
+            </tr>
+            <tr>
+              <td>StackAdvisor</td>
+              <td><code>vision.json</code>, <code>ai_features.json</code>, <code>code_review.json</code>, <code>design/manifest.json</code></td>
+            </tr>
+            <tr>
+              <td>Phaser</td>
+              <td><code>vision.json</code>, <code>ai_features.json</code>, <code>stack.json</code>, <code>code_review.json</code>, <code>design/mock.html</code></td>
+            </tr>
+            <tr>
+              <td>Deployer</td>
+              <td><code>ai_features.json</code>, <code>stack.json</code>, <code>feature_specs.json</code>, <code>phases/</code>, <code>design/mock.html</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>CodeScanner reads the repository, not an artifact, so it has no upstream. <code>usage.json</code> is a record for you, read by no agent, and never makes anything stale.</p>
 
@@ -110,40 +109,42 @@
 
       <p>What you see on the project page:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">Meaning</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td>The agent's inputs exist and it hasn't produced its output yet.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>Same as Start, but this session already has an unfinished conversation with the agent.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td>The agent's output exists and is at least as new as every input it depends on.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td>The output exists, but an upstream artifact has changed since it was written.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td>
-          </tr>
-          <tr>
-            <td><strong>Required</strong></td>
-            <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td>The agent's inputs exist and it hasn't produced its output yet.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>Same as Start, but this session already has an unfinished conversation with the agent.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td>The agent's output exists and is at least as new as every input it depends on.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td>The output exists, but an upstream artifact has changed since it was written.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>A required input is missing, or the inputs are out of order — an upstream artifact is newer than one downstream of it.</td>
+            </tr>
+            <tr>
+              <td><strong>Required</strong></td>
+              <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>So if you re-run Brainstormer after StackAdvisor, the project page shows StackAdvisor as <strong>Needs Update</strong>. Re-running an agent appends to <code>usage.json</code>; nothing is overwritten.</p>
     </section>

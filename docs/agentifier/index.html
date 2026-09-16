@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agentifier — Spec4 docs</title>
   <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
   <link rel="canonical" href="https://spec4.ai/docs/agentifier/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -33,102 +30,104 @@
 
       <p>Nine tiers, cheapest first. Every cell below is from the frontmatter of the tier's pattern file in the repository; the live example is the <a href="/bws4/">Built With Spec4</a> app that demonstrates the tier.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tier</th>
-            <th scope="col">Cost per invocation</th>
-            <th scope="col">Latency (s)</th>
-            <th scope="col">Reviewed</th>
-            <th scope="col">Live example</th>
-            <th scope="col">Pattern file</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><code>deterministic</code></td>
-            <td>$0 (no model inference)</td>
-            <td>&lt;0.01</td>
-            <td>2026-05-30</td>
-            <td>— (not AI; no app)</td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/01_deterministic.md"><code>01_deterministic.md</code></a></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td><code>embeddings</code></td>
-            <td>$0.00001–$0.001 per item embedded</td>
-            <td>0.05–0.5</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/02_embeddings.md"><code>02_embeddings.md</code></a></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><code>single_call</code></td>
-            <td>$0.001–$0.05</td>
-            <td>1–5</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/03_single_call.md"><code>03_single_call.md</code></a></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td><code>rag</code></td>
-            <td>$0.002–$0.08</td>
-            <td>1–6</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/04_rag.md"><code>04_rag.md</code></a></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td><code>tool_agent</code></td>
-            <td>$0.005–$0.15</td>
-            <td>2–15</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/05_tool_agent.md"><code>05_tool_agent.md</code></a></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td><code>chained_calls</code></td>
-            <td>$0.01–$0.20</td>
-            <td>3–20</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/06_chained_calls.md"><code>06_chained_calls.md</code></a></td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td><code>planning_agent</code></td>
-            <td>$0.05–$2.00+</td>
-            <td>10–300+</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/07_planning_agent.md"><code>07_planning_agent.md</code></a></td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td><code>orchestrated_subagents</code></td>
-            <td>$0.10–$5.00+</td>
-            <td>15–600+</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/08_orchestrated_subagents.md"><code>08_orchestrated_subagents.md</code></a></td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td><code>multi_agent_collaboration</code></td>
-            <td>$0.20–$10.00+</td>
-            <td>30–1800+</td>
-            <td>2026-05-30</td>
-            <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
-            <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/09_multi_agent_collaboration.md"><code>09_multi_agent_collaboration.md</code></a></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Cost per invocation</th>
+              <th scope="col">Latency (s)</th>
+              <th scope="col">Reviewed</th>
+              <th scope="col">Live example</th>
+              <th scope="col">Pattern file</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>deterministic</code></td>
+              <td>$0 (no model inference)</td>
+              <td>&lt;0.01</td>
+              <td>2026-05-30</td>
+              <td>— (not AI; no app)</td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/01_deterministic.md"><code>01_deterministic.md</code></a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>embeddings</code></td>
+              <td>$0.00001–$0.001 per item embedded</td>
+              <td>0.05–0.5</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/02_embeddings.md"><code>02_embeddings.md</code></a></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>single_call</code></td>
+              <td>$0.001–$0.05</td>
+              <td>1–5</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/03_single_call.md"><code>03_single_call.md</code></a></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>rag</code></td>
+              <td>$0.002–$0.08</td>
+              <td>1–6</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/04_rag.md"><code>04_rag.md</code></a></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>tool_agent</code></td>
+              <td>$0.005–$0.15</td>
+              <td>2–15</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/05_tool_agent.md"><code>05_tool_agent.md</code></a></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><code>chained_calls</code></td>
+              <td>$0.01–$0.20</td>
+              <td>3–20</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/06_chained_calls.md"><code>06_chained_calls.md</code></a></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><code>planning_agent</code></td>
+              <td>$0.05–$2.00+</td>
+              <td>10–300+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/07_planning_agent.md"><code>07_planning_agent.md</code></a></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><code>orchestrated_subagents</code></td>
+              <td>$0.10–$5.00+</td>
+              <td>15–600+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/08_orchestrated_subagents.md"><code>08_orchestrated_subagents.md</code></a></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><code>multi_agent_collaboration</code></td>
+              <td>$0.20–$10.00+</td>
+              <td>30–1800+</td>
+              <td>2026-05-30</td>
+              <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
+              <td><a href="https://github.com/robertcrowe/spec4/blob/main/src/spec4/agentifier/patterns/tiers/09_multi_agent_collaboration.md"><code>09_multi_agent_collaboration.md</code></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Tier 1 is not AI. The deterministic pattern file describes itself as the default the other eight tiers have to earn their way past, and its purpose is to let Agentifier recommend no model at all. Spec4's own Agentifier is a tier-8 system, as its pattern file notes.</p>
     </section>
@@ -197,36 +196,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td><code>vision.json</code> exists and no AI features have been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with Agentifier.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>ai_features.json</code> exists and is newer than the vision and the code review.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td><code>vision.json</code> or <code>code_review.json</code> is newer than <code>ai_features.json</code>.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>No vision yet.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>vision.json</code> exists and no AI features have been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with Agentifier.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>ai_features.json</code> exists and is newer than the vision and the code review.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td><code>vision.json</code> or <code>code_review.json</code> is newer than <code>ai_features.json</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No vision yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Skipping Agentifier is allowed: <a href="/docs/designer/">Designer</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and Phaser run without <code>ai_features.json</code> and plan no AI features.</p>
     </section>

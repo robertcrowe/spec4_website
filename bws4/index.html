@@ -2,23 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Built With Spec4 — Spec4</title>
   <meta name="description" content="Built With Spec4 is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder Agentifier recommends from, so you can see what a tier looks like as software. It was planned in nine rounds, with hand edits between them, and its full .spec4/ history — v0 through v8, every artifact and every phase file — is in its repository.">
   <link rel="canonical" href="https://spec4.ai/bws4/">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/">Docs</a>
     <a href="/bws4/" aria-current="page">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -32,62 +29,64 @@
     <section>
       <h2>The apps</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">App</th>
-            <th scope="col">Tier</th>
-            <th scope="col">Round</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
-            <td><code>embeddings</code></td>
-            <td><code>v1</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
-            <td><code>single_call</code></td>
-            <td><code>v2</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
-            <td><code>rag</code></td>
-            <td><code>v0</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
-            <td><code>tool_agent</code></td>
-            <td><code>v0</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
-            <td><code>chained_calls</code></td>
-            <td><code>v3</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
-            <td><code>planning_agent</code></td>
-            <td><code>v4</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/react">ReAct Loop</a></td>
-            <td><code>planning_agent</code></td>
-            <td><code>v7</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
-            <td><code>orchestrated_subagents</code></td>
-            <td><code>v5</code></td>
-          </tr>
-          <tr>
-            <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
-            <td><code>multi_agent_collaboration</code></td>
-            <td><code>v6</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">App</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Round</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://bw.spec4.ai/embeddings">Embeddings</a></td>
+              <td><code>embeddings</code></td>
+              <td><code>v1</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/single-call">Single Call</a></td>
+              <td><code>single_call</code></td>
+              <td><code>v2</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/rag">RAG</a></td>
+              <td><code>rag</code></td>
+              <td><code>v0</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/tool-use">Tool Use</a></td>
+              <td><code>tool_agent</code></td>
+              <td><code>v0</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/chained-calls">Chained Calls</a></td>
+              <td><code>chained_calls</code></td>
+              <td><code>v3</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/planning">Planning Agent</a></td>
+              <td><code>planning_agent</code></td>
+              <td><code>v4</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/react">ReAct Loop</a></td>
+              <td><code>planning_agent</code></td>
+              <td><code>v7</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/orchestrated">Orchestrated Subagents</a></td>
+              <td><code>orchestrated_subagents</code></td>
+              <td><code>v5</code></td>
+            </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/collab">Multi-Agent Collaboration</a></td>
+              <td><code>multi_agent_collaboration</code></td>
+              <td><code>v6</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Two apps share the <code>planning_agent</code> tier on purpose: Planning Agent fixes its plan up front, and ReAct Loop discovers it one observation at a time. The tier ladder is on the <a href="/docs/agentifier/">Agentifier</a> page.</p>
 
@@ -99,62 +98,64 @@
 
       <p>One line per round, from each <a href="/docs/artifacts/"><code>vision.json</code></a>'s <code>revision_history</code>:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Round</th>
-            <th scope="col">What it planned</th>
-            <th scope="col">Agents run</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>v0</code></td>
-            <td>The framework — landing page, shared model and embedding services, the Exa search integration — and the first two apps, RAG and Tool Use. Hosted on Render's free tier.</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td><code>v1</code></td>
-            <td>Embeddings, as a visual explorer on the framework's existing embedding model.</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td><code>v2</code></td>
-            <td>Single Call, in simple and schema-constrained modes.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v3</code></td>
-            <td>Chained Calls: a writer and a critic, capped at two calls.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v4</code></td>
-            <td>Planning Agent: plan, approve, then execute, under a per-run call cap.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v5</code></td>
-            <td>Orchestrated Subagents: a coordinator briefs two of four specialists, runs them concurrently, merges.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v6</code></td>
-            <td>Multi-Agent Collaboration: a buyer negotiates against two sellers holding private constraints, over A2A-shaped messages.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v7</code></td>
-            <td>ReAct Loop, in deliberate contrast with <code>v4</code>.</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td><code>v8</code></td>
-            <td>Hosting moved from Render to a self-hosted VPS, behaviour-preserving; PostgreSQL with pgvector stays on Neon.</td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Round</th>
+              <th scope="col">What it planned</th>
+              <th scope="col">Agents run</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>v0</code></td>
+              <td>The framework — landing page, shared model and embedding services, the Exa search integration — and the first two apps, RAG and Tool Use. Hosted on Render's free tier.</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td><code>v1</code></td>
+              <td>Embeddings, as a visual explorer on the framework's existing embedding model.</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td><code>v2</code></td>
+              <td>Single Call, in simple and schema-constrained modes.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v3</code></td>
+              <td>Chained Calls: a writer and a critic, capped at two calls.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v4</code></td>
+              <td>Planning Agent: plan, approve, then execute, under a per-run call cap.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v5</code></td>
+              <td>Orchestrated Subagents: a coordinator briefs two of four specialists, runs them concurrently, merges.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v6</code></td>
+              <td>Multi-Agent Collaboration: a buyer negotiates against two sellers holding private constraints, over A2A-shaped messages.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v7</code></td>
+              <td>ReAct Loop, in deliberate contrast with <code>v4</code>.</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><code>v8</code></td>
+              <td>Hosting moved from Render to a self-hosted VPS, behaviour-preserving; PostgreSQL with pgvector stays on Neon.</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p><code>IMPLEMENTED</code> is present in all nine. Seven of the eight brownfield rounds open with an integration thread; <code>v3</code> went straight to backend work. <code>v8</code> skipped <a href="/docs/designer/">Designer</a> and Agentifier, since nothing it planned had a screen or a model call; <a href="/docs/deployer/">Deployer</a> ran only when the deployment changed — <code>v0</code>, <code>v1</code>, and <code>v8</code>. Run the agents a round needs.</p>
 
@@ -181,36 +182,38 @@
 
       <p>Between <code>v0</code> and <code>v1</code> the developer changed the code without Spec4, and the next round's <a href="/docs/codescanner/">CodeScanner</a> read it. Three things entered the codebase that no <code>v0</code> artifact mentions:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Term</th>
-            <th scope="col">In a <code>v0</code> artifact?</th>
-            <th scope="col">In <code>v1</code>'s <code>code_review.json</code>?</th>
-            <th scope="col">Later in a spec?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Groq</td>
-            <td>no</td>
-            <td>yes — <code>change_risks</code>, from the README</td>
-            <td><code>v6</code> on in phases; <code>stack.json</code> in <code>v8</code></td>
-          </tr>
-          <tr>
-            <td><code>model_registry</code></td>
-            <td>no</td>
-            <td>yes — <code>change_risks</code>, from the README</td>
-            <td>phases in <code>v2</code>–<code>v4</code> and <code>v6</code>–<code>v8</code>; <code>stack.json</code> from <code>v7</code></td>
-          </tr>
-          <tr>
-            <td>oxlint</td>
-            <td>no</td>
-            <td>yes — <code>coding_style.linter</code>, from <code>package.json</code></td>
-            <td><code>v4</code> and <code>v6</code> phases; <code>stack.json</code> in <code>v8</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">Term</th>
+              <th scope="col">In a <code>v0</code> artifact?</th>
+              <th scope="col">In <code>v1</code>'s <code>code_review.json</code>?</th>
+              <th scope="col">Later in a spec?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Groq</td>
+              <td>no</td>
+              <td>yes — <code>change_risks</code>, from the README</td>
+              <td><code>v6</code> on in phases; <code>stack.json</code> in <code>v8</code></td>
+            </tr>
+            <tr>
+              <td><code>model_registry</code></td>
+              <td>no</td>
+              <td>yes — <code>change_risks</code>, from the README</td>
+              <td>phases in <code>v2</code>–<code>v4</code> and <code>v6</code>–<code>v8</code>; <code>stack.json</code> from <code>v7</code></td>
+            </tr>
+            <tr>
+              <td>oxlint</td>
+              <td>no</td>
+              <td>yes — <code>coding_style.linter</code>, from <code>package.json</code></td>
+              <td><code>v4</code> and <code>v6</code> phases; <code>stack.json</code> in <code>v8</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>The <code>v1</code> review's one recorded change risk is the free-tier model chains in <code>model_registry.py</code> rotting as providers retire slugs — a risk in code the plan never asked for, caught on the next scan. <a href="/docs/rounds/">Rounds</a></p>
     </section>

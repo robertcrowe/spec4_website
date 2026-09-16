@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Brainstormer — Spec4 docs</title>
   <meta name="description" content="Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed: vision.json, which every later agent reads, and feature_specs.json, a behavioural spec for each MVP feature.">
   <link rel="canonical" href="https://spec4.ai/docs/brainstormer/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -82,36 +79,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td>No vision this round; if the directory has code, <code>code_review.json</code> exists.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with Brainstormer.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>vision.json</code> exists and is newer than <code>code_review.json</code>. Opens in update mode.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td><code>code_review.json</code> is newer than <code>vision.json</code>.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>The directory has code and hasn't been scanned yet.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td>No vision this round; if the directory has code, <code>code_review.json</code> exists.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with Brainstormer.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>vision.json</code> exists and is newer than <code>code_review.json</code>. Opens in update mode.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td><code>code_review.json</code> is newer than <code>vision.json</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>The directory has code and hasn't been scanned yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>Re-running Brainstormer after later agents have run marks those agents <strong>Needs Update</strong>, since they all read the vision.</p>
     </section>

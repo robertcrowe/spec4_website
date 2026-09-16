@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Deployer — Spec4 docs</title>
   <meta name="description" content="Deployer is the last agent. It asks which coding agent you're using and writes deployment-plan.md: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's README.md.">
   <link rel="canonical" href="https://spec4.ai/docs/deployer/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <nav>
-    <a href="/">Spec4</a>
-    <code>1.5.0</code>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -86,36 +83,38 @@
     <section>
       <h2>Buttons</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Button</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Start</strong></td>
-            <td><code>phases/</code> exists and no plan has been written this round.</td>
-          </tr>
-          <tr>
-            <td><strong>Continue</strong></td>
-            <td>This session has an unfinished conversation with Deployer.</td>
-          </tr>
-          <tr>
-            <td><strong>Modify</strong></td>
-            <td><code>deployment-plan.md</code> exists and is newer than every input it depends on. Offers to keep the plan and answer questions about it, refine parts of it, or start over.</td>
-          </tr>
-          <tr>
-            <td><strong>Needs Update</strong></td>
-            <td>The stack, phases, AI features, or mock is newer than the plan.</td>
-          </tr>
-          <tr>
-            <td><strong>Not Ready</strong></td>
-            <td>No phases yet.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Button</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start</strong></td>
+              <td><code>phases/</code> exists and no plan has been written this round.</td>
+            </tr>
+            <tr>
+              <td><strong>Continue</strong></td>
+              <td>This session has an unfinished conversation with Deployer.</td>
+            </tr>
+            <tr>
+              <td><strong>Modify</strong></td>
+              <td><code>deployment-plan.md</code> exists and is newer than every input it depends on. Offers to keep the plan and answer questions about it, refine parts of it, or start over.</td>
+            </tr>
+            <tr>
+              <td><strong>Needs Update</strong></td>
+              <td>The stack, phases, AI features, or mock is newer than the plan.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ready</strong></td>
+              <td>No phases yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p>A newer <code>feature_specs.json</code> is caught when Deployer runs, but not yet by the button. <a href="/docs/rounds/">Rounds</a></p>
     </section>
