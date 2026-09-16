@@ -7,7 +7,7 @@ Rules for every page on spec4.ai. Every build task follows this file. The pages 
 1. Use the supplied copy verbatim: headings, order, tables, code blocks, and paragraphs. Do not rewrite, shorten, reorder, or add.
 2. Every term in backticks renders in monospace.
 3. Oxford commas are already in the copy; keep them.
-4. Nothing is added that isn't in the copy: no taglines, no calls to action, no summary boxes, no "learn more" links, no alt text that editorialises.
+4. Nothing is added that isn't in the copy: no taglines, no calls to action, no summary boxes, no "learn more" links, no alt text that editorialises. Naming the practice ("spec-driven development") is a fact and is allowed; ranking Spec4 within it ("the only…", "the first…") is the claim this rule bars. *(Amended 2026-09-16.)*
 
 ## Markup
 
