@@ -42,8 +42,11 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   --font-prose: Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text", Cambria, Georgia, serif;
 
-  /* Measure and rhythm. The reading layout is adjusted here and only here. */
+  /* Measure and rhythm. The reading layout is adjusted here and only here.
+     --gutter is the reading column's side padding; main pads by it and the
+     nav subtracts two of them, so the two stay in step from one place. */
   --measure: 37em;
+  --gutter: 1.25rem;
   --font-size-base: 1.0625rem;
   --line-height-base: 1.65;
 }
@@ -111,7 +114,7 @@ body {
 main {
   max-width: var(--measure);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: var(--gutter);
 }
 
 p {
@@ -244,9 +247,9 @@ em {
 
 .site-nav {
   /* The nav's text edges match main's: the reading measure less the two
-     1.25rem gutters main pads with, so the wordmark, the links and the rule
-     below them all line up with the prose on every page. */
-  width: min(var(--measure) - 2.5rem, 100% - 2.5rem);
+     gutters main pads with, so the wordmark, the links and the rule below
+     them all line up with the prose on every page. */
+  width: min(var(--measure) - 2 * var(--gutter), 100% - 2 * var(--gutter));
   margin-inline: auto;
   display: flex;
   flex-wrap: wrap;
@@ -311,4 +314,130 @@ em {
 
 .site-nav a[aria-current="page"]:hover {
   text-decoration: none;
+}
+
+/* ===== components (table wrapper, code panel, figure) ===== */
+
+/* COMPONENTS MARKUP CONTRACT
+   Phase 6 applies this to the thirteen pages. It adds the table wrapper as
+   the minimum markup the stylesheet needs and changes no table content --
+   no cell text, no column order, no rows added or removed.
+
+     <div class="table-wrap">
+       <table>...</table>          (add class="wide" when the table has four
+     </div>                         or more columns; see the rule below)
+
+     <pre><code>...</code></pre>   every code block is this pair, nothing else
+
+     <figure>
+       <img src="..." alt="...">
+       <figcaption>...</figcaption>
+     </figure>
+
+   The wrapper is the bounded box and it is what scrolls; the table inside is
+   allowed to be wider than it. That relationship is the whole mechanism for
+   keeping a wide table off the page's own scrollbar, so neither half of it
+   may be "simplified" away. These two rules and nothing else in this
+   stylesheet declare overflow -- it is never set on html, body, or main. */
+
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1.3rem;
+}
+
+/* The table may exceed the wrapper -- that is what makes the wrapper scroll
+   instead of the page. Without a min-width the columns would squeeze into
+   slivers at 380px and the page would look fine while being unreadable. */
+.table-wrap table {
+  width: 100%;
+  min-width: 30rem;
+}
+
+.table-wrap table.wide {
+  min-width: 38rem;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+}
+
+/* The header row is distinguished by weight and a firmer rule, never a fill.
+   No zebra striping, no cell backgrounds, no outer border. */
+thead th {
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-text);
+}
+
+td code,
+th code {
+  white-space: nowrap;
+}
+
+/* A flat tinted panel that scrolls within itself. No syntax colour, no line
+   numbers, and no rule here may produce either: no counters, no per-token
+   classes, no language selectors. The panel's only colours are its tint and
+   the base text colour. */
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  margin-block: 1.3rem;
+  padding: 0.9rem 1rem;
+  background: var(--color-code-tint);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  tab-size: 4;
+}
+
+/* Keeps the Phase 3 inline-code treatment from double-applying in a panel. */
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+figure {
+  margin-block: 1.6rem;
+  margin-inline: 0;
+}
+
+figure img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Always rendered below the image and always visible -- never a tooltip. */
+figcaption {
+  margin-top: 0.6rem;
+  font-family: var(--font-prose);
+  font-style: italic;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+figcaption code {
+  font-style: normal;
 }
