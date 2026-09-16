@@ -153,10 +153,13 @@ h4 {
   font-weight: 700;
 }
 
-/* Links carry their meaning in the underline, not in a colour: body text and
-   link text are the same token. The wordmark tokens are not used here. */
+/* Links are the app's green, which register §7 names as the site's single
+   accent; the underline carries the affordance so a link is never marked by
+   colour alone. See "Round amendments / A2" in rework/baseline/inventory.md:
+   this amends phase3 instruction 7, which generalised the wordmark-only rule
+   from blue onto green. Blue remains confined to .wordmark-spec. */
 a {
-  color: var(--color-text);
+  color: var(--accent-green);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.14em;
@@ -207,4 +210,105 @@ strong {
 
 em {
   font-style: italic;
+}
+
+/* ===== nav ===== */
+
+/* CANONICAL NAV MARKUP CONTRACT
+   Phase 6 copies this structure onto all thirteen pages verbatim, changing
+   only which link carries aria-current. It is recorded here, in the
+   stylesheet, so the constraints travel with the code.
+
+     <nav class="site-nav" aria-label="Site">
+       <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+       <span class="nav-version">1.5.0</span>
+       <a href="/docs/">Docs</a>
+       <a href="/bws4/">Examples</a>
+       <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+     </nav>
+
+   EXACTLY THREE LINKS follow the version: Docs, Examples, GitHub. There is no
+   Home link, and none is ever to be added -- the wordmark is the path back to
+   the front page. The wordmark link does not count toward the three.
+
+   CURRENT SECTION. aria-current="page" is placed on:
+     - the Docs link, on /docs/ and on all ten pages beneath it;
+     - the Examples link, on /bws4/.
+   The front page at / carries NO current mark at all. None of the three links
+   points to /, so on index.html no link receives aria-current. The GitHub
+   link is external and is never marked current on any page.
+
+   Targets, from register section 19: the wordmark goes to /, Examples goes to
+   /bws4/, GitHub goes to the project repository, and the version string is
+   1.5.0 in monospace. */
+
+.site-nav {
+  /* The nav's text edges match main's: the reading measure less the two
+     1.25rem gutters main pads with, so the wordmark, the links and the rule
+     below them all line up with the prose on every page. */
+  width: min(var(--measure) - 2.5rem, 100% - 2.5rem);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.4rem;
+  padding-block: 1.35rem 0.9rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.wordmark:hover {
+  text-decoration: none;
+}
+
+/* The only rule in the stylesheet permitted to use the blue token. */
+.wordmark-spec {
+  color: var(--wordmark-blue);
+}
+
+.wordmark-four {
+  color: var(--accent-green);
+}
+
+/* Sits with the wordmark at the start; its trailing auto margin is what
+   groups the three links at the end, and what lets them drop to their own
+   line intact when the nav wraps. */
+.nav-version {
+  margin-inline-end: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.site-nav a:not(.wordmark) {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.site-nav a:not(.wordmark):hover,
+.site-nav a:not(.wordmark):focus-visible {
+  text-decoration: underline;
+}
+
+/* Current section: raised to full text colour and given the green rule the
+   mock uses, so it is marked by weight and a rule, never by colour alone.
+   Amends phase4 instruction 11 -- see "Round amendments / A2" in
+   rework/baseline/inventory.md. */
+.site-nav a[aria-current="page"] {
+  color: var(--color-text);
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid var(--accent-green);
+}
+
+.site-nav a[aria-current="page"]:hover {
+  text-decoration: none;
 }
