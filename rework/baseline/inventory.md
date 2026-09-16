@@ -240,3 +240,42 @@ No other part of §8 is affected: the measure is ~70 characters as it requires
 system stack, Charter first, Georgia fallback; no font files", with a dated
 note recording that the design round settled it. The two governing documents
 now agree and nothing is outstanding for a later round to rediscover.
+
+## A4 — The code panel keeps its 2px radius (Phase 5)
+
+**Amends:** phase5.md instruction 8 and its `border-radius` verification grep.
+
+Phase 5 instruction 8 says to "remove any rounding, border, or shadow from the
+panel — it is a flat tinted block", and the phase's verification runs
+`grep -niE 'shadow|gradient|animation|transition|border-radius|counter-increment'`
+expecting no matches. The design says otherwise, in the same phase file and in
+the design manifest, twice:
+
+- `InstallCommand` (a UI surface carried into every phase file, under the
+  heading "These specifications are authoritative for this phase"):
+  "Two-line install command in **a plain code panel (one tint, 2px radius,** no
+  syntax colour, no line numbers)".
+- `.spec4/v1/design/manifest.json`: "Code panel treatment (one tint, **2px
+  radius**, horizontal scroll)".
+
+The approved mock ships `border-radius: 2px` on both `pre` and inline `code`.
+The conflict is internal to phase5.md — its authoritative specification section
+contradicts its own instruction 8 — and the specification section wins, as that
+section's own preamble states. Register §10 ("plain bordered panels; no window
+chrome, no traffic-light dots, no titlebar") is about chrome, not corner radius,
+and is satisfied either way.
+
+The stylesheet therefore contains three `border-radius` declarations:
+
+| Line | Rule | Value | Source |
+|---|---|---|---|
+| ~201 | `code` (inline) | `2px` | mock, shipped in Phase 3 |
+| ~403 | `pre` | `2px` | mock and design manifest |
+| ~414 | `pre code` | `0` | reset, so the inline treatment does not double-apply inside a panel |
+
+**Consequence for Phase 7.** The `border-radius` term in Phase 5's grep is
+expected to match these three lines and must not be treated as a failure. Every
+other term in that grep — shadow, gradient, animation, transition,
+counter-increment — still returns nothing, and those are the exclusions the
+specification's success criteria actually name. Radius is not on the excluded
+list in register §14 or §17.
