@@ -6,7 +6,7 @@
   <title>Brainstormer — Spec4 docs</title>
   <meta name="description" content="Brainstormer develops the project vision through a conversation, one question at a time, and writes two files when the vision is confirmed: vision.json, which every later agent reads, and feature_specs.json, a behavioural spec for each MVP feature.">
   <link rel="canonical" href="https://spec4.ai/docs/brainstormer/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,11 +21,23 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
         <li><a href="/docs/codescanner/">CodeScanner</a></li>
-        <li><span aria-current="page">Brainstormer</span></li>
+        <li><span aria-current="page">Brainstormer</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/agentifier/">Agentifier</a></li>
         <li><a href="/docs/designer/">Designer</a></li>
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
@@ -54,13 +66,13 @@
     <p>It asks about the product and never about technology. The one implementation question it asks is the UI surface — web, mobile, desktop, CLI, API — because <a href="/docs/designer/">Designer</a> and <a href="/docs/phaser/">Phaser</a> need it.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p>You, one question at a time. If the <a href="/docs/rounds/">round</a> started with <a href="/docs/codescanner/">CodeScanner</a>, <code>code_review.json</code> as well, and the conversation is framed around the project that exists. In a revision round, the previous implemented round's <code>vision.json</code> as read-only reference.</p>
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Nine topics, in order, one at a time. It doesn't move to the next until you've confirmed your answer to the current one, and it recaps the decisions so far after each so you can go back and change any of them.</p>
 
@@ -89,7 +101,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>vision.json</code> — the confirmed vision as a document: name, purpose, target audience, <code>key_features_mvp</code>, UI surface, differentiators, future enhancements, monetization, and references with canonical links. Each MVP feature gets a stable id, assigned by Spec4 from its name, that every later artifact uses to refer to it.</p>
 
@@ -105,7 +117,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -144,13 +156,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>The first round's vision is the product. Every later round's is the product as it will be after that round, with one more entry in <code>revision_history</code>. The delta in that entry is what <a href="/docs/agentifier/">Agentifier</a>, Designer, <a href="/docs/stackadvisor/">StackAdvisor</a>, Phaser, and <a href="/docs/deployer/">Deployer</a> scope their work to.</p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>16 calls, about 253k tokens, and $0.67 in <code>v0</code>; 4 calls, 66k, and $0.32 in <code>v1</code>; 27 calls, 485k, and $1.60 in <code>v2</code>, feature-speccer calls included, all on <code>claude-sonnet-5</code>. It was Brainstormer's longest dialogue of the three, and <code>v2</code>'s most expensive line on the default model.</p>
     </section>

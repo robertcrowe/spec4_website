@@ -6,7 +6,7 @@
   <title>Agentifier — Spec4 docs</title>
   <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
   <link rel="canonical" href="https://spec4.ai/docs/agentifier/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,12 +21,26 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
         <li><a href="/docs/codescanner/">CodeScanner</a></li>
         <li><a href="/docs/brainstormer/">Brainstormer</a></li>
-        <li><span aria-current="page">Agentifier</span></li>
+        <li><span aria-current="page">Agentifier</span>
+          <ul>
+            <li><a href="#the-ladder">The ladder</a></li>
+            <li><a href="#the-rubric">The rubric</a></li>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/designer/">Designer</a></li>
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
         <li><a href="/docs/phaser/">Phaser</a></li>
@@ -54,7 +68,7 @@
     <p>It is optional. Spec4's own three <a href="/docs/rounds/">rounds</a> didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.</p>
 
     <section>
-      <h2>The ladder</h2>
+      <h2 id="the-ladder">The ladder</h2>
 
       <p>Nine tiers, cheapest first. Every cell below is from the frontmatter of the tier's pattern file in the repository; the live example is the <a href="/bws4/">Built With Spec4</a> app that demonstrates the tier.</p>
 
@@ -161,7 +175,7 @@
     </section>
 
     <section>
-      <h2>The rubric</h2>
+      <h2 id="the-rubric">The rubric</h2>
 
       <p>Each tier's pattern file has the same six sections — Description, When it works, When it doesn't, Over-engineering signs, Under-engineering signs, References — and a loader validates every file against that schema on startup. The Tier Analyst, the sub-agent that makes the recommendation, is given all nine files and a set of framing rules. Two of them, verbatim from <code>tier_analyst.py</code>:</p>
 
@@ -181,13 +195,13 @@
     </section>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p><code>vision.json</code> and <code>feature_specs.json</code>. <code>code_review.json</code> when the round has one, so candidates are found against what exists. In a revision round, the previous implemented round's <code>ai_features.json</code> as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.</p>
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Agentifier is a sub-pipeline. Scout reads the vision and finds candidate AI features; Linker relates them to each other and to the product features; Composer assembles the catalog; Tier Analyst recommends a tier for each; Spec Drafter writes the spec for each feature you keep; two passes then add cross-cutting concerns and a priority order. Sub-agents run on Agentifier's model.</p>
 
@@ -203,7 +217,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>ai_catalog.json</code> — one record per candidate: <code>name</code>, <code>scope</code>, <code>rough_description</code>, <code>linked_existing_workflow</code> (the current implementation it would replace, if any), <code>tier_recommendation</code>, <code>tier_decision</code>, and <code>tier_decision_rationale</code>. The rationale is empty when your decision matched the recommendation and your words when it didn't.</p>
 
@@ -222,7 +236,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -261,13 +275,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>A revision round carries the previous implemented round's <code>ai_features.json</code> as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped <code>introduced_in_version</code>. Phaser plans only those. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>Not run. Spec4's AI features — the seven planning agents themselves — were built before it was mature enough to plan itself, and the three rounds it has run on itself planned UI work that needed no new model call. The Built With Spec4 rounds ran Agentifier in eight of nine, with a feature at every tier from <code>embeddings</code> up.</p>
     </section>

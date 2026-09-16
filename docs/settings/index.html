@@ -6,7 +6,7 @@
   <title>Settings — Spec4 docs</title>
   <meta name="description" content="Spec4 has three settings: a model provider and key, a default model and reasoning effort, and an optional web-search provider. The setup wizard asks for them in that order the first time you open a project; the Settings page carries the same three steps afterwards.">
   <link rel="canonical" href="https://spec4.ai/docs/settings/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -33,7 +36,16 @@
         <li><a href="/docs/deployer/">Deployer</a></li>
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
-        <li><span aria-current="page">Settings</span></li>
+        <li><span aria-current="page">Settings</span>
+          <ul>
+            <li><a href="#providers">Providers</a></li>
+            <li><a href="#where-keys-live">Where keys live</a></li>
+            <li><a href="#default-model-and-effort">Default model and effort</a></li>
+            <li><a href="#per-agent-model-and-effort">Per-agent model and effort</a></li>
+            <li><a href="#search">Search</a></li>
+            <li><a href="#what-the-published-rounds-ran-on">What the published rounds ran on</a></li>
+          </ul>
+        </li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -59,7 +71,7 @@
     </figure>
 
     <section>
-      <h2>Providers</h2>
+      <h2 id="providers">Providers</h2>
 
       <div class="table-wrap">
         <table>
@@ -112,7 +124,7 @@
     </section>
 
     <section>
-      <h2>Where keys live</h2>
+      <h2 id="where-keys-live">Where keys live</h2>
 
       <p>The key you enter is held in your browser and sent to one place: the provider it belongs to. It is never written to disk and never sent to spec4.ai or anywhere else.</p>
 
@@ -120,7 +132,7 @@
     </section>
 
     <section>
-      <h2>Default model and effort</h2>
+      <h2 id="default-model-and-effort">Default model and effort</h2>
 
       <p>The model step sets the project's default: one provider, one model, and one reasoning effort. Every agent uses the default unless you choose otherwise for that agent (next section).</p>
 
@@ -136,7 +148,7 @@
     </section>
 
     <section>
-      <h2>Per-agent model and effort</h2>
+      <h2 id="per-agent-model-and-effort">Per-agent model and effort</h2>
 
       <p>Each agent can run on a different provider, model, and effort from the default, chosen in three places:</p>
 
@@ -152,7 +164,7 @@
     </section>
 
     <section>
-      <h2>Search</h2>
+      <h2 id="search">Search</h2>
 
       <p>Web search is optional and off unless you give it a key. With one, every agent can search for the standards, protocols, and SDKs it names and embed the canonical documentation link rather than recall one.</p>
 
@@ -181,7 +193,7 @@
     </section>
 
     <section>
-      <h2>What the published rounds ran on</h2>
+      <h2 id="what-the-published-rounds-ran-on">What the published rounds ran on</h2>
 
       <p>Spec4's three rounds on itself, from each round's <code>usage.json</code>:</p>
 

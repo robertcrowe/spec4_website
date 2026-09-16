@@ -6,7 +6,7 @@
   <title>Phaser — Spec4 docs</title>
   <meta name="description" content="Phaser turns everything the earlier agents wrote into ordered implementation phases, one file each, written for a coding agent. Phase 1 is a steel thread — the thinnest live end-to-end path — and every phase after it builds on the one before, ends with the command that proves it's done, and names where a coding agent is likely to go wrong.">
   <link rel="canonical" href="https://spec4.ai/docs/phaser/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -29,7 +32,16 @@
         <li><a href="/docs/agentifier/">Agentifier</a></li>
         <li><a href="/docs/designer/">Designer</a></li>
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
-        <li><span aria-current="page">Phaser</span></li>
+        <li><span aria-current="page">Phaser</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/deployer/">Deployer</a></li>
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
@@ -54,7 +66,7 @@
     <p>It is the agent whose output you hand over. Everything else in the pipeline exists to make these files right.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p>Everything above it: <a href="/docs/artifacts/"><code>vision.json</code></a>, <code>feature_specs.json</code>, <code>stack.json</code>, and — when they exist — <code>code_review.json</code>, <code>ai_features.json</code>, <code>design/manifest.json</code>, and <code>design/mock.html</code>. The stack arrives as the approved component list; the specs arrive per feature; the mock is cited by path for the coding agent to match. In a <a href="/docs/rounds/">revision round</a>, the code review of the implemented system and the delta from the vision.</p>
 
@@ -62,7 +74,7 @@
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Eight steps, in the prompt's order:</p>
 
@@ -85,7 +97,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>phases/phase1.md</code> through <code>phase{k}.md</code>. Each file is the phase as JSON frontmatter followed by the same content rendered as Markdown for the coding agent:</p>
 
@@ -103,7 +115,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -142,13 +154,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>Nothing carries forward. In a revision round Phaser is told to treat everything in the code review as built and in place, and to plan only the new or changed surface named in the delta. The new phases are numbered from 1 as a self-contained set; Phase 1 is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread; no phases are emitted for unchanged features. AI features are partitioned by <code>introduced_in_version</code>, so only this round's are planned, and the coverage check looks only at those. The seam check is skipped, since a revision's graph is partial by design. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>6 calls, about 231k tokens, and $1.72 in <code>v0</code>; 4 calls, 189k, and $1.70 in <code>v1</code>; 4 calls, 242k, and $2.09 in <code>v2</code> — seam checks included — all on <code>claude-opus-5</code>, the one agent Spec4's rounds always ran on a stronger model than the default. Phaser was the first or second largest line in every round because it holds every upstream artifact in context while it drafts. Its single largest call, the <code>v2</code> draft, was 73k tokens over 4 minutes 18 seconds.</p>
     </section>

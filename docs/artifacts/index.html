@@ -6,7 +6,7 @@
   <title>Artifacts — Spec4 docs</title>
   <meta name="description" content="Everything Spec4 produces is a file under .spec4/ in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.">
   <link rel="canonical" href="https://spec4.ai/docs/artifacts/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -31,7 +34,22 @@
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
         <li><a href="/docs/phaser/">Phaser</a></li>
         <li><a href="/docs/deployer/">Deployer</a></li>
-        <li><span aria-current="page">Artifacts</span></li>
+        <li><span aria-current="page">Artifacts</span>
+          <ul>
+            <li><a href="#code-review-json"><code>code_review.json</code></a></li>
+            <li><a href="#vision-json"><code>vision.json</code></a></li>
+            <li><a href="#feature-specs-json"><code>feature_specs.json</code></a></li>
+            <li><a href="#ai-catalog-json-and-ai-features-json"><code>ai_catalog.json</code> and <code>ai_features.json</code></a></li>
+            <li><a href="#design-mock-html-and-design-manifest-json"><code>design/mock.html</code> and <code>design/manifest.json</code></a></li>
+            <li><a href="#stack-json"><code>stack.json</code></a></li>
+            <li><a href="#phases-phase-n-md"><code>phases/phase{N}.md</code></a></li>
+            <li><a href="#deployment-plan-md"><code>deployment-plan.md</code></a></li>
+            <li><a href="#usage-json"><code>usage.json</code></a></li>
+            <li><a href="#implemented"><code>IMPLEMENTED</code></a></li>
+            <li><a href="#pointing-a-coding-agent-at-the-folder">Pointing a coding agent at the folder</a></li>
+            <li><a href="#reading-and-editing-by-hand">Reading and editing by hand</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
       </ul>
@@ -81,7 +99,7 @@
     <p>Every file is plain JSON, HTML, or Markdown, readable and editable by hand. A phase file reads the same to a person as to an agent.</p>
 
     <section>
-      <h2><code>code_review.json</code></h2>
+      <h2 id="code-review-json"><code>code_review.json</code></h2>
 
       <p>Written by <a href="/docs/codescanner/">CodeScanner</a>. Read by <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and <a href="/docs/phaser/">Phaser</a>.</p>
 
@@ -115,7 +133,7 @@
     </section>
 
     <section>
-      <h2><code>vision.json</code></h2>
+      <h2 id="vision-json"><code>vision.json</code></h2>
 
       <p>Written by Brainstormer. Read by Agentifier, <a href="/docs/designer/">Designer</a>, StackAdvisor, and Phaser.</p>
 
@@ -153,7 +171,7 @@
     </section>
 
     <section>
-      <h2><code>feature_specs.json</code></h2>
+      <h2 id="feature-specs-json"><code>feature_specs.json</code></h2>
 
       <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and <a href="/docs/deployer/">Deployer</a>.</p>
 
@@ -180,7 +198,7 @@
     </section>
 
     <section>
-      <h2><code>ai_catalog.json</code> and <code>ai_features.json</code></h2>
+      <h2 id="ai-catalog-json-and-ai-features-json"><code>ai_catalog.json</code> and <code>ai_features.json</code></h2>
 
       <p>Written by Agentifier. <code>ai_features.json</code> is read by Designer, StackAdvisor, Phaser, and Deployer; <code>ai_catalog.json</code> is the record of how it was decided.</p>
 
@@ -199,7 +217,7 @@
     </section>
 
     <section>
-      <h2><code>design/mock.html</code> and <code>design/manifest.json</code></h2>
+      <h2 id="design-mock-html-and-design-manifest-json"><code>design/mock.html</code> and <code>design/manifest.json</code></h2>
 
       <p>Written by Designer. The manifest is read by StackAdvisor; the mock is read by Phaser and Deployer, which hand it to the coding agent by path.</p>
 
@@ -244,7 +262,7 @@
     </section>
 
     <section>
-      <h2><code>stack.json</code></h2>
+      <h2 id="stack-json"><code>stack.json</code></h2>
 
       <p>Written by StackAdvisor. Read by Phaser and Deployer.</p>
 
@@ -278,7 +296,7 @@
     </section>
 
     <section>
-      <h2><code>phases/phase{N}.md</code></h2>
+      <h2 id="phases-phase-n-md"><code>phases/phase{N}.md</code></h2>
 
       <p>Written by Phaser. Read by your coding agent, one file per run, in order. Deployer reads the set.</p>
 
@@ -320,7 +338,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
     </section>
 
     <section>
-      <h2><code>deployment-plan.md</code></h2>
+      <h2 id="deployment-plan-md"><code>deployment-plan.md</code></h2>
 
       <p>Written by Deployer. Read by no agent; it's for you.</p>
 
@@ -332,7 +350,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
     </section>
 
     <section>
-      <h2><code>usage.json</code></h2>
+      <h2 id="usage-json"><code>usage.json</code></h2>
 
       <p>Written by Spec4 after every model call. Read by no agent, and never makes another artifact stale.</p>
 
@@ -442,7 +460,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
     </section>
 
     <section>
-      <h2><code>IMPLEMENTED</code></h2>
+      <h2 id="implemented"><code>IMPLEMENTED</code></h2>
 
       <p>Written by your coding agent, as the last instruction of the last phase. Read by Spec4.</p>
 
@@ -450,13 +468,13 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
     </section>
 
     <section>
-      <h2>Pointing a coding agent at the folder</h2>
+      <h2 id="pointing-a-coding-agent-at-the-folder">Pointing a coding agent at the folder</h2>
 
       <p>Hand your coding agent one phase file at a time, in order. Each phase is self-contained: the specs it builds to are inlined, the stack entries it may use are listed, and the reference artifacts it should read are cited by path under <code>.spec4/v{N}/</code>. <code>deployment-plan.md</code> opens with instructions for loading and running the phases in the agent you named. Spec4 has no commands inside your coding agent; you hand it the files.</p>
     </section>
 
     <section>
-      <h2>Reading and editing by hand</h2>
+      <h2 id="reading-and-editing-by-hand">Reading and editing by hand</h2>
 
       <p>Every file is plain JSON, HTML, or Markdown. Edit one and the project page recomputes which downstream agents need to re-run, from the files' modification times, the next time it renders. The app's Artifacts view shows every file of every round and can download them.</p>
     </section>

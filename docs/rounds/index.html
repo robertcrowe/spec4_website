@@ -6,7 +6,7 @@
   <title>Rounds — Spec4 docs</title>
   <meta name="description" content="A round is one pass over the project. Its output is one folder — .spec4/v0/ for the first round, v1/ for the next, and so on — and every round after the first starts from the code, not from the previous plan.">
   <link rel="canonical" href="https://spec4.ai/docs/rounds/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -32,7 +35,15 @@
         <li><a href="/docs/phaser/">Phaser</a></li>
         <li><a href="/docs/deployer/">Deployer</a></li>
         <li><a href="/docs/artifacts/">Artifacts</a></li>
-        <li><span aria-current="page">Rounds</span></li>
+        <li><span aria-current="page">Rounds</span>
+          <ul>
+            <li><a href="#starting-on-existing-code">Starting on existing code</a></li>
+            <li><a href="#revision-rounds">Revision rounds</a></li>
+            <li><a href="#stale-inputs">Stale inputs</a></li>
+            <li><a href="#implemented"><code>IMPLEMENTED</code></a></li>
+            <li><a href="#evidence">Evidence</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/settings/">Settings</a></li>
       </ul>
       <p class="group">Examples</p>
@@ -54,7 +65,7 @@
     <p>A round is a feature or a rework. For a change smaller than that, don't run one.</p>
 
     <section>
-      <h2>Starting on existing code</h2>
+      <h2 id="starting-on-existing-code">Starting on existing code</h2>
 
       <p>A directory with files in it gets one question when you open it — <em>Is there an existing project here?</em> — because a <code>uv init</code> skeleton and a codebase you're modifying look the same to a file listing. <em>Existing project</em> starts the round with <a href="/docs/codescanner/">CodeScanner</a>; <em>New project</em> starts with <a href="/docs/brainstormer/">Brainstormer</a>. You're asked again next session; the answer isn't written to disk.</p>
 
@@ -62,7 +73,7 @@
     </section>
 
     <section>
-      <h2>Revision rounds</h2>
+      <h2 id="revision-rounds">Revision rounds</h2>
 
       <p>A revision round is any round after one that has been implemented. Four things are different from a first round:</p>
 
@@ -88,7 +99,7 @@
     </section>
 
     <section>
-      <h2>Stale inputs</h2>
+      <h2 id="stale-inputs">Stale inputs</h2>
 
       <p>Every artifact is dated against the ones upstream of it. The project page recomputes each agent's state from the files on disk every time it renders; nothing is cached.</p>
 
@@ -178,7 +189,7 @@
     </section>
 
     <section>
-      <h2><code>IMPLEMENTED</code></h2>
+      <h2 id="implemented"><code>IMPLEMENTED</code></h2>
 
       <p>The last phase's final instruction is <code>touch .spec4/v{N}/IMPLEMENTED</code>. It is appended to the phase file by Spec4, not written by the model.</p>
 
@@ -188,7 +199,7 @@
     </section>
 
     <section>
-      <h2>Evidence</h2>
+      <h2 id="evidence">Evidence</h2>
 
       <ul>
         <li>Spec4's own three rounds, <code>.spec4/v0/</code> to <code>v2/</code> in the <a href="https://github.com/robertcrowe/spec4">repository</a>: the UI rework, the artifacts view and chat frame, and the remaining screens. Every phase file and every call's cost.</li>

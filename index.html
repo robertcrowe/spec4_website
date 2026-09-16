@@ -13,7 +13,7 @@
   <meta property="og:image:height" content="421">
   <meta property="og:title" content="From a rough idea to ordered, executable development phases — files a coding agent can build from.">
   <meta property="og:description" content="Spec4 turns an idea into a set of structured, ordered development phases — plus an optional UI mock and a deployment plan — that you hand to whichever coding agent you use. Everything it produces is a file in a .spec4/ folder inside your project. It runs on your machine, talks only to the model provider you choose, and keeps your API key in your browser.">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -28,6 +28,21 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><span aria-current="page">Overview</span>
+          <ul>
+            <li><a href="#what-you-get">What you get</a></li>
+            <li><a href="#the-pipeline">The pipeline</a></li>
+            <li><a href="#which-features-get-ai-and-how-much">Which features get AI, and how much</a></li>
+            <li><a href="#rounds-why-this-isnt-waterfall">Rounds: why this isn't waterfall</a></li>
+            <li><a href="#built-for-production-not-demos">Built for production, not demos</a></li>
+            <li><a href="#what-it-costs">What it costs</a></li>
+            <li><a href="#what-it-isnt-and-where-your-data-goes">What it isn't, and where your data goes</a></li>
+            <li><a href="#install">Install</a></li>
+            <li><a href="#run-it-on-itself">Run it on itself</a></li>
+          </ul>
+        </li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -75,7 +90,7 @@ spec4</code></pre>
     </ul>
 
     <section>
-      <h2>What you get</h2>
+      <h2 id="what-you-get">What you get</h2>
 
       <p>This is the app's project page, open on Spec4's own repository.</p>
 
@@ -150,7 +165,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>The pipeline</h2>
+      <h2 id="the-pipeline">The pipeline</h2>
 
       <p>Seven agents, in order. Each reads what the ones before it wrote.</p>
 
@@ -231,7 +246,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>Which features get AI, and how much</h2>
+      <h2 id="which-features-get-ai-and-how-much">Which features get AI, and how much</h2>
 
       <p>Agentifier looks for places in the vision where an AI feature would serve it and recommends how much AI each one needs: a complexity tier from a nine-tier ladder (deterministic code → embeddings → single call → RAG → tool use → … → multi-agent collaboration) and the mechanisms to build it with. You choose the candidates and decide each tier; it records both and drafts a full spec for each feature you keep. The tiers are the same ones the <a href="/bws4/">Built With Spec4</a> gallery demonstrates as working apps.</p>
 
@@ -250,7 +265,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>Rounds: why this isn't waterfall</h2>
+      <h2 id="rounds-why-this-isnt-waterfall">Rounds: why this isn't waterfall</h2>
 
       <p>The standard objection to spec-driven development is that it turns into waterfall: the spec is written once, the code drifts from it, and after a month the plan describes a program that doesn't exist.</p>
 
@@ -269,7 +284,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>Built for production, not demos</h2>
+      <h2 id="built-for-production-not-demos">Built for production, not demos</h2>
 
       <p>A demo needs a happy path. A production system needs the rest, and Spec4's artifacts carry it:</p>
 
@@ -289,7 +304,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>What it costs</h2>
+      <h2 id="what-it-costs">What it costs</h2>
 
       <p>The three rounds Spec4 has run against itself, planning changes to its own code, with every call recorded. <code>claude-sonnet-5</code> was the default; Phaser ran on <code>claude-opus-5</code> in all three; Designer ran on <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code> and <code>claude-opus-5</code> in <code>v2</code>.</p>
 
@@ -340,7 +355,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>What it isn't, and where your data goes</h2>
+      <h2 id="what-it-isnt-and-where-your-data-goes">What it isn't, and where your data goes</h2>
 
       <ul>
         <li>Not a coding agent, and not tied to one. It doesn't assume every change goes through it either: work on the code however you like between rounds, and the next round starts from what's there. Spec4 produces the plan; Claude Code, Cursor, Codex, Copilot, or whatever you use does the building. The artifacts are plain Markdown and JSON with no agent-specific format — a phase file reads the same to a person as to an agent — and Deployer writes its coding-agent setup instructions for the agent you name, not for one it assumes.</li>
@@ -360,7 +375,7 @@ serves HTTP on localhost:8050 only.
     </section>
 
     <section>
-      <h2>Install</h2>
+      <h2 id="install">Install</h2>
 
       <p>Requires Python 3.12+ and <a href="https://docs.astral.sh/uv/">uv</a>, plus an API key for at least one of eight supported model providers: Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. A <a href="https://tavily.com/">Tavily</a> or <a href="https://exa.ai/">Exa</a> key is optional, for web search grounding.</p>
 
@@ -379,7 +394,7 @@ make spec4</code></pre>
     </section>
 
     <section>
-      <h2>Run it on itself</h2>
+      <h2 id="run-it-on-itself">Run it on itself</h2>
 
       <p>Spec4 is a brownfield project like any other, and its own <code>.spec4/</code> is committed:</p>
 

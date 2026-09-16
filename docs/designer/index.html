@@ -6,7 +6,7 @@
   <title>Designer — Spec4 docs</title>
   <meta name="description" content="Designer draws a self-contained HTML mock of the application's starting screen, before any production code is written, so the look is decided once rather than by the coding agent at every phase. It writes two files: design/mock.html, which Phaser directs the coding agent to build to, and design/manifest.json, the design decisions the mock embodies. The HTML only defines a look, so it can be used with any application that has a UI, including mobile.">
   <link rel="canonical" href="https://spec4.ai/docs/designer/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,13 +21,25 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
         <li><a href="/docs/codescanner/">CodeScanner</a></li>
         <li><a href="/docs/brainstormer/">Brainstormer</a></li>
         <li><a href="/docs/agentifier/">Agentifier</a></li>
-        <li><span aria-current="page">Designer</span></li>
+        <li><span aria-current="page">Designer</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
         <li><a href="/docs/phaser/">Phaser</a></li>
         <li><a href="/docs/deployer/">Deployer</a></li>
@@ -54,7 +66,7 @@
     <p>It is optional, and it has no chat: it's a short wizard.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p><code>vision.json</code> and, when they exist, <code>ai_features.json</code> and <code>feature_specs.json</code> — every AI surface is drawn as a real interaction, with its inputs as controls and its output as a result. In a brownfield project, up to twenty of your existing UI source files, 8,000 characters of each, so the mock captures the look you already have. Reference images you upload, with a note on each about what to take or avoid. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's approved mock.</p>
 
@@ -62,7 +74,7 @@
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Seven steps:</p>
 
@@ -80,7 +92,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>design/mock.html</code> — one complete HTML document: CSS in a <code>&lt;style&gt;</code> block, JavaScript in a <code>&lt;script&gt;</code> block, no frameworks, no external assets, no CDN links. One screen per target audience, with in-page navigation between them, and realistic content drawn from the vision rather than placeholder text. It opens in any browser, and the coding agent is pointed at it by path.</p>
 
@@ -94,7 +106,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -133,13 +145,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>In a revision round, <em>Carry forward</em> loads the previous implemented round's approved mock as the baseline and prefills the refine note from this round's delta — the features added, changed, and removed, named by Brainstormer, with an instruction to preserve everything the changes don't touch. The established look carries forward; the mock changes only where the round does. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>Two calls, about 56k tokens, and $1.64 in <code>v0</code>; one call, 55k, and $1.97 in <code>v1</code>, both on <code>claude-fable-5-1</code>; one call, 63k, and $0.93 in <code>v2</code> on <code>claude-opus-5</code>. In <code>v1</code> Designer was the round's largest line: a single call that is the whole mock. The <code>v2</code> mock — step 3 of this very wizard, in the developer-tool look — is the one whose manifest is excerpted on the Artifacts page.</p>
     </section>

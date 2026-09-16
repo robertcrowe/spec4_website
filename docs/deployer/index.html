@@ -6,7 +6,7 @@
   <title>Deployer — Spec4 docs</title>
   <meta name="description" content="Deployer is the last agent. It asks which coding agent you're using and writes deployment-plan.md: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's README.md.">
   <link rel="canonical" href="https://spec4.ai/docs/deployer/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -30,7 +33,16 @@
         <li><a href="/docs/designer/">Designer</a></li>
         <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
         <li><a href="/docs/phaser/">Phaser</a></li>
-        <li><span aria-current="page">Deployer</span></li>
+        <li><span aria-current="page">Deployer</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
@@ -52,7 +64,7 @@
     <p>Deployer is the last agent. It asks which coding agent you're using and writes <a href="/docs/artifacts/"><code>deployment-plan.md</code></a>: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's <code>README.md</code>.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p><code>stack.json</code>, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its <code>credentials_env</code>; the stores and infrastructure to provision; and the roadmap entries to record rather than build. <code>phases/</code>, for the configurations the phases will need. <code>feature_specs.json</code>, for the non-functional goals. <code>ai_features.json</code>, when it exists, for the AI channel. <code>code_review.json</code>, when it exists, for the deployment, environment variables, persistence, and auth already in place. <code>design/mock.html</code>, cited by path in the coding-agent guidance. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>deployment-plan.md</code> as the baseline.</p>
 
@@ -62,7 +74,7 @@
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>One question at a time, in two parts.</p>
 
@@ -86,7 +98,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>deployment-plan.md</code>, in a fixed structure with inapplicable sections omitted:</p>
 
@@ -109,7 +121,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -148,13 +160,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>A revision round carries the previous implemented round's plan forward as the established baseline. Deployer confirms it, asks which coding agent you'll use for this round's phases, and updates the deployment only for what the round changed — new environment variables or keys, infrastructure for a new surface, observability for a newly introduced AI feature — without re-asking settled decisions. A deployment plan describes the whole running system, so the update is whole-system-scoped. The README update, if requested, is scoped to this round's feature changes and leaves the rest intact.</p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>Not run. Spec4's deployment — a local process installed from PyPI — didn't change in any of the three rounds. The <a href="/bws4/">Built With Spec4</a> app is deployed from a Deployer plan.</p>
     </section>

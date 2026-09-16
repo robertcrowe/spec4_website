@@ -6,7 +6,7 @@
   <title>CodeScanner — Spec4 docs</title>
   <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.">
   <link rel="canonical" href="https://spec4.ai/docs/codescanner/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,10 +21,22 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
-        <li><span aria-current="page">CodeScanner</span></li>
+        <li><span aria-current="page">CodeScanner</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/brainstormer/">Brainstormer</a></li>
         <li><a href="/docs/agentifier/">Agentifier</a></li>
         <li><a href="/docs/designer/">Designer</a></li>
@@ -54,7 +66,7 @@
     <p>It is the first agent of any <a href="/docs/rounds/">round</a> on existing code, and the first agent of every round after the first.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p>The repository, locally. What the model receives is a bounded summary assembled by Spec4 before any call is made:</p>
 
@@ -103,7 +115,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>code_review.json</code>. The shape is fixed:</p>
 
@@ -120,7 +132,7 @@
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the file — or press <strong>Modify</strong> later to reopen it.</p>
 
@@ -128,7 +140,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -163,13 +175,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>The review is rewritten from scratch each round, of the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>Three calls, about 118k tokens, and $0.53 in <code>v1</code>; three calls, about 116k tokens, and $0.46 in <code>v2</code>, on <code>claude-sonnet-5</code>. <code>v0</code>'s scan ran before usage was recorded.</p>
     </section>

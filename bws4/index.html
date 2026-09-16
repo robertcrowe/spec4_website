@@ -9,7 +9,7 @@
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -24,6 +24,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -40,7 +43,15 @@
       </ul>
       <p class="group">Examples</p>
       <ul>
-        <li><span aria-current="page">Built With Spec4</span></li>
+        <li><span aria-current="page">Built With Spec4</span>
+          <ul>
+            <li><a href="#the-apps">The apps</a></li>
+            <li><a href="#the-nine-rounds">The nine rounds</a></li>
+            <li><a href="#the-recommendation-and-the-decision">The recommendation and the decision</a></li>
+            <li><a href="#hand-edits-reconciled">Hand edits, reconciled</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+          </ul>
+        </li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -55,7 +66,7 @@
     <p><a href="https://bw.spec4.ai">Built With Spec4</a> is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder <a href="/docs/agentifier/">Agentifier</a> recommends from, so you can see what a tier looks like as software. It was planned in nine <a href="/docs/rounds/">rounds</a>, with hand edits between them, and its full <code>.spec4/</code> history — <code>v0</code> through <code>v8</code>, every artifact and every phase file — is in <a href="https://github.com/robertcrowe/BWS4">its repository</a>.</p>
 
     <section>
-      <h2>The apps</h2>
+      <h2 id="the-apps">The apps</h2>
 
       <div class="table-wrap">
         <table>
@@ -122,7 +133,7 @@
     </section>
 
     <section>
-      <h2>The nine rounds</h2>
+      <h2 id="the-nine-rounds">The nine rounds</h2>
 
       <p>One line per round, from each <a href="/docs/artifacts/"><code>vision.json</code></a>'s <code>revision_history</code>:</p>
 
@@ -191,7 +202,7 @@
     </section>
 
     <section>
-      <h2>The recommendation and the decision</h2>
+      <h2 id="the-recommendation-and-the-decision">The recommendation and the decision</h2>
 
       <p>Agentifier writes its recommendation and the developer's decision to the same file. From <code>.spec4/v0/ai_catalog.json</code>:</p>
 
@@ -206,7 +217,7 @@
     </section>
 
     <section>
-      <h2>Hand edits, reconciled</h2>
+      <h2 id="hand-edits-reconciled">Hand edits, reconciled</h2>
 
       <p>Between <code>v0</code> and <code>v1</code> the developer changed the code without Spec4, and the next round's <a href="/docs/codescanner/">CodeScanner</a> read it. Three things entered the codebase that no <code>v0</code> artifact mentions:</p>
 
@@ -247,7 +258,7 @@
     </section>
 
     <section>
-      <h2>Deployment</h2>
+      <h2 id="deployment">Deployment</h2>
 
       <p>The VPS runs the plan Deployer wrote in <code>v8</code>. It opens with instructions for the coding agent named for the round, then the whole system, one target at a time. The web client's block, from <code>.spec4/v8/deployment-plan.md</code>:</p>
 

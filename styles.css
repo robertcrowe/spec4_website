@@ -34,7 +34,12 @@
   /* The wordmark's two colours. Blue appears in the wordmark and nowhere
      else on the site. Green additionally marks links and the active section. */
   --wordmark-blue: #1565c0; /* the app's blue, darkened for a white page; 5.75:1 */
-  --accent-green: #177a36;  /* the app's green, darkened for a white page; 5.42:1 */
+  --accent-green: #157f00;  /* the app's green, darkened for a white page; 5.16:1,
+                               and 4.64:1 on --color-code-tint for a link round a code span.
+                               Hue 110 and full saturation, which is #39ff14's own hue: the
+                               previous value sat at hue 139 and 68% saturation, close enough
+                               in luminance to --wordmark-blue (1.06:1) that the wordmark's 4
+                               read as part of Spec rather than as the accent. */
 
   /* Fonts. Exactly two: a self-hosted monospace for code, the wordmark and
      version text, and a system stack for reading prose — no files are shipped
@@ -325,10 +330,14 @@ em {
      <details class="sitemap">
        <summary>Contents</summary>
        <nav aria-label="Site map">
+         <ul><li><a href="/">Overview</a></li></ul>   ... in no group ...
          <p class="group">Docs</p>
          <ul>
            <li><a href="/docs/">Install and first run</a></li>
            ... one <li> per page, in the order fixed by the register ...
+           <li><span aria-current="page">Phaser</span>   ... this page ...
+             <ul><li><a href="#reads">Reads</a></li> ... its h2s ... </ul>
+           </li>
          </ul>
          <p class="group">Examples</p>   ... <p class="group">Source</p> ...
        </nav>
@@ -341,28 +350,44 @@ em {
 
    CURRENT PAGE. The page's own entry is not a link. It is
    <span aria-current="page">Title</span>, and it carries the same short green
-   rule the one-line nav's current section carries. The front page at / is not
-   in the site map, so index.html has no marked entry.
+   rule the one-line nav's current section carries. Exactly one entry per page
+   is marked, index.html's being the Overview that heads the map. Nested under
+   that entry, and under no other, is a <ul> of the page's own <h2>s in
+   document order, each linking to that heading's id. h3s are never listed.
 
    NO ICON. The summary is the word "Contents" and nothing else: the marker is
    removed, and no glyph, arrow, or rule is put in its place. Blue does not
    appear anywhere in this element. */
 
 .sitemap {
-  /* Narrow scheme: the same text edges as the one-line nav and the prose. */
+  /* Narrow scheme: the same text edges as the one-line nav and the prose.
+     --measure is in em, so this element must keep the inherited font size or
+     the box it resolves to stops matching the nav's. The list's smaller size
+     is set on the inner nav, below, where it costs nothing. */
   width: min(var(--measure) - 2 * var(--gutter), 100% - 2 * var(--gutter));
   margin-inline: auto;
-  padding-block: 0.6rem 0.2rem;
+}
+
+.sitemap > nav {
   font-size: 0.95rem;
 }
 
-/* list-style removes the disclosure triangle in every engine that renders one
-   as a list marker; the -webkit- pseudo-element covers the one that doesn't.
-   Neither is replaced by anything -- the word is the whole control. */
+/* The summary is a fourth nav item that happens to sit on its own line, not a
+   heading: the mono face, the size and the muted colour of Docs / Examples /
+   GitHub, and the one-line nav's own padding-block, so the space above and
+   below it matches the space around those links. display: block ends the
+   element's list-item behaviour, which is what takes the marker and its inline
+   padding out; padding-inline is zeroed anyway, so the word starts exactly
+   where the wordmark above it does. The -webkit- pseudo-element covers the
+   engine that draws the marker outside the list-item mechanism. Nothing
+   replaces the marker -- the word is the whole control. */
 .sitemap > summary {
   display: block;
   list-style: none;
-  padding-block: 0.3rem;
+  padding-block: 1.35rem 0.9rem;
+  padding-inline: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   color: var(--color-muted);
   cursor: pointer;
 }
@@ -371,8 +396,9 @@ em {
   display: none;
 }
 
+/* The nav links' hover: an underline, at the same colour. */
 .sitemap > summary:hover {
-  color: var(--color-text);
+  text-decoration: underline;
 }
 
 .sitemap > summary:focus-visible {
@@ -391,9 +417,6 @@ em {
   color: var(--color-muted);
 }
 
-.sitemap .group:first-child {
-  margin-top: 0.5rem;
-}
 
 .sitemap ul {
   margin-block: 0;
@@ -406,6 +429,24 @@ em {
   line-height: 1.45;
 }
 
+/* The current page's own h2s, and only ever its own: one step down in size,
+   indented under the entry they belong to, and otherwise the same links as
+   every other line here. No marker and nothing standing in for one -- the
+   indent is what says these are subordinate. h3s are never listed. */
+.sitemap li ul {
+  margin-block: 0.35rem 0.6rem;
+  padding-left: 0.9rem;
+  font-size: 0.88em;
+}
+
+/* A heading that is a filename keeps its monospace here, but not the panel
+   fill the prose gives it: in a column this narrow the tint reads as a box
+   round the words, and this part of the page is text only. */
+.sitemap code {
+  background: none;
+  padding: 0;
+}
+
 /* The links take the base element rule untouched -- they are body links, and
    no rule here may give them a colour, a size, or a face of their own. */
 
@@ -416,39 +457,52 @@ em {
   border-bottom: 2px solid var(--accent-green);
 }
 
-/* Wide scheme. The breakpoint is arithmetic, not taste: the reading column is
-   --measure (37em = 39.3rem at the base size) and must not shrink by a pixel,
-   so the two flanking columns have to hold the 14.5rem sidebar on their own --
-   39.3 + 2 x 14.5 = 68.3rem, taken up to 70rem for slack. Below it the
-   sidebar would have to eat into the measure, so below it there is none.
+/* SIDEBAR SCHEMES
 
-   The three columns keep main exactly where it is at every other width --
-   centred, its left edge under the one-line nav's -- and spend the left
-   gutter, which was empty, on the site map. The sidebar scrolls with the
-   page: nothing here is sticky or fixed. */
-@media (min-width: 70rem) {
+   The breakpoints are arithmetic, not taste. The reading column is --measure
+   (37em = 39.3rem at the base size) and never gives up a pixel of it to make
+   room, so a sidebar appears only where one already fits beside a column at
+   full measure.
+
+   From 51.5rem the pair fits if it is allowed to sit against the left of the
+   viewport rather than in the middle of it: one gutter, then a sidebar column
+   of 9.5rem to 12.5rem, then the 39.3rem reading column -- 51.4rem at its
+   tightest. Whatever is left over goes to an empty third column on the right,
+   so the pair stays where it is as the window grows instead of drifting. The
+   column loses its centring here, not its width.
+
+   From 70rem the sidebar fits twice over in the margins, so the reading column
+   returns to the middle of the viewport and the site map spends the left
+   gutter, which was empty: 39.3 + 2 x 14.5 = 68.3rem, taken up to 70rem for
+   slack. That is the only thing the second query changes.
+
+   In both, the one-line nav keeps the reading column's edges -- in the first
+   by sharing its grid column, in the second by spanning a symmetrical grid --
+   and the sidebar scrolls with the page: nothing here is sticky or fixed. */
+
+@media (min-width: 51.5rem) {
   body {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) min(var(--measure), 100%) minmax(0, 1fr);
+    grid-template-columns: minmax(9.5rem, 12.5rem) min(var(--measure), 100%) minmax(0, 1fr);
+    padding-inline-start: var(--gutter);
   }
 
-  .site-nav {
-    grid-column: 1 / -1;
+  .site-nav,
+  main {
+    grid-column: 2;
   }
 
   main {
-    grid-column: 2;
     grid-row: 2;
   }
 
   .sitemap {
     grid-column: 1;
     grid-row: 2;
-    justify-self: end;
-    width: 14.5rem;
+    width: auto;
     margin-inline: 0;
     padding-block: 2.5rem 0;
-    padding-inline-end: 2rem;
+    padding-inline-end: 1.4rem;
   }
 
   /* Forced open, not opened: no attribute is written and no script runs. The
@@ -465,6 +519,23 @@ em {
   .sitemap::details-content {
     content-visibility: visible;
     block-size: auto;
+  }
+}
+
+@media (min-width: 70rem) {
+  body {
+    grid-template-columns: minmax(0, 1fr) min(var(--measure), 100%) minmax(0, 1fr);
+    padding-inline-start: 0;
+  }
+
+  .site-nav {
+    grid-column: 1 / -1;
+  }
+
+  .sitemap {
+    justify-self: end;
+    width: 14.5rem;
+    padding-inline-end: 2rem;
   }
 }
 

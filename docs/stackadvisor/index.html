@@ -6,7 +6,7 @@
   <title>StackAdvisor — Spec4 docs</title>
   <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
   <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -21,6 +21,9 @@
   <details class="sitemap">
     <summary>Contents</summary>
     <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
       <p class="group">Docs</p>
       <ul>
         <li><a href="/docs/">Install and first run</a></li>
@@ -28,7 +31,16 @@
         <li><a href="/docs/brainstormer/">Brainstormer</a></li>
         <li><a href="/docs/agentifier/">Agentifier</a></li>
         <li><a href="/docs/designer/">Designer</a></li>
-        <li><span aria-current="page">StackAdvisor</span></li>
+        <li><span aria-current="page">StackAdvisor</span>
+          <ul>
+            <li><a href="#reads">Reads</a></li>
+            <li><a href="#asks">Asks</a></li>
+            <li><a href="#writes">Writes</a></li>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#across-rounds">Across rounds</a></li>
+            <li><a href="#in-spec4s-own-rounds">In Spec4's own rounds</a></li>
+          </ul>
+        </li>
         <li><a href="/docs/phaser/">Phaser</a></li>
         <li><a href="/docs/deployer/">Deployer</a></li>
         <li><a href="/docs/artifacts/">Artifacts</a></li>
@@ -54,7 +66,7 @@
     <p>The file is the approved component list. <a href="/docs/phaser/">Phaser</a> treats it as authoritative: a phase that needs anything not in it has to ask you first, and the answer is written back here.</p>
 
     <section>
-      <h2>Reads</h2>
+      <h2 id="reads">Reads</h2>
 
       <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
 
@@ -62,7 +74,7 @@
     </section>
 
     <section>
-      <h2>Asks</h2>
+      <h2 id="asks">Asks</h2>
 
       <p>Eight topics, in order, one at a time, with comparisons and recommendations given for each. You aren't limited to the candidates it suggests, and you can return to any earlier topic to change a decision.</p>
 
@@ -90,7 +102,7 @@
     </section>
 
     <section>
-      <h2>Writes</h2>
+      <h2 id="writes">Writes</h2>
 
       <p><code>stack.json</code>. The shape is what Phaser and Deployer read from, so its join keys matter as much as its names:</p>
 
@@ -109,7 +121,7 @@
     </section>
 
     <section>
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
 
       <div class="table-wrap">
         <table>
@@ -148,13 +160,13 @@
     </section>
 
     <section>
-      <h2>Across rounds</h2>
+      <h2 id="across-rounds">Across rounds</h2>
 
       <p>A revision round carries the previous implemented round's stack forward as the baseline and records only the incremental changes; stack additions recorded by Phaser carry with it. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
-      <h2>In Spec4's own rounds</h2>
+      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
       <p>35 calls, about 1.15M tokens, and $3.02 in <code>v0</code> — the largest line of any agent in any round, a stack dialogue from scratch on <code>claude-sonnet-5</code>; 4 calls, 193k, and $0.56 in <code>v1</code>; 5 calls, 282k, and $0.80 in <code>v2</code>, both revision rounds that carried the <code>v0</code> stack forward.</p>
     </section>
