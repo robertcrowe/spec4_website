@@ -131,3 +131,86 @@ overrides. Hero rules, card rules, grid rules (23 `display: grid` /
 `grid-template` declarations) and nav rules are therefore not centralized — they
 are scattered per-section and per-page, which is what makes a wholesale
 replacement in Phase 2 higher-risk than the line count suggests.
+
+---
+
+# Round amendments
+
+Decisions taken during implementation that depart from what the phase files
+say. The phase files under `.spec4/v1/phases/` are left exactly as Phaser wrote
+them — they are the round's planning record, not a live document — so any
+divergence is recorded here instead. Phase 7's audit should read this section
+before it starts; its instruction 15 already requires carrying forward what is
+noted here.
+
+## A1 — Phase 2 tokens were renamed (Phase 3)
+
+Phase 2 fixed the custom-property naming convention by example only
+(`--color-bg`, `--font-mono`) and left the rest of the names to the
+implementer. The names chosen at Phase 2 did not match the names Phases 3, 4, 5
+and 7 go on to reference literally, so four were renamed in the Phase 3 commit:
+
+| Phase 2 name | Current name | Referenced literally by |
+|---|---|---|
+| `--color-fg` | `--color-text` | phases 3, 4 |
+| `--color-tint` | `--color-code-tint` | phases 3, 5 |
+| `--color-blue` | `--wordmark-blue` | phases 4, 7 |
+| `--color-green` | `--accent-green` | phase 4 |
+
+Values and measured contrast ratios are unchanged; this was a rename only. It
+is noted because the Phase 2 commit message and the styles.css history show the
+older names, and anyone reading the Phase 2 record against the current file
+would otherwise be puzzled. The three tokens no phase names literally —
+`--measure`, `--font-size-base`, `--line-height-base` — keep their original
+names.
+
+## A2 — Green is restored as the accent for links and the nav indicator (Phase 4)
+
+**Amends:** phase3.md instructions 7 and 8, and phase4.md instruction 11.
+
+Phase 3 instruction 7 requires links to use `--color-text` with an underline and
+forbids any link, heading or accent from using "the blue or green wordmark
+tokens". Phase 4 instruction 11 likewise forbids green for the current-section
+indicator. That is stricter than what the round actually decided, and it
+contradicts the register, which governs every page:
+
+- **§7 (Look):** "the app's green as the single accent" — green *is* the accent,
+  and links are what an accent is for.
+- **§17 (Not on any page):** "No second accent colour. No blue, except in the
+  Spec4 wordmark, where it is the app's." — the wordmark-only restriction
+  applies to **blue**, not to green.
+
+The approved mock follows the register: it styles `a { color: var(--green) }`
+and marks the current section with a green bottom rule. Phaser generalised the
+blue rule onto green; the register and the mock are authoritative over the
+generated phase text.
+
+**What Phase 4 must do, in addition to its own instructions:**
+
+1. Amend the `a` rule in the **base elements** section to
+   `color: var(--accent-green)`, keeping the underline, thickness and
+   underline-offset exactly as Phase 3 left them. Green carries the link
+   colour; the underline still carries the affordance, so links remain
+   distinguishable without colour.
+2. Style `.site-nav a[aria-current="page"]` with the green bottom rule the mock
+   uses (`border-bottom: 2px solid var(--accent-green)`), in place of phase4
+   instruction 11's `--color-rule`. The indicator also raises the link to
+   `--color-text`, so the current section is still marked by weight and a rule
+   and not by colour alone.
+
+Phase 4 therefore edits one rule inside the base-elements section. That is a
+deliberate, recorded exception to the mandated section ordering, not scope
+creep: the `a` rule belongs where Phase 3 put it and only its colour changes.
+
+**Consequences for Phase 7's audit.** The colour audit should expect:
+
+- **Blue** — exactly one rule, `.wordmark-spec`. Unchanged; the §17 guarantee
+  and phase7 instruction 12 both still hold verbatim.
+- **Green** — exactly three rules: the wordmark's `4` (`.wordmark-four`), body
+  links (`a`), and the current-section indicator
+  (`.site-nav a[aria-current="page"]`). A grep for `--accent-green` returning
+  three references is the expected pass, not a failure.
+
+Contrast for the green link colour is already measured and recorded beside the
+token: 5.42:1 on the light background and 14.57:1 on the dark background, both
+clearing SC 1.4.3's 4.5:1 for body text.
