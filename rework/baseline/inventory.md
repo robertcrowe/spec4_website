@@ -280,6 +280,40 @@ counter-increment — still returns nothing, and those are the exclusions the
 specification's success criteria actually name. Radius is not on the excluded
 list in register §14 or §17.
 
+## A5 — The baseline extractor segments by block element, not by text node (Phase 6)
+
+**Amends:** phase1.md instruction 8, and with it the `text/` files every later
+phase diffs against.
+
+Phase 1 specified `extract_text.py` to "emit the concatenated text nodes of the
+document body ... one text block per line". That made the instrument sensitive
+to markup that does not change what a reader sees. Phase 4's nav contract splits
+the wordmark into `<span class="wordmark-spec">Spec</span><span
+class="wordmark-four">4</span>` for its two-colour treatment, and the original
+script read that as two lines where the page still renders `Spec4`. Phase 6
+could not satisfy its own byte-identity check while honouring the Phase 4
+contract: one of the two had to give, and it was right that the measuring
+instrument gave rather than the design.
+
+The script now accumulates text across inline elements and flushes at block
+boundaries, so its output tracks rendered text rather than markup structure.
+`<br>` still ends a line. The inline set is listed in the script.
+
+**The baselines under `text/` were regenerated with the new version**, from the
+untouched pre-round snapshots in `html/` — which are byte-identical originals
+committed in Phase 1 — so the baseline still describes the site as it was
+*before* the round, not as it is now. Regenerating from the edited pages would
+have made the check worthless; regenerating from the snapshots does not.
+
+Safety was proved rather than assumed: with all whitespace removed, every one of
+the thirteen text files hashes identically before and after the change. Not one
+character was gained, lost, or reordered. Only line segmentation differs, 2,355
+lines total becoming 956.
+
+**Consequence for Phase 7.** The `text/` files it diffs against are the amended
+ones. They are the correct baseline and the pre-round original is preserved in
+git history at commit `35f1e98` if it is ever needed for comparison.
+
 ---
 
 # Copy drift found
