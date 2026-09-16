@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployer — Spec4 docs</title>
+  <meta name="description" content="Deployer is the last agent. It asks which coding agent you're using and writes deployment-plan.md: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's README.md.">
+  <link rel="canonical" href="https://spec4.ai/docs/deployer/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>Deployer</h1>
+
+    <p>Deployer is the last agent. It asks which coding agent you're using and writes <a href="/docs/artifacts/"><code>deployment-plan.md</code></a>: how to load and run the phase files in that agent, then the complete path to production — target, containerization, CI/CD, environment, monitoring, exact commands, complete configuration files, and Terraform if you want it. It can also author the project's <code>README.md</code>.</p>
+
+    <section>
+      <h2>Reads</h2>
+
+      <p><code>stack.json</code>, in a deployment-shaped view rendered by Spec4 — every target with its kind, hosting, build, and exposure; every auth mechanism with its <code>credentials_env</code>; the stores and infrastructure to provision; and the roadmap entries to record rather than build. <code>phases/</code>, for the configurations the phases will need. <code>feature_specs.json</code>, for the non-functional goals. <code>ai_features.json</code>, when it exists, for the AI channel. <code>code_review.json</code>, when it exists, for the deployment, environment variables, persistence, and auth already in place. <code>design/mock.html</code>, cited by path in the coding-agent guidance. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>deployment-plan.md</code> as the baseline.</p>
+
+      <p>Two absences are read as decisions, not omissions: a stack with no <code>security.auth</code> has no accounts, and one with no <code>integrations</code> calls no external services. Deployer doesn't re-ask either.</p>
+
+      <p>Web search, if enabled, before every platform-specific recommendation — the coding agent's documentation, current pricing and free tiers, the recommended base image, CI setup for the chosen platform, the Terraform provider.</p>
+    </section>
+
+    <section>
+      <h2>Asks</h2>
+
+      <p>One question at a time, in two parts.</p>
+
+      <p><strong>Part 1: your coding agent.</strong> First, whether you want a <code>README.md</code> authored once the plan is done. Then which coding agent you'll use, so the plan's opening section can say how to start it in the project directory, where the Spec4 files live, the exact syntax to reference a phase file in that agent, and the workflow for working through the phases.</p>
+
+      <p><strong>Part 2: deployment.</strong> Seven topics:</p>
+
+      <ol>
+        <li><strong>Target.</strong> Each surface the stack declares — a static frontend and an API are two — gets its own hosting decision: cloud, PaaS, on-premise, or serverless. If you're unsure, a recommendation from the stack and the scale the vision implies.</li>
+        <li><strong>Service.</strong> Which one on that target — ECS or App Runner or Lambda; Fly.io or Render or Railway — with current pricing checked first.</li>
+        <li><strong>Containerization.</strong> Keep or update an existing Dockerfile if the code review found one; otherwise whether to containerize, and with what base image.</li>
+        <li><strong>CI/CD.</strong> Whether to build and deploy on push, on which platform, with which stages.</li>
+        <li><strong>Environment.</strong> Deployer assembles the required variables from every source in context — the code review's <code>env_vars</code>, every phase's configurations, each auth mechanism's and AI provider's <code>credentials_env</code>, and whatever the target itself requires — and presents the list for correction rather than asking cold. Names only, never values. Then how secrets are managed.</li>
+        <li><strong>Monitoring.</strong> Error tracking and metrics. When AI features exist, also model observability, eval cadence, a feedback loop, and safety guardrails — sized to the tiers in use, so a single low-tier feature gets lightweight error tracking and a <a href="/docs/agentifier/"><code>rag</code></a> or <code>tool_agent</code> feature justifies evals.</li>
+        <li><strong>Terraform.</strong> Cloud targets only. Whether you want the infrastructure provisioned as <code>.tf</code> files, and what that would cover.</li>
+      </ol>
+
+      <p>Then a summary of the decisions for your yes, and the plan.</p>
+
+      <p>Non-functional goals are sorted honestly: latency, availability, and durability goals are the deployment's to address; answer correctness, citation verifiability, and tone are the coding agent's. The plan's Notes record which is which, so no goal is silently dropped, and never claim that a hosting choice satisfies a goal it can't.</p>
+    </section>
+
+    <section>
+      <h2>Writes</h2>
+
+      <p><code>deployment-plan.md</code>, in a fixed structure with inapplicable sections omitted:</p>
+
+      <ul>
+        <li><strong>Coding Agent Guidance</strong> — everything from Part 1.</li>
+        <li><strong>Target</strong> — one block per surface: type, provider, service, region, transport, CORS.</li>
+        <li><strong>Containerization</strong> — base image and registry.</li>
+        <li><strong>CI/CD</strong> — platform, trigger branch, stages.</li>
+        <li><strong>Environment</strong> — the required variables and the secrets strategy.</li>
+        <li><strong>Monitoring</strong> — error tracking, metrics, and the AI-channel items.</li>
+        <li><strong>Deployment Steps</strong> — ordered provisioning steps, each with the exact shell commands.</li>
+        <li><strong>Configuration Files</strong> — every file the deployment needs, complete and ready to use: the Dockerfile, the pipeline YAML, provider config. No placeholders.</li>
+        <li><strong>Terraform</strong> — if requested, every <code>.tf</code> file to provision the infrastructure from scratch: <code>main.tf</code>, <code>variables.tf</code>, <code>outputs.tf</code>.</li>
+        <li><strong>Notes</strong> — caveats, cost estimates, and the record of which non-functional goals the deployment addresses and which are the coding agent's.</li>
+      </ul>
+
+      <p>An <a href="/examples/deployment-plan.html">example plan</a> is on this site.</p>
+
+      <p><code>README.md</code>, in the project root, if you said yes: the vision, key features, install and setup, and usage, so anyone or any coding agent opening the repository has the picture in one place. An existing README is updated in place, not replaced.</p>
+    </section>
+
+    <section>
+      <h2>Buttons</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td><code>phases/</code> exists and no plan has been written this round.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>This session has an unfinished conversation with Deployer.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td><code>deployment-plan.md</code> exists and is newer than every input it depends on. Offers to keep the plan and answer questions about it, refine parts of it, or start over.</td>
+          </tr>
+          <tr>
+            <td><strong>Needs Update</strong></td>
+            <td>The stack, phases, AI features, or mock is newer than the plan.</td>
+          </tr>
+          <tr>
+            <td><strong>Not Ready</strong></td>
+            <td>No phases yet.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>A newer <code>feature_specs.json</code> is caught when Deployer runs, but not yet by the button. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2>Across rounds</h2>
+
+      <p>A revision round carries the previous implemented round's plan forward as the established baseline. Deployer confirms it, asks which coding agent you'll use for this round's phases, and updates the deployment only for what the round changed — new environment variables or keys, infrastructure for a new surface, observability for a newly introduced AI feature — without re-asking settled decisions. A deployment plan describes the whole running system, so the update is whole-system-scoped. The README update, if requested, is scoped to this round's feature changes and leaves the rest intact.</p>
+    </section>
+
+    <section>
+      <h2>In Spec4's own rounds</h2>
+
+      <p>Not run. Spec4's deployment — a local process installed from PyPI — didn't change in any of the three rounds. The <a href="/bws4/">Built With Spec4</a> app is deployed from a Deployer plan.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StackAdvisor — Spec4 docs</title>
+  <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
+  <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>StackAdvisor</h1>
+
+    <p>StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes <a href="/docs/artifacts/"><code>stack.json</code></a>: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.</p>
+
+    <p>The file is the approved component list. <a href="/docs/phaser/">Phaser</a> treats it as authoritative: a phase that needs anything not in it has to ask you first, and the answer is written back here.</p>
+
+    <section>
+      <h2>Reads</h2>
+
+      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
+
+      <p>Web search, if enabled, to verify a library's maintenance status and recent release activity before recommending it, and to find the canonical documentation link for each entry.</p>
+    </section>
+
+    <section>
+      <h2>Asks</h2>
+
+      <p>Eight topics, in order, one at a time, with comparisons and recommendations given for each. You aren't limited to the candidates it suggests, and you can return to any earlier topic to change a decision.</p>
+
+      <ol>
+        <li><strong>Language(s).</strong> Which, at what version, in what role — one entry per language.</li>
+        <li><strong>Deployment and hosting.</strong> Every separately shipped piece is a target — a browser client and the API it calls are two — with a kind and where it runs.</li>
+        <li><strong>Provider and model.</strong> Which provider serves which AI features, and the model family for each.</li>
+        <li><strong>External integrations.</strong> External services the app calls, and how the app authenticates its own users — a list, since an admin console and a public read path need not share a mechanism. An app with no accounts records no <code>security</code> block; that absence is a decision, and Phaser and <a href="/docs/deployer/">Deployer</a> are told to respect it rather than re-ask.</li>
+        <li><strong>Libraries.</strong> For each functional area — database access, UI, HTTP client, validation, caching, testing, logging, error tracking — candidate libraries as numbered options, one area at a time, each with what it does for this project, how maintained and widely adopted it is, its footprint, its strengths and weaknesses against the alternatives, and how much custom code you'd write without it. A well-chosen library is always preferred over custom code.</li>
+        <li><strong>Data and persistence.</strong> Stores and collections, keyed to the entities the manifest and feature specs name.</li>
+        <li><strong>Infrastructure.</strong> Only when the AI features require it: each required substrate — an agent loop runtime, a tool-execution harness, an embedding pipeline — walked to a concrete choice, and recorded even when a library fills it.</li>
+        <li><strong>Coding style and tooling.</strong> Linter, formatter, key style rules, naming conventions, type checking, and code patterns, per language, and the project structure.</li>
+      </ol>
+
+      <p>Four modes, chosen from what's on disk when the agent starts:</p>
+
+      <ul>
+        <li><strong>Fresh start.</strong> No prior stack or code. The eight topics from the top.</li>
+        <li><strong>Brownfield, no stack.</strong> A code review exists. StackAdvisor describes the technology it found and offers two options: draft an initial stack from it for you to refine, or start the topic sequence fresh.</li>
+        <li><strong>Update.</strong> A stack already exists this round. It's summarized; you say whether to refine it or start over.</li>
+        <li><strong>Revision.</strong> A previous round is implemented. The established stack is the baseline; languages and deployment are not re-asked. StackAdvisor recommends only the additions or swaps the new or changed features require, warns about conflicts with what's there, and on confirmation writes the full updated stack, never a diff.</li>
+      </ul>
+
+      <p>Every recommendation comes as options with tradeoffs. You decide; StackAdvisor writes the decision.</p>
+    </section>
+
+    <section>
+      <h2>Writes</h2>
+
+      <p><code>stack.json</code>. The shape is what Phaser and Deployer read from, so its join keys matter as much as its names:</p>
+
+      <ul>
+        <li><strong><code>serves_features</code></strong> on an entry names the product features that keep it alive. The test is the prompt's: if every feature that uses it were cut, would you still choose it? Still yes — the UI framework, the test runner, the linter — and it's <strong><code>foundational</code></strong> instead, with no <code>serves_features</code>. An entry is never both.</li>
+        <li><strong><code>serves_capabilities</code></strong> names the AI features an entry serves, in a separate id space from product features; a capability serves features and is never the same object.</li>
+        <li><strong><code>satisfies_nfr</code></strong> names the non-functional goals a choice is what makes achievable — a persistence choice for a durability goal, a caching choice for a latency goal — by the <code>nfr_&lt;slug&gt;</code> id from this project's feature specs.</li>
+        <li><strong><code>status: optional</code></strong> or <strong><code>deferred</code></strong> marks an entry as roadmap. It is recorded, named to you when the plan is presented, and never placed in a phase.</li>
+      </ul>
+
+      <p>Those keys are what make two joins mechanical rather than prompted. Stack routing: an entry attaches to every phase whose declared features intersect the ones it serves; an entry with no <code>serves</code> keys is a project-wide staple and appears in every phase, so a global dependency can never silently vanish from the plan. NFR threading: a goal claimed by a serving entry is rendered into the Verification section of the phases that entry routes to; a goal claimed only by foundational entries lands in the final phase as project-wide acceptance; a goal no entry claims is surfaced to you as unclaimed, never given an invented claim.</p>
+
+      <p>Before finalizing, StackAdvisor checks the linkage both ways: every feature with a dedicated store, client, or library must be able to reach it. An entry from Spec4's <code>.spec4/v2/stack.json</code> is on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+
+      <p><strong>Stack additions.</strong> When Phaser needs a dependency the stack doesn't have, it asks you — naming the dependency, why the choice needs it, and what it adds — and on your yes records a <code>stack_addition</code> with the same join keys. The addition lands in <code>stack.json</code> alongside StackAdvisor's own entries, so the next round's StackAdvisor treats it as its own. A dependency never appears in a plan without your having said yes to it.</p>
+    </section>
+
+    <section>
+      <h2>Buttons</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td><code>vision.json</code> exists and no stack has been written this round.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>This session has an unfinished conversation with StackAdvisor.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td><code>stack.json</code> exists and is newer than every input it depends on. Opens in update mode.</td>
+          </tr>
+          <tr>
+            <td><strong>Needs Update</strong></td>
+            <td>The vision, AI features, code review, or design manifest is newer than <code>stack.json</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>Not Ready</strong></td>
+            <td>No vision yet.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>StackAdvisor depends on <a href="/docs/designer/">Designer</a>'s manifest and not the mock: a purely visual change can't invalidate a stack choice.</p>
+    </section>
+
+    <section>
+      <h2>Across rounds</h2>
+
+      <p>A revision round carries the previous implemented round's stack forward as the baseline and records only the incremental changes; stack additions recorded by Phaser carry with it. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2>In Spec4's own rounds</h2>
+
+      <p>35 calls, about 1.15M tokens, and $3.02 in <code>v0</code> — the largest line of any agent in any round, a stack dialogue from scratch on <code>claude-sonnet-5</code>; 4 calls, 193k, and $0.56 in <code>v1</code>; 5 calls, 282k, and $0.80 in <code>v2</code>, both revision rounds that carried the <code>v0</code> stack forward.</p>
+    </section>
+  </main>
+</body>
+</html>

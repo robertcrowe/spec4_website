@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeScanner — Spec4 docs</title>
+  <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.">
+  <link rel="canonical" href="https://spec4.ai/docs/codescanner/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css?v=5">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav>
+    <a href="/">Spec4</a>
+    <code>1.5.0</code>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <main>
+    <h1>CodeScanner</h1>
+
+    <p>CodeScanner reads an existing directory and writes <a href="/docs/artifacts/"><code>code_review.json</code></a>: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.</p>
+
+    <p>It is the first agent of any <a href="/docs/rounds/">round</a> on existing code, and the first agent of every round after the first.</p>
+
+    <section>
+      <h2>Reads</h2>
+
+      <p>The repository, locally. What the model receives is a bounded summary assembled by Spec4 before any call is made:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Part</th>
+            <th scope="col">What's included</th>
+            <th scope="col">Limit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>File tree</td>
+            <td>Every path under the directory, skipping vendored and build directories</td>
+            <td>150 files</td>
+          </tr>
+          <tr>
+            <td>Manifests</td>
+            <td><code>pyproject.toml</code>, <code>package.json</code>, <code>Cargo.toml</code>, <code>go.mod</code>, <code>Makefile</code>, linter and type-checker configs, and the like</td>
+            <td>3,000 characters per file, 10,000 in total</td>
+          </tr>
+          <tr>
+            <td>README</td>
+            <td>The root README, if there is one</td>
+            <td>80 lines</td>
+          </tr>
+          <tr>
+            <td>Deployment and CI signals</td>
+            <td><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Procfile</code>, <code>fly.toml</code>, <code>render.yaml</code>, <code>.github/workflows/</code>, Terraform directories, and the like</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Source samples</td>
+            <td>The head of up to eight non-test source files, entry-point candidates first (<code>main</code>, <code>app</code>, <code>index</code>, <code>server</code>, <code>cli</code>, <code>__main__</code>)</td>
+            <td>80 lines per file, 8,000 characters in total</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Skipped: <code>.git</code>, <code>node_modules</code>, <code>.venv</code>, <code>__pycache__</code>, <code>dist</code>, <code>build</code>, <code>target</code>, <code>.spec4</code>, and the other cache and vendor directories. Test directories are excluded from the samples.</p>
+
+      <p>Before the call, the chat shows how many files were indexed and roughly how many tokens are about to be sent, and to which model. Nothing else leaves the machine.</p>
+    </section>
+
+    <section>
+      <h2>Writes</h2>
+
+      <p><code>code_review.json</code>. The shape is fixed:</p>
+
+      <ul>
+        <li><code>project_type</code>, <code>languages</code>, <code>frameworks</code>, <code>build_system</code>, <code>commands</code>, <code>entrypoints</code>, <code>ui_summary</code>, and <code>notes</code> are required when the directory holds a software project.</li>
+        <li>Every fact carries a <code>source</code> — the file it was read from — or <code>inferred_from</code> — the file it was deduced from. A fact with neither is not written.</li>
+        <li><code>commands</code> has a closed set of keys: <code>build</code>, <code>test</code>, <code>lint</code>, <code>typecheck</code>, <code>run</code>, <code>dev</code>, <code>deploy</code>. <code>entrypoints</code> likewise: <code>main</code>, <code>wsgi_app</code>, <code>cli_script</code>, <code>dev_server</code>, <code>ui_root</code>. Anything else the project has goes in <code>notes.other_notes</code> as a line of text, so a downstream agent reading <code>commands.test</code> always finds the same thing.</li>
+        <li>A key the model can't verify is omitted, never filled with "none" or "n/a".</li>
+        <li><code>notes.change_risks</code> records where a change is likely to break something; <a href="/docs/stackadvisor/">StackAdvisor</a> is told to read it before proposing a swap. <code>notes.security_observations</code> and <code>existing_self_description</code> (quoted from the README or a package description, never from a config file) are also there.</li>
+        <li>An empty directory, or one without code, gets <code>is_software_project: false</code> and a one-line summary.</li>
+      </ul>
+
+      <p>An excerpt from Spec4's own <code>.spec4/v2/code_review.json</code> is on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+    </section>
+
+    <section>
+      <h2>Asks</h2>
+
+      <p>Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the file — or press <strong>Modify</strong> later to reopen it.</p>
+
+      <p>Web search, if you've given it a key, is available to CodeScanner for the standards and protocols it names.</p>
+    </section>
+
+    <section>
+      <h2>Buttons</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Button</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start</strong></td>
+            <td>The directory has code and no review has been written this round.</td>
+          </tr>
+          <tr>
+            <td><strong>Continue</strong></td>
+            <td>This session has an unfinished conversation with CodeScanner.</td>
+          </tr>
+          <tr>
+            <td><strong>Modify</strong></td>
+            <td><code>code_review.json</code> exists for this round.</td>
+          </tr>
+          <tr>
+            <td><strong>Required</strong></td>
+            <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan — even if the previous round was greenfield.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with <a href="/docs/brainstormer/">Brainstormer</a>.</p>
+    </section>
+
+    <section>
+      <h2>Across rounds</h2>
+
+      <p>The review is rewritten from scratch each round, of the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan. <a href="/docs/rounds/">Rounds</a></p>
+    </section>
+
+    <section>
+      <h2>In Spec4's own rounds</h2>
+
+      <p>Three calls, about 118k tokens, and $0.53 in <code>v1</code>; three calls, about 116k tokens, and $0.46 in <code>v2</code>, on <code>claude-sonnet-5</code>. <code>v0</code>'s scan ran before usage was recorded.</p>
+    </section>
+  </main>
+</body>
+</html>

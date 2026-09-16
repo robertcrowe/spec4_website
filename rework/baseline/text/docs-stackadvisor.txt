@@ -1,0 +1,130 @@
+Spec4
+1.5.0
+Docs
+Examples
+GitHub
+StackAdvisor
+StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes
+stack.json
+: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.
+The file is the approved component list.
+Phaser
+treats it as authoritative: a phase that needs anything not in it has to ask you first, and the answer is written back here.
+Reads
+vision.json
+and
+feature_specs.json
+— every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id.
+ai_features.json
+, when it exists, for the AI tiers and the infrastructure they imply.
+design/manifest.json
+, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice.
+code_review.json
+, when it exists, for the technology already in place and the change risks
+CodeScanner
+noted. In a
+revision round
+, the previous implemented round's
+stack.json
+as the baseline.
+Web search, if enabled, to verify a library's maintenance status and recent release activity before recommending it, and to find the canonical documentation link for each entry.
+Asks
+Eight topics, in order, one at a time, with comparisons and recommendations given for each. You aren't limited to the candidates it suggests, and you can return to any earlier topic to change a decision.
+Language(s).
+Which, at what version, in what role — one entry per language.
+Deployment and hosting.
+Every separately shipped piece is a target — a browser client and the API it calls are two — with a kind and where it runs.
+Provider and model.
+Which provider serves which AI features, and the model family for each.
+External integrations.
+External services the app calls, and how the app authenticates its own users — a list, since an admin console and a public read path need not share a mechanism. An app with no accounts records no
+security
+block; that absence is a decision, and Phaser and
+Deployer
+are told to respect it rather than re-ask.
+Libraries.
+For each functional area — database access, UI, HTTP client, validation, caching, testing, logging, error tracking — candidate libraries as numbered options, one area at a time, each with what it does for this project, how maintained and widely adopted it is, its footprint, its strengths and weaknesses against the alternatives, and how much custom code you'd write without it. A well-chosen library is always preferred over custom code.
+Data and persistence.
+Stores and collections, keyed to the entities the manifest and feature specs name.
+Infrastructure.
+Only when the AI features require it: each required substrate — an agent loop runtime, a tool-execution harness, an embedding pipeline — walked to a concrete choice, and recorded even when a library fills it.
+Coding style and tooling.
+Linter, formatter, key style rules, naming conventions, type checking, and code patterns, per language, and the project structure.
+Four modes, chosen from what's on disk when the agent starts:
+Fresh start.
+No prior stack or code. The eight topics from the top.
+Brownfield, no stack.
+A code review exists. StackAdvisor describes the technology it found and offers two options: draft an initial stack from it for you to refine, or start the topic sequence fresh.
+Update.
+A stack already exists this round. It's summarized; you say whether to refine it or start over.
+Revision.
+A previous round is implemented. The established stack is the baseline; languages and deployment are not re-asked. StackAdvisor recommends only the additions or swaps the new or changed features require, warns about conflicts with what's there, and on confirmation writes the full updated stack, never a diff.
+Every recommendation comes as options with tradeoffs. You decide; StackAdvisor writes the decision.
+Writes
+stack.json
+. The shape is what Phaser and Deployer read from, so its join keys matter as much as its names:
+serves_features
+on an entry names the product features that keep it alive. The test is the prompt's: if every feature that uses it were cut, would you still choose it? Still yes — the UI framework, the test runner, the linter — and it's
+foundational
+instead, with no
+serves_features
+. An entry is never both.
+serves_capabilities
+names the AI features an entry serves, in a separate id space from product features; a capability serves features and is never the same object.
+satisfies_nfr
+names the non-functional goals a choice is what makes achievable — a persistence choice for a durability goal, a caching choice for a latency goal — by the
+nfr_<slug>
+id from this project's feature specs.
+status: optional
+or
+deferred
+marks an entry as roadmap. It is recorded, named to you when the plan is presented, and never placed in a phase.
+Those keys are what make two joins mechanical rather than prompted. Stack routing: an entry attaches to every phase whose declared features intersect the ones it serves; an entry with no
+serves
+keys is a project-wide staple and appears in every phase, so a global dependency can never silently vanish from the plan. NFR threading: a goal claimed by a serving entry is rendered into the Verification section of the phases that entry routes to; a goal claimed only by foundational entries lands in the final phase as project-wide acceptance; a goal no entry claims is surfaced to you as unclaimed, never given an invented claim.
+Before finalizing, StackAdvisor checks the linkage both ways: every feature with a dedicated store, client, or library must be able to reach it. An entry from Spec4's
+.spec4/v2/stack.json
+is on the
+Artifacts
+page.
+Stack additions.
+When Phaser needs a dependency the stack doesn't have, it asks you — naming the dependency, why the choice needs it, and what it adds — and on your yes records a
+stack_addition
+with the same join keys. The addition lands in
+stack.json
+alongside StackAdvisor's own entries, so the next round's StackAdvisor treats it as its own. A dependency never appears in a plan without your having said yes to it.
+Buttons
+Button
+When
+Start
+vision.json
+exists and no stack has been written this round.
+Continue
+This session has an unfinished conversation with StackAdvisor.
+Modify
+stack.json
+exists and is newer than every input it depends on. Opens in update mode.
+Needs Update
+The vision, AI features, code review, or design manifest is newer than
+stack.json
+.
+Not Ready
+No vision yet.
+StackAdvisor depends on
+Designer
+'s manifest and not the mock: a purely visual change can't invalidate a stack choice.
+Across rounds
+A revision round carries the previous implemented round's stack forward as the baseline and records only the incremental changes; stack additions recorded by Phaser carry with it.
+Rounds
+In Spec4's own rounds
+35 calls, about 1.15M tokens, and $3.02 in
+v0
+— the largest line of any agent in any round, a stack dialogue from scratch on
+claude-sonnet-5
+; 4 calls, 193k, and $0.56 in
+v1
+; 5 calls, 282k, and $0.80 in
+v2
+, both revision rounds that carried the
+v0
+stack forward.
