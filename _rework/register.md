@@ -34,6 +34,7 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 17. No second accent colour. No blue, except in the Spec4 wordmark, where it is the app's. *(Amended 2026-09-15: the wordmark's `4` takes a brighter green than the accent — `--wordmark-green`, the same hue — because at the accent's darkness it read as part of `Spec` rather than as the mark's second half. It is a wordmark colour, not a second accent: nothing outside `.wordmark-four` may use it, and the accent itself is still one colour.)*
 18. No analytics, no external fonts beyond what the existing pages already load, no JavaScript beyond what the existing pages already load.
 27. No category claims: "the only", "the first", "unlike other tools", or any other ranking of Spec4 within a category. Naming the practice — "spec-driven development" — is a fact and is allowed. *(Added 2026-09-16.)*
+28. A name collision may be named on the front page for disambiguation only: the domain, the statement that there is no connection, and nothing about what it is or sells. No link. *(Added 2026-09-16.)*
 
 ## Nav (every page)
 
