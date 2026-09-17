@@ -6,7 +6,7 @@ uv tool install spec4 --refresh spec4
 Version 1.5.0 · Apache 2.0 · GitHub · Docs
 Runs locally. A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.
 Your code stays in the repo. CodeScanner reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.
-Your keys, in your browser. Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in localStorage, opt-in; never written to disk; never sent anywhere but the provider they belong to.
+Your keys, in your browser. Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in localStorage, opt-in; never sent anywhere but the provider they belong to.
 Any model, any step. A default for the pipeline; a different provider, model, and reasoning effort for any agent, chosen when it starts or on a retry after a provider error.
 Any coding agent. Plain Markdown and JSON with no agent-specific format; Deployer writes the setup instructions for the agent you name. The folder is documented. Artifacts
 Apache 2.0. Free. You pay your provider, and every round records what it cost.
@@ -118,7 +118,7 @@ No commands inside your coding agent. You hand it the files.
 It stops at the spec. Building and verifying the code is your coding agent's job and yours.
 Nothing runs in the cloud. The app is a local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.
 CodeScanner reads your repository locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.
-API keys are held in the browser (localStorage, opt-in) and never written to disk or sent anywhere but the provider they belong to.
+API keys are held in the browser (localStorage, opt-in) and never sent anywhere but the provider they belong to.
 Web search is off unless you give it a key.
 "You've made something really really really cool. I'm almost done with our driver app. Will be field tested by Friday. I don't think I would have built what this is going to become without it."
 — Wihan Booyse, Kriterion.ai

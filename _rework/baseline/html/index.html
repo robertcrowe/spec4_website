@@ -43,7 +43,7 @@ spec4</code></pre>
     <ul>
       <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
       <li><strong>Your code stays in the repo.</strong> <a href="/docs/codescanner/">CodeScanner</a> reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
-      <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never written to disk; never sent anywhere but the provider they belong to.</li>
+      <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never sent anywhere but the provider they belong to.</li>
       <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and <a href="/docs/settings/">reasoning effort</a> for any agent, chosen when it starts or on a retry after a provider error.</li>
       <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; <a href="/docs/deployer/">Deployer</a> writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
       <li><strong>Apache 2.0.</strong> Free. You pay your provider, and every round records what it cost.</li>
@@ -320,7 +320,7 @@ serves HTTP on localhost:8050 only.
         <li>It stops at the spec. Building and verifying the code is your coding agent's job and yours.</li>
         <li>Nothing runs in the cloud. The app is a local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
         <li>CodeScanner reads your repository locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
-        <li>API keys are held in the browser (<code>localStorage</code>, opt-in) and never written to disk or sent anywhere but the provider they belong to.</li>
+        <li>API keys are held in the browser (<code>localStorage</code>, opt-in) and never sent anywhere but the provider they belong to.</li>
         <li>Web search is off unless you give it a key.</li>
       </ul>
 

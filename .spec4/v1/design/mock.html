@@ -259,7 +259,7 @@ spec4</code></pre>
     <ul>
       <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
       <li><strong>Your code stays in the repo.</strong> <a href="/docs/codescanner/">CodeScanner</a> reads it locally and sends the model a bounded summary — manifests, entry points, samples — not the tree.</li>
-      <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never written to disk; never sent anywhere but the provider they belong to.</li>
+      <li><strong>Your keys, in your browser.</strong> Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter. Held in <code>localStorage</code>, opt-in; never sent anywhere but the provider they belong to.</li>
       <li><strong>Any model, any step.</strong> A default for the pipeline; a different provider, model, and <a href="/docs/settings/">reasoning effort</a> for any agent, chosen when it starts or on a retry after a provider error.</li>
       <li><strong>Any coding agent.</strong> Plain Markdown and JSON with no agent-specific format; <a href="/docs/deployer/">Deployer</a> writes the setup instructions for the agent you name. The folder is documented. <a href="/docs/artifacts/">Artifacts</a></li>
       <li><strong>Apache 2.0.</strong> Free. You pay your provider, and every round records what it cost.</li>
@@ -526,7 +526,7 @@ make spec4</code></pre>
 
     <ol>
       <li><strong>Pick a project directory.</strong> An empty directory is a new project. A directory with files in it gets one question — <em>Is there an existing project here?</em> — because a <code>uv init</code> skeleton and a codebase you're modifying look the same to a file listing. <em>Existing project</em> starts with <a href="/docs/codescanner/">CodeScanner</a>; <em>New project</em> starts with <a href="/docs/brainstormer/">Brainstormer</a>. You're asked again next session; the answer isn't written to disk.</li>
-      <li><strong>Connect a provider.</strong> Choose one of eight — Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter — enter its key, and pick a default model and <a href="/docs/settings/">reasoning effort</a>. The key is held in your browser's <code>localStorage</code>, opt-in, and is never written to disk or sent anywhere but the provider it belongs to. Optionally add a <a href="https://tavily.com/">Tavily</a> or <a href="https://exa.ai/">Exa</a> key so the agents can ground their recommendations with live search. <a href="/docs/settings/">Settings</a></li>
+      <li><strong>Connect a provider.</strong> Choose one of eight — Anthropic, AWS Bedrock, Cohere, Google Gemini, Mistral, Nebius, OpenAI, or OpenRouter — enter its key, and pick a default model and <a href="/docs/settings/">reasoning effort</a>. The key is held in your browser's <code>localStorage</code>, opt-in, and is never sent anywhere but the provider it belongs to. Optionally add a <a href="https://tavily.com/">Tavily</a> or <a href="https://exa.ai/">Exa</a> key so the agents can ground their recommendations with live search. <a href="/docs/settings/">Settings</a></li>
       <li><strong>Start the first agent.</strong> The project page lists the seven agents in order with one button each. Press <strong>Start</strong> on the first one that offers it.</li>
     </ol>
 
