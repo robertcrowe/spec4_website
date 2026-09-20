@@ -6,13 +6,13 @@
   <title>Spec4 docs</title>
   <meta name="description" content="Spec4 is a local spec-driven development tool: it turns a rough idea, or a change to an existing codebase, into ordered phases written for a coding agent.">
   <link rel="canonical" href="https://spec4.ai/docs/">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -48,6 +48,7 @@
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -65,7 +66,9 @@
 
     <p>Spec4 is a local spec-driven development tool that turns a rough idea, or a change to an existing codebase, into a set of ordered development phases written for a coding agent. Seven planning agents run in order. Each reads what the ones before it wrote, and everything they write is a file under <code>.spec4/</code> in your project. Spec4 doesn't write code; your coding agent does, one phase at a time.</p>
 
-    <p>Version 1.5.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a></p>
+    <p>The agents are conversational — all but <a href="/docs/codescanner/">CodeScanner</a>, which reports facts about the code rather than forming an opinion. Each is a specialist in its stage and works a fixed agenda with you, one topic at a time, recording what you decide. Nothing advances without your confirmation: you make every call.</p>
+
+    <p>Version 1.5.1 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a></p>
 
     <section>
       <h2 id="install">Install</h2>
@@ -225,6 +228,8 @@ make spec4</code></pre>
       <h2 id="models-and-cost">Models and cost</h2>
 
       <p>The default model and effort apply to every agent. At any agent's gate you can pick a different provider, model, and effort for that agent alone, and on a provider error the retry offers the same choice. Sub-agents inherit their parent's choice. <code>usage.json</code> records what each agent actually ran on and what each call cost; the cost strip on the project page shows the round's total. Dollar figures are LiteLLM's estimate from its community cost map and may lag provider price sheets; your provider's bill is authoritative. <a href="/docs/settings/">Settings</a></p>
+
+      <p>On Anthropic and AWS Bedrock, Spec4 caches the repeated part of each prompt automatically, and <code>usage.json</code> records what each call read from cache and what it wrote. <a href="/docs/caching/">Caching</a></p>
     </section>
 
     <section>
@@ -241,6 +246,7 @@ make spec4</code></pre>
         <li><a href="/docs/artifacts/">Artifacts</a> — every file's shape, with excerpts from real rounds</li>
         <li><a href="/docs/rounds/">Rounds</a> — brownfield, revisions, staleness, <code>IMPLEMENTED</code></li>
         <li><a href="/docs/settings/">Settings</a> — providers, effort, the gate, search, credentials</li>
+        <li><a href="/docs/caching/">Caching</a> — which agents cache, which providers, how to read the numbers</li>
         <li><a href="/bws4/">Built With Spec4</a> — nine rounds of Spec4 planning a deployed app</li>
         <li><a href="https://github.com/robertcrowe/spec4">Source</a> · <a href="https://github.com/robertcrowe/spec4/issues">Issues</a></li>
       </ul>

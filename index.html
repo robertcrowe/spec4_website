@@ -13,13 +13,13 @@
   <meta property="og:image:height" content="421">
   <meta property="og:title" content="Spec4 — spec-driven development for coding agents">
   <meta property="og:description" content="Spec4 is a spec-driven development tool: it turns an idea into ordered development phases — files a coding agent can build from.">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -56,6 +56,7 @@
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -78,7 +79,7 @@
 <pre><code>uv tool install spec4 --refresh
 spec4</code></pre>
 
-    <p>Version 1.5.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a> · <a href="/docs/">Docs</a></p>
+    <p>Version 1.5.1 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a> · <a href="/docs/">Docs</a></p>
 
     <ul>
       <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
@@ -168,6 +169,8 @@ serves HTTP on localhost:8050 only.
       <h2 id="the-pipeline">The pipeline</h2>
 
       <p>Seven agents, in order. Each reads what the ones before it wrote.</p>
+
+      <p>They are conversational — all but CodeScanner, which reports facts about the code rather than forming an opinion. Each is a specialist in its stage, working a fixed agenda with you one topic at a time and writing down what you decide. Nothing advances without your confirmation. It runs like a project team meeting: the specialists give their input, and the project owner makes the final call.</p>
 
       <div class="table-wrap">
         <table class="wide">
@@ -280,6 +283,8 @@ serves HTTP on localhost:8050 only.
 
       <p>So the plan is never the source of truth for long. The code is, and each round re-reads it. The Spec4 repository carries three rounds of Spec4 planning its own changes under <code>.spec4/</code>; the phase file quoted above is the first phase of the first of them.</p>
 
+      <p>Greenfield is only round one against an empty repository: the same re-read runs every round, so the plan is regenerated rather than maintained, and anything an upstream change has left behind is shown on the project page as <a href="/docs/rounds/#stale-inputs">stale inputs</a>.</p>
+
       <p>A round is a feature or a rework. For a change smaller than that, don't run one. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
@@ -350,6 +355,8 @@ serves HTTP on localhost:8050 only.
       </div>
 
       <p>Elapsed is the first call's start to the last call's end, including the developer's time in the dialogue. Cost is LiteLLM's estimate from its community cost map; your provider's bill is authoritative.</p>
+
+      <p>All three rounds ran before prompt caching, so their figures carry no cache reads; Spec4 now caches the repeated part of each prompt automatically on Anthropic and AWS Bedrock. <a href="/docs/caching/">Caching</a></p>
 
       <p>Phaser is the first or second largest line in every round, because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model. <code>usage.json</code> records every call per agent, per round, and the project page shows the totals. Each agent can override the project's default model and effort from its own gate, so you can put a stronger model on Phaser without changing anything else. <a href="/docs/settings/">Settings</a></p>
     </section>

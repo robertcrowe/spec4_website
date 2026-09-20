@@ -6,13 +6,13 @@
   <title>Artifacts — Spec4 docs</title>
   <meta name="description" content="Everything Spec4 produces is a file under .spec4/ in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.">
   <link rel="canonical" href="https://spec4.ai/docs/artifacts/">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -52,6 +52,7 @@
         </li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -387,7 +388,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
   "computed_cost_usd": 5.880532
 }</code></pre>
 
-      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. The two capability probes the <a href="/docs/settings/">setup wizard</a> runs are not recorded.</p>
+      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. Every record also carries <code>cache_read_input_tokens</code> and <code>cache_creation_input_tokens</code>, and the per-agent rollups carry <code>cached_input_tokens</code> and <code>cache_creation_input_tokens</code>; both cache figures are inside the input count rather than additions to it. The two capability probes the <a href="/docs/settings/">setup wizard</a> runs are not recorded. <a href="/docs/caching/">Caching</a></p>
 
       <h3>Per agent, Spec4's three rounds</h3>
 
@@ -456,7 +457,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
         </table>
       </div>
 
-      <p>No Agentifier or Deployer calls in any round: none of the three rounds added an AI feature, and the deployment didn't change. No retries — every call has <code>error: null</code> — and no cached input. The largest line is a different agent each round: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>. Phaser is first or second every time because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model.</p>
+      <p>No Agentifier or Deployer calls in any round: none of the three rounds added an AI feature, and the deployment didn't change. No retries — every call has <code>error: null</code> — and no cached input. The largest line is a different agent each round: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>. Phaser is first or second every time because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model. All three rounds ran before prompt caching. <a href="/docs/caching/">Caching</a></p>
     </section>
 
     <section>

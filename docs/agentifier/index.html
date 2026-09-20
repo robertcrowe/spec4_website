@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agentifier — Spec4 docs</title>
-  <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
+  <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back with direction — an area to look at again, or a candidate of your own to work up — and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
   <link rel="canonical" href="https://spec4.ai/docs/agentifier/">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -48,6 +48,7 @@
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -63,7 +64,7 @@
   <main>
     <h1>Agentifier</h1>
 
-    <p>Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back for a different set, and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to <a href="/docs/artifacts/"><code>ai_catalog.json</code></a>, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to <code>ai_features.json</code>.</p>
+    <p>Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back with direction — an area to look at again, or a candidate of your own to work up — and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to <a href="/docs/artifacts/"><code>ai_catalog.json</code></a>, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to <code>ai_features.json</code>.</p>
 
     <p>It is optional. Spec4's own three <a href="/docs/rounds/">rounds</a> didn't run it: Spec4's AI features were built before it was mature enough to plan itself, and none of the three rounds added one.</p>
 
@@ -208,7 +209,7 @@
       <p>What you see:</p>
 
       <ol>
-        <li><strong>Breadth.</strong> Scout's candidates, as a set. You can accept them or send Scout back with guidance on what to look for.</li>
+        <li><strong>Breadth.</strong> Scout's candidates, as a set. You can accept them, or send Scout back with guidance on what to look for — including a candidate it didn't offer, which it works up and returns alongside the rest.</li>
         <li><strong>One candidate at a time.</strong> Its name and description; where it sits among the other features; the Tier Analyst's recommendation in bold with its rationale; what going one tier cheaper would mean instead, so you can push back if the recommendation over-engineers; the seams to watch if the call is borderline; and all nine tiers as numbered options, plus a tenth: suggest your own.</li>
         <li><strong>Your decision.</strong> Pick the recommendation and it's recorded. Pick a different tier and Agentifier names the specific risk in one or two sentences and asks you to confirm; on yes, your choice and your reason are recorded. It doesn't lecture and it doesn't refuse.</li>
         <li><strong>The running catalog.</strong> After each decision, a table of every feature decided so far: recommended and decided. Say <em>revise &lt;name&gt;</em> at any point to go back.</li>

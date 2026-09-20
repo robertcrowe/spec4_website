@@ -6,13 +6,13 @@
   <title>Settings — Spec4 docs</title>
   <meta name="description" content="Spec4 has three settings: a model provider and key, a default model and reasoning effort, and an optional web-search provider. The setup wizard asks for them in that order the first time you open a project; the Settings page carries the same three steps afterwards.">
   <link rel="canonical" href="https://spec4.ai/docs/settings/">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -46,6 +46,7 @@
             <li><a href="#what-the-published-rounds-ran-on">What the published rounds ran on</a></li>
           </ul>
         </li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -121,6 +122,8 @@
       <p>Models are fetched live from the provider when you connect, with a hardcoded fallback list if the API is unavailable.</p>
 
       <p>AWS Bedrock accepts Bedrock API keys, IAM access keys, or ambient AWS credentials — environment variables, <code>~/.aws/credentials</code>, or IAM roles.</p>
+
+      <p>Prompt caching is applied per provider, automatically, and there is nothing to set for it here; <code>SPEC4_PROMPT_CACHING=0</code> in the environment turns it off, for measurement. <a href="/docs/caching/">Caching</a></p>
     </section>
 
     <section>

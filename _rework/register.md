@@ -38,18 +38,18 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 
 ## Nav (every page)
 
-19. Text links: `Docs · Examples · GitHub`, current section marked. `Examples` → `/bws4/`; `GitHub` → `https://github.com/robertcrowe/spec4`. The `Spec4` wordmark links to `/`. Version `1.5.0` in monospace. How it is laid out is the look pass's decision; the markup is one `<nav>` with those links.
+19. Text links: `Docs · Examples · GitHub`, current section marked. `Examples` → `/bws4/`; `GitHub` → `https://github.com/robertcrowe/spec4`. The `Spec4` wordmark links to `/`. Version `1.5.1` in monospace. How it is laid out is the look pass's decision; the markup is one `<nav>` with those links.
 
 ## Site map (every page)
 
 *(Added 2026-09-15. Numbering continues from the end of the file rather than renumbering §20–§24, which are cited elsewhere.)*
 
-25. Below the one-line nav, every styled page carries the whole site map — all thirteen pages: `Overview` on its own, then the three groups of §26 — in a native `<details class="sitemap">` whose `<summary>` reads `Contents`. The same markup serves every width: CSS forces it open as the wide-screen sidebar and leaves it collapsed at narrow widths. There is no `open` attribute in the HTML and no script anywhere near it; nothing here is ever reimplemented with a click handler. No icon: the summary's marker is removed and nothing takes its place — no ☰, no arrow, no glyph, no rule. No `role=` and no `aria-expanded=`; `<details>` exposes both already and a hand-written pair would go stale on toggle. The page's own entry is not a link: it is `<span aria-current="page">Title</span>`, carrying the same short green rule the current section carries in the one-line nav. The front page is in the map as `Overview`, so every page, `index.html` included, marks exactly one entry. Group labels are the reading face, set small; the links take the site's ordinary link styling. Blue appears nowhere in it (§17), and the sidebar is not sticky.
+25. Below the one-line nav, every styled page carries the whole site map — all fourteen pages: `Overview` on its own, then the three groups of §26 — in a native `<details class="sitemap">` whose `<summary>` reads `Contents`. The same markup serves every width: CSS forces it open as the wide-screen sidebar and leaves it collapsed at narrow widths. There is no `open` attribute in the HTML and no script anywhere near it; nothing here is ever reimplemented with a click handler. No icon: the summary's marker is removed and nothing takes its place — no ☰, no arrow, no glyph, no rule. No `role=` and no `aria-expanded=`; `<details>` exposes both already and a hand-written pair would go stale on toggle. The page's own entry is not a link: it is `<span aria-current="page">Title</span>`, carrying the same short green rule the current section carries in the one-line nav. The front page is in the map as `Overview`, so every page, `index.html` included, marks exactly one entry. Group labels are the reading face, set small; the links take the site's ordinary link styling. Blue appears nowhere in it (§17), and the sidebar is not sticky.
 
 26. **Link order, fixed here.** A page is added to the site in three places in the same change: this list, the Reference list on `/docs/`, and the site map on every page. The link text is the text below, verbatim. A page's own entry also carries a sub-list of its `<h2>`s in document order, each linking to the heading's id — `<h2>` only, never `<h3>` — and that sub-list is updated whenever the page's headings change; it is the only part of the site map that differs from one page to the next.
 
     - `Overview` → `/`, first, above the groups and in none of them.
-    - **Docs** — `Install and first run` → `/docs/`; `CodeScanner`; `Brainstormer`; `Agentifier`; `Designer`; `StackAdvisor`; `Phaser`; `Deployer`; `Artifacts`; `Rounds`; `Settings` — each at `/docs/<name>/`.
+    - **Docs** — `Install and first run` → `/docs/`; `CodeScanner`; `Brainstormer`; `Agentifier`; `Designer`; `StackAdvisor`; `Phaser`; `Deployer`; `Artifacts`; `Rounds`; `Settings`; `Caching` — each at `/docs/<name>/`. *(Amended 2026-09-19: `Caching` added, after `Settings`.)*
     - **Examples** — `Built With Spec4` → `/bws4/`.
     - **Source** — `GitHub` → `https://github.com/robertcrowe/spec4`.
 

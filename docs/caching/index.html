@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caching — Spec4 docs</title>
+  <meta name="description" content="Most of every Spec4 request is text the model has already seen. Prompt caching lets the model reuse the processed prefix instead of processing it again. Spec4 turns it on automatically for the providers where it is safe; there is nothing to configure.">
+  <link rel="canonical" href="https://spec4.ai/docs/caching/">
+  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.1</span>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <details class="sitemap">
+    <summary>Contents</summary>
+    <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
+      <p class="group">Docs</p>
+      <ul>
+        <li><a href="/docs/">Install and first run</a></li>
+        <li><a href="/docs/codescanner/">CodeScanner</a></li>
+        <li><a href="/docs/brainstormer/">Brainstormer</a></li>
+        <li><a href="/docs/agentifier/">Agentifier</a></li>
+        <li><a href="/docs/designer/">Designer</a></li>
+        <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
+        <li><a href="/docs/phaser/">Phaser</a></li>
+        <li><a href="/docs/deployer/">Deployer</a></li>
+        <li><a href="/docs/artifacts/">Artifacts</a></li>
+        <li><a href="/docs/rounds/">Rounds</a></li>
+        <li><a href="/docs/settings/">Settings</a></li>
+        <li><span aria-current="page">Caching</span>
+          <ul>
+            <li><a href="#what-it-does">What it does</a></li>
+            <li><a href="#the-two-breakpoints">The two breakpoints</a></li>
+            <li><a href="#which-agents-get-which">Which agents get which</a></li>
+            <li><a href="#providers">Providers</a></li>
+            <li><a href="#minimum-cacheable-prefix">Minimum cacheable prefix</a></li>
+            <li><a href="#what-it-saves">What it saves</a></li>
+            <li><a href="#cache-lifetime">Cache lifetime</a></li>
+            <li><a href="#turning-it-off">Turning it off</a></li>
+            <li><a href="#reading-the-numbers">Reading the numbers</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p class="group">Examples</p>
+      <ul>
+        <li><a href="/bws4/">Built With Spec4</a></li>
+      </ul>
+      <p class="group">Source</p>
+      <ul>
+        <li><a href="https://github.com/robertcrowe/spec4">GitHub</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <main>
+    <h1>Caching</h1>
+
+    <p>Prompt caching shipped in 1.5.1. Most of every Spec4 request is text the model has already seen — an agent's system prompt, and for an agent that holds a running exchange with the model, the turns so far. Caching lets the model reuse the processed prefix instead of processing it again.</p>
+
+    <p>Spec4 turns it on automatically for the providers where it is safe. There is nothing to configure.</p>
+
+    <section>
+      <h2 id="what-it-does">What it does</h2>
+
+      <p>On Anthropic models a cached read costs one tenth of a normal input token, and a cache write costs 1.25&times;. So a prefix that is written once and read on every later call pays 1.25 once and 0.1 thereafter, instead of 1.0 every time.</p>
+
+      <p>Nothing about the plan changes. The model sees the same prompt; only the price of the part it has already processed changes.</p>
+    </section>
+
+    <section>
+      <h2 id="the-two-breakpoints">The two breakpoints</h2>
+
+      <ol>
+        <li><strong>The system prompt.</strong> Static for the life of a run: written once, read on every later call that agent makes. It also covers the web-search tool definition, because Anthropic caches tool definitions ahead of the system prompt.</li>
+        <li><strong>The last message.</strong> A moving breakpoint. Each turn reads the whole previous prompt from cache and writes only what that turn added.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 id="which-agents-get-which">Which agents get which</h2>
+
+      <p>Exactly six agents get the second breakpoint: <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/codescanner/">CodeScanner</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, <a href="/docs/phaser/">Phaser</a>, and <a href="/docs/deployer/">Deployer</a>. These are the multi-turn agents — the ones whose exchange with the model accumulates, so the last message of one call sits inside the prefix of the next.</p>
+
+      <p><em>Multi-turn</em> here is about the exchange with the model, not the one with you. CodeScanner is in this set and asks you nothing; <a href="/docs/designer/">Designer</a> is outside it and refines a mock against your feedback.</p>
+
+      <p>Everything else gets the first breakpoint alone. Its last message is a user turn that differs on every call, so a second breakpoint would be a guaranteed write with no read. That covers the one-shot sub-agents — Scout, TierAnalyst, Linker, Composer, Prioritizer, SpecDrafter, and Feature Speccer — and Designer, which builds one system message and one user message per draw and carries no conversation history.</p>
+
+      <p>Designer is worth stating rather than leaving to inference. It is one-shot, and its system prompt sits below every current model's minimum cacheable prefix, so Designer draws are not cached at all. A prompt edit that pushes it over the floor would change that.</p>
+    </section>
+
+    <section>
+      <h2 id="providers">Providers</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Provider</th>
+              <th scope="col">Caching</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Anthropic</td>
+              <td>On.</td>
+            </tr>
+            <tr>
+              <td>AWS Bedrock (Claude)</td>
+              <td>On.</td>
+            </tr>
+            <tr>
+              <td>OpenAI</td>
+              <td>Provider-managed. Spec4 sends no markers.</td>
+            </tr>
+            <tr>
+              <td>Google Gemini</td>
+              <td>Off, deliberately: a message-level marker makes LiteLLM switch to Vertex explicit context caching, which adds live HTTP calls per request. Gemini's own implicit caching still applies.</td>
+            </tr>
+            <tr>
+              <td>Mistral</td>
+              <td>Off. Markers are stripped.</td>
+            </tr>
+            <tr>
+              <td>Nebius Token Factory</td>
+              <td>Off, deliberately: a strict OpenAI-compatible endpoint may reject the markers.</td>
+            </tr>
+            <tr>
+              <td>OpenRouter</td>
+              <td>Off. Spec4 routes no Claude traffic through it.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The provider is resolved from the configured model string, so a model picked from any provider's list gets the right behaviour without configuration. <a href="/docs/settings/">Settings</a></p>
+    </section>
+
+    <section>
+      <h2 id="minimum-cacheable-prefix">Minimum cacheable prefix</h2>
+
+      <p>Anthropic will not create a cache entry below a per-model floor. The floor is not monotonic across a model line, so it is a table and not a sentence. This is Anthropic's published table as of September 2026; check theirs if this one looks stale.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Floor</th>
+              <th scope="col">Models</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>512</td>
+              <td>Fable 5.1, Mythos 5.1, Opus 5, Fable 5, Mythos 5</td>
+            </tr>
+            <tr>
+              <td>1,024</td>
+              <td>Sonnet 5, Sonnet 4.6, Sonnet 4.5, Sonnet 4, Opus 4.8, Opus 4.1, Opus 4</td>
+            </tr>
+            <tr>
+              <td>2,048</td>
+              <td>Opus 4.7, Mythos Preview, Haiku 3.5</td>
+            </tr>
+            <tr>
+              <td>4,096</td>
+              <td>Haiku 4.5, Opus 4.6, Opus 4.5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>A request below the floor is processed normally, at full price: no write, no penalty.</p>
+
+      <p>Spec4's agent system prompts run from about 150 tokens (Composer) to about 10,500 (StackAdvisor). On a 1,024-floor model the system prompt caches from the first call for every agent except the smallest one-shots, and a conversation caches turn over turn from call 2. On a 4,096-floor model, Brainstormer and Agentifier show no cache activity until the conversation itself passes 4,096 tokens — 7&ndash;8 turns for Brainstormer and 2&ndash;3 for Agentifier in measured runs — while the larger agents' system prompts clear the floor on their own and the small one-shot sub-agents never cache at all.</p>
+    </section>
+
+    <section>
+      <h2 id="what-it-saves">What it saves</h2>
+
+      <p>Measured on one vision, Brainstormer and Agentifier only, against the same run with caching off:</p>
+
+      <ul>
+        <li><strong>Sonnet 4.5.</strong> 16% of run cost with the system-prompt breakpoint alone, 35% with both. Brainstormer read 91% of its input tokens from cache and saved 61% of its cost.</li>
+        <li><strong>Haiku 4.5.</strong> About 0% with the system prompt alone, 14% with both.</li>
+      </ul>
+
+      <p>Those two agents are the front of the pipeline, not a whole <a href="/docs/rounds/">round</a>. StackAdvisor, Phaser, and Deployer have the largest system prompts, so their savings should land at the upper end of that range; they were not in the measured slice. Designer saves nothing, for the reason above.</p>
+    </section>
+
+    <section>
+      <h2 id="cache-lifetime">Cache lifetime</h2>
+
+      <p>An entry lives five minutes from its last use. Pause a Brainstormer conversation for longer than that and the next turn misses and rewrites the whole prefix — about a cent on Sonnet at current prompt sizes — with reads resuming on the turn after. In a measured run, two pauses of 400&ndash;518 seconds produced exactly one miss.</p>
+
+      <p>Two other things reset a conversation's cache: changing the web-search key mid-run, and a validation retry that drops the tools array.</p>
+    </section>
+
+    <section>
+      <h2 id="turning-it-off">Turning it off</h2>
+
+      <p><code>SPEC4_PROMPT_CACHING=0</code> in the environment — or <code>false</code>, or <code>off</code>. It is read on every call, so it takes effect without a restart.</p>
+
+      <p>It exists for A/B measurement. There is no reason to use it in normal operation.</p>
+    </section>
+
+    <section>
+      <h2 id="reading-the-numbers">Reading the numbers</h2>
+
+      <p>The usage report, <code>spec4-usage</code>, carries three cache columns per agent: <code>cached</code> is tokens read from cache, <code>cache_write</code> is tokens written, and <code>hit%</code> is <code>cached</code> over <code>input</code>.</p>
+
+      <p>Both cache figures are already inside <code>input</code>. Do not add them to it.</p>
+
+      <p>A blank means no call reported the field — a round planned before caching, or a provider that does not report writes. The healthy shape is a write on the first call and reads on every call after it. In the app, the cost card shows <code>(N cached)</code> beside the token counts.</p>
+
+      <p>In <a href="/docs/artifacts/"><code>usage.json</code></a>, every call record carries <code>cache_read_input_tokens</code> and <code>cache_creation_input_tokens</code>, and the per-agent rollups carry <code>cached_input_tokens</code> and <code>cache_creation_input_tokens</code>. <a href="/docs/artifacts/">Artifacts</a></p>
+    </section>
+  </main>
+</body>
+</html>

@@ -6,13 +6,13 @@
   <title>StackAdvisor — Spec4 docs</title>
   <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
   <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.0</span>
+    <span class="nav-version">1.5.1</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -46,6 +46,7 @@
         <li><a href="/docs/artifacts/">Artifacts</a></li>
         <li><a href="/docs/rounds/">Rounds</a></li>
         <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
       </ul>
       <p class="group">Examples</p>
       <ul>
@@ -98,7 +99,7 @@
         <li><strong>Revision.</strong> A previous round is implemented. The established stack is the baseline; languages and deployment are not re-asked. StackAdvisor recommends only the additions or swaps the new or changed features require, warns about conflicts with what's there, and on confirmation writes the full updated stack, never a diff.</li>
       </ul>
 
-      <p>Every recommendation comes as options with tradeoffs. You decide; StackAdvisor writes the decision.</p>
+      <p>Every recommendation comes as options with tradeoffs. You decide; StackAdvisor writes the decision. An option you bring counts the same as one it offered: name a fifth language against the four it proposed and it researches the fifth, comes back with its analysis of it, and on your choice writes that into <code>stack.json</code> — which is what Phaser and Deployer plan from, so the rest of the round is built on it.</p>
     </section>
 
     <section>
