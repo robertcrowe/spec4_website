@@ -236,7 +236,7 @@ em {
 
      <nav class="site-nav" aria-label="Site">
        <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-       <span class="nav-version">1.5.1</span>
+       <span class="nav-version">1.5.2</span>
        <a href="/docs/">Docs</a>
        <a href="/bws4/">Examples</a>
        <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -255,7 +255,7 @@ em {
 
    Targets, from register section 19: the wordmark goes to /, Examples goes to
    /bws4/, GitHub goes to the project repository, and the version string is
-   1.5.1 in monospace. */
+   1.5.2 in monospace. */
 
 .site-nav {
   /* The nav's text edges match main's: the reading measure less the two

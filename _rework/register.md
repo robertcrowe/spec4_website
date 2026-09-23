@@ -38,7 +38,7 @@ The site is consistent with the Spec4 app in its brand elements and is a reading
 
 ## Nav (every page)
 
-19. Text links: `Docs · Examples · GitHub`, current section marked. `Examples` → `/bws4/`; `GitHub` → `https://github.com/robertcrowe/spec4`. The `Spec4` wordmark links to `/`. Version `1.5.1` in monospace. How it is laid out is the look pass's decision; the markup is one `<nav>` with those links.
+19. Text links: `Docs · Examples · GitHub`, current section marked. `Examples` → `/bws4/`; `GitHub` → `https://github.com/robertcrowe/spec4`. The `Spec4` wordmark links to `/`. Version `1.5.2` in monospace. How it is laid out is the look pass's decision; the markup is one `<nav>` with those links.
 
 ## Site map (every page)
 
