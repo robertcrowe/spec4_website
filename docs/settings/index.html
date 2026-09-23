@@ -52,6 +52,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -208,7 +209,14 @@
         <li>Every other agent that ran — <a href="/docs/codescanner/">CodeScanner</a>, Brainstormer, <a href="/docs/stackadvisor/">StackAdvisor</a> — on the default.</li>
       </ul>
 
-      <p>That is practice, not a recommendation. Phaser got the stronger model because it holds every upstream artifact in context while it drafts and was the first or second largest line in every round; Designer got one because its single call is the whole mock. The three rounds predate per-agent effort, so every call ran at the provider's default. Per-agent figures are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+      <p>SnarkCheck's one round, from its <code>usage.json</code>:</p>
+
+      <ul>
+        <li>Brainstormer and <a href="/docs/agentifier/">Agentifier</a>: <code>claude-opus-5</code> at <code>default</code> effort.</li>
+        <li>Designer, StackAdvisor, Phaser, and <a href="/docs/deployer/">Deployer</a>: <code>claude-sonnet-5</code> at <code>medium</code>.</li>
+      </ul>
+
+      <p>That is practice, not a recommendation. Phaser got the stronger model because it holds every upstream artifact in context while it drafts and was the first or second largest line in every round; Designer got one because its single call is the whole mock. Spec4's three rounds predate per-agent effort, so every call ran at the provider's default; SnarkCheck's records it on every call. SnarkCheck's allocation is the reverse of Spec4's — the stronger model at the front, where the product decisions are made, and the default at <code>medium</code> on everything after, Phaser included, for $0.43. Neither is a recommendation. Per-agent figures are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
     </section>
   </main>
 </body>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SnarkCheck — Spec4</title>
+  <meta name="description" content="SnarkCheck is a browser checkers game with an AI opponent that heckles you. It exists as an example of a production-deployable app planned in one Spec4 round and built by a coding agent from the phase files — plan, code, tests, CI, and every planning call's cost in one repository.">
+  <link rel="canonical" href="https://spec4.ai/snarkcheck/">
+  <meta property="og:image" content="https://spec4.ai/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.2</span>
+    <a href="/docs/">Docs</a>
+    <a href="/bws4/" aria-current="page">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <details class="sitemap">
+    <summary>Contents</summary>
+    <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
+      <p class="group">Docs</p>
+      <ul>
+        <li><a href="/docs/">Install and first run</a></li>
+        <li><a href="/docs/codescanner/">CodeScanner</a></li>
+        <li><a href="/docs/brainstormer/">Brainstormer</a></li>
+        <li><a href="/docs/agentifier/">Agentifier</a></li>
+        <li><a href="/docs/designer/">Designer</a></li>
+        <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
+        <li><a href="/docs/phaser/">Phaser</a></li>
+        <li><a href="/docs/deployer/">Deployer</a></li>
+        <li><a href="/docs/artifacts/">Artifacts</a></li>
+        <li><a href="/docs/rounds/">Rounds</a></li>
+        <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
+        <li><a href="/docs/sdd/">Spec-driven development</a></li>
+      </ul>
+      <p class="group">Examples</p>
+      <ul>
+        <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><span aria-current="page">SnarkCheck</span>
+          <ul>
+            <li><a href="#what-was-built">What was built</a></li>
+            <li><a href="#the-round">The round</a></li>
+            <li><a href="#what-it-cost">What it cost</a></li>
+            <li><a href="#from-the-plan-to-the-code">From the plan to the code</a></li>
+            <li><a href="#where-the-plan-and-the-code-differ">Where the plan and the code differ</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p class="group">Source</p>
+      <ul>
+        <li><a href="https://github.com/robertcrowe/spec4">GitHub</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <main>
+    <h1>SnarkCheck</h1>
+
+    <p><a href="https://github.com/robertcrowe/snarkcheck">SnarkCheck</a> is a browser checkers game with an AI opponent that heckles you. Every move — yours and its own — gets a remark from a smug-grandmaster persona, and the game closes with a monologue recapping your turning points. It's a small, deliberately silly app.</p>
+
+    <p>It exists for a serious reason. A vibe-coded demo is a single prompt, a single file, and a happy path that works on the author's laptop. SnarkCheck was built the other way round: planned first, in one Spec4 <a href="/docs/rounds/">round</a>, then handed to a coding agent as seven phase files with the failure modes, the non-functional goals, the approved dependency list, and the deployment already decided. It is an example of what a production-deployable application looks like when the planning is done up front and the coding agent is handed real specs rather than a wish.</p>
+
+    <p>The round ran on Spec4 <code>1.5.1</code> in September 2026, greenfield, with all six planning agents. The plan, the code, its tests, its CI pipeline, its Render blueprint, and every planning call's tokens and cost are committed together in <a href="https://github.com/robertcrowe/snarkcheck">its repository</a>. Three things to know before reading on. The app is deployable, not hosted: the repository carries the Render blueprint and the deploy pipeline, and nothing is running at a public address. The cost figures cover the planning round; the coding agent that built the seven phases ran outside Spec4, and its tokens are not recorded. And the plan and the code do not agree everywhere; the last section says where.</p>
+
+    <section>
+      <h2 id="what-was-built">What was built</h2>
+
+      <p>Three surfaces, from <a href="/docs/artifacts/"><code>stack.json</code></a> and <code>deployment-plan.md</code>:</p>
+
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">Surface</th>
+              <th scope="col">What it is</th>
+              <th scope="col">Where it runs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>web_client</code></td>
+              <td>React and TypeScript, built with Vite; the rules engine, board, and settings run in the browser</td>
+              <td>Render static site</td>
+            </tr>
+            <tr>
+              <td><code>commentary_api</code></td>
+              <td>Node and TypeScript; three routes, each a single model call with a deterministic fallback</td>
+              <td>Render web service</td>
+            </tr>
+            <tr>
+              <td><code>litellm_proxy</code></td>
+              <td>Self-hosted LiteLLM, Anthropic primary with OpenRouter fallback; holds the provider keys</td>
+              <td>Render private service, unreachable from the browser</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>130 tests pass — 64 in the client, 66 in the server. ESLint, Prettier, and <code>tsc --strict</code> run clean. GitHub Actions runs lint, typecheck, tests, and build on every push and triggers each service's Render deploy hook only when all four pass on <code>main</code>; Render's own auto-deploy is off. Every model-backed route falls back to deterministic or curated output on timeout, provider error, schema violation, an illegal move, or a repeated line, and logs why. The repository's <code>README.md</code> carries the full account.</p>
+    </section>
+
+    <section>
+      <h2 id="the-round">The round</h2>
+
+      <p>Fifteen agents and sub-agents ran, in this order. Sub-agents file their calls under the parent in <code>usage.json</code>.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Ran</th>
+              <th scope="col">Under</th>
+              <th scope="col">Wrote</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>brainstormer</code></td>
+              <td>—</td>
+              <td><code>vision.json</code></td>
+            </tr>
+            <tr>
+              <td><code>feature_speccer</code>, <code>scout</code>, <code>linker</code>, <code>composer</code></td>
+              <td>Brainstormer</td>
+              <td><code>feature_specs.json</code></td>
+            </tr>
+            <tr>
+              <td><code>tier_analyst</code></td>
+              <td>Agentifier</td>
+              <td><code>ai_catalog.json</code></td>
+            </tr>
+            <tr>
+              <td><code>agentifier</code>, <code>spec_drafter</code>, <code>cross_cutting_analyst</code>, <code>prioritizer</code></td>
+              <td>Agentifier</td>
+              <td><code>ai_features.json</code></td>
+            </tr>
+            <tr>
+              <td><code>designer</code></td>
+              <td>—</td>
+              <td><code>design/mock.html</code>, <code>design/manifest.json</code></td>
+            </tr>
+            <tr>
+              <td><code>stack_advisor</code></td>
+              <td>—</td>
+              <td><code>stack.json</code></td>
+            </tr>
+            <tr>
+              <td><code>phaser</code>, <code>phaser_seam</code></td>
+              <td>Phaser</td>
+              <td><code>phases/phase1.md</code> – <code>phase7.md</code></td>
+            </tr>
+            <tr>
+              <td><code>deployer</code></td>
+              <td>—</td>
+              <td><code>deployment-plan.md</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><a href="/docs/agentifier/">Agentifier</a>'s four entries in <code>ai_catalog.json</code> — <code>snark_engine</code> and its three members — all recommend <code>single_call</code>, and the decision agreed in each case. No <code>tier_decision_rationale</code> was recorded. A checkers commentator is a single-call problem; the interesting decision record on this site is the one on <a href="/bws4/">Built With Spec4</a>.</p>
+
+      <p>The round ran in two sittings a day apart: 17 minutes for <a href="/docs/brainstormer/">Brainstormer</a> and Agentifier, 34 the next evening for <a href="/docs/designer/">Designer</a> through <a href="/docs/deployer/">Deployer</a>. <code>IMPLEMENTED</code> is present.</p>
+    </section>
+
+    <section>
+      <h2 id="what-it-cost">What it cost</h2>
+
+      <p>From <code>.spec4/v0/usage.json</code>, Spec4 <code>1.5.1</code>, LiteLLM <code>1.101.0</code>. Tokens are the provider's figures; cost is LiteLLM's estimate from its community cost map, and your provider's bill is authoritative. Brainstormer includes its sub-agents; Agentifier includes <code>tier_analyst</code>; <a href="/docs/phaser/">Phaser</a> includes the seam check.</p>
+
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col">Agent</th>
+              <th scope="col">Model · effort</th>
+              <th scope="col">Calls</th>
+              <th scope="col">Input</th>
+              <th scope="col">Output</th>
+              <th scope="col">From cache</th>
+              <th scope="col">Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Brainstormer</td>
+              <td><code>claude-opus-5</code> · <code>default</code></td>
+              <td>13</td>
+              <td>74k</td>
+              <td>11k</td>
+              <td>85%</td>
+              <td>$0.38</td>
+            </tr>
+            <tr>
+              <td>Agentifier</td>
+              <td><code>claude-opus-5</code> · <code>default</code></td>
+              <td>24</td>
+              <td>154k</td>
+              <td>37k</td>
+              <td>68%</td>
+              <td>$1.26</td>
+            </tr>
+            <tr>
+              <td>Designer</td>
+              <td><code>claude-sonnet-5</code> · <code>medium</code></td>
+              <td>1</td>
+              <td>8k</td>
+              <td>15k</td>
+              <td>0%</td>
+              <td>$0.17</td>
+            </tr>
+            <tr>
+              <td>StackAdvisor</td>
+              <td><code>claude-sonnet-5</code> · <code>medium</code></td>
+              <td>36</td>
+              <td>1.51M</td>
+              <td>31k</td>
+              <td>96%</td>
+              <td>$0.76</td>
+            </tr>
+            <tr>
+              <td>Phaser</td>
+              <td><code>claude-sonnet-5</code> · <code>medium</code></td>
+              <td>4</td>
+              <td>150k</td>
+              <td>27k</td>
+              <td>61%</td>
+              <td>$0.43</td>
+            </tr>
+            <tr>
+              <td>Deployer</td>
+              <td><code>claude-sonnet-5</code> · <code>medium</code></td>
+              <td>20</td>
+              <td>658k</td>
+              <td>19k</td>
+              <td>92%</td>
+              <td>$0.44</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td></td>
+              <td>98</td>
+              <td>2.55M</td>
+              <td>140k</td>
+              <td>90%</td>
+              <td>$3.44</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>"From cache" is <code>cached_input_tokens</code> over <code>input_tokens</code>, per agent. 2.31M of the 2.55M input tokens were read from cache and 212k were written to it. Every call has <code>error: null</code>; no call is missing usage or cost.</p>
+
+      <p>The largest line is Agentifier, a long dialogue on the stronger model. Phaser is fourth: four calls on <code>claude-sonnet-5</code> at <code>medium</code>, with caching, for $0.43. <a href="/docs/stackadvisor/">StackAdvisor</a> put 1.51M input tokens through 36 calls for $0.76, 96% of them cache reads. Designer's single call reads nothing from cache, as the <a href="/docs/caching/">Caching</a> page explains.</p>
+
+      <p>The model allocation is the reverse of Spec4's own rounds: the stronger model on the two agents at the front, where the product decisions are made, and the default model at <code>medium</code> on everything after. Neither allocation is a recommendation; both are recorded. <a href="/docs/settings/">Settings</a></p>
+    </section>
+
+    <section>
+      <h2 id="from-the-plan-to-the-code">From the plan to the code</h2>
+
+      <p>Three places where a line in <code>.spec4/v0/</code> can be checked against the file it produced.</p>
+
+      <p><strong>An escalation threshold became an alert rule.</strong> <code>phases/phase3.md</code>, in the AI opponent's escalation section:</p>
+
+<pre><code>Fallback rate above 5% over a rolling hour pages the on-call engineer;
+sustained fallback above 20% flips a feature flag to run the
+deterministic selector exclusively until resolved.</code></pre>
+
+      <p><code>server/src/services/opponent-move-service.ts</code> logs <code>opponent_move</code> on success and <code>opponent_move_fallback</code> with a <code>fallback_reason</code> on every fallback, and the repository's <code>MONITORING.md</code> carries the 5% and 20% thresholds as the alert rules to wire up, with the formula for computing the rate from those two events.</p>
+
+      <p><strong>A tier decision became a route.</strong> Each <code>single_call</code> entry in <code>ai_catalog.json</code> is one route in <code>server/src/routes/</code> — <code>/api/opponent-move</code>, <code>/api/commentary</code>, <code>/api/game-end-monologue</code> — each with the fallback the entry's escalation text asks for.</p>
+
+      <p><strong>The deployment plan became two files.</strong> <code>deployment-plan.md</code> names the three services, the shared secret between API and proxy, the CI stages, and the decision to turn off Render's auto-deploy so every deploy is gated. <code>render.yaml</code> and <code>.github/workflows/deploy.yml</code> are those decisions as configuration.</p>
+    </section>
+
+    <section>
+      <h2 id="where-the-plan-and-the-code-differ">Where the plan and the code differ</h2>
+
+      <p>The plan is advisory. Spec4 writes it; the coding agent builds; nothing enforces one against the other, as the <a href="/docs/sdd/">Spec-driven development</a> page says. In SnarkCheck's build the two came apart in three places, one in each direction and one neither.</p>
+
+      <p><strong>Omitted.</strong> <code>deployment-plan.md</code> calls for Sentry error tracking on <code>web_client</code> and <code>commentary_api</code>, performance spans around each LiteLLM call, and a <code>guardrail_violation</code> event tag. None of it is in the code. Fallbacks and content-filter trips are recorded as Pino log events with a <code>fallback_reason</code> field, and nothing computes a rate or pages anyone. <code>MONITORING.md</code> in the repository records the gap.</p>
+
+      <p><strong>Exceeded.</strong> <code>deployment-plan.md</code> specifies <code>litellm_proxy</code> as a Render web service with access "restricted to <code>commentary_api</code> via shared secret". The agent, in phase 7, made it a Render private service (<code>pserv</code>) instead: no public address at all, reachable only over Render's private network, with the shared secret as a second layer. The code is stricter than the plan.</p>
+
+      <p><strong>Stayed inside.</strong> <code>stack.json</code> is the approved dependency list, and Phaser cannot add to it without the developer's yes. The built <code>package.json</code> files declare 35 packages. Every library among them is in <code>stack.json</code>; the entries that are not named there are companions of ones that are — <code>react-dom</code>, <code>@vitejs/plugin-react</code>, <code>eslint-config-prettier</code>, <code>jsdom</code>, and type packages. The coding agent added no library of its own.</p>
+
+      <p><strong>What was verified.</strong> <code>phases/phase7.md</code> ends with a Verification section. <code>.spec4/v0/phase7-verification.md</code> records what was run against it: the full automated suite in both packages; a live smoke test of the API against the real proxy and provider, including CORS rejection of an unapproved origin; and a network-interruption test — the proxy container stopped mid-session, a fallback move returned in 9 ms with <code>source: "fallback"</code>, and the health check recovering when the container restarted. The full manual browser click-through the phase asks for was not run, because no browser tool was available in that session, and the note says so.</p>
+    </section>
+  </main>
+</body>
+</html>

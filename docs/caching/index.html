@@ -55,6 +55,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -196,6 +197,8 @@
       </ul>
 
       <p>Those two agents are the front of the pipeline, not a whole <a href="/docs/rounds/">round</a>. StackAdvisor, Phaser, and Deployer have the largest system prompts, so their savings should land at the upper end of that range; they were not in the measured slice. Designer saves nothing, for the reason above.</p>
+
+      <p><strong>A whole round, on <code>1.5.1</code>.</strong> SnarkCheck's round ran every agent with both breakpoints on Anthropic. There was no caching-off run to compare against, so there is no saved-percentage figure; the hit rates are measured. StackAdvisor read 96% of its input tokens from cache over 36 calls; Deployer 92% over 20; Brainstormer 85% over 13; Agentifier 68% over 24; Phaser 61% over 4; Designer 0%, as above. Across the round, 2.31M of 2.55M input tokens were cache reads and 212k were cache writes. StackAdvisor's 1.51M input tokens cost $0.76. Phaser's figure is close to its ceiling for four calls, since the first call of any agent is write-only. The per-agent table is on the <a href="/snarkcheck/">SnarkCheck</a> page.</p>
     </section>
 
     <section>

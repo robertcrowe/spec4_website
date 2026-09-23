@@ -53,6 +53,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -71,7 +72,7 @@
     <p><strong>The short version:</strong></p>
 
     <ul>
-      <li><strong>It's for production code, not vibe coding.</strong> Spec4 plans systems you intend to ship and maintain. That means failure modes, non-functional goals, dependencies, and deployment, not just the happy path.</li>
+      <li><strong>It's for production code, not vibe coding.</strong> Spec4 plans systems you intend to ship and maintain. That means failure modes, non-functional goals, dependencies, and deployment, not just the happy path. <a href="/snarkcheck/">SnarkCheck</a> is the worked example: one greenfield round, then a deployed app with tests, CI, and a fallback on every model call, and a record of where the built code departed from the plan.</li>
       <li><strong>You make every decision.</strong> Spec4's agents lay out options and tradeoffs, but nothing advances without your confirmation. The spec is a record of your decisions, not something the model wrote for you.</li>
       <li><strong>It's a spec-driven <em>planner</em>.</strong> It doesn't keep a spec true over time, and it doesn't generate code from specs. Every <a href="/docs/rounds/">round</a>, it re-derives the plan from the code as it actually is.</li>
       <li><strong>It doesn't enforce anything.</strong> It sits outside your coding agent. If you want the spec to be the permanent source of truth for your system, Spec4 is not that tool.</li>
@@ -219,7 +220,7 @@
         <li>a <a href="/docs/deployer/">deployment plan</a> written as complete files.</li>
       </ul>
 
-      <p>That is more ceremony, and Piskala names it as a pitfall: teams that drown in generated plans, task lists, and intermediate documents. I take the point. Spec4's answer is that the whole-system scope is for the first round of a system you intend to ship, and that half the pipeline is optional: Agentifier, <a href="/docs/designer/">Designer</a>, and <a href="/docs/deployer/">Deployer</a> can be skipped, and Spec4's own three rounds skipped two of them. If you run all seven agents on a small change, that is the sledgehammer problem below, and it is on you.</p>
+      <p>That is more ceremony, and Piskala names it as a pitfall: teams that drown in generated plans, task lists, and intermediate documents. I take the point. Spec4's answer is that the whole-system scope is for the first round of a system you intend to ship, and that half the pipeline is optional: Agentifier, <a href="/docs/designer/">Designer</a>, and <a href="/docs/deployer/">Deployer</a> can be skipped, and Spec4's own three rounds skipped two of them. SnarkCheck ran all six, because it was a new system with model calls in it and a deployment to plan — the case the full pipeline is for. If you run all seven agents on a small change, that is the sledgehammer problem below, and it is on you.</p>
 
       <p>Being <em>outside</em> the agent has a real cost too. Spec Kit and Kiro keep planning and implementation in the same loop. With Spec4 you hand the phase files over yourself, and there are no commands inside your coding agent. I chose this for agent-agnosticism, and it is a trade, not a free win.</p>
     </section>
@@ -232,6 +233,8 @@
       <p>This is the most common critique. François Zaninotto put it well in <a href="https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html"><em>Spec-Driven Development: The Waterfall Strikes Back</em></a> (<a href="https://news.ycombinator.com/item?id=45935763">HN discussion</a>). The worry is that a big spec gets written up front, the code drifts from it, and a month later the plan describes a program that doesn't exist.</p>
 
       <p>Spec4's unit of work is the round, not the spec. A round covers one feature or one rework. Each round is planned against the current code, and a revision round plans only the delta, not the whole application. <a href="/bws4/">Built With Spec4</a> took nine rounds, with hand edits in between. Spec4 has been used on itself for three rounds; that history is committed under <code>.spec4/</code> in <a href="https://github.com/robertcrowe/spec4">the repo</a>.</p>
+
+      <p>The up-front work has a size. SnarkCheck's whole plan — vision, feature specs, AI tiers, mock, stack, seven phases, deployment — took 51 minutes of dialogue and $3.44 in model calls, and the coding agent built from it.</p>
 
       <p>That said, <em>within</em> a round, Spec4 does plan everything before the agent writes any code, and a round is a meaningful amount of up-front work. If you want to discover the design by writing code, Spec4 will get in your way.</p>
 
@@ -248,7 +251,7 @@
       <ul>
         <li>a risk assessment naming where the agent is likely to hallucinate;</li>
         <li>a pinned stack, so the agent doesn't choose its own dependencies;</li>
-        <li>a Verification section containing the exact command that proves the phase is done.</li>
+        <li>a Verification section containing the exact command that proves the phase is done. SnarkCheck's <code>phase7-verification.md</code> records that section being run, and what was not run.</li>
       </ul>
 
       <h3>"Specs aren't enforced, so what's the point?"</h3>
@@ -256,6 +259,8 @@
       <p>This is the strongest objection to Spec4 specifically. Piskala's central distinction between SDD and old-fashioned design documents is that SDD specs are enforced: tests fail and builds break when code diverges.</p>
 
       <p><strong>Spec4 does not enforce anything.</strong> It stops at the spec. Building and verifying the code is your coding agent's job and yours. No spec can force an agent to comply. Every phase ends with a Verification section that is a command you can run, not a description of what "done" looks like. But Spec4 doesn't run it, doesn't gate on it, and doesn't wire it into your CI. The dependency list is the same story: Phaser can't add a library without your visible yes, but nothing stops your coding agent adding one at build time. By Piskala's definition, Spec4 produces very well-structured <em>advisory</em> specs with executable acceptance checks attached.</p>
+
+      <p>SnarkCheck shows how that plays out. Its coding agent added no library beyond <code>stack.json</code>. It also left out the Sentry integration the deployment plan called for, and it made the LLM proxy a private service where the plan had said web service with a shared secret — stricter than asked. Omission, improvement, and compliance, none of them enforced, all of them visible because the plan is in the repository next to the code. <a href="/snarkcheck/">SnarkCheck</a></p>
 
       <p>I think that's the right boundary for a tool that doesn't know or control which coding agent you use. But if enforcement is what you mean by SDD, Spec4 only gets you partway there.</p>
 
@@ -284,7 +289,7 @@
         <li>You work in a brownfield repository that other people, other tools, and you by hand all edit.</li>
         <li>You want the plan to cover production concerns — failure modes, non-functional goals, deployment, where AI belongs and how much — not just the happy path.</li>
         <li>You switch coding agents, or use more than one.</li>
-        <li>You want every artifact as a plain file in your repo, generated on your machine with your own model provider, and a record of what each step cost.</li>
+        <li>You want every artifact as a plain file in your repo, generated on your machine with your own model provider, and a record of what each step cost. SnarkCheck's <code>usage.json</code> is one such record.</li>
       </ul>
     </section>
 

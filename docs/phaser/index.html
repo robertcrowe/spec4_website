@@ -52,6 +52,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -164,7 +165,7 @@
     <section>
       <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
-      <p>6 calls, about 231k tokens, and $1.72 in <code>v0</code>; 4 calls, 189k, and $1.70 in <code>v1</code>; 4 calls, 242k, and $2.09 in <code>v2</code> — seam checks included — all on <code>claude-opus-5</code>, the one agent Spec4's rounds always ran on a stronger model than the default. Phaser was the first or second largest line in every round because it holds every upstream artifact in context while it drafts. Its single largest call, the <code>v2</code> draft, was 73k tokens over 4 minutes 18 seconds.</p>
+      <p>6 calls, about 231k tokens, and $1.72 in <code>v0</code>; 4 calls, 189k, and $1.70 in <code>v1</code>; 4 calls, 242k, and $2.09 in <code>v2</code> — seam checks included — all on <code>claude-opus-5</code>, the one agent Spec4's rounds always ran on a stronger model than the default. Phaser was the first or second largest line in every one of Spec4's rounds because it holds every upstream artifact in context while it drafts. In <a href="/snarkcheck/">SnarkCheck</a>'s round it was fourth: 4 calls, about 177k tokens, and $0.43 on <code>claude-sonnet-5</code> at <code>medium</code>, 61% of input from cache. Its single largest call, the <code>v2</code> draft, was 73k tokens over 4 minutes 18 seconds.</p>
     </section>
   </main>
 </body>

@@ -58,6 +58,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -389,11 +390,44 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
   "computed_cost_usd": 5.880532
 }</code></pre>
 
-      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; the three published rounds predate that field. Every record also carries <code>cache_read_input_tokens</code> and <code>cache_creation_input_tokens</code>, and the per-agent rollups carry <code>cached_input_tokens</code> and <code>cache_creation_input_tokens</code>; both cache figures are inside the input count rather than additions to it. The two capability probes the <a href="/docs/settings/">setup wizard</a> runs are not recorded. <a href="/docs/caching/">Caching</a></p>
+      <p>A call with cache activity and an <code>effort</code> field, from SnarkCheck's <code>.spec4/v0/usage.json</code>:</p>
 
-      <h3>Per agent, Spec4's three rounds</h3>
+<pre><code>{
+  "timestamp": "2026-09-21T03:00:41.936036+00:00",
+  "agent": "stack_advisor",
+  "model": "claude-sonnet-5",
+  "provider": "anthropic",
+  "effort": "medium",
+  "streamed": true,
+  "duration_s": 6.362,
+  "prompt_tokens": 24182,
+  "completion_tokens": 445,
+  "total_tokens": 24627,
+  "cached_tokens": 23107,
+  "cache_creation_input_tokens": 1073,
+  "cache_read_input_tokens": 23107,
+  "computed_cost_usd": 0.011757899999999998,
+  "usage_missing": false,
+  "error": null
+}</code></pre>
 
-      <p>Calls · tokens · cost · model, from each round's <code>usage.json</code>. Brainstormer includes its feature-speccing calls; Phaser includes the seam check.</p>
+<pre><code>"totals": {
+  "calls": 98,
+  "calls_missing_usage": 0,
+  "calls_missing_cost": 0,
+  "input_tokens": 2552075,
+  "output_tokens": 140219,
+  "total_tokens": 2692294,
+  "cached_input_tokens": 2309217,
+  "cache_creation_input_tokens": 212387,
+  "computed_cost_usd": 3.44075125
+}</code></pre>
+
+      <p>Tokens are the provider's figures. <code>computed_cost_usd</code> is LiteLLM's estimate from its community cost map, which may lag provider price sheets; a call it can't price is counted in <code>calls_missing_cost</code> and excluded from the total, never folded in as zero. Since 1.5.0 each record also carries <code>effort</code>; Spec4's three rounds predate that field; SnarkCheck's round carries it on every call. Every record also carries <code>cache_read_input_tokens</code> and <code>cache_creation_input_tokens</code>, and the per-agent rollups carry <code>cached_input_tokens</code> and <code>cache_creation_input_tokens</code>; both cache figures are inside the input count rather than additions to it. The two capability probes the <a href="/docs/settings/">setup wizard</a> runs are not recorded. <a href="/docs/caching/">Caching</a></p>
+
+      <h3>Per agent, the published rounds</h3>
+
+      <p>Calls · tokens · cost · model, from each round's <code>usage.json</code>. Brainstormer includes its feature-speccing calls; Agentifier includes the tier analyst; Phaser includes the seam check.</p>
 
       <div class="table-wrap">
         <table class="wide">
@@ -403,6 +437,7 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
               <th scope="col"><code>v0</code></th>
               <th scope="col"><code>v1</code></th>
               <th scope="col"><code>v2</code></th>
+              <th scope="col">SnarkCheck <code>v0</code></th>
             </tr>
           </thead>
           <tbody>
@@ -411,54 +446,62 @@ Gives the user an at-a-glance, ordered view of every artifact in the current rou
               <td>— (ran before usage was recorded)</td>
               <td>3 · 118k · $0.53 · <code>claude-sonnet-5</code></td>
               <td>3 · 116k · $0.46 · <code>claude-sonnet-5</code></td>
+              <td>— (greenfield)</td>
             </tr>
             <tr>
               <td>Brainstormer</td>
               <td>16 · 253k · $0.67 · <code>claude-sonnet-5</code></td>
               <td>4 · 66k · $0.32 · <code>claude-sonnet-5</code></td>
               <td>27 · 485k · $1.60 · <code>claude-sonnet-5</code></td>
+              <td>13 · 86k · $0.38 · <code>claude-opus-5</code></td>
             </tr>
             <tr>
               <td>Agentifier</td>
               <td>—</td>
               <td>—</td>
               <td>—</td>
+              <td>24 · 190k · $1.26 · <code>claude-opus-5</code></td>
             </tr>
             <tr>
               <td>Designer</td>
               <td>2 · 56k · $1.64 · <code>claude-fable-5-1</code></td>
               <td>1 · 55k · $1.97 · <code>claude-fable-5-1</code></td>
               <td>1 · 63k · $0.93 · <code>claude-opus-5</code></td>
+              <td>1 · 23k · $0.17 · <code>claude-sonnet-5</code></td>
             </tr>
             <tr>
               <td>StackAdvisor</td>
               <td>35 · 1.15M · $3.02 · <code>claude-sonnet-5</code></td>
               <td>4 · 193k · $0.56 · <code>claude-sonnet-5</code></td>
               <td>5 · 282k · $0.80 · <code>claude-sonnet-5</code></td>
+              <td>36 · 1.54M · $0.76 · <code>claude-sonnet-5</code></td>
             </tr>
             <tr>
               <td>Phaser</td>
               <td>6 · 231k · $1.72 · <code>claude-opus-5</code></td>
               <td>4 · 189k · $1.70 · <code>claude-opus-5</code></td>
               <td>4 · 242k · $2.09 · <code>claude-opus-5</code></td>
+              <td>4 · 177k · $0.43 · <code>claude-sonnet-5</code></td>
             </tr>
             <tr>
               <td>Deployer</td>
               <td>—</td>
               <td>—</td>
               <td>—</td>
+              <td>20 · 676k · $0.44 · <code>claude-sonnet-5</code></td>
             </tr>
             <tr>
               <td><strong>Total</strong></td>
               <td><strong>59 · 1.69M · $7.04</strong></td>
               <td><strong>16 · 0.62M · $5.09</strong></td>
               <td><strong>40 · 1.19M · $5.88</strong></td>
+              <td><strong>98 · 2.69M · $3.44</strong></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <p>No Agentifier or Deployer calls in any round: none of the three rounds added an AI feature, and the deployment didn't change. No retries — every call has <code>error: null</code> — and no cached input. The largest line is a different agent each round: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>. Phaser is first or second every time because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model. All three rounds ran before prompt caching. <a href="/docs/caching/">Caching</a></p>
+      <p>No Agentifier or Deployer calls in Spec4's own rounds: none of the three added an AI feature, and the deployment didn't change. SnarkCheck's round ran both. No retries in any of the four — every call has <code>error: null</code>. In Spec4's rounds the largest line is a different agent each time: StackAdvisor in <code>v0</code>, Designer in <code>v1</code>, Phaser in <code>v2</code>; Phaser is first or second every time because it holds every upstream artifact in context while it drafts. In SnarkCheck's round the largest line is Agentifier and Phaser is fourth. Spec4's three rounds ran before prompt caching and carry no cached input; SnarkCheck's read 90% of its input from cache. <a href="/docs/caching/">Caching</a></p>
     </section>
 
     <section>

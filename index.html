@@ -62,6 +62,7 @@
       <p class="group">Examples</p>
       <ul>
         <li><a href="/bws4/">Built With Spec4</a></li>
+        <li><a href="/snarkcheck/">SnarkCheck</a></li>
       </ul>
       <p class="group">Source</p>
       <ul>
@@ -307,12 +308,14 @@ serves HTTP on localhost:8050 only.
       <p><strong>What the coding agent is handed.</strong> One phase at a time, as a file. Each phase says what it does and what it does not do yet; carries the stack, the mock, the feature spec, and the non-functional goals it depends on, so those are not the agent's to choose; and ends with a Verification section that is the command you run, not a description of done. The first phase of Spec4's own UI rework is at <code>.spec4/v0/phases/phase1.md</code>.</p>
 
       <p>No spec can force an agent to comply. A phase file leaves it less to decide, and the Verification section is what you run to see what it did.</p>
+
+      <p><a href="/snarkcheck/">SnarkCheck</a> is what the handed-over files became: three deployed surfaces, 130 tests, a CI pipeline that gates every deploy on them, and a fallback on every model call, built from one round's seven phase files, with the plan committed beside the code and the places where the two differ written down.</p>
     </section>
 
     <section>
       <h2 id="what-it-costs">What it costs</h2>
 
-      <p>The three rounds Spec4 has run against itself, planning changes to its own code, with every call recorded. <code>claude-sonnet-5</code> was the default; Phaser ran on <code>claude-opus-5</code> in all three; Designer ran on <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code> and <code>claude-opus-5</code> in <code>v2</code>.</p>
+      <p>Spec4's three rounds on itself, planning changes to its own code, and one greenfield round on SnarkCheck, with every call recorded. <code>claude-sonnet-5</code> was the default; Phaser ran on <code>claude-opus-5</code> in all three; Designer ran on <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code> and <code>claude-opus-5</code> in <code>v2</code>. SnarkCheck ran Brainstormer and Agentifier on <code>claude-opus-5</code> and the rest on <code>claude-sonnet-5</code> at <code>medium</code>.</p>
 
       <div class="table-wrap">
         <table class="wide">
@@ -351,15 +354,23 @@ serves HTTP on localhost:8050 only.
               <td>$5.88</td>
               <td>4 h 17 m</td>
             </tr>
+            <tr>
+              <td>SnarkCheck <code>v0</code></td>
+              <td>a checkers game with a commenting AI opponent, greenfield — 7 phases, all six agents</td>
+              <td>98</td>
+              <td>2.69M</td>
+              <td>$3.44</td>
+              <td>51 m, two sittings</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <p>Elapsed is the first call's start to the last call's end, including the developer's time in the dialogue. Cost is LiteLLM's estimate from its community cost map; your provider's bill is authoritative.</p>
+      <p>Elapsed is the first call's start to the last call's end, including the developer's time in the dialogue. Cost is LiteLLM's estimate from its community cost map; your provider's bill is authoritative. SnarkCheck's round ran in two sittings a day apart, and its elapsed is the two summed.</p>
 
-      <p>All three rounds ran before prompt caching, so their figures carry no cache reads; Spec4 now caches the repeated part of each prompt automatically on Anthropic and AWS Bedrock. <a href="/docs/caching/">Caching</a></p>
+      <p>Spec4's three rounds ran before prompt caching, so their figures carry no cache reads. SnarkCheck's ran with it, on <code>1.5.1</code>, and read 90% of its 2.55M input tokens from cache — StackAdvisor 96%, Deployer 92%. Spec4 caches the repeated part of each prompt automatically on Anthropic and AWS Bedrock. <a href="/docs/caching/">Caching</a></p>
 
-      <p>Phaser is the first or second largest line in every round, because it holds every upstream artifact in context while it drafts; the other large lines are long dialogues on the default model. <code>usage.json</code> records every call per agent, per round, and the project page shows the totals. Each agent can override the project's default model and effort from its own gate, so you can put a stronger model on Phaser without changing anything else. <a href="/docs/settings/">Settings</a></p>
+      <p>In Spec4's own rounds Phaser was the first or second largest line, because it holds every upstream artifact in context while it drafts; the other large lines were long dialogues on the default model. In SnarkCheck's round Phaser was fourth, at $0.43 on <code>claude-sonnet-5</code> with caching, and the largest lines were Agentifier and StackAdvisor, the long dialogues. <code>usage.json</code> records every call per agent, per round, and the project page shows the totals. Each agent can override the project's default model and effort from its own gate, so you can put a stronger model on Phaser without changing anything else. <a href="/docs/settings/">Settings</a></p>
     </section>
 
     <section>
@@ -413,6 +424,8 @@ spec4
       <p>The project page opens on the latest round with its artifacts and costs. Choose "existing project" and run CodeScanner to start a fourth.</p>
 
       <p>Built With Spec4, a gallery of small apps at <a href="https://bw.spec4.ai">bw.spec4.ai</a>, was planned in nine rounds, hand edits in between; the history is in its repo.</p>
+
+      <p><a href="/snarkcheck/">SnarkCheck</a>, a checkers game with a commenting AI opponent, was planned in one round on <code>1.5.1</code> and built from the phase files; the plan, the code, the tests, and every planning call's cost are in <a href="https://github.com/robertcrowe/snarkcheck">its repository</a>.</p>
     </section>
   </main>
 </body>
