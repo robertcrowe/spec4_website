@@ -1,5 +1,5 @@
 /* spec4.ai — styles.css
-   One stylesheet for all fourteen pages. The specification's list of excluded
+   One stylesheet for all fifteen pages. The specification's list of excluded
    decorative devices is a standing constraint on every edit to this file; it is
    recorded in .spec4/v1/phases/phase2.md and is deliberately not restated here,
    so that a plain search of this file for any excluded device returns nothing.
@@ -230,7 +230,7 @@ em {
 /* ===== nav ===== */
 
 /* CANONICAL NAV MARKUP CONTRACT
-   Phase 6 copies this structure onto all thirteen pages verbatim, changing
+   Phase 6 copies this structure onto all fourteen pages verbatim, changing
    only which link carries aria-current. It is recorded here, in the
    stylesheet, so the constraints travel with the code.
 
@@ -247,7 +247,7 @@ em {
    the front page. The wordmark link does not count toward the three.
 
    CURRENT SECTION. aria-current="page" is placed on:
-     - the Docs link, on /docs/ and on all eleven pages beneath it;
+     - the Docs link, on /docs/ and on all twelve pages beneath it;
      - the Examples link, on /bws4/.
    The front page at / carries NO current mark at all. None of the three links
    points to /, so on index.html no link receives aria-current. The GitHub
@@ -332,7 +332,7 @@ em {
 }
 
 /* CANONICAL SITE-MAP MARKUP CONTRACT
-   The whole site map -- fourteen pages, three groups -- sits on every styled
+   The whole site map -- fifteen pages, three groups -- sits on every styled
    page directly below the one-line nav, in one native <details>. It is the
    same markup at every width; the two presentations below are the
    stylesheet's doing and nothing else's.

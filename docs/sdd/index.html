@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spec-driven development — Spec4 docs</title>
+  <meta name="description" content="Which claim Spec4 makes under the spec-driven development label and which it doesn't: it re-derives the plan from the code each round rather than keeping a spec true over time, and it doesn't enforce anything.">
+  <link rel="canonical" href="https://spec4.ai/docs/sdd/">
+  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site">
+    <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
+    <span class="nav-version">1.5.2</span>
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/bws4/">Examples</a>
+    <a href="https://github.com/robertcrowe/spec4">GitHub</a>
+  </nav>
+
+  <details class="sitemap">
+    <summary>Contents</summary>
+    <nav aria-label="Site map">
+      <ul>
+        <li><a href="/">Overview</a></li>
+      </ul>
+      <p class="group">Docs</p>
+      <ul>
+        <li><a href="/docs/">Install and first run</a></li>
+        <li><a href="/docs/codescanner/">CodeScanner</a></li>
+        <li><a href="/docs/brainstormer/">Brainstormer</a></li>
+        <li><a href="/docs/agentifier/">Agentifier</a></li>
+        <li><a href="/docs/designer/">Designer</a></li>
+        <li><a href="/docs/stackadvisor/">StackAdvisor</a></li>
+        <li><a href="/docs/phaser/">Phaser</a></li>
+        <li><a href="/docs/deployer/">Deployer</a></li>
+        <li><a href="/docs/artifacts/">Artifacts</a></li>
+        <li><a href="/docs/rounds/">Rounds</a></li>
+        <li><a href="/docs/settings/">Settings</a></li>
+        <li><a href="/docs/caching/">Caching</a></li>
+        <li><span aria-current="page">Spec-driven development</span>
+          <ul>
+            <li><a href="#the-taxonomy-most-people-use">The taxonomy most people use</a></li>
+            <li><a href="#where-spec4-lands-none-of-the-three-on-purpose">Where Spec4 lands: none of the three, on purpose</a></li>
+            <li><a href="#how-spec4-compares-with-the-tools-people-know">How Spec4 compares with the tools people know</a></li>
+            <li><a href="#the-objections-answered-honestly">The objections, answered honestly</a></li>
+            <li><a href="#when-spec4-is-the-wrong-tool">When Spec4 is the wrong tool</a></li>
+            <li><a href="#when-it-fits">When it fits</a></li>
+            <li><a href="#sources">Sources</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p class="group">Examples</p>
+      <ul>
+        <li><a href="/bws4/">Built With Spec4</a></li>
+      </ul>
+      <p class="group">Source</p>
+      <ul>
+        <li><a href="https://github.com/robertcrowe/spec4">GitHub</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <main>
+    <h1>Where Spec4 sits in spec-driven development</h1>
+
+    <p><em>I'm Spec4's author, so read this with that in mind. Where Spec4 falls short, this page says so.</em></p>
+
+    <p>"Spec-driven development" (SDD) spread faster than anyone agreed on what it means. A lot of tools now carry the label. A study of SDD artifacts found the practice <a href="https://arxiv.org/abs/2608.25202">barely existed before 2025 and now spans more than 70,000 GitHub repositories</a>, and those tools make quite different claims under the same name. This page explains which claim Spec4 makes and which it doesn't, so you can judge it against the right standard.</p>
+
+    <p><strong>The short version:</strong></p>
+
+    <ul>
+      <li><strong>It's for production code, not vibe coding.</strong> Spec4 plans systems you intend to ship and maintain. That means failure modes, non-functional goals, dependencies, and deployment, not just the happy path.</li>
+      <li><strong>You make every decision.</strong> Spec4's agents lay out options and tradeoffs, but nothing advances without your confirmation. The spec is a record of your decisions, not something the model wrote for you.</li>
+      <li><strong>It's a spec-driven <em>planner</em>.</strong> It doesn't keep a spec true over time, and it doesn't generate code from specs. Every <a href="/docs/rounds/">round</a>, it re-derives the plan from the code as it actually is.</li>
+      <li><strong>It doesn't enforce anything.</strong> It sits outside your coding agent. If you want the spec to be the permanent source of truth for your system, Spec4 is not that tool.</li>
+    </ul>
+
+    <hr>
+
+    <section>
+      <h2 id="the-taxonomy-most-people-use">The taxonomy most people use</h2>
+
+      <p>The most widely used way to sort SDD tools comes from Birgitta Böckeler's analysis of Kiro, Spec Kit, and Tessl on martinfowler.com (<a href="https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html">Understanding Spec-Driven Development</a>). She describes three levels of ambition:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Level</th>
+              <th scope="col">What happens to the spec</th>
+              <th scope="col">Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Spec-first</td>
+              <td>Written before coding and used to drive the task. It may be discarded or left to go stale afterward.</td>
+              <td>Most Spec Kit / Kiro use in practice</td>
+            </tr>
+            <tr>
+              <td>Spec-anchored</td>
+              <td>Kept after implementation and evolved along with the feature.</td>
+              <td>The goal of several newer tools</td>
+            </tr>
+            <tr>
+              <td>Spec-as-source</td>
+              <td>The only artifact humans edit. Code is generated and never touched by hand.</td>
+              <td><a href="https://tessl.io/">Tessl</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The same three levels appear in Deepak Babu Piskala's preprint <a href="https://arxiv.org/abs/2602.00180"><em>Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants</em></a>. It is the paper most often cited when someone needs an arXiv reference for SDD. Piskala goes further than Böckeler on one point. He defines SDD as treating specifications as <em>the source of truth</em>, with code as a derived artifact, and he argues that what separates SDD specs from old-fashioned design documents is that they are <em>enforced</em> rather than advisory: tests fail and builds break when code diverges.</p>
+
+      <p>It's worth being clear that none of this is settled. A September 2026 paper on SDD for agentic software engineering, from Díaz, Gayoso, Cimminio, and Pérez at the Universidad Politécnica de Madrid, notes that the term was <a href="https://arxiv.org/abs/2609.00252">named in practitioner discourse, and no peer-reviewed study has yet defined it, delimited its scope, or measured its effects</a>. The <a href="https://www.thoughtworks.com/radar/techniques/spec-driven-development">Thoughtworks Technology Radar</a> tracks it as a technique, not a standard.</p>
+    </section>
+
+    <section>
+      <h2 id="where-spec4-lands-none-of-the-three-on-purpose">Where Spec4 lands: none of the three, on purpose</h2>
+
+      <p>Spec4 doesn't fit neatly on the ladder, and it would be misleading to pretend it does. Its different parts sit at different levels.</p>
+
+      <p><strong>The phase files are spec-first.</strong> <a href="/docs/phaser/">Phaser</a> writes <a href="/docs/artifacts/"><code>phases/phase1.md</code></a> … <code>phaseN.md</code> for one round. You hand them to your coding agent, and once the round is marked <code>IMPLEMENTED</code> they are history. Nobody maintains them.</p>
+
+      <p><strong>The intent layer is roughly spec-anchored.</strong> <code>vision.json</code> and <code>feature_specs.json</code> carry forward from round to round. In a revision round, <a href="/docs/brainstormer/">Brainstormer</a> records which features were added, modified, and removed, and every downstream agent works only on that delta. This is the one layer that is kept up over time, but it describes what the product is for and what each feature must do, not how the code is built.</p>
+
+      <p><strong>Spec-as-source is rejected outright.</strong> Spec4 assumes you and your agent will edit the code directly, and that other tools will too. A hotfix, a refactor, or a week of work done without Spec4 is simply what the next round plans against.</p>
+
+      <p>The best short description of the overall position is <strong>code-anchored, re-derived per round</strong>:</p>
+
+      <blockquote>
+        <p>The plan is never the source of truth for long. The code is, and each round re-reads it.</p>
+      </blockquote>
+
+      <p>Every round after the first starts with <a href="/docs/codescanner/">CodeScanner</a> reading the repository as it actually is, not as the last plan said it would be. That runs directly against the principle, in Piskala and again in Díaz et al., that when spec and code disagree the spec wins and the code is re-derived. By Piskala's own spectrum Spec4 is still SDD: spec-first is his entry level, and he defines it as a spec that may be discarded once the code exists. What Spec4 fails is his enforcement criterion, and that is the argument worth having. Here is my side of it.</p>
+
+      <h3>Why re-derive instead of maintain</h3>
+
+      <p>There are four broad answers to spec drift:</p>
+
+      <ol>
+        <li><strong>Tolerate it.</strong> Write the spec, build, and move on. Böckeler observed that most current tools end up here in practice, whatever they aim for.</li>
+        <li><strong>Continuously reconcile it.</strong> Keep the spec true as code changes, for example with an LLM that proposes spec updates. <a href="https://docs.rs/crate/notarai/latest">NotarAI</a> is one tool that explicitly targets this gap.</li>
+        <li><strong>Make it impossible.</strong> Never let humans edit code (spec-as-source).</li>
+        <li><strong>Make it irrelevant at the boundaries.</strong> Let the code drift from the plan between rounds, then re-read the code before planning anything new. This is Spec4's answer.</li>
+      </ol>
+
+      <p>Option 4 gives up something real: between rounds, nothing tells you the code has diverged from the plan. In exchange, it works in brownfield repositories, it tolerates hand edits and other tools, and it never asks you to keep a document in sync on faith. Inside the artifact chain itself, drift is tracked: every artifact is dated against the ones upstream of it, and the project page flags <a href="/docs/rounds/#stale-inputs">stale inputs</a> when you re-run an earlier agent.</p>
+    </section>
+
+    <section>
+      <h2 id="how-spec4-compares-with-the-tools-people-know">How Spec4 compares with the tools people know</h2>
+
+      <p>Spec4's overall shape — specify, then plan, then tasks — is the same one <a href="https://github.com/github/spec-kit">GitHub Spec Kit</a> and <a href="https://kiro.dev/">Kiro</a> use. The differences are these:</p>
+
+      <div class="table-wrap">
+        <table class="wide">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Spec Kit</th>
+              <th scope="col">Kiro</th>
+              <th scope="col">Tessl</th>
+              <th scope="col">Spec4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Runs</td>
+              <td>Inside your agent (slash commands)</td>
+              <td>Inside its own IDE</td>
+              <td>Its own framework</td>
+              <td>Local web app, <em>outside</em> your agent</td>
+            </tr>
+            <tr>
+              <td>Coding agent</td>
+              <td>Several supported</td>
+              <td>Kiro's own</td>
+              <td>Tessl's own</td>
+              <td>Any: output is plain Markdown + JSON</td>
+            </tr>
+            <tr>
+              <td>Rung it targets</td>
+              <td>Spec-first in practice</td>
+              <td>Spec-first</td>
+              <td>Spec-as-source</td>
+              <td>Re-derived per round; intent layer anchored</td>
+            </tr>
+            <tr>
+              <td>Scope of the spec</td>
+              <td>Feature</td>
+              <td>Feature</td>
+              <td>Per-file / per-module</td>
+              <td>Whole system: vision, feature specs, AI tiers, UI mock, stack, phases, deployment</td>
+            </tr>
+            <tr>
+              <td>Records tool recommendation vs. your decision</td>
+              <td>Not a stated feature</td>
+              <td>Not a stated feature</td>
+              <td>Not a stated feature</td>
+              <td>Yes, side by side</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Two things in this table are unusual enough to call out.</p>
+
+      <p><strong>Decisions are recorded, not just specs.</strong> At every step after Brainstormer, Spec4 lays out options and tradeoffs, and you choose. <a href="/docs/agentifier/">Agentifier</a>, for example, writes the tool's recommended AI tier and <em>your</em> decision, with your rationale, into the same record. When the two disagree, the file shows both, so anyone reading the spec later can see where you overrode the tool and why.</p>
+
+      <p><strong>The scope goes well beyond the feature.</strong> Most SDD tools specify the change in front of you. Spec4 also specifies:</p>
+
+      <ul>
+        <li>where AI belongs in the product, and how much of it, on a <a href="/docs/agentifier/#the-ladder">nine-tier ladder</a> that starts at deterministic code;</li>
+        <li>an approved dependency list, which Phaser cannot go beyond without your explicit yes;</li>
+        <li>a <a href="/docs/deployer/">deployment plan</a> written as complete files.</li>
+      </ul>
+
+      <p>That is more ceremony, and Piskala names it as a pitfall: teams that drown in generated plans, task lists, and intermediate documents. I take the point. Spec4's answer is that the whole-system scope is for the first round of a system you intend to ship, and that half the pipeline is optional: Agentifier, <a href="/docs/designer/">Designer</a>, and <a href="/docs/deployer/">Deployer</a> can be skipped, and Spec4's own three rounds skipped two of them. If you run all seven agents on a small change, that is the sledgehammer problem below, and it is on you.</p>
+
+      <p>Being <em>outside</em> the agent has a real cost too. Spec Kit and Kiro keep planning and implementation in the same loop. With Spec4 you hand the phase files over yourself, and there are no commands inside your coding agent. I chose this for agent-agnosticism, and it is a trade, not a free win.</p>
+    </section>
+
+    <section>
+      <h2 id="the-objections-answered-honestly">The objections, answered honestly</h2>
+
+      <h3>"It's just waterfall."</h3>
+
+      <p>This is the most common critique. François Zaninotto put it well in <a href="https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html"><em>Spec-Driven Development: The Waterfall Strikes Back</em></a> (<a href="https://news.ycombinator.com/item?id=45935763">HN discussion</a>). The worry is that a big spec gets written up front, the code drifts from it, and a month later the plan describes a program that doesn't exist.</p>
+
+      <p>Spec4's unit of work is the round, not the spec. A round covers one feature or one rework. Each round is planned against the current code, and a revision round plans only the delta, not the whole application. <a href="/bws4/">Built With Spec4</a> took nine rounds, with hand edits in between. Spec4 has been used on itself for three rounds; that history is committed under <code>.spec4/</code> in <a href="https://github.com/robertcrowe/spec4">the repo</a>.</p>
+
+      <p>That said, <em>within</em> a round, Spec4 does plan everything before the agent writes any code, and a round is a meaningful amount of up-front work. If you want to discover the design by writing code, Spec4 will get in your way.</p>
+
+      <h3>"It's a sledgehammer for small changes."</h3>
+
+      <p>Critics often point out that SDD tools produce pages of requirements for a one-line bug fix. I agree. Spec4 doesn't solve this; it tells you where the line is. <strong>A round is the unit for a feature or a rework. For a quick script, a refactor, or a small feature in a mature codebase, don't run one.</strong> Use your coding agent directly.</p>
+
+      <h3>"It's just BDD with branding."</h3>
+
+      <p>Bryan Finster makes this case in <a href="https://bdfinst.medium.com/5-minute-devops-spec-driven-development-isnt-new-3a5c552efc95"><em>Spec-Driven Development Isn't New</em></a>, and he's largely right about the underlying idea. Writing down intended behavior before building is decades old, and Spec4's <code>feature_specs.json</code> (inputs, outputs, success criteria, failure modes) will look familiar to anyone who has written acceptance criteria.</p>
+
+      <p>What's new is who the audience is. The phase files are written for a coding agent, not a human team, so they cover the things agents get wrong:</p>
+
+      <ul>
+        <li>a risk assessment naming where the agent is likely to hallucinate;</li>
+        <li>a pinned stack, so the agent doesn't choose its own dependencies;</li>
+        <li>a Verification section containing the exact command that proves the phase is done.</li>
+      </ul>
+
+      <h3>"Specs aren't enforced, so what's the point?"</h3>
+
+      <p>This is the strongest objection to Spec4 specifically. Piskala's central distinction between SDD and old-fashioned design documents is that SDD specs are enforced: tests fail and builds break when code diverges.</p>
+
+      <p><strong>Spec4 does not enforce anything.</strong> It stops at the spec. Building and verifying the code is your coding agent's job and yours. No spec can force an agent to comply. Every phase ends with a Verification section that is a command you can run, not a description of what "done" looks like. But Spec4 doesn't run it, doesn't gate on it, and doesn't wire it into your CI. The dependency list is the same story: Phaser can't add a library without your visible yes, but nothing stops your coding agent adding one at build time. By Piskala's definition, Spec4 produces very well-structured <em>advisory</em> specs with executable acceptance checks attached.</p>
+
+      <p>I think that's the right boundary for a tool that doesn't know or control which coding agent you use. But if enforcement is what you mean by SDD, Spec4 only gets you partway there.</p>
+
+      <h3>"The model writes the spec, so it's the model's opinion."</h3>
+
+      <p>Nothing moves forward without your confirmation, and where the tool's recommendation and your decision differ, both are recorded. You can still click through without thinking, and a spec is only as good as the decisions put into it.</p>
+    </section>
+
+    <section>
+      <h2 id="when-spec4-is-the-wrong-tool">When Spec4 is the wrong tool</h2>
+
+      <ul>
+        <li>You want the spec to be the permanent, authoritative description of your system → look at spec-anchored or spec-as-source tools.</li>
+        <li>You want planning inside your agent's loop, with no hand-off → Spec Kit or Kiro will feel smoother.</li>
+        <li>You need spec compliance enforced in CI → Spec4 gives you the verification commands, but the enforcement is yours to build.</li>
+        <li>The change is small → skip the round.</li>
+        <li>You're vibe coding, hacking on a throwaway prototype, or still exploring what to build → a coding agent on its own is faster. Spec4 is for code you intend to ship and maintain. If a prototype turns into something real, run a round against it then: CodeScanner will plan from what's there.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="when-it-fits">When it fits</h2>
+
+      <ul>
+        <li>You're starting a real system, or making a substantial change to one, and you want the decisions made and written down before an agent starts guessing.</li>
+        <li>You work in a brownfield repository that other people, other tools, and you by hand all edit.</li>
+        <li>You want the plan to cover production concerns — failure modes, non-functional goals, deployment, where AI belongs and how much — not just the happy path.</li>
+        <li>You switch coding agents, or use more than one.</li>
+        <li>You want every artifact as a plain file in your repo, generated on your machine with your own model provider, and a record of what each step cost.</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2 id="sources">Sources</h2>
+
+      <ul>
+        <li>Böckeler, B. <a href="https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html">Understanding Spec-Driven Development: Kiro, spec-kit, and Tessl</a>. martinfowler.com, Oct 2025.</li>
+        <li>Piskala, D. B. <a href="https://arxiv.org/abs/2602.00180">Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants</a>. arXiv:2602.00180, Jan 2026.</li>
+        <li>Díaz, J., Gayoso, J., Cimminio, A., and Pérez, J. <a href="https://arxiv.org/abs/2609.00252">Spec-Driven Development for Agentic Software Engineering: Harnessing Human–Agent Teamwork</a>. arXiv:2609.00252, Sep 2026.</li>
+        <li>Agarwal, S., Singhal, A., Breaux, T., and Vasilescu, B. <a href="https://arxiv.org/abs/2608.25202">SpecMine: A Large-Scale Corpus of Spec-Driven Development Artifacts</a>. arXiv:2608.25202, Aug 2026.</li>
+        <li>Thoughtworks. <a href="https://www.thoughtworks.com/radar/techniques/spec-driven-development">Spec-Driven Development</a>. Technology Radar, 2025.</li>
+        <li>Zaninotto, F. <a href="https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html">Spec-Driven Development: The Waterfall Strikes Back</a>. Marmelab, Nov 2025. (<a href="https://news.ycombinator.com/item?id=45935763">HN</a>)</li>
+        <li>Finster, B. <a href="https://bdfinst.medium.com/5-minute-devops-spec-driven-development-isnt-new-3a5c552efc95">5-Minute DevOps: Spec-Driven Development Isn't New</a>. Medium, Nov 2025.</li>
+        <li><a href="https://github.com/github/spec-kit">GitHub Spec Kit</a> · <a href="https://kiro.dev/">Kiro</a> · <a href="https://tessl.io/">Tessl</a> · <a href="https://docs.rs/crate/notarai/latest">NotarAI</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Specification-driven_development">Specification-driven development</a>. Wikipedia.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
