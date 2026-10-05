@@ -6,13 +6,13 @@
   <title>CodeScanner — Spec4 docs</title>
   <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.">
   <link rel="canonical" href="https://spec4.ai/docs/codescanner/">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.2</span>
+    <span class="nav-version">1.5.3</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -131,6 +131,8 @@
         <li>An empty directory, or one without code, gets <code>is_software_project: false</code> and a one-line summary.</li>
       </ul>
 
+      <p>Later agents don't receive the file as pasted JSON. <a href="/docs/brainstormer/">Brainstormer</a>, StackAdvisor, and <a href="/docs/phaser/">Phaser</a> each get a rendered view of exactly the blocks they read, each block under one line of guidance, with values verbatim and their <code>source</code> or <code>inferred_from</code> in brackets; a field the renderer has no special knowledge of still reaches them. A probe, <code>evals/code_scanner/review_reach.py</code>, showed why: with the raw paste, fields a prompt named reached the plan and fields it didn't mostly didn't, and StackAdvisor recorded its prompt example's <code>ESLint</code> and <code>Prettier</code> in eight rounds out of eight for a codebase whose review said <code>oxlint</code>.</p>
+
       <p>An excerpt from Spec4's own <code>.spec4/v2/code_review.json</code> is on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
     </section>
 
@@ -174,7 +176,7 @@
         </table>
       </div>
 
-      <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with <a href="/docs/brainstormer/">Brainstormer</a>.</p>
+      <p>CodeScanner has no upstream artifact, so it is never <strong>Needs Update</strong> or <strong>Not Ready</strong>. A directory you answered <em>New project</em> to skips it and starts with Brainstormer.</p>
     </section>
 
     <section>

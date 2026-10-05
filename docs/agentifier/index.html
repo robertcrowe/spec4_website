@@ -6,13 +6,13 @@
   <title>Agentifier — Spec4 docs</title>
   <meta name="description" content="Agentifier looks for places in the vision where an AI feature would serve it, and recommends how much AI each one needs. You choose which candidates to keep, can send its Scout back with direction — an area to look at again, or a candidate of your own to work up — and decide the tier for each — with its recommendation in front of you. Your decisions and its recommendations are written to ai_catalog.json, side by side. For each feature you keep, it drafts the spec the coding agent will build to and writes it to ai_features.json.">
   <link rel="canonical" href="https://spec4.ai/docs/agentifier/">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.2</span>
+    <span class="nav-version">1.5.3</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -200,7 +200,7 @@
     <section>
       <h2 id="reads">Reads</h2>
 
-      <p><code>vision.json</code> and <code>feature_specs.json</code>. <code>code_review.json</code> when the round has one, so candidates are found against what exists. In a revision round, the previous implemented round's <code>ai_features.json</code> as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.</p>
+      <p><code>vision.json</code> and <code>feature_specs.json</code>. <code>code_review.json</code> when the round has one, so candidates are found against what exists. In a revision round, the newest implemented round's <code>ai_features.json</code> (the newest that has one) as reference. Web search, if enabled, for the canonical documentation of any standard or SDK you mention.</p>
     </section>
 
     <section>
@@ -280,7 +280,7 @@
     <section>
       <h2 id="across-rounds">Across rounds</h2>
 
-      <p>A revision round carries the previous implemented round's <code>ai_features.json</code> as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped <code>introduced_in_version</code>. Phaser plans only those. <a href="/docs/rounds/">Rounds</a></p>
+      <p>A revision round carries the newest implemented round's <code>ai_features.json</code> (the newest that has one) as reference — the features already built, with their cross-cutting decisions — and writes only this round's, each stamped <code>introduced_in_version</code>. Phaser plans only those. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>

@@ -6,13 +6,13 @@
   <title>Rounds — Spec4 docs</title>
   <meta name="description" content="A round is one pass over the project. Its output is one folder — .spec4/v0/ for the first round, v1/ for the next, and so on — and every round after the first starts from the code, not from the previous plan.">
   <link rel="canonical" href="https://spec4.ai/docs/rounds/">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.2</span>
+    <span class="nav-version">1.5.3</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -78,13 +78,14 @@
     <section>
       <h2 id="revision-rounds">Revision rounds</h2>
 
-      <p>A revision round is any round after one that has been implemented. Four things are different from a first round:</p>
+      <p>A revision round is any round after one that has been implemented. Five things are different from a first round:</p>
 
       <ul>
         <li><strong>CodeScanner reads what was actually built — by anyone.</strong> The code review for round N is of the code as it stands, including what the coding agent did that the plan didn't say and whatever you changed yourself in between. A hotfix, a refactor, or a week of work done without Spec4 is just what the next round plans against.</li>
+        <li><strong>The review reaches the agents in a shape they read.</strong> Brainstormer, StackAdvisor, and Phaser each get a rendered view of exactly the review blocks they use — languages, toolchain, persistence, and entry points — with values verbatim and their sources alongside, rather than a JSON paste the model skims, so the linter the review found is the one StackAdvisor carries forward, not the one in its prompt's example.</li>
         <li><strong>Brainstormer stamps a delta.</strong> <code>vision.json</code> gains a <code>revision_history</code> entry — <code>version</code>, <code>based_on_version</code>, the round's goal, the features added, modified, and removed, and the rationale — and the downstream agents scope to that delta rather than re-deriving the whole application.</li>
         <li><strong><a href="/docs/phaser/">Phaser</a> plans only the change.</strong> Phase 1 of a revision is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread. The new phases are numbered from 1 as a self-contained set, and no phases are emitted for established, unchanged features.</li>
-        <li><strong>The previous round is the baseline, not the input.</strong> Each of the other agents reads the delta from <code>vision.json</code> and the corresponding artifact from the latest implemented round, and works on the difference.</li>
+        <li><strong>The previous round is the baseline, not the input.</strong> Each of the other agents reads the delta from <code>vision.json</code> and the corresponding artifact from the latest implemented round, and works on the difference. For the optional agents — Agentifier, Designer, and Deployer — that is the newest implemented round that has the artifact, so a round implemented without one of them (a hosting migration, say) doesn't empty what the next round carries forward. Unimplemented rounds in between are skipped, not read.</li>
       </ul>
 
       <p>What that means per agent:</p>
@@ -93,7 +94,7 @@
         <li><strong>Brainstormer</strong> writes the <code>revision_history</code> entry deterministically. The version numbers come from the folder on disk, not the model; the <code>added</code>, <code>modified</code>, and <code>removed</code> lists are reconciled against the feature names in the previous implemented vision, so a feature the previous round didn't have is recorded as <code>added</code> however the model labelled it, and a rename reads as remove plus add.</li>
         <li><strong><a href="/docs/agentifier/">Agentifier</a></strong> carries the previous round's <code>ai_features.json</code> — the AI features already built, with their cross-cutting decisions — as reference, not as this round's working artifact. Each feature it writes in a revision round carries <code>introduced_in_version</code>, which is how the agents downstream tell this round's AI work from what already exists.</li>
         <li><strong><a href="/docs/designer/">Designer</a></strong> starts from the previous round's approved <code>design/mock.html</code> and applies the revision to it, so the established look carries forward and the mock changes only where the delta does. It can also capture the look from screenshots of the running app.</li>
-        <li><strong><a href="/docs/stackadvisor/">StackAdvisor</a></strong> carries the previous round's <code>stack.json</code> forward as the baseline and guides you through only the incremental changes the new or changed features require. It does not re-decide the established stack or re-run the full topic sequence.</li>
+        <li><strong><a href="/docs/stackadvisor/">StackAdvisor</a></strong> carries the previous round's <code>stack.json</code> forward as the baseline and guides you through only the incremental changes the new or changed features require. It does not re-decide the established stack or re-run the full topic sequence. Any established entry missing from what it writes back is restored, unless the delta or you asked for its removal, and the commit screen says which.</li>
         <li><strong>Phaser</strong> carries nothing forward: the fresh <code>code_review.json</code> describes what's built, the AI-feature context is partitioned by <code>introduced_in_version</code> so only this round's features are planned, and the coverage check after generation looks only at those.</li>
         <li><strong><a href="/docs/deployer/">Deployer</a></strong> carries the previous round's <code>deployment-plan.md</code> forward when there is one, and updates it for the delta rather than re-deriving it. A deployment plan describes the whole running system, so the update is whole-system-scoped. If Deployer authors the README, a revision round scopes the update to this round's feature changes and leaves the rest of the document intact.</li>
       </ul>

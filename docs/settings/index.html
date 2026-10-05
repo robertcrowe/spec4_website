@@ -6,13 +6,13 @@
   <title>Settings — Spec4 docs</title>
   <meta name="description" content="Spec4 has three settings: a model provider and key, a default model and reasoning effort, and an optional web-search provider. The setup wizard asks for them in that order the first time you open a project; the Settings page carries the same three steps afterwards.">
   <link rel="canonical" href="https://spec4.ai/docs/settings/">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.2</span>
+    <span class="nav-version">1.5.3</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -144,10 +144,12 @@
       <p>Effort is sent to the provider as LiteLLM's <code>reasoning_effort</code>. The values offered are <code>default</code>, <code>low</code>, <code>medium</code>, and <code>high</code>, plus <code>max</code> on Anthropic models and <code>xhigh</code> on OpenAI models. Whether a model accepts the parameter at all is checked with a network-free capability probe; which levels it accepts is not, so:</p>
 
       <ul>
-        <li><code>default</code> sends no effort parameter.</li>
+        <li><code>default</code> sends <code>medium</code> on a model that accepts the parameter, and nothing on one that doesn't. On models that think whenever nothing is sent, sending nothing meant thinking at the API's own depth — minutes of silence on a large prompt, with the thinking left out of the stream. A level bounds the thinking and makes its summaries stream.</li>
         <li>A model that doesn't accept the parameter ignores it; the call goes through.</li>
         <li>A model that accepts the parameter but rejects the level is retried once with no effort, and the call is recorded in <a href="/docs/artifacts/"><code>usage.json</code></a> as <code>default (fallback from &lt;level&gt;)</code>.</li>
       </ul>
+
+      <p>While a model reasons, the screen counts it, in every agent. In <a href="/docs/codescanner/">CodeScanner</a>, <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, <a href="/docs/phaser/">Phaser</a>, and <a href="/docs/deployer/">Deployer</a>, the status line under the composer reads <em>Thinking — N chars</em> as the reasoning streams, until the first character of the reply arrives; Agentifier's count includes the reasoning of its sub-agents. <a href="/docs/designer/">Designer</a>'s counter shows the same while it waits for the mock's first output, and also reports a pause of more than 15 seconds mid-draw with how long it has lasted, so a long wait reads as a pause rather than a hang.</p>
 
       <p>Spec4 never sends a provider-specific thinking or budget parameter. <code>reasoning_effort</code> is the only mechanism.</p>
     </section>
@@ -205,7 +207,7 @@
       <ul>
         <li>Default: <code>claude-sonnet-5</code> on Anthropic, in all three rounds.</li>
         <li>Phaser: <code>claude-opus-5</code>, in all three rounds.</li>
-        <li><a href="/docs/designer/">Designer</a>: <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code>; <code>claude-opus-5</code> in <code>v2</code>.</li>
+        <li>Designer: <code>claude-fable-5-1</code> in <code>v0</code> and <code>v1</code>; <code>claude-opus-5</code> in <code>v2</code>.</li>
         <li>Every other agent that ran — <a href="/docs/codescanner/">CodeScanner</a>, Brainstormer, <a href="/docs/stackadvisor/">StackAdvisor</a> — on the default.</li>
       </ul>
 

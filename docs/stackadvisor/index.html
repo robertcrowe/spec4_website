@@ -6,13 +6,13 @@
   <title>StackAdvisor — Spec4 docs</title>
   <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
   <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.2</span>
+    <span class="nav-version">1.5.3</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -71,7 +71,7 @@
     <section>
       <h2 id="reads">Reads</h2>
 
-      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
+      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. It arrives as a rendered view of the blocks StackAdvisor reads, values verbatim with their sources, not as raw JSON. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
 
       <p>Web search, if enabled, to verify a library's maintenance status and recent release activity before recommending it, and to find the canonical documentation link for each entry.</p>
     </section>
@@ -165,7 +165,7 @@
     <section>
       <h2 id="across-rounds">Across rounds</h2>
 
-      <p>A revision round carries the previous implemented round's stack forward as the baseline and records only the incremental changes; stack additions recorded by Phaser carry with it. <a href="/docs/rounds/">Rounds</a></p>
+      <p>A revision round carries the previous implemented round's stack forward as the baseline and records only the incremental changes, re-emitting the whole <code>stack.json</code> with them folded in; stack additions recorded by Phaser carry with it. Re-emitting a large file is where a model drops a line nobody asked it to drop — in one live round an established <code>SendGrid</code> entry disappeared with no signal anywhere — so every established entry missing from the result is found deterministically and classified: removal asked for by <a href="/docs/brainstormer/">Brainstormer</a>'s delta, asked for by you in this round's conversation, or unrequested. An unrequested removal is restored at its prior position. The commit screen carries a receipt for each — <em>Restored to the established stack</em> or <em>Removed from the established stack</em> — and every revision commit records the entries and their dispositions, an empty list included. <a href="/docs/rounds/">Rounds</a></p>
     </section>
 
     <section>
