@@ -132,38 +132,96 @@
   }
 }</code></pre>
 
-      <p>The <code>scan</code> layer's <code>delta</code>, from the first scan of <a href="/bws4/">BWS4</a> after its <code>v9</code> round was implemented, under Spec4 2.9.2 (kept in Spec4's repository as <code>tests/golden/fixtures/carry_bws4_2_9_1_to_2_9_2.json</code>), trimmed. The round added a router; the scan lists what that did to the tree rather than asking the model to remember it:</p>
+      <p>Both layers of a 2.x review, from <a href="/bws4/">BWS4</a>'s <code>.spec4/v10/code_review.json</code> — the first scan after its <code>v9</code> Router round, under Spec4 2.11.1 — trimmed. The scan lists what the round did to the tree rather than asking the model to remember it; the review reconciles the previous round's phases against it and records what entered the codebase outside any plan:</p>
 
-<pre><code>"scan": {
-  …
-  "delta": {
-    "prior": { "kind": "implemented", "version": 9, "head": "861c009" },
-    "files": {
-      "added": [
-        "backend/app/api/router.py",
-        "backend/app/db/migrations/versions/0014_router_histories.py",
-        "backend/app/router/__init__.py",
-        "backend/app/router/classifier.py",
-        … 63 more
-      ],
-      "removed": [],
-      "partial": false
-    },
-    "signatures": {
-      "backend/app/db/models.py": {
-        "added": ["RouterAgreementRecord", "RouterLatencyObservation"],
-        "removed": [],
-        "changed": []
-      },
+<pre><code>{
+  "code_review": {
+    "schema_version": 2,
+    "scan": {
       …
+      "plan_drift": {
+        "prior_version": 9,
+        "planned": 49,
+        "declared": 46,
+        "planned_unmatched": [ { "name": "Playwright", "sources": ["stack"] } ],
+        "declared_not_planned": [],
+        …
+      },
+      "delta": {
+        "prior": { "kind": "implemented", "version": 9, "head": "861c009" },
+        "files": {
+          "added": [
+            "backend/app/api/router.py",
+            "backend/app/db/migrations/versions/0014_router_histories.py",
+            "backend/app/router/__init__.py",
+            … 64 more
+          ],
+          "removed": [],
+          "modified": [ "README.md", "backend/app/db/models.py", "backend/app/main.py", … 9 more ]
+        },
+        "signatures": {
+          "backend/app/db/models.py": { "added": ["RouterAgreementRecord", "RouterLatencyObservation"], "removed": [], "changed": [] },
+          …
+        },
+        "candidates": {
+          "entered": ["backend/app/router/constants.py", "frontend/src/api/router.ts"],
+          "left": ["frontend/src/apps/collab/runState.ts", "frontend/src/components/LayoutShell.tsx"]
+        },
+        "carried": { "env_vars": 0, "dependencies": 0, "api_surface": 0 }
+      },
+      "producer": { "spec4": "2.11.1", "schema": 2 }
     },
-    "candidates": {
-      "entered": ["backend/app/router/constants.py", "frontend/src/api/router.ts"],
-      "left": ["frontend/src/apps/collab/runState.ts", "frontend/src/components/LayoutShell.tsx"]
-    },
-    "dependencies": {
-      "frontend/package.json": { "added": [], "removed": [], "bumped": [] },
-      "pyproject.toml": { "added": [], "removed": [], "bumped": [] }
+    "review": {
+      …
+      "load_bearing": [
+        {
+          "module": "backend/app/core/config.py",
+          "symbol": "get_settings",
+          "role": "Single cached source of validated environment configuration for the whole backend",
+          "contract": {
+            "inputs": ["environment variables and a repo-root .env file"],
+            "outputs": ["cached Settings instance"],
+            "invariants": [
+              "env file resolved from REPO_ROOT, not the cwd",
+              "raises RuntimeError with an operator-facing message when required config is missing"
+            ]
+          },
+          "inferred_from": "backend/app/core/config.py",
+          "consumers": [ "backend/app/collab/service.py", "backend/app/core/observability.py", … ]
+        },
+        …
+      ],
+      "prior_round_reconciliation": [
+        {
+          "phase_number": 1,
+          "title": "Integration Thread: Router Slice Wired into the Existing App",
+          "verdict": "evidence_found",
+          "implemented_ids": ["router_app", "landing_page_directory"],
+          …
+        },
+        … nine more, all evidence_found
+      ],
+      "unplanned_changes": [
+        {
+          "area": "SEO and site metadata",
+          "summary": "Page head, sitemap and per-route SEO metadata were edited alongside the Router launch; no phase planned these edits.",
+          "affects": ["frontend/index.html", "frontend/public/sitemap.xml", "frontend/src/seo/siteMeta.ts", "landing_page_directory"],
+          "inferred_from": "frontend/src/seo/siteMeta.ts",
+          "classification": "unknown"
+        },
+        …
+      ],
+      "divergences": [
+        {
+          "area": "persistence",
+          "planned": "PostgreSQL (Neon-hosted) + pgvector",
+          "found": "PostgreSQL",
+          "kind": "renamed",
+          "note": "Same Neon-hosted Postgres with pgvector, recorded under the engine product name",
+          "inferred_from": "backend/app/db/session.py"
+        },
+        …
+      ]
     }
   }
 }</code></pre>
