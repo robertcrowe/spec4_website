@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Built With Spec4 — Spec4</title>
-  <meta name="description" content="Built With Spec4 is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder Agentifier recommends from, so you can see what a tier looks like as software. It was planned in nine rounds, with hand edits between them, and its full .spec4/ history — v0 through v8, every artifact and every phase file — is in its repository.">
+  <meta name="description" content="Built With Spec4 is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder Agentifier recommends from, so you can see what a tier looks like as software. It was planned in eleven rounds, with hand edits between them, and its full .spec4/ history — v0 through v10, every artifact and every phase file — is in its repository.">
   <link rel="canonical" href="https://spec4.ai/bws4/">
   <meta property="og:image" content="https://spec4.ai/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -48,10 +48,11 @@
         <li><span aria-current="page">Built With Spec4</span>
           <ul>
             <li><a href="#the-apps">The apps</a></li>
-            <li><a href="#the-nine-rounds">The nine rounds</a></li>
+            <li><a href="#the-eleven-rounds">The eleven rounds</a></li>
             <li><a href="#the-recommendation-and-the-decision">The recommendation and the decision</a></li>
             <li><a href="#hand-edits-reconciled">Hand edits, reconciled</a></li>
             <li><a href="#deployment">Deployment</a></li>
+            <li><a href="#cost">Cost</a></li>
           </ul>
         </li>
         <li><a href="/snarkcheck/">SnarkCheck</a></li>
@@ -66,7 +67,7 @@
   <main>
     <h1>Built With Spec4</h1>
 
-    <p><a href="https://bw.spec4.ai">Built With Spec4</a> is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder <a href="/docs/agentifier/">Agentifier</a> recommends from, so you can see what a tier looks like as software. It was planned in nine <a href="/docs/rounds/">rounds</a>, with hand edits between them, and its full <code>.spec4/</code> history — <code>v0</code> through <code>v8</code>, every artifact and every phase file — is in <a href="https://github.com/robertcrowe/BWS4">its repository</a>.</p>
+    <p><a href="https://bw.spec4.ai">Built With Spec4</a> is a live gallery of small apps, every one planned with Spec4 and built by a coding agent working from Spec4's phase files. Each app demonstrates one tier of the ladder <a href="/docs/agentifier/">Agentifier</a> recommends from, so you can see what a tier looks like as software. It was planned in eleven <a href="/docs/rounds/">rounds</a>, with hand edits between them, and its full <code>.spec4/</code> history — <code>v0</code> through <code>v10</code>, every artifact and every phase file — is in <a href="https://github.com/robertcrowe/BWS4">its repository</a>.</p>
 
     <section>
       <h2 id="the-apps">The apps</h2>
@@ -126,17 +127,22 @@
               <td><code>multi_agent_collaboration</code></td>
               <td><code>v6</code></td>
             </tr>
+            <tr>
+              <td><a href="https://bw.spec4.ai/router">Router</a></td>
+              <td><code>chained_calls</code></td>
+              <td><code>v9</code></td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <p>Two apps share the <code>planning_agent</code> tier on purpose: Planning Agent fixes its plan up front, and ReAct Loop discovers it one observation at a time. The tier ladder is on the <a href="/docs/agentifier/">Agentifier</a> page.</p>
+      <p>Two apps share the <code>planning_agent</code> tier on purpose: Planning Agent fixes its plan up front, and ReAct Loop discovers it one observation at a time. Router is not a tier of its own: one classification call with structured output scores four paths the other apps already show — a hand-written evaluator, a single call, RAG's retriever, or search plus one generation call — and code, not the model, dispatches to the winner. Its catalog entry is <code>chained_calls</code>, recommendation and decision alike. The tier ladder is on the <a href="/docs/agentifier/">Agentifier</a> page.</p>
 
-      <p>Every app runs on free OpenRouter models through LiteLLM, with per-session run caps so a public demo can't spend the quota. The caps are stated on each app's page.</p>
+      <p>Every app runs on free models — OpenRouter and Groq, through one shared registry with one fallback chain — with per-visit run caps so a public demo can't spend the quota. The caps are stated on each app's page.</p>
     </section>
 
     <section>
-      <h2 id="the-nine-rounds">The nine rounds</h2>
+      <h2 id="the-eleven-rounds">The eleven rounds</h2>
 
       <p>One line per round, from each <a href="/docs/artifacts/"><code>vision.json</code></a>'s <code>revision_history</code>:</p>
 
@@ -195,13 +201,23 @@
               <td>Hosting moved from Render to a self-hosted VPS, behaviour-preserving; PostgreSQL with pgvector stays on Neon.</td>
               <td>5</td>
             </tr>
+            <tr>
+              <td><code>v9</code></td>
+              <td>Router: one classification call picks one of four existing paths, and code dispatches to it. Specified in the vision, found unbuilt by the re-scan, so planned as new work with its description unchanged.</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td><code>v10</code></td>
+              <td>Cleanup, no new app: the whole backend under <code>ruff</code> and <code>mypy</code>, the documented credential contract made real, stale Render references removed, the unrecorded edits the re-scan found written down, and the Router's warm-up made best-effort with an unavailable state and a Retry button.</td>
+              <td>5</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <p><code>IMPLEMENTED</code> is present in all nine. Seven of the eight brownfield rounds open with an integration thread; <code>v3</code> went straight to backend work. <code>v8</code> skipped <a href="/docs/designer/">Designer</a> and Agentifier, since nothing it planned had a screen or a model call; <a href="/docs/deployer/">Deployer</a> ran only when the deployment changed — <code>v0</code>, <code>v1</code>, and <code>v8</code>. Run the agents a round needs.</p>
+      <p><code>IMPLEMENTED</code> is present in all eleven. Nine of the ten brownfield rounds open with an integration thread; <code>v3</code> went straight to backend work. <code>v8</code> and <code>v10</code> skipped <a href="/docs/designer/">Designer</a> and Agentifier, since nothing they planned had a new screen or a new model call; <a href="/docs/deployer/">Deployer</a> ran only when the deployment changed — <code>v0</code>, <code>v1</code>, <code>v8</code>, and the two rounds since, each updating the <code>v8</code> plan for its delta. Run the agents a round needs.</p>
 
-      <p>Phases in <code>v0</code>–<code>v4</code> run 7 to 14 instructions; the agentic-pattern rounds <code>v5</code>–<code>v8</code> run 14 to 26.</p>
+      <p>Phases in <code>v0</code>–<code>v4</code> run 7 to 14 instructions; the agentic-pattern rounds <code>v5</code>–<code>v8</code> run 14 to 26; <code>v9</code> and <code>v10</code>, planned under Spec4 2.x against a measured code review, are back to 6 to 14 across ten and eight phases.</p>
     </section>
 
     <section>
@@ -216,7 +232,7 @@
   "tier_decision_rationale": "The whole point of this example is to illustrate the use of RAG, so the retrieval pipeline is intentional despite the small dataset size."
 }</code></pre>
 
-      <p>The tool argued against the agent; the developer decided; the file records both. Every other product feature across <code>v1</code>–<code>v7</code> shows recommendation and decision agreeing; the infrastructure entries — <code>embedding_pipeline</code>, <code>vector_index</code>, <code>agent_loop_runtime</code>, and the rest — carry no recommendation, because they're injected from the tier's pattern file rather than chosen.</p>
+      <p>The tool argued against the agent; the developer decided; the file records both. Every other product feature across <code>v1</code>–<code>v9</code> shows recommendation and decision agreeing; the infrastructure entries — <code>embedding_pipeline</code>, <code>vector_index</code>, <code>agent_loop_runtime</code>, and the rest — carry no recommendation, because they're injected from the tier's pattern file rather than chosen.</p>
     </section>
 
     <section>
@@ -258,12 +274,14 @@
       </div>
 
       <p>The <code>v1</code> review's one recorded change risk is the free-tier model chains in <code>model_registry.py</code> rotting as providers retire slugs — a risk in code the plan never asked for, caught on the next scan. <a href="/docs/rounds/">Rounds</a></p>
+
+      <p>Nine rounds later the reconciling is measured rather than read. <code>v10</code>'s scan, under Spec4 2.11.1, found 67 files added and 12 modified since <code>v9</code>'s plan and none removed, two symbols added to <code>models.py</code>, two load-bearing candidates entered and two left, no manifest changed, and one planned dependency no manifest declares — Playwright. The model's review then reconciled all ten <code>v9</code> phases as <code>evidence_found</code>, recorded two divergences from the planned stack (both renames), and listed three areas edited outside any phase: the site metadata, the shared generation service, and the README, tooling, and manifests. The commit carried nothing back — <code>carried: {env_vars: 0, dependencies: 0, api_surface: 0}</code> — because the model had kept every untouched entry itself. <code>v10</code>'s goal names those three unrecorded edits as something to write down; the excerpt is on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
     </section>
 
     <section>
       <h2 id="deployment">Deployment</h2>
 
-      <p>The VPS runs the plan Deployer wrote in <code>v8</code>. It opens with instructions for the coding agent named for the round, then the whole system, one target at a time. The web client's block, from <code>.spec4/v8/deployment-plan.md</code>:</p>
+      <p>The VPS runs the plan Deployer wrote in <code>v8</code> and updated in <code>v9</code> and <code>v10</code>, each for that round's delta — <code>v10</code>'s records that the Router's unavailable state and Retry button ship in the same hashed bundle and change nothing in the edge. The <code>v8</code> plan opens with instructions for the coding agent named for the round, then the whole system, one target at a time. The web client's block, from <code>.spec4/v8/deployment-plan.md</code>:</p>
 
 <pre><code>### `web_client`
 
@@ -278,7 +296,68 @@ Build: `npm ci &amp;&amp; npm run build` executed **on the VPS** by `deploy/depl
 
       <p>The plan's Configuration Files section carries the Caddyfile, the systemd unit, <code>deploy/deploy.sh</code>, and a <code>CLAUDE.md</code> for the coding agent, complete. Its Roadmap records what was considered and not provisioned — CI, <code>fail2ban</code>, snapshots — so a later round can pick them up.</p>
 
-      <p>The nine rounds predate Spec4's usage recording, so there is no cost line for them. Spec4's own rounds carry one on the <a href="/">front page</a>, and <a href="/snarkcheck/">SnarkCheck</a>'s round carries one with caching and all six agents.</p>
+    </section>
+
+    <section>
+      <h2 id="cost">Cost</h2>
+
+      <p><code>v0</code>–<code>v8</code> predate Spec4's usage recording, so there is no cost line for them. <code>v9</code> and <code>v10</code> carry one, from each round's <code>usage.json</code> — calls, tokens, and the cost LiteLLM computed, all on <code>claude-sonnet-5-5</code> at medium effort:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Agent</th>
+              <th scope="col"><code>v9</code> — Router</th>
+              <th scope="col"><code>v10</code> — cleanup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CodeScanner</td>
+              <td>10 · 619k · $1.85</td>
+              <td>4 · 354k · $0.85</td>
+            </tr>
+            <tr>
+              <td>Brainstormer</td>
+              <td>25 · 795k · $1.27</td>
+              <td>16 · 564k · $0.62</td>
+            </tr>
+            <tr>
+              <td>Agentifier</td>
+              <td>34 · 323k · $0.80</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Designer</td>
+              <td>3 · 389k · $2.16</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>StackAdvisor</td>
+              <td>23 · 2.77M · $2.10</td>
+              <td>13 · 1.38M · $2.15</td>
+            </tr>
+            <tr>
+              <td>Phaser</td>
+              <td>4 · 517k · $1.37</td>
+              <td>3 · 344k · $0.84</td>
+            </tr>
+            <tr>
+              <td>Deployer</td>
+              <td>8 · 363k · $0.39</td>
+              <td>6 · 228k · $0.47</td>
+            </tr>
+            <tr>
+              <td>Round</td>
+              <td>107 · 5.78M · $9.93</td>
+              <td>42 · 2.87M · $4.93</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>About 70% of each round's input tokens were read from cache. <code>v9</code>'s calls span October 1 to 16; <code>v10</code>'s fit in a day. Spec4's own rounds carry a cost line on the <a href="/">front page</a>, and <a href="/snarkcheck/">SnarkCheck</a>'s round carries one with caching and all six agents.</p>
     </section>
   </main>
 </body>
