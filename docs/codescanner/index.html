@@ -281,12 +281,6 @@
 
       <p>A review written under an older schema isn't read as current. The gate above fires, and the re-scan starts fresh — the fresh seed with the old review appended as context — rather than asking for a merge into a shape the current version doesn't read.</p>
     </section>
-
-    <section>
-      <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
-
-      <p>Three calls, about 118k tokens, and $0.53 in <code>v1</code>; three calls, about 116k tokens, and $0.46 in <code>v2</code>, on <code>claude-sonnet-5</code>. <code>v0</code>'s scan ran before usage was recorded. All three reviews were written before 2.0.0 and carry <code>schema_version: 1</code>, so Spec4's fourth round opens with the fresh-seed re-scan described above.</p>
-    </section>
   </main>
 </body>
 </html>
