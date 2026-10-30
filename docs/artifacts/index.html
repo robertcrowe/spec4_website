@@ -6,13 +6,13 @@
   <title>Artifacts — Spec4 docs</title>
   <meta name="description" content="Everything Spec4 produces is a file under .spec4/ in your project, one folder per round. This page documents each file: which agent writes it, which agents read it, what it's for, what it looks like, and how it changes from one round to the next.">
   <link rel="canonical" href="https://spec4.ai/docs/artifacts/">
-  <link rel="stylesheet" href="/styles.css?v=13">
+  <link rel="stylesheet" href="/styles.css?v=14">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.3</span>
+    <span class="nav-version">2.13.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -104,11 +104,11 @@
     <section>
       <h2 id="code-review-json"><code>code_review.json</code></h2>
 
-      <p>Written by <a href="/docs/codescanner/">CodeScanner</a>. Read by <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, and <a href="/docs/phaser/">Phaser</a>.</p>
+      <p>Written by <a href="/docs/codescanner/">CodeScanner</a>. Read by <a href="/docs/brainstormer/">Brainstormer</a>, <a href="/docs/agentifier/">Agentifier</a>, <a href="/docs/stackadvisor/">StackAdvisor</a>, <a href="/docs/phaser/">Phaser</a>, and <a href="/docs/deployer/">Deployer</a>.</p>
 
-      <p>What is actually in the repository, as facts with provenance. CodeScanner reads the tree locally and sends the model a bounded summary — manifests, entry points, samples — and every fact it records carries a <code>source</code> (the file it was read from) or <code>inferred_from</code> (the file it was deduced from). A greenfield directory reports <code>is_software_project: false</code>.</p>
+      <p>What is actually in the repository, in two layers under <code>schema_version: 2</code>. <code>scan</code> is measured by code and never shown to the model: the inventory, the import graph and its load-bearing candidates, public signatures, every manifest's declared dependencies, git state and the commits since the last round, an extract of what the previous round planned, the drift from that plan, and the delta from the previous scan. <code>review</code> is the model's judgment, drawn from an evidence sample the scan ranks, and every fact in it carries a <code>source</code> (the file it was read from) or <code>inferred_from</code> (the file it was deduced from). A greenfield directory reports <code>is_software_project: false</code>.</p>
 
-      <p>From Spec4's <code>.spec4/v2/code_review.json</code>, trimmed:</p>
+      <p>The <code>review</code> layer, from Spec4's <code>.spec4/v2/code_review.json</code>, trimmed. Spec4's own rounds were scanned before 2.0.0, so this file is <code>schema_version: 1</code> and holds the <code>review</code> fields at the top level; a 2.x review carries the same fields under <code>review</code>, beside <code>scan</code>:</p>
 
 <pre><code>{
   "code_review": {
@@ -132,7 +132,43 @@
   }
 }</code></pre>
 
-      <p>Across rounds: rewritten from scratch every round. Round N's review is of the code as it stands, including what the coding agent built and whatever you changed by hand. <code>notes.change_risks</code> is where StackAdvisor is told to look before proposing a swap.</p>
+      <p>The <code>scan</code> layer's <code>delta</code>, from the first scan of <a href="/bws4/">BWS4</a> after its <code>v9</code> round was implemented, under Spec4 2.9.2 (kept in Spec4's repository as <code>tests/golden/fixtures/carry_bws4_2_9_1_to_2_9_2.json</code>), trimmed. The round added a router; the scan lists what that did to the tree rather than asking the model to remember it:</p>
+
+<pre><code>"scan": {
+  …
+  "delta": {
+    "prior": { "kind": "implemented", "version": 9, "head": "861c009" },
+    "files": {
+      "added": [
+        "backend/app/api/router.py",
+        "backend/app/db/migrations/versions/0014_router_histories.py",
+        "backend/app/router/__init__.py",
+        "backend/app/router/classifier.py",
+        … 63 more
+      ],
+      "removed": [],
+      "partial": false
+    },
+    "signatures": {
+      "backend/app/db/models.py": {
+        "added": ["RouterAgreementRecord", "RouterLatencyObservation"],
+        "removed": [],
+        "changed": []
+      },
+      …
+    },
+    "candidates": {
+      "entered": ["backend/app/router/constants.py", "frontend/src/api/router.ts"],
+      "left": ["frontend/src/apps/collab/runState.ts", "frontend/src/components/LayoutShell.tsx"]
+    },
+    "dependencies": {
+      "frontend/package.json": { "added": [], "removed": [], "bumped": [] },
+      "pyproject.toml": { "added": [], "removed": [], "bumped": [] }
+    }
+  }
+}</code></pre>
+
+      <p>Across rounds: every round after the first begins with a re-scan of the code as it stands, including what the coding agent built and whatever you changed by hand. The model is handed the prior <code>review</code> and the list of paths the <code>delta</code> names, and re-derives only those; an environment variable, a dependency, or an endpoint it drops from an untouched file is put back at commit, and <code>scan.delta.carried</code> says how many. <code>notes.change_risks</code> is where StackAdvisor is told to look before proposing a swap.</p>
     </section>
 
     <section>
@@ -176,7 +212,7 @@
     <section>
       <h2 id="feature-specs-json"><code>feature_specs.json</code></h2>
 
-      <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and <a href="/docs/deployer/">Deployer</a>.</p>
+      <p>Written by Brainstormer, on completion of the vision. Read by StackAdvisor, Phaser, and Deployer.</p>
 
       <p>A technology-agnostic behavioural spec for every MVP feature: invocation trigger, inputs, outputs, success criteria, failure modes with likelihood and mitigation, dependencies on other features, and the entities involved. Non-functional goals get ids of the form <code>nfr_&lt;slug&gt;</code> that the stack and the phase files refer back to.</p>
 
