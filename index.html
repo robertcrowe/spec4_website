@@ -13,13 +13,13 @@
   <meta property="og:image:height" content="421">
   <meta property="og:title" content="Spec4 — spec-driven development for coding agents">
   <meta property="og:description" content="Spec4 is a spec-driven development tool: it turns an idea into ordered development phases — files a coding agent can build from.">
-  <link rel="stylesheet" href="/styles.css?v=13">
+  <link rel="stylesheet" href="/styles.css?v=14">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.3</span>
+    <span class="nav-version">2.13.0</span>
     <a href="/docs/">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -81,7 +81,7 @@
 <pre><code>uv tool install spec4 --refresh
 spec4</code></pre>
 
-    <p>Version 1.5.3 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a> · <a href="/docs/">Docs</a></p>
+    <p>Version 2.13.0 · Apache 2.0 · <a href="https://github.com/robertcrowe/spec4">GitHub</a> · <a href="/docs/">Docs</a></p>
 
     <ul>
       <li><strong>Runs locally.</strong> A local process; the only network calls are to the model provider you chose and, if you enable it, the search provider.</li>
@@ -233,7 +233,7 @@ serves HTTP on localhost:8050 only.
 
       <p>Run the agents a round needs. Spec4's own rounds ran five of the seven.</p>
 
-      <p><strong>CodeScanner</strong> reads an existing directory and records its architecture, stack, commands, entry points, and conventions as facts with sources, so the later agents plan against what's there rather than what they'd guess.</p>
+      <p><strong>CodeScanner</strong> reads an existing directory and records its architecture, stack, commands, entry points, and conventions as facts with sources, so the later agents plan against what's there rather than what they'd guess. The review has two layers. The <code>scan</code> layer is measured by code and never touched by the model: an exhaustive inventory, the module graph and its load-bearing candidates, public signatures, every manifest's declared dependencies, git state and activity, what the previous round planned and how the tree has drifted from it — a planned library that no manifest declares is reported as unmatched, unless a file in the tree witnesses it as a runtime or infrastructure (<code>uv.lock</code>, a systemd unit, a <code>Caddyfile</code>), and a declared dependency no plan named is reported as adopted outside Spec4. The <code>review</code> layer is the model's judgment, drawn from a bounded evidence sample the scan ranks. On a re-scan the model is handed the prior review and the exact list of paths that changed since it, and asked to re-derive only those; what it drops anyway from an untouched file — an environment variable, a dependency, an endpoint — is put back at commit, and the stored review says how many were put back and against which prior.</p>
 
       <p><strong><a href="/docs/brainstormer/">Brainstormer</a></strong> develops the vision through focused questions — purpose, audiences, MVP features — and, on completion, derives a technology-agnostic behavioral spec for every MVP feature: inputs, outputs, success criteria, failure modes. It searches the web for the standards it names and embeds canonical documentation links.</p>
 
@@ -277,10 +277,11 @@ serves HTTP on localhost:8050 only.
       <p>Spec4 is built around the round instead of the spec. A round is one pass over the project — <code>.spec4/v1/</code>, <code>v2/</code>, <code>v3/</code> — and every round after the first starts from the code, not from the previous plan:</p>
 
       <ul>
-        <li><strong>CodeScanner reads what was actually built — by anyone.</strong> The code review for round N is of the code as it stands, including what the coding agent did that the plan didn't say and whatever you changed yourself in between. Spec4 doesn't assume it's the only thing editing the repository; a hotfix, a refactor, or a week of work done without it is just what the next round plans against.</li>
+        <li><strong>CodeScanner reads what was actually built — by anyone.</strong> The code review for round N is of the code as it stands, including what the coding agent did that the plan didn't say and whatever you changed yourself in between. Spec4 doesn't assume it's the only thing editing the repository; a hotfix, a refactor, or a week of work done without it is just what the next round plans against. The scan measures the drift itself — files, signatures, manifests, and load-bearing modules since the last round, and the last plan's dependencies against what the manifests now declare — so the agents read what changed as a list, not as a model's recollection.</li>
         <li><strong>Brainstormer stamps a delta.</strong> In a revision round it records which features were added, modified, and removed, and the downstream agents scope to that delta rather than re-deriving the whole application.</li>
         <li><strong>Phaser plans only the change.</strong> Phase 1 of a revision is an integration thread that wires the new surface into the existing code, not a from-scratch steel thread, and no phases are emitted for established, unchanged features.</li>
         <li><strong>Stale inputs are flagged, not ignored.</strong> Every artifact is dated against the ones upstream of it. If you re-run Brainstormer after StackAdvisor, the project page shows StackAdvisor as needing an update — and the coding agent's <code>IMPLEMENTED</code> marker is what tells Spec4 the round is built and the next one may begin.</li>
+        <li><strong>A round may skip the optional agents.</strong> A round implemented without Agentifier, Designer, or Deployer doesn't empty what the next round carries forward: the prior AI catalog, mock, manifest, and deployment plan come from the newest implemented round that has them.</li>
       </ul>
 
       <p>So the plan is never the source of truth for long. The code is, and each round re-reads it. The Spec4 repository carries three rounds of Spec4 planning its own changes under <code>.spec4/</code>; the phase file quoted above is the first phase of the first of them.</p>

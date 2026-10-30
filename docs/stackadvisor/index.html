@@ -6,13 +6,13 @@
   <title>StackAdvisor — Spec4 docs</title>
   <meta name="description" content="StackAdvisor guides you through choosing a technology stack, one topic at a time, and writes stack.json: every language, library, store, service, and deployment target the project will use, each with its purpose, a canonical documentation link, the features it serves, and the non-functional goals it satisfies.">
   <link rel="canonical" href="https://spec4.ai/docs/stackadvisor/">
-  <link rel="stylesheet" href="/styles.css?v=13">
+  <link rel="stylesheet" href="/styles.css?v=14">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.3</span>
+    <span class="nav-version">2.13.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -71,7 +71,7 @@
     <section>
       <h2 id="reads">Reads</h2>
 
-      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. It arrives as a rendered view of the blocks StackAdvisor reads, values verbatim with their sources, not as raw JSON. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
+      <p><code>vision.json</code> and <code>feature_specs.json</code> — every feature, AI or not, needs libraries and substrate chosen to satisfy it, and the specs carry the project's non-functional goals by id. <code>ai_features.json</code>, when it exists, for the AI tiers and the infrastructure they imply. <code>design/manifest.json</code>, when it exists, as the data-model and layout signal — what the app must store and how the screens are structured; the store, the schema, and any routing library remain the stack's choice. <code>code_review.json</code>, when it exists, for the technology already in place and the change risks <a href="/docs/codescanner/">CodeScanner</a> noted. It arrives as a rendered view of the blocks StackAdvisor reads, values verbatim with their sources, not as raw JSON: the review's <code>integrations</code> (its <code>llm_provider</code> entries are the providers topic; the rest are integrations already in place) and <code>divergences</code> from the planned stack, and three measured facts from the scan — what the last round planned that no manifest declares and no file in the tree witnesses, what the manifests declare that no plan named, and which dependencies each manifest added, removed, or bumped since the last scan. In a <a href="/docs/rounds/">revision round</a>, the previous implemented round's <code>stack.json</code> as the baseline.</p>
 
       <p>Web search, if enabled, to verify a library's maintenance status and recent release activity before recommending it, and to find the canonical documentation link for each entry.</p>
     </section>

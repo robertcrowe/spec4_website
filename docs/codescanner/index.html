@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CodeScanner — Spec4 docs</title>
-  <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.">
+  <meta name="description" content="CodeScanner reads an existing directory and writes code_review.json in two layers: a scan measured by code — inventory, import graph, signatures, dependencies, git, the prior round, and the drift from its plan — and the model’s review of architecture, stack, commands, entry points, and what is built, each fact with its source. Every later agent plans against that file.">
   <link rel="canonical" href="https://spec4.ai/docs/codescanner/">
-  <link rel="stylesheet" href="/styles.css?v=13">
+  <link rel="stylesheet" href="/styles.css?v=14">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
   <nav class="site-nav" aria-label="Site">
     <a class="wordmark" href="/"><span class="wordmark-spec">Spec</span><span class="wordmark-four">4</span></a>
-    <span class="nav-version">1.5.3</span>
+    <span class="nav-version">2.13.0</span>
     <a href="/docs/" aria-current="page">Docs</a>
     <a href="/bws4/">Examples</a>
     <a href="https://github.com/robertcrowe/spec4">GitHub</a>
@@ -64,84 +64,175 @@
   <main>
     <h1>CodeScanner</h1>
 
-    <p>CodeScanner reads an existing directory and writes <a href="/docs/artifacts/"><code>code_review.json</code></a>: the project's architecture, stack, commands, entry points, and conventions, each as a fact with the file it came from. Every later agent plans against that file rather than against what it would guess.</p>
+    <p>CodeScanner reads an existing directory and writes <a href="/docs/artifacts/"><code>code_review.json</code></a>: what is in the repository, in two layers. The <code>scan</code> layer is measured by code and never touched by the model — the inventory, the import graph and its load-bearing modules, public signatures, every manifest's declared dependencies, git state and activity, what the previous round planned, and how the tree has drifted from it. The <code>review</code> layer is the model's judgment — the project's architecture, stack, commands, entry points, conventions, and what is built — each as a fact with the file it came from, drawn from a bounded evidence sample the scan ranks. Every later agent plans against that file rather than against what it would guess.</p>
 
     <p>It is the first agent of any <a href="/docs/rounds/">round</a> on existing code, and the first agent of every round after the first.</p>
 
     <section>
       <h2 id="reads">Reads</h2>
 
-      <p>The repository, locally. What the model receives is a bounded summary assembled by Spec4 before any call is made:</p>
+      <p>The repository, locally. Before any call is made, Spec4 walks the tree, measures it, and chooses the evidence the model receives from that measurement rather than from walk order, within a budget of 24,000 tokens (<code>scan_context_tokens</code> in the model settings overrides it). The evidence is assembled in four tiers, each with its own share of the budget:</p>
 
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th scope="col">Part</th>
+              <th scope="col">Tier</th>
               <th scope="col">What's included</th>
               <th scope="col">Limit</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>File tree</td>
-              <td>Every path under the directory, skipping vendored and build directories</td>
-              <td>150 files</td>
+              <td>A — File tree</td>
+              <td>Every directory holding a file, with its file count and top three extensions, then the list of every non-test source file</td>
+              <td>Directories never capped; 400 source files</td>
             </tr>
             <tr>
-              <td>Manifests</td>
-              <td><code>pyproject.toml</code>, <code>package.json</code>, <code>Cargo.toml</code>, <code>go.mod</code>, <code>Makefile</code>, linter and type-checker configs, and the like</td>
-              <td>3,000 characters per file, 10,000 in total</td>
-            </tr>
-            <tr>
-              <td>README</td>
+              <td>A — README</td>
               <td>The root README, if there is one</td>
               <td>80 lines</td>
             </tr>
             <tr>
-              <td>Deployment and CI signals</td>
-              <td><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Procfile</code>, <code>fly.toml</code>, <code>render.yaml</code>, <code>.github/workflows/</code>, Terraform directories, and the like</td>
-              <td></td>
+              <td>A — Manifests</td>
+              <td><code>pyproject.toml</code>, <code>package.json</code>, <code>Cargo.toml</code>, <code>go.mod</code>, <code>pom.xml</code>, <code>Makefile</code>, <code>tsconfig.json</code>, linter and type-checker configs, and the like</td>
+              <td>3,000 characters per file, 10,000 in total</td>
             </tr>
             <tr>
-              <td>Source samples</td>
-              <td>The head of up to eight non-test source files, entry-point candidates first (<code>main</code>, <code>app</code>, <code>index</code>, <code>server</code>, <code>cli</code>, <code>__main__</code>)</td>
-              <td>80 lines per file, 8,000 characters in total</td>
+              <td>A — Deployment and CI signals</td>
+              <td><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Procfile</code>, <code>fly.toml</code>, <code>render.yaml</code>, <code>Caddyfile</code>, <code>nginx.conf</code>, <code>deploy.sh</code>, any <code>*.service</code> unit, <code>.github/workflows/</code>, Terraform directories, and the like</td>
+              <td>Five files each, 1,500 characters per file</td>
+            </tr>
+            <tr>
+              <td>A — Project conventions</td>
+              <td><code>.env.example</code> (or <code>.env.sample</code>, <code>.env.template</code>), <code>CLAUDE.md</code>, <code>AGENTS.md</code>, <code>CONTRIBUTING.md</code>; <code>LICENSE</code> and <code>CLA.md</code> named as present, never pasted</td>
+              <td>1,500 characters; 80 lines each</td>
+            </tr>
+            <tr>
+              <td>A — Prior round</td>
+              <td>On a re-scan: the previous round's phases by number and title, the feature ids each declared, and the planned stack; then the changes since that round — commits, authors, coding-agent trailers, touched directories, the most-touched files, files added and removed, and the load-bearing candidates that entered or left</td>
+              <td>50 ids; 25 files; 10 added and 10 removed</td>
+            </tr>
+            <tr>
+              <td>B — Signatures</td>
+              <td>Every load-bearing candidate and entry-point candidate as a signature block: one line per public symbol with the first line of its docstring</td>
+              <td>6,000 tokens</td>
+            </tr>
+            <tr>
+              <td>C — Bodies</td>
+              <td>The entry-point candidates (<code>main</code>, <code>app</code>, <code>index</code>, <code>server</code>, <code>cli</code>, <code>__main__</code>), the top three candidates by fan-in, and the files most touched since the last round — whole when under 4,000 tokens, else the first 150 lines plus the file's signatures</td>
+              <td>12,000 tokens, plus what B left unspent</td>
+            </tr>
+            <tr>
+              <td>D — Other packages</td>
+              <td>One signature block per product package no B or C file sits in, from its highest fan-in member</td>
+              <td>3,000 tokens</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <p>Skipped: <code>.git</code>, <code>node_modules</code>, <code>.venv</code>, <code>__pycache__</code>, <code>dist</code>, <code>build</code>, <code>target</code>, <code>.spec4</code>, and the other cache and vendor directories. Test directories are excluded from the samples.</p>
+      <p>Within each tier, files reached from an entry point go first. A block that doesn't fit is skipped, so a smaller one later in the order can still use the room; an <code>__init__.py</code> under 20 lines never takes a slot. Test files are outside the graph and outside the samples. On Spec4's own tree this is 4 bodies, 17 signature files, and every <code>src/</code> module named, at about 17,400 tokens of evidence.</p>
 
-      <p>Before the call, the chat shows how many files were indexed and roughly how many tokens are about to be sent, and to which model. Nothing else leaves the machine.</p>
+      <p>Skipped: <code>.git</code>, <code>node_modules</code>, <code>.venv</code>, <code>__pycache__</code>, <code>dist</code>, <code>build</code>, <code>target</code>, <code>.next</code>, <code>.spec4</code>, and the other cache and vendor directories.</p>
+
+      <p>Before the call, the chat shows how many files were indexed and roughly how many tokens are about to be sent, and to which model. Nothing else leaves the machine. What was shown is recorded in <code>scan.coverage</code>, by the code that pastes it, so the review says what the model saw.</p>
     </section>
 
     <section>
       <h2 id="writes">Writes</h2>
 
-      <p><code>code_review.json</code>. The shape is fixed:</p>
+      <p><code>code_review.json</code>, as an envelope with <code>schema_version: 2</code> and two objects. The model emits a bare <code>review</code> block, validated on its own; the envelope is assembled and validated again at commit, and a review that fails validation is written to <code>.spec4/failures/</code> and re-asked once.</p>
+
+      <h3 id="the-scan-layer">The <code>scan</code> layer</h3>
+
+      <p>Computed from the same walk the model is shown, and held until the model's block is committed. Each block is optional and closed, so a review from an earlier 2.x is still read:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Block</th>
+              <th scope="col">What it records</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>inventory</code></td>
+              <td>File and line counts per extension, the first 2,000 paths, and every directory the walk pruned — so a consumer can tell "not there" from "not looked at".</td>
+            </tr>
+            <tr>
+              <td><code>coverage</code></td>
+              <td>What the model was shown: the README, manifests, CI, deployment, and convention files pasted, the signature files and bodies sampled, the source total they were drawn from, and the evidence size.</td>
+            </tr>
+            <tr>
+              <td><code>git</code></td>
+              <td>Head, branch, modified and untracked counts (<code>.spec4/</code> excluded); the commits since the last round — after the latest <code>IMPLEMENTED</code> marker — with their date range, author names (never emails), per-directory touch counts, the 25 most-touched files, and whether any commit carries a coding-agent trailer; the last commit per top-level directory. Present when the project root is itself a repository. Any failure — no binary, a timeout, an empty repository — stores <code>available: false</code> and never fails the scan.</td>
+            </tr>
+            <tr>
+              <td><code>module_graph</code></td>
+              <td>Import edges between the project's own source files — Python through <code>ast</code>, JavaScript and TypeScript by relative specifier, Go through <code>go.mod</code> — stored as per-node fan-in and fan-out, the top ten modules by fan-in with at least two importers as <code>load_bearing_candidates</code> with their consumers, the external packages with what imports them, and how much of the graph the entry points reach.</td>
+            </tr>
+            <tr>
+              <td><code>signatures</code></td>
+              <td>For the candidates and the entry points: public top-level definitions and module-level variables with the first line of their docstring. 40 symbols per file, 32 KB in all, with <code>truncated</code> flags at both levels.</td>
+            </tr>
+            <tr>
+              <td><code>dependencies</code></td>
+              <td>What each <code>pyproject.toml</code> (including PEP 735 dependency groups), <code>package.json</code>, and <code>go.mod</code> declares, by manifest path. Nothing else in a manifest is read.</td>
+            </tr>
+            <tr>
+              <td><code>prior_round</code></td>
+              <td>The latest implemented round as an extract, never a pass-through: each phase's title, feature and capability declarations, and dependencies; the stack's languages, libraries, deployment targets, persistence, providers, and integrations; the vision's feature ids; the AI catalog reduced to ids and tiers. About 15 KB on <a href="/bws4/">BWS4</a>, where the round's artifacts run to hundreds.</td>
+            </tr>
+            <tr>
+              <td><code>plan_drift</code></td>
+              <td>The prior plan's dependencies against the tree, in five buckets: <code>planned_in_manifests</code>; <code>planned_only_imported</code> (never declared, but imported — a smell); <code>planned_tooling</code> (declared by no manifest, but witnessed by a file in the tree — <code>uv.lock</code>, a systemd unit, a <code>Caddyfile</code>, a <code>Dockerfile</code>, a CI workflow, a tool's own config — or named by a manifest without being depended on, like <code>requires-python</code> or <code>packageManager</code>); <code>planned_unmatched</code>; and <code>declared_not_planned</code>. A presence test, never a version check. Which bucket means drift is the consumer's judgment.</td>
+            </tr>
+            <tr>
+              <td><code>delta</code></td>
+              <td>This scan against the prior one: files added, removed, and modified; dependencies added, removed, and bumped per manifest; candidates that entered or left; public symbols added, removed, or changed. And <code>carried</code> — how many prior entries the commit put back into the review, and against which baseline (below).</td>
+            </tr>
+            <tr>
+              <td><code>producer</code></td>
+              <td>The Spec4 version and schema that measured the scan, so a reader of <code>delta</code> can tell "measured by an older extractor" from "the tree changed".</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="the-review-layer">The <code>review</code> layer</h3>
 
       <ul>
         <li><code>project_type</code>, <code>languages</code>, <code>frameworks</code>, <code>build_system</code>, <code>commands</code>, <code>entrypoints</code>, <code>ui_summary</code>, and <code>notes</code> are required when the directory holds a software project.</li>
         <li>Every fact carries a <code>source</code> — the file it was read from — or <code>inferred_from</code> — the file it was deduced from. A fact with neither is not written.</li>
         <li><code>commands</code> has a closed set of keys: <code>build</code>, <code>test</code>, <code>lint</code>, <code>typecheck</code>, <code>run</code>, <code>dev</code>, <code>deploy</code>. <code>entrypoints</code> likewise: <code>main</code>, <code>wsgi_app</code>, <code>cli_script</code>, <code>dev_server</code>, <code>ui_root</code>. Anything else the project has goes in <code>notes.other_notes</code> as a line of text, so a downstream agent reading <code>commands.test</code> always finds the same thing.</li>
+        <li><code>load_bearing</code>: one entry per candidate the scan named, with its role and contract — inputs, outputs, invariants, side effects. Its <code>consumers</code> are filled from the graph at commit, replacing whatever the model emitted, so the stored list is always the measured one.</li>
+        <li><code>implemented</code>: what is built, each with a <code>status</code> of <code>complete</code>, <code>partial</code>, <code>stub</code>, or <code>scaffolded_only</code>, its paths, and the ids of the prior round's features it realizes.</li>
+        <li><code>integrations</code>: each external service by name and kind — an LLM provider, a database, a cache, a queue, a web search, an MCP server, and the rest of <a href="/docs/stackadvisor/">StackAdvisor</a>'s vocabulary — with its client module, the names of its environment variables (never values), and its purpose.</li>
+        <li><code>prior_round_reconciliation</code>: one entry per phase of the previous round, with a verdict — <code>evidence_found</code>, <code>evidence_partial</code>, <code>no_evidence_found</code>, or <code>unassessed</code> for a phase that declared no features — computed at commit from <code>implemented</code> against the features the phase declared. The model contributes only the <code>gap</code> for a phase it judges short.</li>
+        <li><code>unplanned_changes</code>: three to ten entries, grouped by area, for what entered the codebase outside any plan; classified <code>out_of_round</code> at commit when a path it names is among the most-touched or added files.</li>
+        <li><code>divergences</code>: where the built stack departs from the planned one — <code>planned</code>, <code>found</code>, and a <code>kind</code> of <code>renamed</code>, <code>replaced</code>, <code>dropped</code>, <code>added</code>, or <code>reshaped</code>. Never a dependency name; <code>plan_drift</code> has those.</li>
         <li>A key the model can't verify is omitted, never filled with "none" or "n/a".</li>
-        <li><code>notes.change_risks</code> records where a change is likely to break something; <a href="/docs/stackadvisor/">StackAdvisor</a> is told to read it before proposing a swap. <code>notes.security_observations</code> and <code>existing_self_description</code> (quoted from the README or a package description, never from a config file) are also there.</li>
+        <li><code>notes.change_risks</code> records where a change is likely to break something; StackAdvisor is told to read it before proposing a swap. <code>notes.security_observations</code> and <code>existing_self_description</code> (quoted from the README or a package description, never from a config file) are also there.</li>
         <li>An empty directory, or one without code, gets <code>is_software_project: false</code> and a one-line summary.</li>
       </ul>
 
-      <p>Later agents don't receive the file as pasted JSON. <a href="/docs/brainstormer/">Brainstormer</a>, StackAdvisor, and <a href="/docs/phaser/">Phaser</a> each get a rendered view of exactly the blocks they read, each block under one line of guidance, with values verbatim and their <code>source</code> or <code>inferred_from</code> in brackets; a field the renderer has no special knowledge of still reaches them. A probe, <code>evals/code_scanner/review_reach.py</code>, showed why: with the raw paste, fields a prompt named reached the plan and fields it didn't mostly didn't, and StackAdvisor recorded its prompt example's <code>ESLint</code> and <code>Prettier</code> in eight rounds out of eight for a codebase whose review said <code>oxlint</code>.</p>
+      <p>Later agents don't receive the file as pasted JSON. <a href="/docs/brainstormer/">Brainstormer</a>, StackAdvisor, and <a href="/docs/phaser/">Phaser</a> each get a rendered view of exactly the blocks they read, each block under one line of guidance, with values verbatim and their <code>source</code> or <code>inferred_from</code> in brackets; a field the renderer has no special knowledge of still reaches them. The views carry measured facts beside the model's judgments: Phaser reads <code>load_bearing</code>, <code>implemented</code>, the reconciliation, the unplanned changes, and a coverage line; StackAdvisor reads <code>integrations</code>, <code>divergences</code>, the drift's <code>planned_unmatched</code> and <code>declared_not_planned</code>, and the dependency delta; Brainstormer reads <code>implemented</code> and the unplanned changes. <a href="/docs/deployer/">Deployer</a> reads <code>integrations</code> and is told to plan against the committed tree when the scan found it dirty; <a href="/docs/agentifier/">Agentifier</a>'s Scout reads through a view of its own. No raw review JSON reaches a downstream model, and none of them receives <code>scan</code> whole.</p>
 
-      <p>An excerpt from Spec4's own <code>.spec4/v2/code_review.json</code> is on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
+      <p>A probe, <code>evals/code_scanner/review_reach.py</code>, showed why the views exist: with the raw paste, fields a prompt named reached the plan and fields it didn't mostly didn't, and StackAdvisor recorded its prompt example's <code>ESLint</code> and <code>Prettier</code> in eight rounds out of eight for a codebase whose review said <code>oxlint</code>.</p>
+
+      <p>Excerpts of both layers are on the <a href="/docs/artifacts/">Artifacts</a> page.</p>
     </section>
 
     <section>
       <h2 id="asks">Asks</h2>
 
-      <p>Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the file — or press <strong>Modify</strong> later to reopen it.</p>
+      <p>Nothing, by default. The scan and the draft are one call. After the review is drafted you can reply in the chat to correct or extend it — CodeScanner re-emits the <code>review</code> block — or press <strong>Modify</strong> later to reopen it. <strong>Re-scan Project</strong>, in the action row under a finished review, walks the tree again.</p>
 
       <p>Web search, if you've given it a key, is available to CodeScanner for the standards and protocols it names.</p>
+
+      <p>A <code>review</code> block that fails schema validation is written to <code>.spec4/failures/code_scanner_review_&lt;n&gt;.txt</code> — the validator's errors first, then the raw reply — before the re-ask, and again if the re-ask fails too. Nothing in the chat is lost; the file is there so a failure can be read rather than remembered.</p>
     </section>
 
     <section>
@@ -170,7 +261,7 @@
             </tr>
             <tr>
               <td><strong>Required</strong></td>
-              <td>The previous round is implemented and the next hasn't started. Only CodeScanner shows this, because every round after the first begins with a re-scan — even if the previous round was greenfield.</td>
+              <td>The previous round is implemented and the next hasn't started — only CodeScanner shows this, because every round after the first begins with a re-scan, even if the previous round was greenfield. Or the round's <code>code_review.json</code> was written by an earlier Spec4 and predates the current review format: a notice names the round's folder, nothing else in the round is lost, and every other agent is Not Ready until the re-scan.</td>
             </tr>
           </tbody>
         </table>
@@ -182,13 +273,19 @@
     <section>
       <h2 id="across-rounds">Across rounds</h2>
 
-      <p>The review is rewritten from scratch each round, of the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan. <a href="/docs/rounds/">Rounds</a></p>
+      <p>Every round after the first begins with a re-scan, and the re-scan reads the code as it stands: what the coding agent built, what you changed by hand, and what the previous round's plan never mentioned. That is what makes the next round a plan against the code rather than against the last plan. <a href="/docs/rounds/">Rounds</a></p>
+
+      <p>The review is not rewritten from scratch. The scan finds the previous round's review, measures the <code>delta</code> from it, and hands the model that review with the exact list of paths that changed since it. An entry whose source path isn't on the list is carried verbatim; the model re-derives only where the list names the path, adds for paths it adds, and drops for paths it removes, and it reuses the id of a capability the prior review already names. What it drops anyway from an untouched file — an environment variable, a dependency, an endpoint — is put back at commit, keyed by name and in the prior's order, and <code>scan.delta.carried</code> records how many were put back and against which baseline. On BWS4's first scan after its <code>v9</code> round, the model dropped 10 of 22 environment variables and 21 of 46 dependencies whose source files hadn't changed; the carry restores both lists. With no prior review, no delta, or a truncated file list, the carry is suspended and the seed says so.</p>
+
+      <p>The drift is measured, not recalled. The scan compares what the last round planned with what the manifests now declare and what files in the tree witness, and lists what changed as files, signatures, manifests, and load-bearing modules, so the agents read what changed as a list rather than as the model's recollection of it.</p>
+
+      <p>A review written under an older schema isn't read as current. The gate above fires, and the re-scan starts fresh — the fresh seed with the old review appended as context — rather than asking for a merge into a shape the current version doesn't read.</p>
     </section>
 
     <section>
       <h2 id="in-spec4s-own-rounds">In Spec4's own rounds</h2>
 
-      <p>Three calls, about 118k tokens, and $0.53 in <code>v1</code>; three calls, about 116k tokens, and $0.46 in <code>v2</code>, on <code>claude-sonnet-5</code>. <code>v0</code>'s scan ran before usage was recorded.</p>
+      <p>Three calls, about 118k tokens, and $0.53 in <code>v1</code>; three calls, about 116k tokens, and $0.46 in <code>v2</code>, on <code>claude-sonnet-5</code>. <code>v0</code>'s scan ran before usage was recorded. All three reviews were written before 2.0.0 and carry <code>schema_version: 1</code>, so Spec4's fourth round opens with the fresh-seed re-scan described above.</p>
     </section>
   </main>
 </body>
